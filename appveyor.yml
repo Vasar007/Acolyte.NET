@@ -40,7 +40,7 @@ artifacts:
 
 deploy:  
   - provider: Environment
-  name: Acolyte.NET
-  on:
-    branch: master
+    name: Acolyte.NET
+    on:
+      branch: master
 
