@@ -7,7 +7,6 @@ branches:
     - develop
 
 platform:
-  - AnyCPU
   - x64
   - x86
 
