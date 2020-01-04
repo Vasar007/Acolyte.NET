@@ -1559,7 +1559,6 @@ namespace Acolyte.Collections
         /// The type of the elements of <paramref name="source" />.
         /// </typeparam>
         /// <param name="source">A sequence of values to convert to string.</param>
-        /// </param>
         /// <param name="selector">A transform function to apply to each element.</param>
         /// <returns>
         /// The string which represent converted value of sequence or special message if 

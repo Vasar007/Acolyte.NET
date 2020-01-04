@@ -11,11 +11,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{9E30DE68
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Acolyte.FSharp", "Libraries\Acolyte.FSharp\Acolyte.FSharp.fsproj", "{0241E333-620A-4A1E-93B9-7A488C84C001}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acolyte", "Libraries\Acolyte\Acolyte.csproj", "{D8B4B4BE-36E8-43AD-BC38-6DA619060967}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acolyte.NET", "Libraries\Acolyte.NET\Acolyte.NET.csproj", "{D8B4B4BE-36E8-43AD-BC38-6DA619060967}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{EC569F31-27CC-47D9-BD4E-580D79238282}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Acolyte.Examples", "..\Examples\Acolyte.Examples\Acolyte.Examples.csproj", "{822AAE76-2C7A-4923-BA25-804570C820B0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acolyte.Examples", "..\Examples\Acolyte.Examples\Acolyte.Examples.csproj", "{822AAE76-2C7A-4923-BA25-804570C820B0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -16,7 +16,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Acolyte.NET\Libraries\Acolyte\Acolyte.csproj" />
+    <ProjectReference Include="..\..\Acolyte.NET\Libraries\Acolyte.NET\Acolyte.NET.csproj" />
   </ItemGroup>
 
 </Project>
