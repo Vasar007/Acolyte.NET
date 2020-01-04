@@ -328,7 +328,8 @@ namespace Acolyte.Collections
         /// Returns the minimum and maximum values in a sequence of <see cref="int" /> values.
         /// </summary>
         /// <param name="source">
-        /// A sequence of <see cref="int" /> values to determine the minimum and maximum values of.
+        /// A sequence of <see cref="int" /> values to determine the minimum and maximum values
+        /// of.
         /// </param>
         /// <returns>The minimum and maximum values in the sequence.</returns>
         /// <exception cref="ArgumentNullException">
@@ -373,7 +374,7 @@ namespace Acolyte.Collections
         /// values of.
         /// </param>
         /// <returns>
-        /// A value of type <see cref="int?" /> that corresponds to the minimum and
+        /// A value of type <see cref="Nullable{Int32}" /> that corresponds to the minimum and
         /// maximum values in the sequence.
         /// </returns>
         /// <exception cref="ArgumentNullException">
@@ -447,7 +448,7 @@ namespace Acolyte.Collections
         /// values of.
         /// </param>
         /// <returns>
-        /// A value of type <see cref="long?" /> that corresponds to the minimum and
+        /// A value of type <see cref="Nullable{Int64}" /> that corresponds to the minimum and
         /// maximum values in the sequence.
         /// </returns>
         /// <exception cref="ArgumentNullException">
@@ -534,7 +535,7 @@ namespace Acolyte.Collections
         /// values of.
         /// </param>
         /// <returns>
-        /// A value of type <see cref="float?" /> that corresponds to the minimum and
+        /// A value of type <see cref="Nullable{Single}" /> that corresponds to the minimum and
         /// maximum values in the sequence.
         /// </returns>
         /// <exception cref="ArgumentNullException">
@@ -624,7 +625,7 @@ namespace Acolyte.Collections
         /// values of.
         /// </param>
         /// <returns>
-        /// A value of type <see cref="double?" /> that corresponds to the minimum and
+        /// A value of type <see cref="Nullable{Double}" /> that corresponds to the minimum and
         /// maximum values in the sequence.
         /// </returns>
         /// <exception cref="ArgumentNullException">
@@ -707,7 +708,7 @@ namespace Acolyte.Collections
         /// maximum values of.
         /// </param>
         /// <returns>
-        /// A value of type <see cref="decimal?" /> that corresponds to the minimum and
+        /// A value of type <see cref="Nullable{Decimal}" /> that corresponds to the minimum and
         /// maximum values in the sequence.
         /// </returns>
         /// <exception cref="ArgumentNullException">
@@ -806,7 +807,6 @@ namespace Acolyte.Collections
         /// <param name="source">
         /// A sequence of values to determine the minimum and maximum values of.
         /// </param>
-        /// <param name="comparer">An element comparer.</param>
         /// <returns>The minimum and maximum values in the sequence.</returns>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="source" /> is <c>null</c>.
@@ -871,7 +871,7 @@ namespace Acolyte.Collections
         /// </param>
         /// <param name="selector">A transform function to apply to each element.</param>
         ///  <returns>
-        /// A value of type <see cref="int?" /> that corresponds to the minimum and
+        /// A value of type <see cref="Nullable{Int32}" /> that corresponds to the minimum and
         /// maximum values in the sequence.
         /// </returns>
         /// <exception cref="ArgumentNullException">
@@ -929,7 +929,7 @@ namespace Acolyte.Collections
         /// </param>
         /// <param name="selector">A transform function to apply to each element.</param>
         ///  <returns>
-        /// A value of type <see cref="long?" /> that corresponds to the minimum and
+        /// A value of type <see cref="Nullable{Int64}" /> that corresponds to the minimum and
         /// maximum values in the sequence.
         /// </returns>
         /// <exception cref="ArgumentNullException">
@@ -994,7 +994,7 @@ namespace Acolyte.Collections
         /// </param>
         /// <param name="selector">A transform function to apply to each element.</param>
         ///  <returns>
-        /// A value of type <see cref="float?" /> that corresponds to the minimum and
+        /// A value of type <see cref="Nullable{Single}" /> that corresponds to the minimum and
         /// maximum values in the sequence.
         /// </returns>
         /// <exception cref="ArgumentNullException">
@@ -1066,7 +1066,7 @@ namespace Acolyte.Collections
         /// </param>
         /// <param name="selector">A transform function to apply to each element.</param>
         ///  <returns>
-        /// A value of type <see cref="double?" /> that corresponds to the minimum and
+        /// A value of type <see cref="Nullable{Double}" /> that corresponds to the minimum and
         /// maximum values in the sequence.
         /// </returns>
         /// <exception cref="ArgumentNullException">
@@ -1131,7 +1131,7 @@ namespace Acolyte.Collections
         /// </param>
         /// <param name="selector">A transform function to apply to each element.</param>
         ///  <returns>
-        /// A value of type <see cref="decimal?" /> that corresponds to the minimum and
+        /// A value of type <see cref="Nullable{Decimal}" /> that corresponds to the minimum and
         /// maximum values in the sequence.
         /// </returns>
         /// <exception cref="ArgumentNullException">
@@ -1164,9 +1164,11 @@ namespace Acolyte.Collections
         /// A sequence of values to determine the minimum and maximum values of.
         /// </param>
         /// <param name="selector">A transform function to apply to each element.</param>
+        /// <param name="comparer">An element comparer.</param>
         /// <returns>The minimum and maximum values in the sequence.</returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="source" /> is <c>null</c>.
+        /// <paramref name="source" /> is <c>null</c> -or-
+        /// <paramref name="comparer" /> is <c>null</c>.
         /// </exception>
         /// <exception cref="InvalidOperationException">
         /// <paramref name="source" /> contains no elements.
@@ -1198,8 +1200,7 @@ namespace Acolyte.Collections
         /// <param name="selector">A transform function to apply to each element.</param>
         /// <returns>The minimum and maximum values in the sequence.</returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="source" /> is <c>null</c>. -or-
-        /// <paramref name="comparer" /> is <c>null</c>.
+        /// <paramref name="source" /> is <c>null</c>.
         /// </exception>
         /// <exception cref="InvalidOperationException">
         /// <paramref name="source" /> contains no elements.
@@ -1305,7 +1306,6 @@ namespace Acolyte.Collections
         /// A sequence of values to determine the minimum by key element of.
         /// </param>
         /// <param name="keySelector">Selector that transform source item to key item.</param>
-        /// <param name="comparer">Key item comparer.</param>
         /// <returns>The minimum by key element in the sequence.</returns>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="source" /> is <c>null</c>. -or-
@@ -1372,7 +1372,6 @@ namespace Acolyte.Collections
         /// A sequence of values to determine the maximum by key element of.
         /// </param>
         /// <param name="keySelector">Selector that transform source item to key item.</param>
-        /// <param name="comparer">Key item comparer.</param>
         /// <returns>The maximum by key element in the sequence.</returns>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="source" /> is <c>null</c>. -or-
@@ -1481,7 +1480,6 @@ namespace Acolyte.Collections
         /// A sequence of values to determine the minimum by key element of.
         /// </param>
         /// <param name="keySelector">Selector that transform source item to key item.</param>
-        /// <param name="comparer">Key item comparer.</param>
         /// <returns>The minimum by key element in the sequence.</returns>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="source" /> is <c>null</c>. -or-
@@ -1518,11 +1516,15 @@ namespace Acolyte.Collections
         /// </returns>
         public static string EnumerableToOneString<TSource>(this IEnumerable<TSource>? source)
         {
-            return source.EnumerableToOneString(emptyCollectionMessage: "None");
+            return source.EnumerableToOneString(
+                separator: ", ",
+                emptyCollectionMessage: "None",
+                selector: item => item is null ? string.Empty : $"'{item.ToString()}'"
+            );
         }
 
         /// <summary>
-        /// Transforms sequence to the string.
+        /// Transforms sequence to the string or returns message when sequence contains no elements.
         /// </summary>
         /// <typeparam name="TSource">
         /// The type of the elements of <paramref name="source" />.
@@ -1533,18 +1535,117 @@ namespace Acolyte.Collections
         /// elements.
         /// </param>
         /// <returns>
-        /// The string which represent converted value of sequence or specified message if 
+        /// The string which represent converted value of sequence or special message if 
         /// <paramref name="source" /> is <c>null</c> or contains no elements.
         /// </returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="emptyCollectionMessage" /> is <c>null</c>.
+        /// </exception>
         public static string EnumerableToOneString<TSource>(this IEnumerable<TSource>? source,
             string emptyCollectionMessage)
         {
+            return source.EnumerableToOneString(
+                separator: ", ",
+                emptyCollectionMessage: emptyCollectionMessage,
+                selector: item => item is null ? string.Empty : $"'{item.ToString()}'"
+            );
+        }
+
+        /// <summary>
+        /// Invokes a transform function on each element of a sequence and transforms sequence to
+        /// the string.
+        /// </summary>
+        /// <typeparam name="TSource">
+        /// The type of the elements of <paramref name="source" />.
+        /// </typeparam>
+        /// <param name="source">A sequence of values to convert to string.</param>
+        /// </param>
+        /// <param name="selector">A transform function to apply to each element.</param>
+        /// <returns>
+        /// The string which represent converted value of sequence or special message if 
+        /// <paramref name="source" /> is <c>null</c> or contains no elements.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="selector" /> is <c>null</c>.
+        /// </exception>
+        public static string EnumerableToOneString<TSource>(this IEnumerable<TSource>? source,
+            Func<TSource, string> selector)
+        {
+            return source.EnumerableToOneString(
+                separator: ", ",
+                emptyCollectionMessage: "None",
+                selector: selector
+            );
+        }
+
+        /// <summary>
+        /// Invokes a transform function on each element of a sequence and transforms sequence to
+        /// the string or returns message when sequence contains no elements.
+        /// </summary>
+        /// <typeparam name="TSource">
+        /// The type of the elements of <paramref name="source" />.
+        /// </typeparam>
+        /// <param name="source">A sequence of values to convert to string.</param>
+        /// <param name="emptyCollectionMessage">
+        /// The string to return if <paramref name="source" /> is <c>null</c> or contains no
+        /// elements.
+        /// </param>
+        /// <param name="selector">A transform function to apply to each element.</param>
+        /// <returns>
+        /// The string which represent converted value of sequence or special message if 
+        /// <paramref name="source" /> is <c>null</c> or contains no elements.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="emptyCollectionMessage" /> is <c>null</c>. -or-
+        /// <paramref name="selector" /> is <c>null</c>.
+        /// </exception>
+        public static string EnumerableToOneString<TSource>(this IEnumerable<TSource>? source,
+            string emptyCollectionMessage, Func<TSource, string> selector)
+        {
+            return source.EnumerableToOneString(
+                separator: ", ",
+                emptyCollectionMessage: emptyCollectionMessage,
+                selector: selector
+            );
+        }
+
+        /// <summary>
+        /// Invokes a transform function on each element of a sequence and transforms sequence to
+        /// the string with provided separator or returns message when sequence contains no
+        /// elements.
+        /// </summary>
+        /// <typeparam name="TSource">
+        /// The type of the elements of <paramref name="source" />.
+        /// </typeparam>
+        /// <param name="source">A sequence of values to convert to string.</param>
+        /// <param name="separator">
+        /// The string to use as a separator. <paramref name="separator" /> is included in the
+        /// returned string only if values has more than one element.
+        /// </param>
+        /// <param name="selector">A transform function to apply to each element.</param>
+        /// <param name="emptyCollectionMessage">
+        /// The string to return if <paramref name="source" /> is <c>null</c> or contains no
+        /// elements.
+        /// </param>
+        /// <returns>
+        /// The string which represent converted value of sequence or specified message if 
+        /// <paramref name="source" /> is <c>null</c> or contains no elements.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="emptyCollectionMessage" /> is <c>null</c>. -or-
+        /// <paramref name="selector" /> is <c>null</c>.
+        /// </exception>
+        public static string EnumerableToOneString<TSource>(this IEnumerable<TSource>? source,
+            string? separator, string emptyCollectionMessage, Func<TSource, string> selector)
+        {
+            emptyCollectionMessage.ThrowIfNull(nameof(emptyCollectionMessage));
+            selector.ThrowIfNull(nameof(selector));
+
             if (source.IsNullOrEmpty()) return emptyCollectionMessage;
 
-            IEnumerable<string> transformedSource = source
-                .Select(x => x is null ? string.Empty : $"'{x.ToString()}'");
+            IEnumerable<string> transformedSource = source.Select(selector);
 
-            return string.Join(", ", transformedSource);
+            return string.Join(separator, transformedSource);
         }
 
         #endregion

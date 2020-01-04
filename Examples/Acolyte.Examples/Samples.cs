@@ -1,24 +1,4 @@
-# Acolyte.NET
-
-[![nuget](https://img.shields.io/nuget/v/Acolyte.NET.svg)](https://www.nuget.org/packages/Acolyte.NET)
-[![License](https://img.shields.io/hexpm/l/plug.svg)](https://github.com/Vasar007/Acolyte.NET/blob/master/LICENSE)
-[![AppVeyor branch](https://img.shields.io/appveyor/ci/Vasar007/Acolyte.NET/master.svg)](https://ci.appveyor.com/project/Vasar007/acolyte.net)
-
-![Acolyte.NET icon](Media/AcolyteIcon.png "Acolyte.NET icon")
-
-Acolyte.NET is a helper library with a lot of useful classes and extension methods that you need in your everyday work.
-So, do not reinvent the wheel, use this library instead!
-
-## Installation
-
-Install [NuGet package](https://www.nuget.org/packages/Acolyte.NET).
-
-## Usage examples
-
-Check examples project [here](https://github.com/Vasar007/Acolyte.NET/blob/master/Examples/Acolyte.Examples).
-
-```csharp
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -84,13 +64,3 @@ namespace Acolyte.Examples
         }
     }
 }
-
-```
-
-## Dependencies
-
-Target .NET Standard is 2.1 for libraries. Version of C# is 8.0, version of F# is 4.7.
-
-## License information
-
-This project is licensed under the terms of the [Apache License 2.0](LICENSE).

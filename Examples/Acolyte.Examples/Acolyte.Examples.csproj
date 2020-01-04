@@ -9,13 +9,14 @@
     <LangVersion>8.0</LangVersion>
     <Nullable>enable</Nullable>
     <WarningsAsErrors>CS8600,CS8602,CS8603,CS8618,CS8625</WarningsAsErrors>
-    <RootNamespace>Acolyte</RootNamespace>
+    <RootNamespace>Acolyte.Examples</RootNamespace>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <IsPackable>false</IsPackable>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)'=='Release'">
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
-    <NoWarn>1701;1702;CS1591</NoWarn>
-  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Acolyte.NET\Libraries\Acolyte\Acolyte.csproj" />
+  </ItemGroup>
 
 </Project>

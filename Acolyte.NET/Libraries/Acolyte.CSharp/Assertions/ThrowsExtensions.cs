@@ -401,7 +401,6 @@ namespace Acolyte.Assertions
         /// </param>
         /// <param name="includedLowerBound">An included lower bound of the range.</param>
         /// <param name="includedUpperBound">An included upper bound of the range.</param>
-        /// <param name="comparer">A value comparer.</param>
         /// <returns>The original value.</returns>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="value" /> is <c>null</c>. -or-

@@ -24,11 +24,17 @@
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageProjectUrl>https://github.com/Vasar007/Acolyte.NET</PackageProjectUrl>
     <RepositoryType>git</RepositoryType>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <PackageIcon>AcolyteIcon.png</PackageIcon>
+    <PackageIconUrl />
+    <Copyright>Copyright © 2020 Vasily Vasilyev (vasar007@yandex.ru)</Copyright>
+    <ApplicationIcon>AcolyteIcon.ico</ApplicationIcon>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)'=='Release'">
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
+    <NoWarn>1701;1702;CS1591</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
@@ -37,6 +43,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="..\..\..\Media\AcolyteIcon.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
     <None Include="..\LICENSE">
       <Pack>True</Pack>
       <PackagePath></PackagePath>

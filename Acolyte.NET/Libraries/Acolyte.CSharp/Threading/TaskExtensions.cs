@@ -44,7 +44,7 @@ namespace Acolyte.Threading
             }
         }
 
-        public static IReadOnlyList<Exception> UnwrapResultsOrExceptions<T>(
+        public static IReadOnlyList<Exception> UnwrapResultsOrExceptions(
             this IEnumerable<ResultOrException<NoneResult>> source)
         {
             source.ThrowIfNull(nameof(source));

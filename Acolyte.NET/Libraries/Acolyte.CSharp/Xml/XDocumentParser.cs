@@ -102,6 +102,7 @@ namespace Acolyte.Xml
         /// </returns>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="element" /> is <c>null</c>.
+        /// </exception>
         public static T GetElementValue<T>(XElement element)
             where T : IConvertible
         {
