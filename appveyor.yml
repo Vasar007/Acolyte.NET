@@ -31,9 +31,9 @@ nuget:
     disable_publish_on_pr: true
 
 artifacts:
-  - path: Acolyte.NET\Acolyte.NET\Libraries\Acolyte.CSharp\bin\Release\*.nupkg
-  - path: Acolyte.NET\Acolyte.NET\Libraries\Acolyte.FSharp\bin\Release\*.nupkg
-  - path: Acolyte.NET\Acolyte.NET\Libraries\Acolyte.NET\bin\Release\*.nupkg
+  - path: Acolyte.NET\Libraries\Acolyte.CSharp\bin\Release\*.nupkg
+  - path: Acolyte.NET\Libraries\Acolyte.FSharp\bin\Release\*.nupkg
+  - path: Acolyte.NET\Libraries\Acolyte.NET\bin\Release\*.nupkg
 
 deploy:
   - provider: Environment
