@@ -10,17 +10,30 @@
     <RootNamespace>Acolyte</RootNamespace>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <Authors>Vasily Vasilyev</Authors>
+    <Product>Acolyte.FSharp</Product>
+    <Description>This package is a part of Acolyte.NET library. Acolyte.NET is a helper library with a lot of useful classes and extension methods that you need in your everyday work. So, do not reinvent the wheel, use this library instead!</Description>
+    <PackageTags>acolyte, acolyte-net, net-acolyte, helper, helper-lib, classes, extension</PackageTags>
+    <RepositoryUrl>https://github.com/Vasar007/Acolyte.NET.git</RepositoryUrl>
+    <AssemblyVersion>1.0.1.0</AssemblyVersion>
+    <FileVersion>1.0.1.0</FileVersion>
+    <Version>1.0.1</Version>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageProjectUrl>https://github.com/Vasar007/Acolyte.NET</PackageProjectUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <PackageIcon>AcolyteIcon.png</PackageIcon>
+    <PackageIconUrl />
+    <Copyright>Copyright © 2020 Vasily Vasilyev (vasar007@yandex.ru)</Copyright>
+    <ApplicationIcon>AcolyteIcon.ico</ApplicationIcon>
+  </PropertyGroup>
+    
   <PropertyGroup Condition="'$(Configuration)'=='Release'">
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
     <NoWarn>1701;1702;CS1591</NoWarn>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Compile Include="Functional\Throw.fs" />
-    <Compile Include="Functional\Utils.fs" />
-    <Compile Include="Functional\SeqEx.fs" />
-  </ItemGroup>
 
   <ItemGroup>
     <None Include="..\..\..\Media\AcolyteIcon.png">
@@ -35,6 +48,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Acolyte.CSharp\Acolyte.CSharp.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Functional\Throw.fs" />
+    <Compile Include="Functional\Utils.fs" />
+    <Compile Include="Functional\SeqEx.fs" />
   </ItemGroup>
 
 </Project>

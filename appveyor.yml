@@ -24,18 +24,25 @@ test:
   assemblies:
     - '**\*.Tests.dll'
 
-pull_requests:
-    do_not_increment_build_number: true
-
-nuget:  
-    disable_publish_on_pr: true
+after_build:
+  - dotnet pack "Libraries\Acolyte.CSharp" -c Release
+  - dotnet pack "Libraries\Acolyte.FSharp" -c Release
+  - dotnet pack "Libraries\Acolyte.NET" -c Release
 
 artifacts:
-  - path: Acolyte.NET\bin\Release\*.nupkg
+  - path: Acolyte.NET\Libraries\Acolyte.CSharp\bin\Release\*.nupkg
+  - path: Acolyte.NET\Libraries\Acolyte.FSharp\bin\Release\*.nupkg
+  - path: Acolyte.NET\Libraries\Acolyte.NET\bin\Release\*.nupkg
 
-deploy:  
+deploy:
   - provider: Environment
     name: Acolyte.NET
     on:
       branch: master
+      configuration: Release
 
+pull_requests:
+    do_not_increment_build_number: true
+
+nuget:
+    disable_publish_on_pr: true
