@@ -18,9 +18,9 @@
     <Description>Acolyte.NET is a helper library with a lot of useful classes and extension methods that you need in your everyday work. So, do not reinvent the wheel, use this library instead!</Description>
     <PackageTags>acolyte, acolyte-net, net-acolyte, helper, helper-lib, classes, extension</PackageTags>
     <RepositoryUrl>https://github.com/Vasar007/Acolyte.NET.git</RepositoryUrl>
-    <AssemblyVersion>1.0.0.0</AssemblyVersion>
-    <FileVersion>1.0.0.0</FileVersion>
-    <Version>1.0.0</Version>
+    <AssemblyVersion>1.0.1.0</AssemblyVersion>
+    <FileVersion>1.0.1.0</FileVersion>
+    <Version>1.0.1</Version>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageProjectUrl>https://github.com/Vasar007/Acolyte.NET</PackageProjectUrl>
     <RepositoryType>git</RepositoryType>
@@ -38,11 +38,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Acolyte.CSharp\Acolyte.CSharp.csproj" />
-    <ProjectReference Include="..\Acolyte.FSharp\Acolyte.FSharp.fsproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Include="..\..\..\Media\AcolyteIcon.png">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
@@ -51,6 +46,11 @@
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Acolyte.CSharp\Acolyte.CSharp.csproj" />
+    <ProjectReference Include="..\Acolyte.FSharp\Acolyte.FSharp.fsproj" />
   </ItemGroup>
 
 </Project>

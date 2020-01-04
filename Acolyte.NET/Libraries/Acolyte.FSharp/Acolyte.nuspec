@@ -17,7 +17,6 @@
     <dependencies>
       <group targetFramework=".NETStandard2.1">
         <dependency id="Acolyte.CSharp" version="1.0.1" exclude="Build,Analyzers" />
-        <dependency id="Acolyte.FSharp" version="1.0.1" exclude="Build,Analyzers" />
       </group>
     </dependencies>
   </metadata>
