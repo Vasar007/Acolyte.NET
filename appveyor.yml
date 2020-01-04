@@ -14,7 +14,7 @@ matrix:
   fast_finish: true
 
 before_build:
-  - cmd: cd Acolyte.NET
+  - cmd: cd acolyte-net
   - cmd: dotnet restore
 
 build:
