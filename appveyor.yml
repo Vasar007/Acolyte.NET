@@ -31,9 +31,9 @@ nuget:
     disable_publish_on_pr: true
 
 after_build:
-  - dotnet pack "Acolyte.CSharp" -c Release
-  - dotnet pack "Acolyte.FSharp" -c Release
-  - dotnet pack "Acolyte.NET" -c Release
+  - dotnet pack "Libraries\Acolyte.CSharp" -c Release
+  - dotnet pack "Libraries\Acolyte.FSharp" -c Release
+  - dotnet pack "Libraries\Acolyte.NET" -c Release
 
 artifacts:
   - path: Libraries\Acolyte.CSharp\bin\Release\*.nupkg
