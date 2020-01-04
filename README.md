@@ -2,9 +2,9 @@
 
 [![nuget](https://img.shields.io/nuget/v/Acolyte.NET.svg)](https://www.nuget.org/packages/Acolyte.NET)
 [![License](https://img.shields.io/hexpm/l/plug.svg)](https://github.com/Vasar007/Acolyte.NET/blob/master/LICENSE)
-[![AppVeyor branch](https://img.shields.io/appveyor/ci/Vasar007/Acolyte.NET/master.svg)](https://ci.appveyor.com/project/Vasar007/acolyte.net)
+[![AppVeyor branch](https://img.shields.io/appveyor/ci/Vasar007/acolyte-net/master.svg)](https://ci.appveyor.com/project/Vasar007/acolyte.net)
 
-![Acolyte.NET icon](Media/AcolyteIcon.png "Acolyte.NET icon")
+<div style="text-align:center"><img src="/Vasar007/Acolyte.NET/raw/master/Media/AcolyteIcon.png" alt="Acolyte.NET icon" title="Acolyte.NET icon" style="max-width:100%;"></div>
 
 Acolyte.NET is a helper library with a lot of useful classes and extension methods that you need in your everyday work.
 So, do not reinvent the wheel, use this library instead!
