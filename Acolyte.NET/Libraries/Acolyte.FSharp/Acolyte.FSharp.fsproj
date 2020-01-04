@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup Label="Globals">
+    <Platforms>AnyCPU</Platforms>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <LangVersion>4.7</LangVersion>
+    <RootNamespace>Acolyte</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="Functional\Utils.fs" />
+    <Compile Include="Functional\SeqEx.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Acolyte.CSharp\Acolyte.CSharp.csproj" />
+  </ItemGroup>
+
+</Project>

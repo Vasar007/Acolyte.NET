@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <licenseUrl>https://github.com/Vasar007/Acolyte.NET/blob/master/LICENSE.md</licenseUrl>
+    <projectUrl>$projectUrl$</projectUrl>
+    <repositoryUrl>$repositoryUrl$</repositoryUrl>
+    <repositoryType>$repositoryType$</repositoryType>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <description>$description$</description>
+    <copyright>$copyright$</copyright>
+    <tags>$tags$</tags>
+    <dependencies>
+      <group targetFramework=".NETStandard2.1">
+      </group>
+    </dependencies>
+  </metadata>
+</package>
