@@ -17,8 +17,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="Functional\Throw.fs" />
     <Compile Include="Functional\Utils.fs" />
     <Compile Include="Functional\SeqEx.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\..\Media\AcolyteIcon.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+    <None Include="..\..\..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
