@@ -4,7 +4,10 @@ using Acolyte.Assertions;
 
 namespace Acolyte.IO
 {
-    internal static class StreamExtensions
+    /// <summary>
+    /// Contains extension methods to work with streams.
+    /// </summary>
+    public static class StreamExtensions
     {
         public static void SaveToFile(this Stream stream, string path)
         {

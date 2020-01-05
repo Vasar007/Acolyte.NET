@@ -6,7 +6,7 @@ using Acolyte.Assertions;
 namespace Acolyte.Xml
 {
     /// <summary>
-    /// XML config parser which provides methods with deferred execution to work with it.
+    /// Represents a XML document parser.
     /// </summary>
     public sealed class XDocumentParser
     {
@@ -17,9 +17,9 @@ namespace Acolyte.Xml
 
 
         /// <summary>
-        /// Creates XML parser and saves pins document to created instance.
+        /// Creates XML parser with specified document object to process.
         /// </summary>
-        /// <param name="document">XML config to parse.</param>
+        /// <param name="document">XML document to parse.</param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="document" /> or it property <c>Root</c> is <c>null</c>.
         /// </exception>

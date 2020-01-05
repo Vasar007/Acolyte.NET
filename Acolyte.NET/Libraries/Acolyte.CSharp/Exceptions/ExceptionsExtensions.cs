@@ -4,6 +4,9 @@ using Acolyte.Assertions;
 
 namespace Acolyte.Exceptions
 {
+    /// <summary>
+    /// Contains extension methods to work with exceptions.
+    /// </summary>
     public static class ExceptionsExtensions
     {
         public static Exception Rethrow(this Exception exception)

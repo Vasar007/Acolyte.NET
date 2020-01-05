@@ -6,6 +6,9 @@ using Acolyte.Common.Monads;
 
 namespace Acolyte.Data
 {
+    /// <summary>
+    /// Contains extension methods for <see cref="IDataReader" /> class.
+    /// </summary>
     public static class DataReaderExtensions
     {
         #region Get Classes

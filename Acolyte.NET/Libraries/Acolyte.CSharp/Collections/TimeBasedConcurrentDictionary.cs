@@ -7,6 +7,12 @@ using Acolyte.Assertions;
 
 namespace Acolyte.Collections
 {
+    /// <summary>
+    /// Extends the standard <see cref="ConcurrentDictionary{TKey, TValue}" /> class with time-based
+    /// logic (this collection cleanup expired objects when calling any method).
+    /// </summary>
+    /// <typeparam name="TKey">The type of the keys in the dictionary.</typeparam>
+    /// <typeparam name="TValue">The type of the values in the dictionary.</typeparam>
     public sealed class TimeBasedConcurrentDictionary<TKey, TValue> :
         ICollection<KeyValuePair<TKey, TValue>>,
         IEnumerable<KeyValuePair<TKey, TValue>>,

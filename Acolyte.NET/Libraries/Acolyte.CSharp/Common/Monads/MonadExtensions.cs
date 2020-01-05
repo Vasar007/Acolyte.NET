@@ -4,10 +4,15 @@ using Acolyte.Assertions;
 
 namespace Acolyte.Common.Monads
 {
+    /// <summary>
+    /// Provides a set of monadic functions (simplify to use functional style in C#).
+    /// </summary>
     public static class MonadExtensions
     {
-        public static TResult Maybe<TMaybe, TResult>(this TMaybe maybe, Func<TMaybe, TResult> just)
-            where TMaybe : class
+        [return: MaybeNull]
+        public static TResult Maybe<TMaybe, TResult>([AllowNull] this TMaybe maybe,
+            Func<TMaybe, TResult> just)
+            where TMaybe : class?
         {
             just.ThrowIfNull(nameof(just));
 
@@ -17,7 +22,7 @@ namespace Acolyte.Common.Monads
         }
 
         [return: MaybeNull]
-        public static TResult With<TSource, TResult>(this TSource source,
+        public static TResult With<TSource, TResult>([AllowNull] this TSource source,
             Func<TSource, TResult> func)
             where TSource : class?
         {
@@ -27,7 +32,7 @@ namespace Acolyte.Common.Monads
         }
 
         [return: MaybeNull]
-        public static TSource Do<TSource>(this TSource source, Action<TSource> action)
+        public static TSource Do<TSource>([AllowNull] this TSource source, Action<TSource> action)
             where TSource : class?
         {
             if (!(source is null))
@@ -54,7 +59,7 @@ namespace Acolyte.Common.Monads
         }
 
         [return: MaybeNull]
-        public static TResult Return<TSource, TResult>(this TSource source,
+        public static TResult Return<TSource, TResult>([AllowNull] this TSource source,
             Func<TSource, TResult> func, [AllowNull] TResult defaultValue)
             where TSource : class?
         {
@@ -63,11 +68,14 @@ namespace Acolyte.Common.Monads
                 : func(source);
         }
 
-        public static TResult To<TResult>(this object value)
+        [return: MaybeNull]
+        public static TResult To<TResult>(this object? value)
         {
             try
             {
+#pragma warning disable CS8601 // Possible null reference assignment.
                 return (TResult) value;
+#pragma warning restore CS8601 // Possible null reference assignment.
             }
             catch (InvalidCastException ex)
             {
@@ -77,9 +85,9 @@ namespace Acolyte.Common.Monads
             }
         }
 
-        private static string FormatErrorMessage<T>(object value)
+        private static string FormatErrorMessage<T>(object? value)
         {
-            return value == null ? InvalidNullCast<T>() : InvalidCast<T>(value);
+            return value is null ? InvalidNullCast<T>() : InvalidCast<T>(value);
         }
 
         private static string InvalidCast<T>(object value)

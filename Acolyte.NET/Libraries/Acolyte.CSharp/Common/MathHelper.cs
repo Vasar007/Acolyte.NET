@@ -3,6 +3,9 @@ using System.Linq;
 
 namespace Acolyte.Common
 {
+    /// <summary>
+    /// Provides a set of useful mathematic methods.
+    /// </summary>
     public static class MathHelper
     {
         public static int Percent(int current, int total)

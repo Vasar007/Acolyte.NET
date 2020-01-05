@@ -1,5 +1,8 @@
 ﻿namespace Acolyte.Common.Bits
 {
+    /// <summary>
+    /// Contains extension methods to work with bits.
+    /// </summary>
     public static class BitConverterExtensions
     {
         // Reverse byte order (16-bit).

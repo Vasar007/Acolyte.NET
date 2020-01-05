@@ -332,8 +332,4 @@ ASALocalRun/
 # User defined block
 *.txt
 *.obj
-credentials.json
-token.json/
-/ThingAppraiser/MigrationBackup
-ThingAppraiser/WebServices/ThingAppraiser.ProcessingWebService/credentials.json
-ThingAppraiser/Libraries/ThingAppraiser.Core/credentials.json
+.ionide/

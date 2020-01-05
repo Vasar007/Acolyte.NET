@@ -4,6 +4,9 @@ using Acolyte.Assertions;
 
 namespace Acolyte.Exceptions
 {
+    /// <summary>
+    /// Allows to set up exception handlers when an exception is not caught.
+    /// </summary>
     public static class AppDomainUnhandledExceptionManager
     {
         private static readonly ConcurrentBag<IUnhandledExceptionHandler> Handlers =

@@ -4,6 +4,9 @@ using System.Linq;
 
 namespace Acolyte.Common
 {
+    /// <summary>
+    /// Contains common logic to work with enumeration values.
+    /// </summary>
     public static class EnumHelper
     {
         #region String Parsing

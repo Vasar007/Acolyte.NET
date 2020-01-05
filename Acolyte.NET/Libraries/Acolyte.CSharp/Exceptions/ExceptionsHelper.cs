@@ -4,6 +4,9 @@ using Acolyte.Assertions;
 
 namespace Acolyte.Exceptions
 {
+    /// <summary>
+    ///  Provides methods to process or transform exceptions.
+    /// </summary>
     public static class ExceptionsHelper
     {
         public static Exception UnwrapAggregateExceptionIfSingle(

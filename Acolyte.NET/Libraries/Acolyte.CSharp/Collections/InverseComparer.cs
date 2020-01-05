@@ -3,6 +3,10 @@ using Acolyte.Assertions;
 
 namespace Acolyte.Collections
 {
+    /// <summary>
+    /// Allows to invert every object of <see cref="IComparer{T}" /> type.
+    /// </summary>
+    /// <typeparam name="T">The type of objects to compare.</typeparam>
     public sealed class InverseComparer<T> : IComparer<T>
     {
         private readonly IComparer<T> _comparer;
