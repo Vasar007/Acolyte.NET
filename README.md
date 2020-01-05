@@ -52,7 +52,7 @@ Library contains classes, helper static classes and many extension methods. Each
 
 #### Monads (C#)
 
-- [MonadExtensions](Acolyte.NET/Libraries/Acolyte.CSharp/Common/Monads/MonadExtensions.cs) — provides a set of monadic functions (simplify to use functional style in C#);
+- [MonadExtensions](Acolyte.NET/Libraries/Acolyte.CSharp/Common/Monads/MonadExtensions.cs) — provides a set of monadic functions (simplify using functional style in C#);
 
 ### Data (C#)
 
