@@ -27,7 +27,7 @@ Library contains classes, helper static classes and many extension methods. Each
 
 ### Collections (C#)
 
-- [AsyncEnumerableExtensions](Acolyte.NET/Libraries/Acolyte.CSharp/Collections/AsyncEnumerableExtensions) — contains useful methods to work with `async` enumerable items (IAsyncEnumerable was introduced in C# 8.0);
+- [AsyncEnumerableExtensions](Acolyte.NET/Libraries/Acolyte.CSharp/Collections/AsyncEnumerableExtensions) — contains useful methods to work with `async` enumerable items (`IAsyncEnumerable` was introduced in C# 8.0);
 - [ConcurrentHashSet](Acolyte.NET/Libraries/Acolyte.CSharp/Collections/ConcurrentHashSet.cs) — represents a thread-safe set of values;
 - [DictionaryExtensions](Acolyte.NET/Libraries/Acolyte.CSharp/Collections/DictionaryExtensions.cs) — contains extension methods to simplify work with associative collections;
 - [EnumerableExtensions](Acolyte.NET/Libraries/Acolyte.CSharp/Collections/EnumerableExtensions.cs) – extends `LINQ` methods to work with enumerable items;
