@@ -1,4 +1,8 @@
-﻿module Acolyte.Functional.Throw
+﻿/// <summary>
+/// Represents F#-style usage of assertion extensions from
+/// <see cref="Acolyte.Assertions.ThrowsExtensions" />.
+/// </summary>
+module Acolyte.Functional.Throw
 
 open Acolyte.Assertions
 

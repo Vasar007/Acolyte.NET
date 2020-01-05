@@ -4,6 +4,10 @@ using Acolyte.Assertions;
 
 namespace Acolyte.Threading
 {
+    /// <summary>
+    /// Represents an object with result or exception value from completed tasks.
+    /// </summary>
+    /// <typeparam name="T">The type of the task result.</typeparam>
     public sealed class ResultOrException<T>
     {
         [MaybeNull]

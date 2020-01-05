@@ -7,6 +7,10 @@ using Acolyte.Assertions;
 
 namespace Acolyte.Collections
 {
+    /// <summary>
+    /// Represents a thread-safe set of values.
+    /// </summary>
+    /// <typeparam name="T">The type of elements in the set.</typeparam>
     public sealed class ConcurrentHashSet<T> :
         ICollection<T>,
         IEnumerable<T>,

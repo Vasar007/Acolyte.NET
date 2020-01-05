@@ -7,6 +7,9 @@ using Acolyte.Assertions;
 
 namespace Acolyte.Threading
 {
+    /// <summary>
+    /// Contains common logic to work with tasks.
+    /// </summary>
     public static class TaskHelper
     {
         #region When All Results Or Exceptions

@@ -1,4 +1,7 @@
-﻿module Acolyte.Functional.SeqEx
+﻿/// <summary>
+/// Contains additional methods to work with <see cref="Microsoft.FSharp.Collections.seq{T}" />.
+/// </summary>
+module Acolyte.Functional.SeqEx
 
 open Acolyte.Assertions
 

@@ -5,6 +5,9 @@ using Acolyte.Assertions;
 
 namespace Acolyte.Collections
 {
+    /// <summary>
+    /// Contains extension methods to simplify work with associative collections.
+    /// </summary>
     public static class DictionaryExtensions
     {
         #region Try Get Key

@@ -6,6 +6,9 @@ using System.Reflection;
 
 namespace Acolyte.Common
 {
+    /// <summary>
+    /// Contains extension methods for enumeration values.
+    /// </summary>
     public static class EnumExtensions
     {
         #region Enum Attributes

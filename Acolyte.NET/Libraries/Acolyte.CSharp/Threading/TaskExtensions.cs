@@ -8,6 +8,9 @@ using Acolyte.Exceptions;
 
 namespace Acolyte.Threading
 {
+    /// <summary>
+    /// Contains extension methods to work with tasks.
+    /// </summary>
     public static class TaskExtensions
     {
         #region Results Or Exceptions
