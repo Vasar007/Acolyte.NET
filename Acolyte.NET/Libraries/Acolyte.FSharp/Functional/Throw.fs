@@ -1,16 +1,34 @@
 ﻿/// <summary>
-/// Represents F#-style usage of assertion extensions from
-/// <see cref="Acolyte.Assertions.ThrowsExtensions" />.
+/// Represents F#-style usage of assertion extensions.
 /// </summary>
 module Acolyte.Functional.Throw
 
-open Acolyte.Assertions
 
+let private (|NotNull|_|) value = 
+    if obj.ReferenceEquals(value, null) then None
+    else Some()
 
-let ifNullValue value (paramName: string) (assertOnPureValueTypes: bool) =
-    paramName.ThrowIfNull("paramName") |> ignore // Replace with nameof operator which still does not compile now.
-    value.ThrowIfNullValue(paramName, assertOnPureValueTypes) |> ignore
+let ifNullValue value (paramName: string) =
+    if isNull paramName then
+        nullArg "paramName" // Replace with nameof operator which still does not compile now.
+
+    match value with
+        | NotNull -> ()
+        | _       -> nullArg paramName
+
+    value
 
 let ifNull obj (paramName: string) =
-    paramName.ThrowIfNull("paramName") |> ignore // Replace with nameof operator which still does not compile now.
-    obj.ThrowIfNull(paramName) |> ignore
+    if isNull paramName then
+        nullArg "paramName" // Replace with nameof operator which still does not compile now.
+
+    if isNull obj then
+        nullArg paramName
+
+    obj
+
+let checkIfNullValue value (paramName: string) =
+    ifNullValue value paramName |> ignore
+
+let checkIfNull obj (paramName: string) =
+    ifNull obj paramName |> ignore

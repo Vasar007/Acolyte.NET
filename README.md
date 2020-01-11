@@ -33,7 +33,7 @@ Library contains classes, helper static classes and many extension methods. Each
 - [EnumerableExtensions](Acolyte.NET/Libraries/Acolyte.CSharp/Collections/EnumerableExtensions.cs) – extends `LINQ` methods to work with enumerable items;
 - [InverseComparer](Acolyte.NET/Libraries/Acolyte.CSharp/Collections/InverseComparer.cs) — allows to invert every object of `IComparer` type;
 - [IHaveCreationTime](Acolyte.NET/Libraries/Acolyte.CSharp/Collections/IHaveCreationTime.cs) — provides read-only `DateTime` property to use by `TimeBasedConcurrentDictionary`;
-- [TimeBasedConcurrentDictionary](Acolyte.NET/Libraries/Acolyte.CSharp/Collections/TimeBasedConcurrentDictionary.cs) — extends the standard `ConcurrentDictionary` class with time-based logic (this collection cleanup expired objects when calling any method).
+- [TimeBasedConcurrentDictionary](Acolyte.NET/Libraries/Acolyte.CSharp/Collections/TimeBasedConcurrentDictionary.cs) — extends the standard `ConcurrentDictionary` class with time-based logic (this collection cleans up expired objects when calling any method).
 
 ### Common (C#)
 
@@ -65,7 +65,7 @@ Library contains classes, helper static classes and many extension methods. Each
 - [ExceptionsExtensions](Acolyte.NET/Libraries/Acolyte.CSharp/Exceptions/ExceptionsExtensions.cs) — contains extension methods to work with exceptions;
 - [ExceptionsHelper](Acolyte.NET/Libraries/Acolyte.CSharp/Exceptions/ExceptionsHelper.cs) — provides methods to process or transform exceptions;
 - [MultipleArgumentException](Acolyte.NET/Libraries/Acolyte.CSharp/Exceptions/MultipleArgumentException.cs) — represents the exception that is thrown when several arguments provided to a method are not valid;
-- [NotFoundException](Acolyte.NET/Libraries/Acolyte.CSharp/Exceptions/NotFoundException.cs) — represents the exception that is thrown when failed to find object;
+- [NotFoundException](Acolyte.NET/Libraries/Acolyte.CSharp/Exceptions/NotFoundException.cs) — represents the exception that is thrown when object is not found;
 - [TaskFaultedException](Acolyte.NET/Libraries/Acolyte.CSharp/Exceptions/TaskFaultedException.cs) — represents the exception that is thrown when processing method encounters task in faulted state.
 
 ### IO (C#)
@@ -77,7 +77,9 @@ Library contains classes, helper static classes and many extension methods. Each
 - [NoneResult](Acolyte.NET/Libraries/Acolyte.CSharp/Threading/NoneResult.cs) — represents an object with no result (used for track `Task` objects);
 - [ResultOrException](Acolyte.NET/Libraries/Acolyte.CSharp/Threading/ResultOrException.cs) — represents an object with result or exception value from completed tasks;
 - [TaskExtensions](Acolyte.NET/Libraries/Acolyte.CSharp/Threading/TaskExtensions.cs) — contains extension methods to work with tasks;
-- [TaskHelper](Acolyte.NET/Libraries/Acolyte.CSharp/Threading/TaskHelper.cs) — contains common logic to work with tasks (like static methods in the standard `Task` class).
+- [TaskHelper](Acolyte.NET/Libraries/Acolyte.CSharp/Threading/TaskHelper.cs) — contains common logic to work with tasks (like static methods in the standard `Task` class);
+- [ThreadHelper](Acolyte.NET/Libraries/Acolyte.CSharp/Threading/ThreadHelper.cs) — contains additional logic to work with `Thread` class;
+- [ThreadPoolHelper](Acolyte.NET/Libraries/Acolyte.CSharp/Threading/ThreadPoolHelper.cs) — contains additional logic to work with `ThreadPool` class.
 
 ### XML (C#)
 
@@ -86,7 +88,7 @@ Library contains classes, helper static classes and many extension methods. Each
 
 ### Functional (F#)
 
-- [Throw](Acolyte.NET/Libraries/Acolyte.FSharp/Functional/Throw.fs) — represents F#-style usage of assertion extensions from `ThrowsExtensions`;
+- [Throw](Acolyte.NET/Libraries/Acolyte.FSharp/Functional/Throw.fs) — represents F#-style usage of some assertion extensions;
 - [Utils](Acolyte.NET/Libraries/Acolyte.FSharp/Functional/Utils.fs) — provides useful methods to work with F# values;
 - [SeqEx](Acolyte.NET/Libraries/Acolyte.FSharp/Functional/SeqEx.fs) — contains additional methods to work with `seq` (i.e. `IEnumerable<T>`).
 

@@ -3,11 +3,9 @@
 /// </summary>
 module Acolyte.Functional.SeqEx
 
-open Acolyte.Assertions
-
 
 let skipSafe (num: int32) (source: seq<'a>) : seq<'a> =
-    source.ThrowIfNull("source") |> ignore
+    Throw.checkIfNull source "source"
 
     seq {
         use e = source.GetEnumerator()
