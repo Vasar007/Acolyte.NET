@@ -4,14 +4,14 @@
 module Acolyte.Functional.SeqEx
 
 
-let skipSafe (num: int32) (source: seq<'a>) : seq<'a> =
+let skipSafe (count: int32) (source: seq<'a>) : seq<'a> =
     Throw.checkIfNull source "source"
 
     seq {
         use e = source.GetEnumerator()
         let idx = ref 0
         let loop = ref true
-        while !idx < num && !loop do
+        while !idx < count && !loop do
             if not(e.MoveNext()) then
                 loop := false
             idx := !idx + 1

@@ -10,7 +10,7 @@ let private (|NotNull|_|) value =
 
 let ifNullValue value (paramName: string) =
     if isNull paramName then
-        nullArg "paramName" // Replace with nameof operator which still does not compile now.
+        nullArg "paramName" // Need to replace with nameof operator which still does not compile now.
 
     match value with
         | NotNull -> ()
@@ -20,7 +20,7 @@ let ifNullValue value (paramName: string) =
 
 let ifNull obj (paramName: string) =
     if isNull paramName then
-        nullArg "paramName" // Replace with nameof operator which still does not compile now.
+        nullArg "paramName" // Need to replace with nameof operator which still does not compile now.
 
     if isNull obj then
         nullArg paramName
