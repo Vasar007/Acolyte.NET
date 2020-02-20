@@ -30,7 +30,7 @@ namespace Acolyte.Common
         /// <returns>
         /// <c>true</c> if type is kind of <see cref="Nullable{T}" />, <c>false</c> otherwise.
         /// </returns>
-        public static bool IsNullableType(Type type)
+        public static bool IsNullableType(this Type type)
         {
             return type != null &&
                    type.IsGenericType &&
@@ -45,7 +45,7 @@ namespace Acolyte.Common
         /// Internal type if the type is kind of <see cref="Nullable{T}" />,
         /// original <paramref name="type" /> parameter value otherwise.
         /// </returns>
-        public static Type GetNonNullableType(Type type)
+        public static Type GetNonNullableType(this Type type)
         {
             if (IsNullableType(type))
             {
