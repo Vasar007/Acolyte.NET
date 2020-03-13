@@ -56,7 +56,7 @@ namespace Acolyte.Assertions
         /// parameter name.
         /// </param>
         /// <param name="assertOnPureValueTypes">
-        /// Allows to throw exception if <paramref name="obj" /> value is pure value type value
+        /// Allows to throw exception if <paramref name="obj" /> value is pure value type
         /// ("pure" means that it is non-nullable type). It can be usefull when you do not want to
         /// check "pure" value types. So, using this parameter you can catch assertion during debug
         /// and eliminate redundant checks (because non-nullable value types do not have null 
