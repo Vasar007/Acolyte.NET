@@ -30,7 +30,11 @@ namespace Acolyte.Threading
         public ResultOrException([AllowNull] T result)
         {
             IsSuccess = true;
+
+            // WTF, _result is marked with MayBeNullAttribute.
+#pragma warning disable CS8601 // Possible null reference assignment.
             _result = result;
+#pragma warning restore CS8601 // Possible null reference assignment.
             _exception = null;
         }
 

@@ -46,7 +46,10 @@ namespace Acolyte.Common
         public Maybe([AllowNull] T value)
             : this()
         {
+            // WTF, _value us marked with MayBeNullAttribute.
+#pragma warning disable CS8601 // Possible null reference assignment.
             _value = value;
+#pragma warning restore CS8601 // Possible null reference assignment.
             HasValue = value is null;
         }
 

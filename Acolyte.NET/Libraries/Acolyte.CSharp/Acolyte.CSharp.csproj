@@ -27,7 +27,7 @@
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <PackageIcon>AcolyteIcon.png</PackageIcon>
     <PackageIconUrl />
-    <Copyright>Copyright © 2020 Vasily Vasilyev (vasar007@yandex.ru)</Copyright>
+    <Copyright>© 2020 Vasily Vasilyev (vasar007@yandex.ru)</Copyright>
     <ApplicationIcon>AcolyteIcon.ico</ApplicationIcon>
   </PropertyGroup>
 

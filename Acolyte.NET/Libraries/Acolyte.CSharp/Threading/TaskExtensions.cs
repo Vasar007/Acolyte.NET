@@ -68,7 +68,10 @@ namespace Acolyte.Threading
             foreach (ResultOrException<TResult> item in source)
             {
                 if (item.IsSuccess)
+                    // List allows to pass null values.
+#pragma warning disable CS8604 // Possible null reference argument.
                     taskResults.Add(item.Result);
+#pragma warning restore CS8604 // Possible null reference argument.
                 else
                     taskExceptions.Add(item.Exception);
             }

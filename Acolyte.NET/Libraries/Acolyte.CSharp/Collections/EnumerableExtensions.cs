@@ -250,6 +250,7 @@ namespace Acolyte.Collections
         /// <exception cref="InvalidOperationException">
         /// <paramref name="source" /> contains no elements.
         /// </exception>
+        [return: MaybeNull]
         public static TSource Min<TSource>(
             this IEnumerable<TSource> source,
             IComparer<TSource> comparer)
@@ -257,9 +258,7 @@ namespace Acolyte.Collections
             source.ThrowIfNull(nameof(source));
             comparer.ThrowIfNull(nameof(comparer));
 
-#pragma warning disable CS8653 // A default expression introduces a null value for a type parameter.
             TSource minValue = default;
-#pragma warning restore CS8653 // A default expression introduces a null value for a type parameter.
             if (minValue is null)
             {
                 foreach (TSource x in source)
@@ -309,6 +308,7 @@ namespace Acolyte.Collections
         /// <exception cref="InvalidOperationException">
         /// <paramref name="source" /> contains no elements.
         /// </exception>
+        [return: MaybeNull]
         public static TSource Max<TSource>(
             this IEnumerable<TSource> source,
             IComparer<TSource> comparer)
@@ -763,7 +763,10 @@ namespace Acolyte.Collections
             TSource minValue = default;
             TSource maxValue = default;
 #pragma warning restore CS8653 // A default expression introduces a null value for a type parameter.
-            if (minValue is null)
+
+            // Second part of check is redundant but otherwise compiler shows warning about
+            // null reference assignment of maxValue variable in the else block.
+            if (minValue is null || maxValue is null)
             {
                 foreach (TSource x in source)
                 {

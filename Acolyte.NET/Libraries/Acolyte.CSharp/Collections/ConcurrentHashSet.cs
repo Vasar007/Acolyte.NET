@@ -134,7 +134,10 @@ namespace Acolyte.Collections
         {
             lock (_lock)
             {
+                // HashSet allows to pass null values.
+#pragma warning disable CS8604 // Possible null reference argument.
                 return _set.Add(item);
+#pragma warning restore CS8604 // Possible null reference argument.
             }
         }
 
@@ -232,7 +235,10 @@ namespace Acolyte.Collections
         {
             lock (_lock)
             {
+                // HashSet allows to pass null values.
+#pragma warning disable CS8604 // Possible null reference argument.
                 return _set.Remove(item);
+#pragma warning restore CS8604 // Possible null reference argument.
             }
         }
 
@@ -248,7 +254,10 @@ namespace Acolyte.Collections
         {
             lock (_lock)
             {
+                // HashSet allows to pass null values.
+#pragma warning disable CS8604 // Possible null reference argument.
                 return _set.Contains(item);
+#pragma warning restore CS8604 // Possible null reference argument.
             }
         }
 
@@ -273,7 +282,10 @@ namespace Acolyte.Collections
         {
             lock (_lock)
             {
+                // HashSet allows to pass null values.
+#pragma warning disable CS8604 // Possible null reference argument.
                 _set.Add(item);
+#pragma warning restore CS8604 // Possible null reference argument.
             }
         }
 
