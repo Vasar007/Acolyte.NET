@@ -17,9 +17,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{EC
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acolyte.Examples", "..\Examples\Acolyte.Examples\Acolyte.Examples.csproj", "{822AAE76-2C7A-4923-BA25-804570C820B0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Acolyte.CSharp.Tests", "Tests\Acolyte.CSharp.Tests\Acolyte.CSharp.Tests.csproj", "{B0D629FA-CCB7-483A-8F4C-26382B426051}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acolyte.CSharp.Tests", "Tests\Acolyte.CSharp.Tests\Acolyte.CSharp.Tests.csproj", "{B0D629FA-CCB7-483A-8F4C-26382B426051}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Acolyte.FSharp.Tests", "Tests\Acolyte.FSharp.Tests\Acolyte.FSharp.Tests.fsproj", "{A772A8E9-5AFB-4633-B618-DFD18AB202A5}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Acolyte.FSharp.Tests", "Tests\Acolyte.FSharp.Tests\Acolyte.FSharp.Tests.fsproj", "{A772A8E9-5AFB-4633-B618-DFD18AB202A5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9CD3F8B1-797A-415C-AA23-82E18E31290D}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

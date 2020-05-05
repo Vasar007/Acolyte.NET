@@ -318,11 +318,11 @@ namespace Acolyte.Collections
 
         #endregion
 
-        #region Min And Max Methods
+        #region MinMax Methods
 
-        #region Min And Max Overloads Without Selector
+        #region MinMax Overloads Without Selector
 
-        #region Min And Max For Int32
+        #region MinMax For Int32
 
         /// <summary>
         /// Returns the minimum and maximum values in a sequence of <see cref="int" /> values.
@@ -397,7 +397,7 @@ namespace Acolyte.Collections
 
         #endregion
 
-        #region Min And Max For Int64
+        #region MinMax For Int64
 
         /// <summary>
         /// Returns the minimum and maximum values in a sequence of <see cref="long" /> values.
@@ -471,7 +471,7 @@ namespace Acolyte.Collections
 
         #endregion
 
-        #region Min And Max For Single
+        #region MinMax For Single
 
         /// <summary>
         /// Returns the minimum and maximum values in a sequence of <see cref="float" /> values.
@@ -566,7 +566,7 @@ namespace Acolyte.Collections
 
         #endregion
 
-        #region Min And Max For Double
+        #region MinMax For Double
 
         /// <summary>
         /// Returns the minimum and maximum values in a sequence of <see cref="double" /> values.
@@ -656,7 +656,7 @@ namespace Acolyte.Collections
 
         #endregion
 
-        #region Min And Max For Decimal
+        #region MinMax For Decimal
 
         /// <summary>
         /// Returns the minimum and maximum values in a sequence of <see cref="decimal" /> values.
@@ -732,7 +732,7 @@ namespace Acolyte.Collections
 
         #endregion
 
-        #region Min And Max For Generic Types
+        #region MinMax For Generic Types
 
         /// <summary>
         /// Returns the minimum and maximum values in a generic sequence with proivided comparer.
@@ -831,9 +831,9 @@ namespace Acolyte.Collections
 
         #endregion
 
-        #region Min And Max Overloads With Selector
+        #region MinMax Overloads With Selector
 
-        #region Min And Max For Int32
+        #region MinMax For Int32
 
         /// <summary>
         /// Invokes a transform function on each element of a sequence and returns the minimum and
@@ -891,7 +891,7 @@ namespace Acolyte.Collections
 
         #endregion
 
-        #region Min And Max For Int64
+        #region MinMax For Int64
 
         /// <summary>
         /// Invokes a transform function on each element of a sequence and returns the minimum and
@@ -949,7 +949,7 @@ namespace Acolyte.Collections
 
         #endregion
 
-        #region Min And Max For Single
+        #region MinMax For Single
 
         /// <summary>
         /// Invokes a transform function on each element of a sequence and returns the minimum and
@@ -1021,7 +1021,7 @@ namespace Acolyte.Collections
 
         #endregion
 
-        #region Min And Max For Double
+        #region MinMax For Double
 
         /// <summary>
         /// Invokes a transform function on each element of a sequence and returns the minimum and
@@ -1093,7 +1093,7 @@ namespace Acolyte.Collections
 
         #endregion
 
-        #region Min And Max For Decimal
+        #region MinMax For Decimal
 
         /// <summary>
         /// Invokes a transform function on each element of a sequence and returns the minimum and
@@ -1151,7 +1151,7 @@ namespace Acolyte.Collections
 
         #endregion
 
-        #region Min And Max For Generic Types
+        #region MinMax For Generic Types
 
         /// <summary>
         /// Invokes a transform function on each element of a generic sequence and returns the
@@ -1264,8 +1264,7 @@ namespace Acolyte.Collections
             TSource minValue = default;
 #pragma warning restore CS8653 // A default expression introduces a null value for a type parameter.
 
-            IEnumerator<TSource> enumerator = source.GetEnumerator();
-            try
+            using (IEnumerator<TSource> enumerator = source.GetEnumerator())
             {
                 if (!enumerator.MoveNext())
                 {
@@ -1288,10 +1287,6 @@ namespace Acolyte.Collections
                         minElementKey = elementKey;
                     }
                 }
-            }
-            finally
-            {
-                enumerator.Dispose();
             }
 
             return minValue;
@@ -1399,7 +1394,7 @@ namespace Acolyte.Collections
 
         #endregion
 
-        #region Min And Max By Key Methods
+        #region MinMax By Key Methods
 
         /// <summary>
         /// Retrieves minimum and maximum by key elements in a generic sequence.
@@ -1436,8 +1431,7 @@ namespace Acolyte.Collections
             TSource maxValue = default;
 #pragma warning restore CS8653 // A default expression introduces a null value for a type parameter.
 
-            IEnumerator<TSource> enumerator = source.GetEnumerator();
-            try
+            using (IEnumerator<TSource> enumerator = source.GetEnumerator())
             {
                 if (!enumerator.MoveNext())
                 {
@@ -1462,10 +1456,6 @@ namespace Acolyte.Collections
                         minElementKey = elementKey;
                     }
                 }
-            }
-            finally
-            {
-                enumerator.Dispose();
             }
 
             return (minValue, maxValue);
@@ -1702,8 +1692,7 @@ namespace Acolyte.Collections
             var seenKeys = new HashSet<TKey>();
             foreach (TSource element in source)
             {
-                if (seenKeys.Add(selector(element)))
-                    yield return element;
+                if (seenKeys.Add(selector(element))) yield return element;
             }
         }
 
