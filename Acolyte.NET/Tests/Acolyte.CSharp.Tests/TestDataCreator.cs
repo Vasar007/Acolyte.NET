@@ -50,6 +50,11 @@ namespace Acolyte.Tests
             return random.Next(minValue, maxValue);
         }
 
+        internal static int CreateRandomInt32(Random? random = null)
+        {
+            return CreateRandomInt32(int.MinValue, int.MaxValue, random);
+        }
+
         internal static double CreateRandomDouble(Random? random = null)
         {
             random ??= RandomInstance;
