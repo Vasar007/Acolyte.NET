@@ -1545,6 +1545,38 @@ namespace Acolyte.Collections
         }
 
         /// <summary>
+        /// Transforms sequence to the string or returns message when sequence contains no elements.
+        /// </summary>
+        /// <typeparam name="TSource">
+        /// The type of the elements of <paramref name="source" />
+        /// .</typeparam>
+        /// <param name="source">A sequence of values to convert to string.</param>
+        /// <param name="emptyCollectionMessage">
+        /// The string to return if <paramref name="source" /> is <c>null</c> or contains no
+        /// elements.
+        /// </param>
+        /// <param name="separator">
+        /// The string to use as a separator. <paramref name="separator" /> is included in the
+        /// returned string only if values has more than one element.
+        /// </param>
+        /// <returns>
+        /// The string which represent converted value of sequence or special message if
+        /// <paramref name="source" /> is <c>null</c> or contains no elements.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="emptyCollectionMessage" /> is <c>null</c>.
+        /// </exception>
+        public static string EnumerableToOneString<TSource>(this IEnumerable<TSource>? source,
+            string emptyCollectionMessage, string? separator)
+        {
+            return source.EnumerableToOneString(
+                emptyCollectionMessage: emptyCollectionMessage,
+                separator: separator,
+                selector: item => item is null ? string.Empty : $"'{item.ToString()}'"
+            );
+        }
+
+        /// <summary>
         /// Invokes a transform function on each element of a sequence and transforms sequence to
         /// the string.
         /// </summary>
@@ -1564,8 +1596,8 @@ namespace Acolyte.Collections
             Func<TSource, string> selector)
         {
             return source.EnumerableToOneString(
-                separator: ", ",
                 emptyCollectionMessage: "None",
+                separator: ", ",
                 selector: selector
             );
         }
@@ -1595,8 +1627,8 @@ namespace Acolyte.Collections
             string emptyCollectionMessage, Func<TSource, string> selector)
         {
             return source.EnumerableToOneString(
-                separator: ", ",
                 emptyCollectionMessage: emptyCollectionMessage,
+                separator: ", ",
                 selector: selector
             );
         }
@@ -1610,15 +1642,15 @@ namespace Acolyte.Collections
         /// The type of the elements of <paramref name="source" />.
         /// </typeparam>
         /// <param name="source">A sequence of values to convert to string.</param>
+        /// <param name="emptyCollectionMessage">
+        /// The string to return if <paramref name="source" /> is <c>null</c> or contains no
+        /// elements.
+        /// </param>
         /// <param name="separator">
         /// The string to use as a separator. <paramref name="separator" /> is included in the
         /// returned string only if values has more than one element.
         /// </param>
         /// <param name="selector">A transform function to apply to each element.</param>
-        /// <param name="emptyCollectionMessage">
-        /// The string to return if <paramref name="source" /> is <c>null</c> or contains no
-        /// elements.
-        /// </param>
         /// <returns>
         /// The string which represent converted value of sequence or specified message if 
         /// <paramref name="source" /> is <c>null</c> or contains no elements.
@@ -1628,7 +1660,7 @@ namespace Acolyte.Collections
         /// <paramref name="selector" /> is <c>null</c>.
         /// </exception>
         public static string EnumerableToOneString<TSource>(this IEnumerable<TSource>? source,
-            string? separator, string emptyCollectionMessage, Func<TSource, string> selector)
+            string emptyCollectionMessage, string? separator, Func<TSource, string> selector)
         {
             emptyCollectionMessage.ThrowIfNull(nameof(emptyCollectionMessage));
             selector.ThrowIfNull(nameof(selector));
