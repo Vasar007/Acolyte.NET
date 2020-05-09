@@ -49,7 +49,10 @@ namespace Acolyte.Collections
         /// <param name="defaultValue">
         /// The specified value to return if the sequence contains no elements.
         /// </param>
-        /// <returns></returns>
+        /// <returns>
+        /// <paramref name="defaultValue" /> if source is empty; otherwise, the first element in
+        /// source.
+        /// </returns>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="source" /> is <c>null</c>.
         /// </exception>
@@ -58,9 +61,15 @@ namespace Acolyte.Collections
         {
             source.ThrowIfNull(nameof(source));
 
-            foreach (TSource item in source)
+            if (source is IList<TSource> list)
             {
-                return item;
+                if (list.Count > 0) return list[0];
+            }
+            else
+            {
+                using IEnumerator<TSource> enumerator = source.GetEnumerator();
+
+                if (enumerator.MoveNext()) return enumerator.Current;
             }
 
             return defaultValue;
@@ -81,9 +90,15 @@ namespace Acolyte.Collections
         /// The specified value to return if the sequence contains no elements that satisfies the 
         /// condition.
         /// </param>
-        /// <returns></returns>
+        /// <returns>
+        /// <paramref name="defaultValue" /> if <paramref name="source" /> is empty or if no element
+        /// passes the test specified by predicate; otherwise, the first element in
+        /// <paramref name="source" /> that passes the test specified by
+        /// <paramref name="predicate" />.
+        /// </returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="source" /> or <paramref name="predicate" /> is <c>null</c>.
+        /// <paramref name="source" /> is <c>null</c>. -or-
+        /// <paramref name="predicate" /> is <c>null</c>.
         /// </exception>
         public static TSource FirstOrDefault<TSource>(this IEnumerable<TSource> source,
             Func<TSource, bool> predicate, TSource defaultValue)
@@ -97,6 +112,210 @@ namespace Acolyte.Collections
             }
 
             return defaultValue;
+        }
+
+        #endregion
+
+        #region Last Or Default
+
+        /// <summary>
+        /// Returns the last element of a sequence, or a specified default value if the sequence
+        /// contains no elements.
+        /// </summary>
+        ///<typeparam name="TSource">
+        /// The type of the elements of <paramref name="source" />.
+        /// </typeparam>
+        /// <param name="source">
+        /// The <see cref="IEnumerable{TSource}" /> to return the last element of or default.
+        /// </param>
+        /// <param name="defaultValue">
+        /// The specified value to return if the sequence contains no elements.
+        /// </param>
+        /// <returns>
+        /// <paramref name="defaultValue" /> if source is empty; otherwise, the last element in
+        /// source.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="source" /> is <c>null</c>.
+        /// </exception>
+        public static TSource LastOrDefault<TSource>(this IEnumerable<TSource> source,
+            TSource defaultValue)
+        {
+            source.ThrowIfNull(nameof(source));
+
+            if (source is IList<TSource> list)
+            {
+                int count = list.Count;
+                if (count > 0) return list[count - 1];
+            }
+            else
+            {
+                using IEnumerator<TSource> enumerator = source.GetEnumerator();
+
+                if (enumerator.MoveNext())
+                {
+                    TSource result;
+                    do
+                    {
+                        result = enumerator.Current;
+                    } while (enumerator.MoveNext());
+
+                    return result;
+                }
+            }
+
+            return defaultValue;
+        }
+
+        /// <summary>
+        /// Returns the last element of a sequence that satisfies the condition, or a specified 
+        /// default value if the sequence contains no elements or no elements satisfy the condition.
+        /// </summary>
+        /// <typeparam name="TSource">
+        /// The type of the elements of <paramref name="source" />.
+        /// </typeparam>
+        /// <param name="source">
+        /// The <see cref="IEnumerable{T}" /> to return the last element of or default.
+        /// </param>
+        /// <param name="predicate">A function to test each element for a condition.</param>
+        /// <param name="defaultValue">
+        /// The specified value to return if the sequence contains no elements that satisfies the 
+        /// condition.
+        /// </param>
+        /// <returns>
+        /// <paramref name="defaultValue" /> if <paramref name="source" /> is empty or if no element
+        /// passes the test specified by predicate; otherwise, the last element in
+        /// <paramref name="source" /> that passes the test specified by
+        /// <paramref name="predicate" />.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="source" /> is <c>null</c>. -or-
+        /// <paramref name="predicate" /> is <c>null</c>.
+        /// </exception>
+        public static TSource LastOrDefault<TSource>(this IEnumerable<TSource> source,
+            Func<TSource, bool> predicate, TSource defaultValue)
+        {
+            source.ThrowIfNull(nameof(source));
+            predicate.ThrowIfNull(nameof(predicate));
+
+            TSource result = defaultValue;
+            foreach (TSource element in source)
+            {
+                if (predicate(element))
+                {
+                    result = element;
+                }
+            }
+
+            return result;
+        }
+
+        #endregion
+
+        #region Single Or Default
+
+        /// <summary>
+        /// Returns the first element of a sequence, or a specified default value if the sequence
+        /// contains no elements; this method throws an exception if sequence contains more than
+        /// one element.
+        /// </summary>
+        ///<typeparam name="TSource">
+        /// The type of the elements of <paramref name="source" />.
+        /// </typeparam>
+        /// <param name="source">
+        /// The <see cref="IEnumerable{TSource}" /> to return the single element from or default.
+        /// </param>
+        /// <param name="defaultValue">
+        /// The specified value to return if the sequence contains no elements.
+        /// </param>
+        /// <returns>
+        /// The single element of the input sequence, or <paramref name="defaultValue" /> if the
+        /// sequence contains no elements.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="source" /> is <c>null</c>.
+        /// </exception>
+        /// <exception cref="InvalidOperationException">
+        /// The input sequence contains more than one element.
+        /// </exception>
+        public static TSource SingleOrDefault<TSource>(this IEnumerable<TSource> source,
+            TSource defaultValue)
+        {
+            source.ThrowIfNull(nameof(source));
+
+            if (source is IList<TSource> list)
+            {
+                switch (list.Count)
+                {
+                    case 0: return defaultValue;
+                    case 1: return list[0];
+                }
+            }
+            else
+            {
+                using IEnumerator<TSource> enumerator = source.GetEnumerator();
+
+                if (!enumerator.MoveNext()) return defaultValue;
+                TSource result = enumerator.Current;
+                if (!enumerator.MoveNext()) return result;
+            }
+
+            throw Error.MoreThanOneElement();
+        }
+
+        /// <summary>
+        /// Returns the only element of a sequence that satisfies a specified condition or
+        /// a default value if no such element exists; this method throws an exception if
+        /// more than one element satisfies the condition.
+        /// </summary>
+        /// <typeparam name="TSource">
+        /// The type of the elements of <paramref name="source" />.
+        /// </typeparam>
+        /// <param name="source">
+        /// The <see cref="IEnumerable{T}" /> to return the single element from or default.
+        /// </param>
+        /// <param name="predicate">A function to test each element for a condition.</param>
+        /// <param name="defaultValue">
+        /// The specified value to return if the sequence contains no elements that satisfies the 
+        /// condition.
+        /// </param>
+        /// <returns>
+        /// The single element of the input sequence that satisfies the condition, or
+        /// <paramref name="defaultValue" /> if no such element is found.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="source" /> is <c>null</c>. -or-
+        /// <paramref name="predicate" /> is <c>null</c>.
+        /// </exception>
+        /// <exception cref="InvalidOperationException">
+        /// More than one element satisfies the condition in predicate.
+        /// </exception>
+        public static TSource SingleOrDefault<TSource>(this IEnumerable<TSource> source,
+            Func<TSource, bool> predicate, TSource defaultValue)
+        {
+            source.ThrowIfNull(nameof(source));
+            predicate.ThrowIfNull(nameof(predicate));
+
+            TSource result = defaultValue;
+            long count = 0;
+            foreach (TSource element in source)
+            {
+                if (predicate(element))
+                {
+                    result = element;
+                    checked { ++count; }
+                }
+            }
+
+            switch (count)
+            {
+                case 0:
+                case 1:
+                    return result;
+
+                default:
+                    throw Error.MoreThanOneMatch();
+            };
         }
 
         #endregion
@@ -120,7 +339,8 @@ namespace Acolyte.Collections
         /// <see cref="Constants.NotFoundIndex" /> (it's equal to -1).
         /// </returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="source" /> or <paramref name="predicate" /> is <c>null</c>.
+        /// <paramref name="source" /> is <c>null</c>. -or-
+        /// <paramref name="predicate" /> is <c>null</c>.
         /// </exception>
         public static int IndexOf<TSource>(this IEnumerable<TSource> source,
             Func<TSource, bool> predicate)
@@ -135,6 +355,62 @@ namespace Acolyte.Collections
                 .FirstOrDefault(Constants.NotFoundIndex);
 
             return foundIndex;
+        }
+
+        /// <summary>
+        /// Searches for an element that equals to the specifed element and returns the zero-based
+        /// index of the first occurrence within the entire sequence. The values are compared by
+        /// using a specified <paramref name="comparer" />.
+        /// </summary>
+        /// <typeparam name="TSource">
+        /// The type of the elements of <paramref name="source" />.
+        /// </typeparam>
+        /// <param name="source">
+        /// The <see cref="IEnumerable{TSource}" /> to find element index.
+        /// </param>
+        /// <param name="comparer">
+        /// An <see cref="IEqualityComparer{TSource}" /> to compare values with.
+        /// </param>
+        /// <returns>
+        /// The zero-based index of the first occurrence of an element that equals to the 
+        /// <paramref name="value" />, if found; otherwise it will return
+        /// <see cref="Constants.NotFoundIndex" /> (it's equal to -1).
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="source" /> is <c>null</c>. -or-
+        /// <paramref name="comparer" /> is <c>null</c>.
+        /// </exception>
+        public static int IndexOf<TSource>(this IEnumerable<TSource> source,
+            TSource value, IEqualityComparer<TSource> comparer)
+        {
+            comparer.ThrowIfNull(nameof(comparer));
+
+            return source.IndexOf(item => comparer.Equals(item, value));
+        }
+
+        /// <summary>
+        /// Searches for an element that equals to the specifed element and returns the zero-based
+        /// index of the first occurrence within the entire sequence. The values are compared by
+        /// using a default equality comparer.
+        /// </summary>
+        /// <typeparam name="TSource">
+        /// The type of the elements of <paramref name="source" />.
+        /// </typeparam>
+        /// <param name="source">
+        /// The <see cref="IEnumerable{TSource}" /> to find element index.
+        /// </param>
+        /// <returns>
+        /// The zero-based index of the first occurrence of an element that equals to the 
+        /// <paramref name="value" />, if found; otherwise it will return
+        /// <see cref="Constants.NotFoundIndex" /> (it's equal to -1).
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="source" /> is <c>null</c>.
+        /// </exception>
+        public static int IndexOf<TSource>(this IEnumerable<TSource> source,
+            TSource value)
+        {
+            return source.IndexOf(value, EqualityComparer<TSource>.Default);
         }
 
         #endregion
@@ -287,7 +563,7 @@ namespace Acolyte.Collections
 
                 if (hasValue) return minValue;
 
-                throw new InvalidOperationException(Constants.NoElementsErrorMessage);
+                throw Error.NoElements();
             }
         }
 
@@ -363,7 +639,7 @@ namespace Acolyte.Collections
 
             if (hasValue) return (minValue, maxValue);
 
-            throw new InvalidOperationException(Constants.NoElementsErrorMessage);
+            throw Error.NoElements();
         }
 
         /// <summary>
@@ -437,7 +713,7 @@ namespace Acolyte.Collections
 
             if (hasValue) return (minValue, maxValue);
 
-            throw new InvalidOperationException(Constants.NoElementsErrorMessage);
+            throw Error.NoElements();
         }
 
         /// <summary>
@@ -524,7 +800,7 @@ namespace Acolyte.Collections
 
             if (hasValue) return (minValue, maxValue);
 
-            throw new InvalidOperationException(Constants.NoElementsErrorMessage);
+            throw Error.NoElements();
         }
 
         /// <summary>
@@ -614,7 +890,7 @@ namespace Acolyte.Collections
 
             if (hasValue) return (minValue, maxValue);
 
-            throw new InvalidOperationException(Constants.NoElementsErrorMessage);
+            throw Error.NoElements();
         }
 
         /// <summary>
@@ -696,8 +972,8 @@ namespace Acolyte.Collections
             }
 
             if (hasValue) return (minValue, maxValue);
-            
-            throw new InvalidOperationException(Constants.NoElementsErrorMessage);
+
+            throw Error.NoElements();
         }
 
         /// <summary>
@@ -797,7 +1073,7 @@ namespace Acolyte.Collections
 
                 if (hasValue) return (minValue, maxValue);
 
-                throw new InvalidOperationException(Constants.NoElementsErrorMessage);
+                throw Error.NoElements();
             }
         }
 
@@ -1271,7 +1547,7 @@ namespace Acolyte.Collections
                 {
                     if (minValue is null) return minValue;
 
-                    throw new InvalidOperationException(Constants.NoElementsErrorMessage);
+                    throw Error.NoElements();
                 }
 
                 minValue = enumerator.Current;
@@ -1438,7 +1714,7 @@ namespace Acolyte.Collections
                 {
                     if (minValue is null) return (minValue, maxValue);
 
-                    throw new InvalidOperationException(Constants.NoElementsErrorMessage);
+                    throw Error.NoElements();
                 }
 
                 minValue = enumerator.Current;
