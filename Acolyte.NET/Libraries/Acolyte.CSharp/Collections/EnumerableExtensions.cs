@@ -63,7 +63,7 @@ namespace Acolyte.Collections
 
             if (source is IList<TSource> list)
             {
-                if (list.Count > 0) return defaultValue;
+                if (list.Count > 0) return list[0];
             }
             else
             {
