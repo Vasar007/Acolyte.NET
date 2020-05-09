@@ -76,8 +76,8 @@ namespace Acolyte.Collections.Tests
             IEnumerable<int?> collectionWithRandomSize = Enumerable
                 .Range(1, count)
                 .Select(i => TestDataCreator.CreateRandomNonNegativeInt32())
-                // Convert all odd valies to null.
-                .Select(value => (value & 1) == 0 ? value : (int?) null)
+                // Convert all even valies to null.
+                .Select(value => TestDataCreator.IsEven(value) ? value : (int?) null)
                 .ToReadOnlyList();
 
             // Act.
@@ -221,9 +221,7 @@ namespace Acolyte.Collections.Tests
             int expectedResult = TestDataCreator.CreateRandomInt32();
 
             // Act.
-            int actualResult = collectionWithSomeItems.FirstOrDefault(
-                _ => false, expectedResult
-            );
+            int actualResult = collectionWithSomeItems.FirstOrDefault(_ => false, expectedResult);
 
             // Assert.
             Assert.Equal(expectedResult, actualResult);
@@ -256,15 +254,14 @@ namespace Acolyte.Collections.Tests
             IEnumerable<int> collectionWithRandomSize =
                 TestDataCreator.CreateRandomInt32List(count);
             int defaultResult = TestDataCreator.CreateRandomInt32();
+            Func<int, bool> predicate = TestDataCreator.IsEven;
 
             // Act.
-            int actualResult = collectionWithRandomSize.FirstOrDefault(
-                i => i.Equals(i), defaultResult
-            );
+            int actualResult = collectionWithRandomSize.FirstOrDefault(predicate, defaultResult);
 
             // Assert.
             int expectedResult = collectionWithRandomSize.Any()
-                ? collectionWithRandomSize.First(i => i.Equals(i))
+                ? collectionWithRandomSize.First(predicate)
                 : defaultResult;
             Assert.Equal(expectedResult, actualResult);
         }
@@ -279,9 +276,7 @@ namespace Acolyte.Collections.Tests
             int expectedResult = TestDataCreator.CreateRandomInt32();
 
             // Act.
-            int actualResult = collectionWithRandomSize.FirstOrDefault(
-                _ => false, expectedResult
-            );
+            int actualResult = collectionWithRandomSize.FirstOrDefault(_ => false, expectedResult);
 
             // Assert.
             Assert.Equal(expectedResult, actualResult);
@@ -420,9 +415,7 @@ namespace Acolyte.Collections.Tests
             int expectedResult = TestDataCreator.CreateRandomInt32();
 
             // Act.
-            int actualResult = collectionWithSomeItems.LastOrDefault(
-                _ => false, expectedResult
-            );
+            int actualResult = collectionWithSomeItems.LastOrDefault(_ => false, expectedResult);
 
             // Assert.
             Assert.Equal(expectedResult, actualResult);
@@ -455,15 +448,14 @@ namespace Acolyte.Collections.Tests
             IEnumerable<int> collectionWithRandomSize =
                 TestDataCreator.CreateRandomInt32List(count);
             int defaultResult = TestDataCreator.CreateRandomInt32();
+            Func<int, bool> predicate = TestDataCreator.IsEven;
 
             // Act.
-            int actualResult = collectionWithRandomSize.LastOrDefault(
-                i => i.Equals(i), defaultResult
-            );
+            int actualResult = collectionWithRandomSize.LastOrDefault(predicate, defaultResult);
 
             // Assert.
             int expectedResult = collectionWithRandomSize.Any()
-                ? collectionWithRandomSize.Last(i => i.Equals(i))
+                ? collectionWithRandomSize.Last(predicate)
                 : defaultResult;
             Assert.Equal(expectedResult, actualResult);
         }
@@ -478,9 +470,7 @@ namespace Acolyte.Collections.Tests
             int expectedResult = TestDataCreator.CreateRandomInt32();
 
             // Act.
-            int actualResult = collectionWithRandomSize.LastOrDefault(
-                _ => false, expectedResult
-            );
+            int actualResult = collectionWithRandomSize.LastOrDefault(_ => false, expectedResult);
 
             // Assert.
             Assert.Equal(expectedResult, actualResult);
@@ -490,7 +480,247 @@ namespace Acolyte.Collections.Tests
 
         #region Tests for "Single Or Default" section
 
-        // TODO: write tests.
+        [Fact]
+        public void Call_SingleOrDefault_ForNullValue()
+        {
+            // Arrange.
+            IEnumerable<int>? nullValue = null;
+
+            // Act & Assert.
+#pragma warning disable CS8604 // Possible null reference argument.
+            Assert.Throws<ArgumentNullException>(
+                "source", () => nullValue.SingleOrDefault(default)
+            );
+#pragma warning restore CS8604 // Possible null reference argument.
+        }
+
+        [Fact]
+        public void Call_SingleOrDefault_WithPredicate_ForNullValue()
+        {
+            // Arrange.
+            IEnumerable<int>? nullValue = null;
+
+            // Act & Assert.
+#pragma warning disable CS8604 // Possible null reference argument.
+            Assert.Throws<ArgumentNullException>(
+                "source", () => nullValue.SingleOrDefault(_ => default, default)
+            );
+#pragma warning restore CS8604 // Possible null reference argument.
+        }
+
+        [Fact]
+        public void Call_SingleOrDefault_WithPredicate_ForNullPredicate()
+        {
+            // Arrange.
+            IEnumerable<int> nullValue = Enumerable.Empty<int>();
+
+            // Act & Assert.
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+            Assert.Throws<ArgumentNullException>(
+                "predicate", () => nullValue.SingleOrDefault(null, default)
+            );
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+        }
+
+        [Fact]
+        public void Call_SingleOrDefault_ForEmptyCollection()
+        {
+            // Arrange.
+            IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
+            int expectedResult = TestDataCreator.CreateRandomInt32();
+
+            // Act.
+            int actualResult = emptyCollection.SingleOrDefault(expectedResult);
+
+            // Assert.
+            Assert.Equal(expectedResult, actualResult);
+        }
+
+        [Fact]
+        public void Call_SingleOrDefault_WithPredicate_ForEmptyCollection()
+        {
+            // Arrange.
+            IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
+            int expectedResult = TestDataCreator.CreateRandomInt32();
+
+            // Act.
+            int actualResult = emptyCollection.SingleOrDefault(_ => default, expectedResult);
+
+            // Assert.
+            Assert.Equal(expectedResult, actualResult);
+        }
+
+        [Fact]
+        public void Call_SingleOrDefault_ForCollectionWithSingleItem_ShouldReturnFirstItem()
+        {
+            // Arrange.
+            IEnumerable<int> collectionWithSingleItem =
+                TestDataCreator.CreateRandomInt32List(TestHelper.OneCollectionSize);
+            int expectedResult = collectionWithSingleItem.Single();
+
+            // Act.
+            int actualResult = collectionWithSingleItem.SingleOrDefault(default);
+
+            // Assert.
+            Assert.Equal(expectedResult, actualResult);
+        }
+
+        [Fact]
+        public void Call_SingleOrDefault_WithPredicate_ForCollectionWithSingleItem_ShouldReturnFirstItem()
+        {
+            // Arrange.
+            IEnumerable<int> collectionWithSingleItem =
+                TestDataCreator.CreateRandomInt32List(TestHelper.OneCollectionSize);
+            int expectedResult = collectionWithSingleItem.Single();
+
+            // Act.
+            int actualResult = collectionWithSingleItem.SingleOrDefault(
+                i => i.Equals(expectedResult), default
+            );
+
+            // Assert.
+            Assert.Equal(expectedResult, actualResult);
+        }
+
+        [Theory]
+        [InlineData(TestHelper.TwoCollectionSize)]
+        [InlineData(TestHelper.FiveCollectionSie)]
+        [InlineData(TestHelper.TenCollectionSize)]
+        [InlineData(TestHelper.HundredCollectionSize)]
+        [InlineData(TestHelper.TenThousandCollectionSize)]
+        [InlineData(TestHelper.MaxCollectionSize)]
+        public void Call_SingleOrDefault_ForCollectionWithSomeItems_ShouldThrow(int count)
+        {
+            // Arrange.
+            IEnumerable<int> collectionWithSomeItems = TestDataCreator.CreateRandomInt32List(count);
+
+            // Act & Assert.
+            Assert.Throws(
+                Error.MoreThanOneElement().GetType(),
+                () => collectionWithSomeItems.SingleOrDefault(default)
+            );
+        }
+
+        [Theory]
+        [InlineData(TestHelper.TwoCollectionSize)]
+        [InlineData(TestHelper.FiveCollectionSie)]
+        [InlineData(TestHelper.TenCollectionSize)]
+        [InlineData(TestHelper.HundredCollectionSize)]
+        [InlineData(TestHelper.TenThousandCollectionSize)]
+        [InlineData(TestHelper.MaxCollectionSize)]
+        public void Call_SingleOrDefault_WithPredicate_ForCollectionWithSomeItems_ShouldThrow(
+            int count)
+        {
+            // Arrange.
+            IEnumerable<int> collectionWithSomeItems = TestDataCreator.CreateRandomInt32List(count);
+
+            // Act & Assert.
+            Assert.Throws(
+                Error.MoreThanOneElement().GetType(),
+                () => collectionWithSomeItems.SingleOrDefault(_ => true, default)
+            );
+        }
+
+        [Theory]
+        [InlineData(TestHelper.OneCollectionSize)]
+        [InlineData(TestHelper.TwoCollectionSize)]
+        [InlineData(TestHelper.FiveCollectionSie)]
+        [InlineData(TestHelper.TenCollectionSize)]
+        [InlineData(TestHelper.HundredCollectionSize)]
+        [InlineData(TestHelper.TenThousandCollectionSize)]
+        [InlineData(TestHelper.MaxCollectionSize)]
+        public void Call_SingleOrDefault_WithPredicate_ForCollectionWithSomeItems_ShouldReturnDefaultItem(
+            int count)
+        {
+            // Arrange.
+            IEnumerable<int> collectionWithSomeItems = TestDataCreator.CreateRandomInt32List(count);
+            int expectedResult = TestDataCreator.CreateRandomInt32();
+
+            // Act.
+            int actualResult = collectionWithSomeItems.SingleOrDefault(_ => false, expectedResult);
+
+            // Assert.
+            Assert.Equal(expectedResult, actualResult);
+        }
+
+        [Fact]
+        public void Call_SingleOrDefault_ForCollectionWithRandomSize()
+        {
+            // Arrange.
+            int count = TestDataCreator.CreateRandomNonNegativeInt32(TestHelper.MaxCollectionSize);
+            IReadOnlyList<int> collectionWithRandomSize =
+                TestDataCreator.CreateRandomInt32List(count);
+            int defaultResult = TestDataCreator.CreateRandomInt32();
+
+            // Act & Assert.
+            if (collectionWithRandomSize.Count > 1)
+            {
+                Assert.Throws(
+                     Error.MoreThanOneElement().GetType(),
+                     () => collectionWithRandomSize.SingleOrDefault(defaultResult)
+                 );
+            }
+            else
+            {
+                int actualResult = collectionWithRandomSize.SingleOrDefault(defaultResult);
+
+                int expectedResult = collectionWithRandomSize.Any()
+                     ? collectionWithRandomSize.Single()
+                     : defaultResult;
+                Assert.Equal(expectedResult, actualResult);
+            }
+        }
+
+        [Fact]
+        public void Call_SingleOrDefault_WithPredicate_ForCollectionWithRandomSize()
+        {
+            // Arrange.
+            int count = TestDataCreator.CreateRandomNonNegativeInt32(TestHelper.MaxCollectionSize);
+            IReadOnlyList<int> collectionWithRandomSize =
+                TestDataCreator.CreateRandomInt32List(count);
+            int defaultResult = TestDataCreator.CreateRandomInt32();
+            Func<int, bool> predicate = TestDataCreator.IsEven;
+
+            // Act & Assert.
+            int foundValuesCount = collectionWithRandomSize.Count(predicate);
+            if (foundValuesCount > 1)
+            {
+                Assert.Throws(
+                     Error.MoreThanOneElement().GetType(),
+                     () => collectionWithRandomSize.SingleOrDefault(predicate, defaultResult)
+                 );
+            }
+            else
+            {
+                int actualResult = collectionWithRandomSize.SingleOrDefault(
+                    predicate, defaultResult
+                );
+
+                // Collection cannot be empty if we found one value.
+                int expectedResult = foundValuesCount == 1
+                    ? collectionWithRandomSize.Single(predicate)
+                    : defaultResult;
+                Assert.Equal(expectedResult, actualResult);
+            }
+        }
+
+        [Fact]
+        public void Call_SingleOrDefault_WithPredicate_ForCollectionWithRandomSize_ShouldReturnDefaultItem()
+        {
+            // Arrange.
+            int count = TestDataCreator.CreateRandomNonNegativeInt32(TestHelper.MaxCollectionSize);
+            IEnumerable<int> collectionWithRandomSize =
+                TestDataCreator.CreateRandomInt32List(count);
+            int expectedResult = TestDataCreator.CreateRandomInt32();
+
+            // Act.
+            int actualResult = collectionWithRandomSize.SingleOrDefault(
+                _ => false, expectedResult
+            );
+
+            // Assert.
+            Assert.Equal(expectedResult, actualResult);
+        }
 
         #endregion
 

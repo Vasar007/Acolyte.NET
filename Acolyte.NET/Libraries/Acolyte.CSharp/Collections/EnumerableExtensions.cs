@@ -297,13 +297,17 @@ namespace Acolyte.Collections
             predicate.ThrowIfNull(nameof(predicate));
 
             TSource result = defaultValue;
-            long count = 0;
+            int count = 0;
             foreach (TSource element in source)
             {
                 if (predicate(element))
                 {
                     result = element;
-                    checked { ++count; }
+                    ++count;
+
+                    // If there are more than one element satisfies the condition in predicate,
+                    // skip the last part of sequence.
+                    if (count > 1) break;
                 }
             }
 

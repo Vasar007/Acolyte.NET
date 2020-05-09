@@ -11,6 +11,10 @@ namespace Acolyte.Tests
     {
         private static readonly Random RandomInstance = new Random();
 
+        internal static bool IsEven(int value)
+        {
+            return (value & 1) == 0;
+        }
 
         internal static string CreateRandomString(int length, Random? random = null)
         {

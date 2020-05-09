@@ -14,7 +14,7 @@
 
         internal const int TenThousandCollectionSize = 10_000;
 
-        // Max collection size in C# is equal to 2_146_435_071.
+        // Max collection size in C# is equal to 2_146_435_071 but we do not need such large values.
         internal const int MaxCollectionSize = 2_146_435;
     }
 }
