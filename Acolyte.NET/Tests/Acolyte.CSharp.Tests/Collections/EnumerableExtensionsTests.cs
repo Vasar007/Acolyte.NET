@@ -113,8 +113,7 @@ namespace Acolyte.Collections.Tests
             // Act & Assert.
 #pragma warning disable CS8604 // Possible null reference argument.
             Assert.Throws<ArgumentNullException>(
-                "source",
-                () => nullValue.FirstOrDefault(_ => default, default)
+                "source", () => nullValue.FirstOrDefault(_ => default, default)
             );
 #pragma warning restore CS8604 // Possible null reference argument.
         }
@@ -128,8 +127,7 @@ namespace Acolyte.Collections.Tests
             // Act & Assert.
 #pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             Assert.Throws<ArgumentNullException>(
-                "predicate",
-                () => nullValue.FirstOrDefault(null, default)
+                "predicate", () => nullValue.FirstOrDefault(null, default)
             );
 #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
@@ -293,7 +291,200 @@ namespace Acolyte.Collections.Tests
 
         #region Tests for "Last Or Default" section
 
-        // TODO: write tests.
+        [Fact]
+        public void Call_LastOrDefault_ForNullValue()
+        {
+            // Arrange.
+            IEnumerable<int>? nullValue = null;
+
+            // Act & Assert.
+#pragma warning disable CS8604 // Possible null reference argument.
+            Assert.Throws<ArgumentNullException>("source", () => nullValue.LastOrDefault(default));
+#pragma warning restore CS8604 // Possible null reference argument.
+        }
+
+        [Fact]
+        public void Call_LastOrDefault_WithPredicate_ForNullValue()
+        {
+            // Arrange.
+            IEnumerable<int>? nullValue = null;
+
+            // Act & Assert.
+#pragma warning disable CS8604 // Possible null reference argument.
+            Assert.Throws<ArgumentNullException>(
+                "source", () => nullValue.LastOrDefault(_ => default, default)
+            );
+#pragma warning restore CS8604 // Possible null reference argument.
+        }
+
+        [Fact]
+        public void Call_LastOrDefault_WithPredicate_ForNullPredicate()
+        {
+            // Arrange.
+            IEnumerable<int> nullValue = Enumerable.Empty<int>();
+
+            // Act & Assert.
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+            Assert.Throws<ArgumentNullException>(
+                "predicate", () => nullValue.LastOrDefault(null, default)
+            );
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+        }
+
+        [Fact]
+        public void Call_LastOrDefault_ForEmptyCollection()
+        {
+            // Arrange.
+            IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
+            int expectedResult = TestDataCreator.CreateRandomInt32();
+
+            // Act.
+            int actualResult = emptyCollection.LastOrDefault(expectedResult);
+
+            // Assert.
+            Assert.Equal(expectedResult, actualResult);
+        }
+
+        [Fact]
+        public void Call_LastOrDefault_WithPredicate_ForEmptyCollection()
+        {
+            // Arrange.
+            IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
+            int expectedResult = TestDataCreator.CreateRandomInt32();
+
+            // Act.
+            int actualResult = emptyCollection.LastOrDefault(_ => default, expectedResult);
+
+            // Assert.
+            Assert.Equal(expectedResult, actualResult);
+        }
+
+        [Theory]
+        [InlineData(TestHelper.OneCollectionSize)]
+        [InlineData(TestHelper.TwoCollectionSize)]
+        [InlineData(TestHelper.FiveCollectionSie)]
+        [InlineData(TestHelper.TenCollectionSize)]
+        [InlineData(TestHelper.HundredCollectionSize)]
+        [InlineData(TestHelper.TenThousandCollectionSize)]
+        [InlineData(TestHelper.MaxCollectionSize)]
+        public void Call_LastOrDefault_ForCollectionWithSomeItems_ShouldReturnLastItem(int count)
+        {
+            // Arrange.
+            IEnumerable<int> collectionWithSomeItems = TestDataCreator.CreateRandomInt32List(count);
+            int expectedResult = collectionWithSomeItems.Last();
+
+            // Act.
+            int actualResult = collectionWithSomeItems.LastOrDefault(default);
+
+            // Assert.
+            Assert.Equal(expectedResult, actualResult);
+        }
+
+        [Theory]
+        [InlineData(TestHelper.OneCollectionSize)]
+        [InlineData(TestHelper.TwoCollectionSize)]
+        [InlineData(TestHelper.FiveCollectionSie)]
+        [InlineData(TestHelper.TenCollectionSize)]
+        [InlineData(TestHelper.HundredCollectionSize)]
+        [InlineData(TestHelper.TenThousandCollectionSize)]
+        [InlineData(TestHelper.MaxCollectionSize)]
+        public void Call_LastOrDefault_WithPredicate_ForCollectionWithSomeItems_ShouldReturnLastItem(
+            int count)
+        {
+            // Arrange.
+            IEnumerable<int> collectionWithSomeItems = TestDataCreator.CreateRandomInt32List(count);
+            int expectedResult = collectionWithSomeItems.Last();
+
+            // Act.
+            int actualResult = collectionWithSomeItems.LastOrDefault(
+                i => i.Equals(expectedResult), default
+            );
+
+            // Assert.
+            Assert.Equal(expectedResult, actualResult);
+        }
+
+        [Theory]
+        [InlineData(TestHelper.OneCollectionSize)]
+        [InlineData(TestHelper.TwoCollectionSize)]
+        [InlineData(TestHelper.FiveCollectionSie)]
+        [InlineData(TestHelper.TenCollectionSize)]
+        [InlineData(TestHelper.HundredCollectionSize)]
+        [InlineData(TestHelper.TenThousandCollectionSize)]
+        [InlineData(TestHelper.MaxCollectionSize)]
+        public void Call_LastOrDefault_WithPredicate_ForCollectionWithSomeItems_ShouldReturnDefaultItem(
+            int count)
+        {
+            // Arrange.
+            IEnumerable<int> collectionWithSomeItems = TestDataCreator.CreateRandomInt32List(count);
+            int expectedResult = TestDataCreator.CreateRandomInt32();
+
+            // Act.
+            int actualResult = collectionWithSomeItems.LastOrDefault(
+                _ => false, expectedResult
+            );
+
+            // Assert.
+            Assert.Equal(expectedResult, actualResult);
+        }
+
+        [Fact]
+        public void Call_LastOrDefault_ForCollectionWithRandomSize()
+        {
+            // Arrange.
+            int count = TestDataCreator.CreateRandomNonNegativeInt32(TestHelper.MaxCollectionSize);
+            IEnumerable<int> collectionWithRandomSize =
+                TestDataCreator.CreateRandomInt32List(count);
+            int defaultResult = TestDataCreator.CreateRandomInt32();
+
+            // Act.
+            int actualResult = collectionWithRandomSize.LastOrDefault(defaultResult);
+
+            // Assert.
+            int expectedResult = collectionWithRandomSize.Any()
+                ? collectionWithRandomSize.Last()
+                : defaultResult;
+            Assert.Equal(expectedResult, actualResult);
+        }
+
+        [Fact]
+        public void Call_LastOrDefault_WithPredicate_ForCollectionWithRandomSize()
+        {
+            // Arrange.
+            int count = TestDataCreator.CreateRandomNonNegativeInt32(TestHelper.MaxCollectionSize);
+            IEnumerable<int> collectionWithRandomSize =
+                TestDataCreator.CreateRandomInt32List(count);
+            int defaultResult = TestDataCreator.CreateRandomInt32();
+
+            // Act.
+            int actualResult = collectionWithRandomSize.LastOrDefault(
+                i => i.Equals(i), defaultResult
+            );
+
+            // Assert.
+            int expectedResult = collectionWithRandomSize.Any()
+                ? collectionWithRandomSize.Last(i => i.Equals(i))
+                : defaultResult;
+            Assert.Equal(expectedResult, actualResult);
+        }
+
+        [Fact]
+        public void Call_LastOrDefault_WithPredicate_ForCollectionWithRandomSize_ShouldReturnDefaultItem()
+        {
+            // Arrange.
+            int count = TestDataCreator.CreateRandomNonNegativeInt32(TestHelper.MaxCollectionSize);
+            IEnumerable<int> collectionWithRandomSize =
+                TestDataCreator.CreateRandomInt32List(count);
+            int expectedResult = TestDataCreator.CreateRandomInt32();
+
+            // Act.
+            int actualResult = collectionWithRandomSize.LastOrDefault(
+                _ => false, expectedResult
+            );
+
+            // Assert.
+            Assert.Equal(expectedResult, actualResult);
+        }
 
         #endregion
 
