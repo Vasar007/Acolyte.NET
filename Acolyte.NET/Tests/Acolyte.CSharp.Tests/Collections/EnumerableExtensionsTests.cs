@@ -3,20 +3,17 @@ using System.Linq;
 using Xunit;
 using Acolyte.Tests;
 using System;
+using Acolyte.Common;
 
 namespace Acolyte.Collections.Tests
 {
     public sealed class EnumerableExtensionsTests
     {
-        // Max collection size in C# is equal to 2_146_435_071.
-        private const int MaxTestCollectionSize = 2_146_435;
-
-
         public EnumerableExtensionsTests()
         {
         }
 
-        #region Tests for "Is Null Or Empty" section.
+        #region Tests for "Is Null Or Empty" section
 
         [Fact]
         public void Call_IsNullOrEmpty_ForNullValue()
@@ -39,13 +36,13 @@ namespace Acolyte.Collections.Tests
         }
 
         [Theory]
-        [InlineData(1)]
-        [InlineData(2)]
-        [InlineData(5)]
-        [InlineData(10)]
-        [InlineData(100)]
-        [InlineData(10_000)]
-        [InlineData(MaxTestCollectionSize)]
+        [InlineData(TestHelper.OneCollectionSize)]
+        [InlineData(TestHelper.TwoCollectionSize)]
+        [InlineData(TestHelper.FiveCollectionSie)]
+        [InlineData(TestHelper.TenCollectionSize)]
+        [InlineData(TestHelper.HundredCollectionSize)]
+        [InlineData(TestHelper.TenThousandCollectionSize)]
+        [InlineData(TestHelper.MaxCollectionSize)]
         public void Call_IsNullOrEmpty_ForCollectionWithSomeItems(int count)
         {
             // Arrange.
@@ -59,7 +56,7 @@ namespace Acolyte.Collections.Tests
         public void Call_IsNullOrEmpty_ForCollectionWithRandomSize()
         {
             // Arrange.
-            int count = TestDataCreator.CreateRandomNonNegativeInt32(MaxTestCollectionSize);
+            int count = TestDataCreator.CreateRandomNonNegativeInt32(TestHelper.MaxCollectionSize);
             IEnumerable<int> collectionWithRandomSize =
                 TestDataCreator.CreateRandomInt32List(count);
 
@@ -75,7 +72,7 @@ namespace Acolyte.Collections.Tests
         public void Call_IsNullOrEmpty_ForCollectionWithRandomNumberAndNullValues()
         {
             // Arrange.
-            int count = TestDataCreator.CreateRandomNonNegativeInt32(MaxTestCollectionSize);
+            int count = TestDataCreator.CreateRandomNonNegativeInt32(TestHelper.MaxCollectionSize);
             IEnumerable<int?> collectionWithRandomSize = Enumerable
                 .Range(1, count)
                 .Select(i => TestDataCreator.CreateRandomNonNegativeInt32())
@@ -93,7 +90,7 @@ namespace Acolyte.Collections.Tests
 
         #endregion
 
-        #region Tests for "First Or Default" section.
+        #region Tests for "First Or Default" section
 
         [Fact]
         public void Call_FirstOrDefault_ForNullValue()
@@ -103,7 +100,7 @@ namespace Acolyte.Collections.Tests
 
             // Act & Assert.
 #pragma warning disable CS8604 // Possible null reference argument.
-            Assert.Throws<ArgumentNullException>(() => nullValue.FirstOrDefault(default));
+            Assert.Throws<ArgumentNullException>("source", () => nullValue.FirstOrDefault(default));
 #pragma warning restore CS8604 // Possible null reference argument.
         }
 
@@ -116,6 +113,7 @@ namespace Acolyte.Collections.Tests
             // Act & Assert.
 #pragma warning disable CS8604 // Possible null reference argument.
             Assert.Throws<ArgumentNullException>(
+                "source",
                 () => nullValue.FirstOrDefault(_ => default, default)
             );
 #pragma warning restore CS8604 // Possible null reference argument.
@@ -130,6 +128,7 @@ namespace Acolyte.Collections.Tests
             // Act & Assert.
 #pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             Assert.Throws<ArgumentNullException>(
+                "predicate",
                 () => nullValue.FirstOrDefault(null, default)
             );
 #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
@@ -164,13 +163,13 @@ namespace Acolyte.Collections.Tests
         }
 
         [Theory]
-        [InlineData(1)]
-        [InlineData(2)]
-        [InlineData(5)]
-        [InlineData(10)]
-        [InlineData(100)]
-        [InlineData(10_000)]
-        [InlineData(MaxTestCollectionSize)]
+        [InlineData(TestHelper.OneCollectionSize)]
+        [InlineData(TestHelper.TwoCollectionSize)]
+        [InlineData(TestHelper.FiveCollectionSie)]
+        [InlineData(TestHelper.TenCollectionSize)]
+        [InlineData(TestHelper.HundredCollectionSize)]
+        [InlineData(TestHelper.TenThousandCollectionSize)]
+        [InlineData(TestHelper.MaxCollectionSize)]
         public void Call_FirstOrDefault_ForCollectionWithSomeItems_ShouldReturnFirstItem(int count)
         {
             // Arrange.
@@ -185,13 +184,13 @@ namespace Acolyte.Collections.Tests
         }
 
         [Theory]
-        [InlineData(1)]
-        [InlineData(2)]
-        [InlineData(5)]
-        [InlineData(10)]
-        [InlineData(100)]
-        [InlineData(10_000)]
-        [InlineData(MaxTestCollectionSize)]
+        [InlineData(TestHelper.OneCollectionSize)]
+        [InlineData(TestHelper.TwoCollectionSize)]
+        [InlineData(TestHelper.FiveCollectionSie)]
+        [InlineData(TestHelper.TenCollectionSize)]
+        [InlineData(TestHelper.HundredCollectionSize)]
+        [InlineData(TestHelper.TenThousandCollectionSize)]
+        [InlineData(TestHelper.MaxCollectionSize)]
         public void Call_FirstOrDefault_WithPredicate_ForCollectionWithSomeItems_ShouldReturnFirstItem(
             int count)
         {
@@ -209,13 +208,13 @@ namespace Acolyte.Collections.Tests
         }
 
         [Theory]
-        [InlineData(1)]
-        [InlineData(2)]
-        [InlineData(5)]
-        [InlineData(10)]
-        [InlineData(100)]
-        [InlineData(10_000)]
-        [InlineData(MaxTestCollectionSize)]
+        [InlineData(TestHelper.OneCollectionSize)]
+        [InlineData(TestHelper.TwoCollectionSize)]
+        [InlineData(TestHelper.FiveCollectionSie)]
+        [InlineData(TestHelper.TenCollectionSize)]
+        [InlineData(TestHelper.HundredCollectionSize)]
+        [InlineData(TestHelper.TenThousandCollectionSize)]
+        [InlineData(TestHelper.MaxCollectionSize)]
         public void Call_FirstOrDefault_WithPredicate_ForCollectionWithSomeItems_ShouldReturnDefaultItem(
             int count)
         {
@@ -236,7 +235,7 @@ namespace Acolyte.Collections.Tests
         public void Call_FirstOrDefault_ForCollectionWithRandomSize()
         {
             // Arrange.
-            int count = TestDataCreator.CreateRandomNonNegativeInt32(MaxTestCollectionSize);
+            int count = TestDataCreator.CreateRandomNonNegativeInt32(TestHelper.MaxCollectionSize);
             IEnumerable<int> collectionWithRandomSize =
                 TestDataCreator.CreateRandomInt32List(count);
             int defaultResult = TestDataCreator.CreateRandomInt32();
@@ -255,7 +254,7 @@ namespace Acolyte.Collections.Tests
         public void Call_FirstOrDefault_WithPredicate_ForCollectionWithRandomSize()
         {
             // Arrange.
-            int count = TestDataCreator.CreateRandomNonNegativeInt32(MaxTestCollectionSize);
+            int count = TestDataCreator.CreateRandomNonNegativeInt32(TestHelper.MaxCollectionSize);
             IEnumerable<int> collectionWithRandomSize =
                 TestDataCreator.CreateRandomInt32List(count);
             int defaultResult = TestDataCreator.CreateRandomInt32();
@@ -276,7 +275,7 @@ namespace Acolyte.Collections.Tests
         public void Call_FirstOrDefault_WithPredicate_ForCollectionWithRandomSize_ShouldReturnDefaultItem()
         {
             // Arrange.
-            int count = TestDataCreator.CreateRandomNonNegativeInt32(MaxTestCollectionSize);
+            int count = TestDataCreator.CreateRandomNonNegativeInt32(TestHelper.MaxCollectionSize);
             IEnumerable<int> collectionWithRandomSize =
                 TestDataCreator.CreateRandomInt32List(count);
             int expectedResult = TestDataCreator.CreateRandomInt32();
@@ -292,61 +291,191 @@ namespace Acolyte.Collections.Tests
 
         #endregion
 
-        #region Tests for "Index Of" section.
+        #region Tests for "Last Or Default" section
 
         // TODO: write tests.
 
         #endregion
 
-        #region Tests for "To Read-Only Collections" section.
+        #region Tests for "Single Or Default" section
 
         // TODO: write tests.
 
         #endregion
 
-        #region Tests for "Min/Max For Generic Types With Comparer" section.
+        #region Tests for "Index Of" section
+
+        [Fact]
+        public void Call_IndexOf_ForNullValue()
+        {
+            // Arrange.
+            IEnumerable<int>? nullValue = null;
+
+            // Act & Assert.
+#pragma warning disable CS8604 // Possible null reference argument.
+            Assert.Throws<ArgumentNullException>("source", () => nullValue.IndexOf(_ => default));
+#pragma warning restore CS8604 // Possible null reference argument.
+        }
+
+        [Fact]
+        public void Call_IndexOf_ForNullPredicate()
+        {
+            // Arrange.
+            IEnumerable<int> nullValue = Enumerable.Empty<int>();
+
+            // Act & Assert.
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+            Assert.Throws<ArgumentNullException>("predicate", () => nullValue.IndexOf(null));
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+        }
+
+        [Fact]
+        public void Call_IndexOf_ForEmptyCollection()
+        {
+            // Arrange.
+            IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
+            int expectedResult = Constants.NotFoundIndex;
+
+            // Act.
+            int actualResult = emptyCollection.IndexOf(_ => default);
+
+            // Assert.
+            Assert.Equal(expectedResult, actualResult);
+        }
+
+        [Theory]
+        [InlineData(TestHelper.OneCollectionSize)]
+        [InlineData(TestHelper.TwoCollectionSize)]
+        [InlineData(TestHelper.FiveCollectionSie)]
+        [InlineData(TestHelper.TenCollectionSize)]
+        [InlineData(TestHelper.HundredCollectionSize)]
+        [InlineData(TestHelper.TenThousandCollectionSize)]
+        [InlineData(TestHelper.MaxCollectionSize)]
+        public void Call_IndexOf_ForCollectionWithSomeItems_ShouldReturnIndexOfRandomlySelectedItem(
+            int count)
+        {
+            // Arrange.
+            IReadOnlyList<int> collectionWithSomeItems =
+                TestDataCreator.CreateRandomInt32List(count);
+            (int randomItem, int expectedResult) =
+                 TestDataCreator.ChoiceWithIndex(collectionWithSomeItems);
+
+            // Act.
+            int actualResult = collectionWithSomeItems.IndexOf(i => i.Equals(randomItem));
+
+            // Assert.
+            Assert.Equal(expectedResult, actualResult);
+        }
+
+        [Theory]
+        [InlineData(TestHelper.OneCollectionSize)]
+        [InlineData(TestHelper.TwoCollectionSize)]
+        [InlineData(TestHelper.FiveCollectionSie)]
+        [InlineData(TestHelper.TenCollectionSize)]
+        [InlineData(TestHelper.HundredCollectionSize)]
+        [InlineData(TestHelper.TenThousandCollectionSize)]
+        [InlineData(TestHelper.MaxCollectionSize)]
+        public void Call_IndexOf_ForCollectionWithSomeItems_ShouldReturnNotFoundIndex(
+            int count)
+        {
+            // Arrange.
+            IEnumerable<int> collectionWithSomeItems = TestDataCreator.CreateRandomInt32List(count);
+            int expectedResult = Constants.NotFoundIndex;
+
+            // Act.
+            int actualResult = collectionWithSomeItems.IndexOf(_ => false);
+
+            // Assert.
+            Assert.Equal(expectedResult, actualResult);
+        }
+
+        [Fact]
+        public void Call_IndexOf_ForCollectionWithRandomSize_ShouldReturnIndexOfRandomlySelectedItem()
+        {
+            // Arrange.
+            // Count should be positive.
+            int count = TestDataCreator.CreateRandomInt32(1, TestHelper.MaxCollectionSize);
+            IReadOnlyList<int> collectionWithRandomSize =
+                TestDataCreator.CreateRandomInt32List(count);
+            (int randomItem, int expectedResult) =
+                TestDataCreator.ChoiceWithIndex(collectionWithRandomSize);
+
+            // Act.
+            int actualResult = collectionWithRandomSize.IndexOf(i => i.Equals(randomItem));
+
+            // Assert.
+            Assert.Equal(expectedResult, actualResult);
+        }
+
+        [Fact]
+        public void Call_IndexOf_ForCollectionWithRandomSize_ShouldReturnNotFoundIndex()
+        {
+            // Arrange.
+            int count = TestDataCreator.CreateRandomNonNegativeInt32(TestHelper.MaxCollectionSize);
+            IEnumerable<int> collectionWithRandomSize =
+                TestDataCreator.CreateRandomInt32List(count);
+            int expectedResult = Constants.NotFoundIndex;
+
+            // Act.
+            int actualResult = collectionWithRandomSize.IndexOf(_ => false);
+
+            // Assert.
+            Assert.Equal(expectedResult, actualResult);
+        }
+
+        // TODO: write tests for the second and third overloads of "IndexOf" method.
+
+        #endregion
+
+        #region Tests for "To Read-Only Collections" section
 
         // TODO: write tests.
 
         #endregion
 
-        #region Tests for "MinMax Methods" section.
+        #region Tests for "Min/Max For Generic Types With Comparer" section
 
         // TODO: write tests.
 
         #endregion
 
-        #region Tests for "Min/Max By Key Methods" section.
+        #region Tests for "MinMax Methods" section
 
         // TODO: write tests.
 
         #endregion
 
-        #region Tests for "MinMax By Key Methods" section.
+        #region Tests for "Min/Max By Key Methods" section
 
         // TODO: write tests.
 
         #endregion
 
-        #region Tests for "Enmumerable To String" section.
+        #region Tests for "MinMax By Key Methods" section
 
         // TODO: write tests.
 
         #endregion
 
-        #region Tests for "For Each Methods" section.
+        #region Tests for "Enmumerable To String" section
 
         // TODO: write tests.
 
         #endregion
 
-        #region Tests for "Distinct By" section.
+        #region Tests for "For Each Methods" section
 
         // TODO: write tests.
 
         #endregion
 
-        #region Tests for "Slicing" section.
+        #region Tests for "Distinct By" section
+
+        // TODO: write tests.
+
+        #endregion
+
+        #region Tests for "Slicing" section
 
         // TODO: write tests.
 

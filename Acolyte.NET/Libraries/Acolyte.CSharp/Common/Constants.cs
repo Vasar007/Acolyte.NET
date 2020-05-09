@@ -9,5 +9,10 @@
         /// Represents a commonly-used index value if the item is not found in the collection.
         /// </summary>
         public static int NotFoundIndex { get; } = -1;
+
+        /// <summary>
+        /// Represents a zero-based index value of the first item in the collection.
+        /// </summary>
+        public static int FirstIndex { get; } = 0;
     }
 }
