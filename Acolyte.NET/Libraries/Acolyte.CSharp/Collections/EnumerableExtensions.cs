@@ -116,7 +116,8 @@ namespace Acolyte.Collections
         /// <param name="predicate">A function to test each element for a condition.</param>
         /// <returns>
         /// The zero-based index of the first occurrence of an element that satisfies 
-        /// <paramref name="predicate" />, if found; otherwise it will return -1.
+        /// <paramref name="predicate" />, if found; otherwise it will return
+        /// <see cref="Constants.NotFoundIndex" /> (it's equal to -1).
         /// </returns>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="source" /> or <paramref name="predicate" /> is <c>null</c>.
