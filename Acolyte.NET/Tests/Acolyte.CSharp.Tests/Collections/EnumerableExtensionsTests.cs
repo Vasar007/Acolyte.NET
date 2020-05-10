@@ -112,22 +112,24 @@ namespace Acolyte.Collections.Tests
 
             // Act & Assert.
 #pragma warning disable CS8604 // Possible null reference argument.
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             Assert.Throws<ArgumentNullException>(
-                "source", () => nullValue.FirstOrDefault(_ => default, default)
+                "source", () => nullValue.FirstOrDefault(default, default)
             );
 #pragma warning restore CS8604 // Possible null reference argument.
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
 
         [Fact]
         public void Call_FirstOrDefault_WithPredicate_ForNullPredicate()
         {
             // Arrange.
-            IEnumerable<int> nullValue = Enumerable.Empty<int>();
+            IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
 
             // Act & Assert.
 #pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             Assert.Throws<ArgumentNullException>(
-                "predicate", () => nullValue.FirstOrDefault(null, default)
+                "predicate", () => emptyCollection.FirstOrDefault(null, default)
             );
 #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
@@ -306,22 +308,24 @@ namespace Acolyte.Collections.Tests
 
             // Act & Assert.
 #pragma warning disable CS8604 // Possible null reference argument.
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             Assert.Throws<ArgumentNullException>(
-                "source", () => nullValue.LastOrDefault(_ => default, default)
+                "source", () => nullValue.LastOrDefault(default, default)
             );
 #pragma warning restore CS8604 // Possible null reference argument.
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
 
         [Fact]
         public void Call_LastOrDefault_WithPredicate_ForNullPredicate()
         {
             // Arrange.
-            IEnumerable<int> nullValue = Enumerable.Empty<int>();
+            IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
 
             // Act & Assert.
 #pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             Assert.Throws<ArgumentNullException>(
-                "predicate", () => nullValue.LastOrDefault(null, default)
+                "predicate", () => emptyCollection.LastOrDefault(null, default)
             );
 #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
@@ -502,22 +506,24 @@ namespace Acolyte.Collections.Tests
 
             // Act & Assert.
 #pragma warning disable CS8604 // Possible null reference argument.
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             Assert.Throws<ArgumentNullException>(
-                "source", () => nullValue.SingleOrDefault(_ => default, default)
+                "source", () => nullValue.SingleOrDefault(default, default)
             );
 #pragma warning restore CS8604 // Possible null reference argument.
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
 
         [Fact]
         public void Call_SingleOrDefault_WithPredicate_ForNullPredicate()
         {
             // Arrange.
-            IEnumerable<int> nullValue = Enumerable.Empty<int>();
+            IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
 
             // Act & Assert.
 #pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             Assert.Throws<ArgumentNullException>(
-                "predicate", () => nullValue.SingleOrDefault(null, default)
+                "predicate", () => emptyCollection.SingleOrDefault(null, default)
             );
 #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
@@ -742,11 +748,51 @@ namespace Acolyte.Collections.Tests
         public void Call_IndexOf_ForNullPredicate()
         {
             // Arrange.
+            IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
+
+            // Act & Assert.
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+            Assert.Throws<ArgumentNullException>("predicate", () => emptyCollection.IndexOf(null));
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+        }
+
+        [Fact]
+        public void Call_IndexOf_Item_ForNullValue()
+        {
+            // Arrange.
+            IEnumerable<int>? nullValue = null;
+
+            // Act & Assert.
+#pragma warning disable CS8604 // Possible null reference argument.
+            Assert.Throws<ArgumentNullException>("source", () => nullValue.IndexOf(default(int)));
+#pragma warning restore CS8604 // Possible null reference argument.
+        }
+
+        [Fact]
+        public void Call_IndexOf_ItemWithComparer_ForNullValue()
+        {
+            // Arrange.
+            IEnumerable<int>? nullValue = null;
+
+            // Act & Assert.
+#pragma warning disable CS8604 // Possible null reference argument.
+            Assert.Throws<ArgumentNullException>(
+                "source", () => nullValue.IndexOf(default, EqualityComparer<int>.Default)
+            );
+#pragma warning restore CS8604 // Possible null reference argument.
+        }
+
+        [Fact]
+        public void Call_IndexOf_ItemWithComparer_ForNullComparer()
+        {
+            // Arrange.
             IEnumerable<int> nullValue = Enumerable.Empty<int>();
 
             // Act & Assert.
 #pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
-            Assert.Throws<ArgumentNullException>("predicate", () => nullValue.IndexOf(null));
+            Assert.Throws<ArgumentNullException>(
+                "comparer", () => nullValue.IndexOf(default, default)
+            );
 #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
 
@@ -759,6 +805,34 @@ namespace Acolyte.Collections.Tests
 
             // Act.
             int actualResult = emptyCollection.IndexOf(_ => default);
+
+            // Assert.
+            Assert.Equal(expectedResult, actualResult);
+        }
+
+        [Fact]
+        public void Call_IndexOf_Item_ForEmptyCollection()
+        {
+            // Arrange.
+            IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
+            int expectedResult = Constants.NotFoundIndex;
+
+            // Act.
+            int actualResult = emptyCollection.IndexOf(default(int));
+
+            // Assert.
+            Assert.Equal(expectedResult, actualResult);
+        }
+
+        [Fact]
+        public void Call_IndexOf_ItemWithComparer_ForEmptyCollection()
+        {
+            // Arrange.
+            IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
+            int expectedResult = Constants.NotFoundIndex;
+
+            // Act.
+            int actualResult = emptyCollection.IndexOf(default, EqualityComparer<int>.Default);
 
             // Assert.
             Assert.Equal(expectedResult, actualResult);
@@ -796,8 +870,57 @@ namespace Acolyte.Collections.Tests
         [InlineData(TestHelper.HundredCollectionSize)]
         [InlineData(TestHelper.TenThousandCollectionSize)]
         [InlineData(TestHelper.MaxCollectionSize)]
-        public void Call_IndexOf_ForCollectionWithSomeItems_ShouldReturnNotFoundIndex(
+        public void Call_IndexOf_Item_ForCollectionWithSomeItems_ShouldReturnIndexOfRandomlySelectedItem(
             int count)
+        {
+            // Arrange.
+            IReadOnlyList<int> collectionWithSomeItems =
+                TestDataCreator.CreateRandomInt32List(count);
+            (int randomItem, int expectedResult) =
+                 TestDataCreator.ChoiceWithIndex(collectionWithSomeItems);
+
+            // Act.
+            int actualResult = collectionWithSomeItems.IndexOf(randomItem);
+
+            // Assert.
+            Assert.Equal(expectedResult, actualResult);
+        }
+
+        [Theory]
+        [InlineData(TestHelper.OneCollectionSize)]
+        [InlineData(TestHelper.TwoCollectionSize)]
+        [InlineData(TestHelper.FiveCollectionSie)]
+        [InlineData(TestHelper.TenCollectionSize)]
+        [InlineData(TestHelper.HundredCollectionSize)]
+        [InlineData(TestHelper.TenThousandCollectionSize)]
+        [InlineData(TestHelper.MaxCollectionSize)]
+        public void Call_IndexOf_ItemWithComparer_ForCollectionWithSomeItems_ShouldReturnIndexOfRandomlySelectedItem(
+            int count)
+        {
+            // Arrange.
+            IReadOnlyList<int> collectionWithSomeItems =
+                TestDataCreator.CreateRandomInt32List(count);
+            (int randomItem, int expectedResult) =
+                 TestDataCreator.ChoiceWithIndex(collectionWithSomeItems);
+
+            // Act.
+            int actualResult = collectionWithSomeItems.IndexOf(
+                randomItem, EqualityComparer<int>.Default
+            );
+
+            // Assert.
+            Assert.Equal(expectedResult, actualResult);
+        }
+
+        [Theory]
+        [InlineData(TestHelper.OneCollectionSize)]
+        [InlineData(TestHelper.TwoCollectionSize)]
+        [InlineData(TestHelper.FiveCollectionSie)]
+        [InlineData(TestHelper.TenCollectionSize)]
+        [InlineData(TestHelper.HundredCollectionSize)]
+        [InlineData(TestHelper.TenThousandCollectionSize)]
+        [InlineData(TestHelper.MaxCollectionSize)]
+        public void Call_IndexOf_ForCollectionWithSomeItems_ShouldReturnNotFoundIndex(int count)
         {
             // Arrange.
             IEnumerable<int> collectionWithSomeItems = TestDataCreator.CreateRandomInt32List(count);
@@ -805,6 +928,56 @@ namespace Acolyte.Collections.Tests
 
             // Act.
             int actualResult = collectionWithSomeItems.IndexOf(_ => false);
+
+            // Assert.
+            Assert.Equal(expectedResult, actualResult);
+        }
+
+        [Theory]
+        [InlineData(TestHelper.OneCollectionSize)]
+        [InlineData(TestHelper.TwoCollectionSize)]
+        [InlineData(TestHelper.FiveCollectionSie)]
+        [InlineData(TestHelper.TenCollectionSize)]
+        [InlineData(TestHelper.HundredCollectionSize)]
+        [InlineData(TestHelper.TenThousandCollectionSize)]
+        [InlineData(TestHelper.MaxCollectionSize)]
+        public void Call_IndexOf_Item_ForCollectionWithSomeItems_ShouldReturnNotFoundIndex(
+            int count)
+        {
+            // Arrange.
+            IEnumerable<int?> collectionWithSomeItems = TestDataCreator
+                .CreateRandomInt32List(count)
+                .ToNullable();
+            int expectedResult = Constants.NotFoundIndex;
+
+            // Act.
+            int actualResult = collectionWithSomeItems.IndexOf((int?) null);
+
+            // Assert.
+            Assert.Equal(expectedResult, actualResult);
+        }
+
+        [Theory]
+        [InlineData(TestHelper.OneCollectionSize)]
+        [InlineData(TestHelper.TwoCollectionSize)]
+        [InlineData(TestHelper.FiveCollectionSie)]
+        [InlineData(TestHelper.TenCollectionSize)]
+        [InlineData(TestHelper.HundredCollectionSize)]
+        [InlineData(TestHelper.TenThousandCollectionSize)]
+        [InlineData(TestHelper.MaxCollectionSize)]
+        public void Call_IndexOf_ItemWithComparer_ForCollectionWithSomeItems_ShouldReturnNotFoundIndex(
+            int count)
+        {
+            // Arrange.
+            IEnumerable<int?> collectionWithSomeItems = TestDataCreator
+                 .CreateRandomInt32List(count)
+                 .ToNullable();
+            int expectedResult = Constants.NotFoundIndex;
+
+            // Act.
+            int actualResult = collectionWithSomeItems.IndexOf(
+                null, EqualityComparer<int?>.Default
+            );
 
             // Assert.
             Assert.Equal(expectedResult, actualResult);
@@ -829,6 +1002,44 @@ namespace Acolyte.Collections.Tests
         }
 
         [Fact]
+        public void Call_IndexOf_Item_ForCollectionWithRandomSize_ShouldReturnIndexOfRandomlySelectedItem()
+        {
+            // Arrange.
+            // Count should be positive.
+            int count = TestDataCreator.CreateRandomInt32(1, TestHelper.MaxCollectionSize);
+            IReadOnlyList<int> collectionWithRandomSize =
+                TestDataCreator.CreateRandomInt32List(count);
+            (int randomItem, int expectedResult) =
+                TestDataCreator.ChoiceWithIndex(collectionWithRandomSize);
+
+            // Act.
+            int actualResult = collectionWithRandomSize.IndexOf(randomItem);
+
+            // Assert.
+            Assert.Equal(expectedResult, actualResult);
+        }
+
+        [Fact]
+        public void Call_IndexOf_ItemWithComparer_ForCollectionWithRandomSize_ShouldReturnIndexOfRandomlySelectedItem()
+        {
+            // Arrange.
+            // Count should be positive.
+            int count = TestDataCreator.CreateRandomInt32(1, TestHelper.MaxCollectionSize);
+            IReadOnlyList<int> collectionWithRandomSize =
+                TestDataCreator.CreateRandomInt32List(count);
+            (int randomItem, int expectedResult) =
+                TestDataCreator.ChoiceWithIndex(collectionWithRandomSize);
+
+            // Act.
+            int actualResult = collectionWithRandomSize.IndexOf(
+                randomItem, EqualityComparer<int>.Default
+            );
+
+            // Assert.
+            Assert.Equal(expectedResult, actualResult);
+        }
+
+        [Fact]
         public void Call_IndexOf_ForCollectionWithRandomSize_ShouldReturnNotFoundIndex()
         {
             // Arrange.
@@ -844,7 +1055,41 @@ namespace Acolyte.Collections.Tests
             Assert.Equal(expectedResult, actualResult);
         }
 
-        // TODO: write tests for the second and third overloads of "IndexOf" method.
+        [Fact]
+        public void Call_IndexOf_Item_ForCollectionWithRandomSize_ShouldReturnNotFoundIndex()
+        {
+            // Arrange.
+            int count = TestDataCreator.CreateRandomNonNegativeInt32(TestHelper.MaxCollectionSize);
+            IEnumerable<int?> collectionWithRandomSize = TestDataCreator
+               .CreateRandomInt32List(count)
+               .ToNullable();
+            int expectedResult = Constants.NotFoundIndex;
+
+            // Act.
+            int actualResult = collectionWithRandomSize.IndexOf((int?) null);
+
+            // Assert.
+            Assert.Equal(expectedResult, actualResult);
+        }
+
+        [Fact]
+        public void Call_IndexOf_ItemWithComparer_ForCollectionWithRandomSize_ShouldReturnNotFoundIndex()
+        {
+            // Arrange.
+            int count = TestDataCreator.CreateRandomNonNegativeInt32(TestHelper.MaxCollectionSize);
+            IEnumerable<int?> collectionWithRandomSize = TestDataCreator
+                .CreateRandomInt32List(count)
+                .ToNullable();
+            int expectedResult = Constants.NotFoundIndex;
+
+            // Act.
+            int actualResult = collectionWithRandomSize.IndexOf(
+                null, EqualityComparer<int?>.Default
+            );
+
+            // Assert.
+            Assert.Equal(expectedResult, actualResult);
+        }
 
         #endregion
 

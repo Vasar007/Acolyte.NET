@@ -81,7 +81,7 @@ namespace Acolyte.Tests
 
             return Enumerable
                 .Range(1, count)
-                .Select(i => CreateRandomNonNegativeInt32(random))
+                .Select(i => CreateRandomInt32(random))
                 .ToReadOnlyList();
         }
 

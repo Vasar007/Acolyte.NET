@@ -1,4 +1,4 @@
-﻿namespace Acolyte
+﻿namespace Acolyte.Tests
 {
     internal static class TestHelper
     {
