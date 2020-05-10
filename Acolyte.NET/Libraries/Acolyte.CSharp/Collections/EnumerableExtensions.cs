@@ -349,7 +349,7 @@ namespace Acolyte.Collections
         public static int IndexOf<TSource>(this IEnumerable<TSource> source,
             Func<TSource, bool> predicate)
         {
-            source.ThrowIfNull(nameof(source));
+            // Null check for "source" parameter is provided by Enumerable.Select method.
             predicate.ThrowIfNull(nameof(predicate));
 
             int foundIndex = source
@@ -384,8 +384,8 @@ namespace Acolyte.Collections
         /// <paramref name="source" /> is <c>null</c>. -or-
         /// <paramref name="comparer" /> is <c>null</c>.
         /// </exception>
-        public static int IndexOf<TSource>(this IEnumerable<TSource> source,
-            TSource value, IEqualityComparer<TSource> comparer)
+        public static int IndexOf<TSource>(this IEnumerable<TSource> source, TSource value,
+            IEqualityComparer<TSource> comparer)
         {
             comparer.ThrowIfNull(nameof(comparer));
 
@@ -411,8 +411,7 @@ namespace Acolyte.Collections
         /// <exception cref="ArgumentNullException">
         /// <paramref name="source" /> is <c>null</c>.
         /// </exception>
-        public static int IndexOf<TSource>(this IEnumerable<TSource> source,
-            TSource value)
+        public static int IndexOf<TSource>(this IEnumerable<TSource> source, TSource value)
         {
             return source.IndexOf(value, EqualityComparer<TSource>.Default);
         }
@@ -462,7 +461,7 @@ namespace Acolyte.Collections
                 Func<TSource, TElement> elementSelector)
             where TKey: notnull
         {
-            // Null check is provided by Enumerable.ToDictionary method.
+            // Null checks for parameters are provided by Enumerable.ToDictionary method.
             return source.ToDictionary(keySelector, elementSelector);
         }
 
@@ -482,7 +481,7 @@ namespace Acolyte.Collections
         public static IReadOnlyList<TSource> ToReadOnlyList<TSource>(
             this IEnumerable<TSource> source)
         {
-            // Null check is provided by Enumerable.ToList method.
+            // Null check for "source" parameter is provided by Enumerable.Select method.
             return source.ToList();
         }
 
@@ -505,7 +504,7 @@ namespace Acolyte.Collections
         public static IReadOnlyCollection<TSource> ToReadOnlyCollection<TSource>(
             this IEnumerable<TSource> source)
         {
-            // Null check is provided by Enumerable.ToList method.
+            // Null check for "source" parameter is provided by Enumerable.Select method.
             return source.ToList();
         }
 
@@ -1943,8 +1942,8 @@ namespace Acolyte.Collections
         public static string EnumerableToOneString<TSource>(this IEnumerable<TSource>? source,
             string emptyCollectionMessage, string? separator, Func<TSource, string> selector)
         {
+            // Null check for "selector" parameter is provided by Enumerable.Select method.
             emptyCollectionMessage.ThrowIfNull(nameof(emptyCollectionMessage));
-            selector.ThrowIfNull(nameof(selector));
 
             if (source.IsNullOrEmpty()) return emptyCollectionMessage;
 
