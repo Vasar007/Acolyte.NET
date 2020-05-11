@@ -479,7 +479,6 @@ namespace Acolyte.Collections
         /// <exception cref="ArgumentNullException">
         /// <paramref name="source" /> is <c>null</c>. -or-
         /// <paramref name="keySelector" /> is <c>null</c>. -or-
-        /// <paramref name="comparer" /> is <c>null</c>. -or-
         /// <paramref name="keySelector" /> produces a key that is <c>null</c>.
         /// </exception>
         /// <exception cref="ArgumentException">
@@ -489,7 +488,7 @@ namespace Acolyte.Collections
             ToReadOnlyDictionary<TKey, TSource>(
                 this IEnumerable<TSource> source,
                 Func<TSource, TKey> keySelector,
-                IEqualityComparer<TKey> comparer)
+                IEqualityComparer<TKey>? comparer)
             where TKey : notnull
         {
             // Null checks for parameters are provided by Enumerable.ToDictionary method.
@@ -573,7 +572,6 @@ namespace Acolyte.Collections
         /// <paramref name="source" /> is <c>null</c>. -or-
         /// <paramref name="keySelector" /> is <c>null</c>. -or-
         /// <paramref name="elementSelector" /> is <c>null</c>. -or-
-        /// <paramref name="comparer" /> is <c>null</c>. -or-
         /// <paramref name="keySelector" /> produces a key that is <c>null</c>.
         /// </exception>
         /// <exception cref="ArgumentException">
@@ -584,7 +582,7 @@ namespace Acolyte.Collections
                 this IEnumerable<TSource> source,
                 Func<TSource, TKey> keySelector,
                 Func<TSource, TElement> elementSelector,
-                IEqualityComparer<TKey> comparer)
+                IEqualityComparer<TKey>? comparer)
             where TKey : notnull
         {
             // Null checks for parameters are provided by Enumerable.ToDictionary method.
@@ -724,7 +722,7 @@ namespace Acolyte.Collections
 
         #endregion
 
-        #region MinMax Methods
+        #region MinMax
 
         #region MinMax Overloads Without Selector
 
@@ -1631,9 +1629,9 @@ namespace Acolyte.Collections
 
         #endregion
 
-        #region Min/Max By Key Methods
+        #region Min/Max By Key
 
-        #region Min By Key Methods
+        #region Min By Key
 
         /// <summary>
         /// Retrieves minimum element by key in a generic sequence.
@@ -1732,7 +1730,7 @@ namespace Acolyte.Collections
 
         #endregion
 
-        #region Max By Key Methods
+        #region Max By Key
 
         /// <summary>
         /// Retrieves maximum element by key in a generic sequence.
@@ -1800,7 +1798,7 @@ namespace Acolyte.Collections
 
         #endregion
 
-        #region MinMax By Key Methods
+        #region MinMax By Key
 
         /// <summary>
         /// Retrieves minimum and maximum by key elements in a generic sequence.
@@ -2080,7 +2078,7 @@ namespace Acolyte.Collections
 
         #endregion
 
-        #region For Each Methods
+        #region For Each
 
         public static void ForEach<TSource>(
             this IEnumerable<TSource> source,

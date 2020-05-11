@@ -65,6 +65,7 @@ namespace Acolyte.Collections.Tests
 
             // Assert.
             bool expectedResult = !collectionWithRandomSize.Any();
+
             Assert.Equal(expectedResult, actualResult);
         }
 
@@ -85,6 +86,7 @@ namespace Acolyte.Collections.Tests
 
             // Assert.
             bool expectedResult = !collectionWithRandomSize.Any();
+
             Assert.Equal(expectedResult, actualResult);
         }
 
@@ -137,13 +139,13 @@ namespace Acolyte.Collections.Tests
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
-            int expectedResult = TestDataCreator.CreateRandomInt32();
+            int expectedValue = TestDataCreator.CreateRandomInt32();
 
             // Act.
-            int actualResult = emptyCollection.FirstOrDefault(expectedResult);
+            int actualValue = emptyCollection.FirstOrDefault(expectedValue);
 
             // Assert.
-            Assert.Equal(expectedResult, actualResult);
+            Assert.Equal(expectedValue, actualValue);
         }
 
         [Fact]
@@ -151,13 +153,13 @@ namespace Acolyte.Collections.Tests
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
-            int expectedResult = TestDataCreator.CreateRandomInt32();
+            int expectedValue = TestDataCreator.CreateRandomInt32();
 
             // Act.
-            int actualResult = emptyCollection.FirstOrDefault(_ => default, expectedResult);
+            int actualValue = emptyCollection.FirstOrDefault(_ => default, expectedValue);
 
             // Assert.
-            Assert.Equal(expectedResult, actualResult);
+            Assert.Equal(expectedValue, actualValue);
         }
 
         [Theory]
@@ -172,13 +174,13 @@ namespace Acolyte.Collections.Tests
         {
             // Arrange.
             IEnumerable<int> collectionWithSomeItems = TestDataCreator.CreateRandomInt32List(count);
-            int expectedResult = collectionWithSomeItems.First();
+            int expectedValue = collectionWithSomeItems.First();
 
             // Act.
-            int actualResult = collectionWithSomeItems.FirstOrDefault(default);
+            int actualValue = collectionWithSomeItems.FirstOrDefault(default);
 
             // Assert.
-            Assert.Equal(expectedResult, actualResult);
+            Assert.Equal(expectedValue, actualValue);
         }
 
         [Theory]
@@ -194,15 +196,15 @@ namespace Acolyte.Collections.Tests
         {
             // Arrange.
             IEnumerable<int> collectionWithSomeItems = TestDataCreator.CreateRandomInt32List(count);
-            int expectedResult = collectionWithSomeItems.First();
+            int expectedValue = collectionWithSomeItems.First();
 
             // Act.
-            int actualResult = collectionWithSomeItems.FirstOrDefault(
-                i => i.Equals(expectedResult), default
+            int actualValue = collectionWithSomeItems.FirstOrDefault(
+                i => i.Equals(expectedValue), default
             );
 
             // Assert.
-            Assert.Equal(expectedResult, actualResult);
+            Assert.Equal(expectedValue, actualValue);
         }
 
         [Theory]
@@ -218,13 +220,13 @@ namespace Acolyte.Collections.Tests
         {
             // Arrange.
             IEnumerable<int> collectionWithSomeItems = TestDataCreator.CreateRandomInt32List(count);
-            int expectedResult = TestDataCreator.CreateRandomInt32();
+            int expectedValue = TestDataCreator.CreateRandomInt32();
 
             // Act.
-            int actualResult = collectionWithSomeItems.FirstOrDefault(_ => false, expectedResult);
+            int actualValue = collectionWithSomeItems.FirstOrDefault(_ => false, expectedValue);
 
             // Assert.
-            Assert.Equal(expectedResult, actualResult);
+            Assert.Equal(expectedValue, actualValue);
         }
 
         [Fact]
@@ -237,13 +239,14 @@ namespace Acolyte.Collections.Tests
             int defaultResult = TestDataCreator.CreateRandomInt32();
 
             // Act.
-            int actualResult = collectionWithRandomSize.FirstOrDefault(defaultResult);
+            int actualValue = collectionWithRandomSize.FirstOrDefault(defaultResult);
 
             // Assert.
-            int expectedResult = collectionWithRandomSize.Any()
+            int expectedValue = collectionWithRandomSize.Any()
                 ? collectionWithRandomSize.First()
                 : defaultResult;
-            Assert.Equal(expectedResult, actualResult);
+
+            Assert.Equal(expectedValue, actualValue);
         }
 
         [Fact]
@@ -257,13 +260,14 @@ namespace Acolyte.Collections.Tests
             Func<int, bool> predicate = TestDataCreator.IsEven;
 
             // Act.
-            int actualResult = collectionWithRandomSize.FirstOrDefault(predicate, defaultResult);
+            int actualValue = collectionWithRandomSize.FirstOrDefault(predicate, defaultResult);
 
             // Assert.
-            int expectedResult = collectionWithRandomSize.Any()
+            int expectedValue = collectionWithRandomSize.Any()
                 ? collectionWithRandomSize.First(predicate)
                 : defaultResult;
-            Assert.Equal(expectedResult, actualResult);
+
+            Assert.Equal(expectedValue, actualValue);
         }
 
         [Fact]
@@ -273,13 +277,13 @@ namespace Acolyte.Collections.Tests
             int count = TestDataCreator.CreateRandomNonNegativeInt32(TestHelper.MaxCollectionSize);
             IEnumerable<int> collectionWithRandomSize =
                 TestDataCreator.CreateRandomInt32List(count);
-            int expectedResult = TestDataCreator.CreateRandomInt32();
+            int expectedValue = TestDataCreator.CreateRandomInt32();
 
             // Act.
-            int actualResult = collectionWithRandomSize.FirstOrDefault(_ => false, expectedResult);
+            int actualValue = collectionWithRandomSize.FirstOrDefault(_ => false, expectedValue);
 
             // Assert.
-            Assert.Equal(expectedResult, actualResult);
+            Assert.Equal(expectedValue, actualValue);
         }
 
         #endregion
@@ -331,13 +335,13 @@ namespace Acolyte.Collections.Tests
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
-            int expectedResult = TestDataCreator.CreateRandomInt32();
+            int expectedValue = TestDataCreator.CreateRandomInt32();
 
             // Act.
-            int actualResult = emptyCollection.LastOrDefault(expectedResult);
+            int actualValue = emptyCollection.LastOrDefault(expectedValue);
 
             // Assert.
-            Assert.Equal(expectedResult, actualResult);
+            Assert.Equal(expectedValue, actualValue);
         }
 
         [Fact]
@@ -345,13 +349,13 @@ namespace Acolyte.Collections.Tests
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
-            int expectedResult = TestDataCreator.CreateRandomInt32();
+            int expectedValue = TestDataCreator.CreateRandomInt32();
 
             // Act.
-            int actualResult = emptyCollection.LastOrDefault(_ => default, expectedResult);
+            int actualValue = emptyCollection.LastOrDefault(_ => default, expectedValue);
 
             // Assert.
-            Assert.Equal(expectedResult, actualResult);
+            Assert.Equal(expectedValue, actualValue);
         }
 
         [Theory]
@@ -366,13 +370,13 @@ namespace Acolyte.Collections.Tests
         {
             // Arrange.
             IEnumerable<int> collectionWithSomeItems = TestDataCreator.CreateRandomInt32List(count);
-            int expectedResult = collectionWithSomeItems.Last();
+            int expectedValue = collectionWithSomeItems.Last();
 
             // Act.
-            int actualResult = collectionWithSomeItems.LastOrDefault(default);
+            int actualValue = collectionWithSomeItems.LastOrDefault(default);
 
             // Assert.
-            Assert.Equal(expectedResult, actualResult);
+            Assert.Equal(expectedValue, actualValue);
         }
 
         [Theory]
@@ -388,15 +392,15 @@ namespace Acolyte.Collections.Tests
         {
             // Arrange.
             IEnumerable<int> collectionWithSomeItems = TestDataCreator.CreateRandomInt32List(count);
-            int expectedResult = collectionWithSomeItems.Last();
+            int expectedValue = collectionWithSomeItems.Last();
 
             // Act.
-            int actualResult = collectionWithSomeItems.LastOrDefault(
-                i => i.Equals(expectedResult), default
+            int actualValue = collectionWithSomeItems.LastOrDefault(
+                i => i.Equals(expectedValue), default
             );
 
             // Assert.
-            Assert.Equal(expectedResult, actualResult);
+            Assert.Equal(expectedValue, actualValue);
         }
 
         [Theory]
@@ -412,13 +416,13 @@ namespace Acolyte.Collections.Tests
         {
             // Arrange.
             IEnumerable<int> collectionWithSomeItems = TestDataCreator.CreateRandomInt32List(count);
-            int expectedResult = TestDataCreator.CreateRandomInt32();
+            int expectedValue = TestDataCreator.CreateRandomInt32();
 
             // Act.
-            int actualResult = collectionWithSomeItems.LastOrDefault(_ => false, expectedResult);
+            int actualValue = collectionWithSomeItems.LastOrDefault(_ => false, expectedValue);
 
             // Assert.
-            Assert.Equal(expectedResult, actualResult);
+            Assert.Equal(expectedValue, actualValue);
         }
 
         [Fact]
@@ -431,13 +435,14 @@ namespace Acolyte.Collections.Tests
             int defaultResult = TestDataCreator.CreateRandomInt32();
 
             // Act.
-            int actualResult = collectionWithRandomSize.LastOrDefault(defaultResult);
+            int actualValue = collectionWithRandomSize.LastOrDefault(defaultResult);
 
             // Assert.
-            int expectedResult = collectionWithRandomSize.Any()
+            int expectedValue = collectionWithRandomSize.Any()
                 ? collectionWithRandomSize.Last()
                 : defaultResult;
-            Assert.Equal(expectedResult, actualResult);
+
+            Assert.Equal(expectedValue, actualValue);
         }
 
         [Fact]
@@ -451,13 +456,14 @@ namespace Acolyte.Collections.Tests
             Func<int, bool> predicate = TestDataCreator.IsEven;
 
             // Act.
-            int actualResult = collectionWithRandomSize.LastOrDefault(predicate, defaultResult);
+            int actualValue = collectionWithRandomSize.LastOrDefault(predicate, defaultResult);
 
             // Assert.
-            int expectedResult = collectionWithRandomSize.Any()
+            int expectedValue = collectionWithRandomSize.Any()
                 ? collectionWithRandomSize.Last(predicate)
                 : defaultResult;
-            Assert.Equal(expectedResult, actualResult);
+
+            Assert.Equal(expectedValue, actualValue);
         }
 
         [Fact]
@@ -467,13 +473,13 @@ namespace Acolyte.Collections.Tests
             int count = TestDataCreator.CreateRandomNonNegativeInt32(TestHelper.MaxCollectionSize);
             IEnumerable<int> collectionWithRandomSize =
                 TestDataCreator.CreateRandomInt32List(count);
-            int expectedResult = TestDataCreator.CreateRandomInt32();
+            int expectedValue = TestDataCreator.CreateRandomInt32();
 
             // Act.
-            int actualResult = collectionWithRandomSize.LastOrDefault(_ => false, expectedResult);
+            int actualValue = collectionWithRandomSize.LastOrDefault(_ => false, expectedValue);
 
             // Assert.
-            Assert.Equal(expectedResult, actualResult);
+            Assert.Equal(expectedValue, actualValue);
         }
 
         #endregion
@@ -527,13 +533,13 @@ namespace Acolyte.Collections.Tests
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
-            int expectedResult = TestDataCreator.CreateRandomInt32();
+            int expectedValue = TestDataCreator.CreateRandomInt32();
 
             // Act.
-            int actualResult = emptyCollection.SingleOrDefault(expectedResult);
+            int actualValue = emptyCollection.SingleOrDefault(expectedValue);
 
             // Assert.
-            Assert.Equal(expectedResult, actualResult);
+            Assert.Equal(expectedValue, actualValue);
         }
 
         [Fact]
@@ -541,13 +547,13 @@ namespace Acolyte.Collections.Tests
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
-            int expectedResult = TestDataCreator.CreateRandomInt32();
+            int expectedValue = TestDataCreator.CreateRandomInt32();
 
             // Act.
-            int actualResult = emptyCollection.SingleOrDefault(_ => default, expectedResult);
+            int actualValue = emptyCollection.SingleOrDefault(_ => default, expectedValue);
 
             // Assert.
-            Assert.Equal(expectedResult, actualResult);
+            Assert.Equal(expectedValue, actualValue);
         }
 
         [Fact]
@@ -556,13 +562,13 @@ namespace Acolyte.Collections.Tests
             // Arrange.
             IEnumerable<int> collectionWithSingleItem =
                 TestDataCreator.CreateRandomInt32List(TestHelper.OneCollectionSize);
-            int expectedResult = collectionWithSingleItem.Single();
+            int expectedValue = collectionWithSingleItem.Single();
 
             // Act.
-            int actualResult = collectionWithSingleItem.SingleOrDefault(default);
+            int actualValue = collectionWithSingleItem.SingleOrDefault(default);
 
             // Assert.
-            Assert.Equal(expectedResult, actualResult);
+            Assert.Equal(expectedValue, actualValue);
         }
 
         [Fact]
@@ -571,15 +577,15 @@ namespace Acolyte.Collections.Tests
             // Arrange.
             IEnumerable<int> collectionWithSingleItem =
                 TestDataCreator.CreateRandomInt32List(TestHelper.OneCollectionSize);
-            int expectedResult = collectionWithSingleItem.Single();
+            int expectedValue = collectionWithSingleItem.Single();
 
             // Act.
-            int actualResult = collectionWithSingleItem.SingleOrDefault(
-                i => i.Equals(expectedResult), default
+            int actualValue = collectionWithSingleItem.SingleOrDefault(
+                i => i.Equals(expectedValue), default
             );
 
             // Assert.
-            Assert.Equal(expectedResult, actualResult);
+            Assert.Equal(expectedValue, actualValue);
         }
 
         [Theory]
@@ -634,13 +640,13 @@ namespace Acolyte.Collections.Tests
         {
             // Arrange.
             IEnumerable<int> collectionWithSomeItems = TestDataCreator.CreateRandomInt32List(count);
-            int expectedResult = TestDataCreator.CreateRandomInt32();
+            int expectedValue = TestDataCreator.CreateRandomInt32();
 
             // Act.
-            int actualResult = collectionWithSomeItems.SingleOrDefault(_ => false, expectedResult);
+            int actualValue = collectionWithSomeItems.SingleOrDefault(_ => false, expectedValue);
 
             // Assert.
-            Assert.Equal(expectedResult, actualResult);
+            Assert.Equal(expectedValue, actualValue);
         }
 
         [Fact]
@@ -662,12 +668,13 @@ namespace Acolyte.Collections.Tests
             }
             else
             {
-                int actualResult = collectionWithRandomSize.SingleOrDefault(defaultResult);
+                int actualValue = collectionWithRandomSize.SingleOrDefault(defaultResult);
 
-                int expectedResult = collectionWithRandomSize.Any()
+                int expectedValue = collectionWithRandomSize.Any()
                      ? collectionWithRandomSize.Single()
                      : defaultResult;
-                Assert.Equal(expectedResult, actualResult);
+
+                Assert.Equal(expectedValue, actualValue);
             }
         }
 
@@ -692,15 +699,14 @@ namespace Acolyte.Collections.Tests
             }
             else
             {
-                int actualResult = collectionWithRandomSize.SingleOrDefault(
-                    predicate, defaultResult
-                );
+                int actualValue = collectionWithRandomSize.SingleOrDefault(predicate, defaultResult);
 
                 // Collection cannot be empty if we found one value.
-                int expectedResult = foundValuesCount == 1
+                int expectedValue = foundValuesCount == 1
                     ? collectionWithRandomSize.Single(predicate)
                     : defaultResult;
-                Assert.Equal(expectedResult, actualResult);
+
+                Assert.Equal(expectedValue, actualValue);
             }
         }
 
@@ -711,15 +717,13 @@ namespace Acolyte.Collections.Tests
             int count = TestDataCreator.CreateRandomNonNegativeInt32(TestHelper.MaxCollectionSize);
             IEnumerable<int> collectionWithRandomSize =
                 TestDataCreator.CreateRandomInt32List(count);
-            int expectedResult = TestDataCreator.CreateRandomInt32();
+            int expectedValue = TestDataCreator.CreateRandomInt32();
 
             // Act.
-            int actualResult = collectionWithRandomSize.SingleOrDefault(
-                _ => false, expectedResult
-            );
+            int actualValue = collectionWithRandomSize.SingleOrDefault(_ => false, expectedValue);
 
             // Assert.
-            Assert.Equal(expectedResult, actualResult);
+            Assert.Equal(expectedValue, actualValue);
         }
 
         #endregion
@@ -795,13 +799,13 @@ namespace Acolyte.Collections.Tests
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
-            int expectedResult = Constants.NotFoundIndex;
+            int expectedIndex = Constants.NotFoundIndex;
 
             // Act.
-            int actualResult = emptyCollection.IndexOf(_ => default);
+            int actualIndex = emptyCollection.IndexOf(_ => default);
 
             // Assert.
-            Assert.Equal(expectedResult, actualResult);
+            Assert.Equal(expectedIndex, actualIndex);
         }
 
         [Fact]
@@ -809,13 +813,13 @@ namespace Acolyte.Collections.Tests
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
-            int expectedResult = Constants.NotFoundIndex;
+            int expectedIndex = Constants.NotFoundIndex;
 
             // Act.
-            int actualResult = emptyCollection.IndexOf(default(int));
+            int actualIndex = emptyCollection.IndexOf(default(int));
 
             // Assert.
-            Assert.Equal(expectedResult, actualResult);
+            Assert.Equal(expectedIndex, actualIndex);
         }
 
         [Fact]
@@ -823,13 +827,13 @@ namespace Acolyte.Collections.Tests
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
-            int expectedResult = Constants.NotFoundIndex;
+            int expectedIndex = Constants.NotFoundIndex;
 
             // Act.
-            int actualResult = emptyCollection.IndexOf(default, EqualityComparer<int>.Default);
+            int actualIndex = emptyCollection.IndexOf(default, EqualityComparer<int>.Default);
 
             // Assert.
-            Assert.Equal(expectedResult, actualResult);
+            Assert.Equal(expectedIndex, actualIndex);
         }
 
         [Theory]
@@ -846,14 +850,14 @@ namespace Acolyte.Collections.Tests
             // Arrange.
             IReadOnlyList<int> collectionWithSomeItems =
                 TestDataCreator.CreateRandomInt32List(count);
-            (int randomItem, int expectedResult) =
+            (int randomItem, int expectedIndex) =
                  TestDataCreator.ChoiceWithIndex(collectionWithSomeItems);
 
             // Act.
-            int actualResult = collectionWithSomeItems.IndexOf(i => i.Equals(randomItem));
+            int actualIndex = collectionWithSomeItems.IndexOf(i => i.Equals(randomItem));
 
             // Assert.
-            Assert.Equal(expectedResult, actualResult);
+            Assert.Equal(expectedIndex, actualIndex);
         }
 
         [Theory]
@@ -870,14 +874,14 @@ namespace Acolyte.Collections.Tests
             // Arrange.
             IReadOnlyList<int> collectionWithSomeItems =
                 TestDataCreator.CreateRandomInt32List(count);
-            (int randomItem, int expectedResult) =
+            (int randomItem, int expectedIndex) =
                  TestDataCreator.ChoiceWithIndex(collectionWithSomeItems);
 
             // Act.
-            int actualResult = collectionWithSomeItems.IndexOf(randomItem);
+            int actualIndex = collectionWithSomeItems.IndexOf(randomItem);
 
             // Assert.
-            Assert.Equal(expectedResult, actualResult);
+            Assert.Equal(expectedIndex, actualIndex);
         }
 
         [Theory]
@@ -894,16 +898,16 @@ namespace Acolyte.Collections.Tests
             // Arrange.
             IReadOnlyList<int> collectionWithSomeItems =
                 TestDataCreator.CreateRandomInt32List(count);
-            (int randomItem, int expectedResult) =
+            (int randomItem, int expectedIndex) =
                  TestDataCreator.ChoiceWithIndex(collectionWithSomeItems);
 
             // Act.
-            int actualResult = collectionWithSomeItems.IndexOf(
+            int actualIndex = collectionWithSomeItems.IndexOf(
                 randomItem, EqualityComparer<int>.Default
             );
 
             // Assert.
-            Assert.Equal(expectedResult, actualResult);
+            Assert.Equal(expectedIndex, actualIndex);
         }
 
         [Theory]
@@ -918,13 +922,13 @@ namespace Acolyte.Collections.Tests
         {
             // Arrange.
             IEnumerable<int> collectionWithSomeItems = TestDataCreator.CreateRandomInt32List(count);
-            int expectedResult = Constants.NotFoundIndex;
+            int expectedIndex = Constants.NotFoundIndex;
 
             // Act.
-            int actualResult = collectionWithSomeItems.IndexOf(_ => false);
+            int actualIndex = collectionWithSomeItems.IndexOf(_ => false);
 
             // Assert.
-            Assert.Equal(expectedResult, actualResult);
+            Assert.Equal(expectedIndex, actualIndex);
         }
 
         [Theory]
@@ -942,13 +946,13 @@ namespace Acolyte.Collections.Tests
             IEnumerable<int?> collectionWithSomeItems = TestDataCreator
                 .CreateRandomInt32List(count)
                 .ToNullable();
-            int expectedResult = Constants.NotFoundIndex;
+            int expectedIndex = Constants.NotFoundIndex;
 
             // Act.
-            int actualResult = collectionWithSomeItems.IndexOf((int?) null);
+            int actualIndex = collectionWithSomeItems.IndexOf((int?) null);
 
             // Assert.
-            Assert.Equal(expectedResult, actualResult);
+            Assert.Equal(expectedIndex, actualIndex);
         }
 
         [Theory]
@@ -966,15 +970,15 @@ namespace Acolyte.Collections.Tests
             IEnumerable<int?> collectionWithSomeItems = TestDataCreator
                  .CreateRandomInt32List(count)
                  .ToNullable();
-            int expectedResult = Constants.NotFoundIndex;
+            int expectedIndex = Constants.NotFoundIndex;
 
             // Act.
-            int actualResult = collectionWithSomeItems.IndexOf(
+            int actualIndex = collectionWithSomeItems.IndexOf(
                 null, EqualityComparer<int?>.Default
             );
 
             // Assert.
-            Assert.Equal(expectedResult, actualResult);
+            Assert.Equal(expectedIndex, actualIndex);
         }
 
         [Fact]
@@ -985,14 +989,14 @@ namespace Acolyte.Collections.Tests
             int count = TestDataCreator.CreateRandomInt32(1, TestHelper.MaxCollectionSize);
             IReadOnlyList<int> collectionWithRandomSize =
                 TestDataCreator.CreateRandomInt32List(count);
-            (int randomItem, int expectedResult) =
+            (int randomItem, int expectedIndex) =
                 TestDataCreator.ChoiceWithIndex(collectionWithRandomSize);
 
             // Act.
-            int actualResult = collectionWithRandomSize.IndexOf(i => i.Equals(randomItem));
+            int actualIndex = collectionWithRandomSize.IndexOf(i => i.Equals(randomItem));
 
             // Assert.
-            Assert.Equal(expectedResult, actualResult);
+            Assert.Equal(expectedIndex, actualIndex);
         }
 
         [Fact]
@@ -1003,14 +1007,14 @@ namespace Acolyte.Collections.Tests
             int count = TestDataCreator.CreateRandomInt32(1, TestHelper.MaxCollectionSize);
             IReadOnlyList<int> collectionWithRandomSize =
                 TestDataCreator.CreateRandomInt32List(count);
-            (int randomItem, int expectedResult) =
+            (int randomItem, int expectedIndex) =
                 TestDataCreator.ChoiceWithIndex(collectionWithRandomSize);
 
             // Act.
-            int actualResult = collectionWithRandomSize.IndexOf(randomItem);
+            int actualIndex = collectionWithRandomSize.IndexOf(randomItem);
 
             // Assert.
-            Assert.Equal(expectedResult, actualResult);
+            Assert.Equal(expectedIndex, actualIndex);
         }
 
         [Fact]
@@ -1021,16 +1025,16 @@ namespace Acolyte.Collections.Tests
             int count = TestDataCreator.CreateRandomInt32(1, TestHelper.MaxCollectionSize);
             IReadOnlyList<int> collectionWithRandomSize =
                 TestDataCreator.CreateRandomInt32List(count);
-            (int randomItem, int expectedResult) =
+            (int randomItem, int expectedIndex) =
                 TestDataCreator.ChoiceWithIndex(collectionWithRandomSize);
 
             // Act.
-            int actualResult = collectionWithRandomSize.IndexOf(
+            int actualIndex = collectionWithRandomSize.IndexOf(
                 randomItem, EqualityComparer<int>.Default
             );
 
             // Assert.
-            Assert.Equal(expectedResult, actualResult);
+            Assert.Equal(expectedIndex, actualIndex);
         }
 
         [Fact]
@@ -1040,13 +1044,13 @@ namespace Acolyte.Collections.Tests
             int count = TestDataCreator.CreateRandomNonNegativeInt32(TestHelper.MaxCollectionSize);
             IEnumerable<int> collectionWithRandomSize =
                 TestDataCreator.CreateRandomInt32List(count);
-            int expectedResult = Constants.NotFoundIndex;
+            int expectedIndex = Constants.NotFoundIndex;
 
             // Act.
-            int actualResult = collectionWithRandomSize.IndexOf(_ => false);
+            int actualIndex = collectionWithRandomSize.IndexOf(_ => false);
 
             // Assert.
-            Assert.Equal(expectedResult, actualResult);
+            Assert.Equal(expectedIndex, actualIndex);
         }
 
         [Fact]
@@ -1057,13 +1061,13 @@ namespace Acolyte.Collections.Tests
             IEnumerable<int?> collectionWithRandomSize = TestDataCreator
                .CreateRandomInt32List(count)
                .ToNullable();
-            int expectedResult = Constants.NotFoundIndex;
+            int expectedIndex = Constants.NotFoundIndex;
 
             // Act.
-            int actualResult = collectionWithRandomSize.IndexOf((int?) null);
+            int actualIndex = collectionWithRandomSize.IndexOf((int?) null);
 
             // Assert.
-            Assert.Equal(expectedResult, actualResult);
+            Assert.Equal(expectedIndex, actualIndex);
         }
 
         [Fact]
@@ -1074,15 +1078,15 @@ namespace Acolyte.Collections.Tests
             IEnumerable<int?> collectionWithRandomSize = TestDataCreator
                 .CreateRandomInt32List(count)
                 .ToNullable();
-            int expectedResult = Constants.NotFoundIndex;
+            int expectedIndex = Constants.NotFoundIndex;
 
             // Act.
-            int actualResult = collectionWithRandomSize.IndexOf(
+            int actualIndex = collectionWithRandomSize.IndexOf(
                 null, EqualityComparer<int?>.Default
             );
 
             // Assert.
-            Assert.Equal(expectedResult, actualResult);
+            Assert.Equal(expectedIndex, actualIndex);
         }
 
         #endregion
@@ -1155,13 +1159,19 @@ namespace Acolyte.Collections.Tests
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
 
-            // Act & Assert.
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
-            Assert.Throws<ArgumentNullException>(
-                "comparer",
-                () => emptyCollection.ToReadOnlyDictionary(TestDataCreator.SimpleKeySelector, null)
+            // Act
+            var actualDictionary = emptyCollection.ToReadOnlyDictionary(
+                KeyFunction<int>.Simple, null
             );
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+
+            // Assert.
+            var expectedDictionary = Enumerable
+                .Empty<int>()
+                .ToDictionary(KeyFunction<int>.Simple, null);
+
+            Assert.NotNull(actualDictionary);
+            Assert.Empty(actualDictionary);
+            Assert.Equal(expectedDictionary, actualDictionary);
         }
 
         [Fact]
@@ -1209,7 +1219,7 @@ namespace Acolyte.Collections.Tests
             Assert.Throws<ArgumentNullException>(
                 "elementSelector",
                 () => emptyCollection.ToReadOnlyDictionary(
-                    TestDataCreator.SimpleKeySelector, nullElementSelector
+                    KeyFunction<int>.Simple, nullElementSelector
                 )
             );
 #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
@@ -1263,7 +1273,7 @@ namespace Acolyte.Collections.Tests
             Assert.Throws<ArgumentNullException>(
                 "elementSelector",
                 () => emptyCollection.ToReadOnlyDictionary(
-                    TestDataCreator.SimpleKeySelector, nullElementSelector, null
+                    KeyFunction<int>.Simple, nullElementSelector, null
                 )
             );
 #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
@@ -1275,15 +1285,19 @@ namespace Acolyte.Collections.Tests
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
 
-            // Act & Assert.
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
-            Assert.Throws<ArgumentNullException>(
-                "comparer",
-                () => emptyCollection.ToReadOnlyDictionary(
-                    TestDataCreator.SimpleKeySelector, i => i, null
-                )
+            // Act
+            var actualDictionary = emptyCollection.ToReadOnlyDictionary(
+                KeyFunction<int>.Simple, IdentityFunction<int>.Instance, null
             );
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+
+            // Assert.
+            var expectedDictionary = Enumerable
+                .Empty<int>()
+                .ToDictionary(KeyFunction<int>.Simple, IdentityFunction<int>.Instance, null);
+
+            Assert.NotNull(actualDictionary);
+            Assert.Empty(actualDictionary);
+            Assert.Equal(expectedDictionary, actualDictionary);
         }
 
         [Fact]
@@ -1310,6 +1324,8 @@ namespace Acolyte.Collections.Tests
 #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
 
+        // TODO: write additional tests.
+
         #endregion
 
         #region Tests for "Min/Max For Generic Types With Comparer" section
@@ -1318,19 +1334,19 @@ namespace Acolyte.Collections.Tests
 
         #endregion
 
-        #region Tests for "MinMax Methods" section
+        #region Tests for "MinMax" section
 
         // TODO: write tests.
 
         #endregion
 
-        #region Tests for "Min/Max By Key Methods" section
+        #region Tests for "Min/Max By Key" section
 
         // TODO: write tests.
 
         #endregion
 
-        #region Tests for "MinMax By Key Methods" section
+        #region Tests for "MinMax By Key" section
 
         // TODO: write tests.
 
@@ -1342,7 +1358,7 @@ namespace Acolyte.Collections.Tests
 
         #endregion
 
-        #region Tests for "For Each Methods" section
+        #region Tests for "For Each" section
 
         // TODO: write tests.
 
