@@ -2,3 +2,5 @@
 
 # IDE0071: Simplify interpolation
 dotnet_style_prefer_simplified_interpolation = false:suggestion
+
+insert_final_newline = true

@@ -19,7 +19,7 @@ namespace Acolyte.Collections.Tests
         public void Call_IsNullOrEmpty_ForNullValue()
         {
             // Arrange.
-            IEnumerable<int>? nullValue = null;
+            const IEnumerable<int>? nullValue = null;
 
             // Act & Assert.
             Assert.True(nullValue.IsNullOrEmpty());
@@ -96,27 +96,25 @@ namespace Acolyte.Collections.Tests
         public void Call_FirstOrDefault_ForNullValue()
         {
             // Arrange.
-            IEnumerable<int>? nullValue = null;
+            const IEnumerable<int>? nullValue = null;
 
             // Act & Assert.
-#pragma warning disable CS8604 // Possible null reference argument.
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             Assert.Throws<ArgumentNullException>("source", () => nullValue.FirstOrDefault(default));
-#pragma warning restore CS8604 // Possible null reference argument.
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
 
         [Fact]
         public void Call_FirstOrDefault_WithPredicate_ForNullValue()
         {
             // Arrange.
-            IEnumerable<int>? nullValue = null;
+            const IEnumerable<int>? nullValue = null;
 
             // Act & Assert.
-#pragma warning disable CS8604 // Possible null reference argument.
 #pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             Assert.Throws<ArgumentNullException>(
                 "source", () => nullValue.FirstOrDefault(default, default)
             );
-#pragma warning restore CS8604 // Possible null reference argument.
 #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
 
@@ -292,27 +290,25 @@ namespace Acolyte.Collections.Tests
         public void Call_LastOrDefault_ForNullValue()
         {
             // Arrange.
-            IEnumerable<int>? nullValue = null;
+            const IEnumerable<int>? nullValue = null;
 
             // Act & Assert.
-#pragma warning disable CS8604 // Possible null reference argument.
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             Assert.Throws<ArgumentNullException>("source", () => nullValue.LastOrDefault(default));
-#pragma warning restore CS8604 // Possible null reference argument.
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
 
         [Fact]
         public void Call_LastOrDefault_WithPredicate_ForNullValue()
         {
             // Arrange.
-            IEnumerable<int>? nullValue = null;
+            const IEnumerable<int>? nullValue = null;
 
             // Act & Assert.
-#pragma warning disable CS8604 // Possible null reference argument.
 #pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             Assert.Throws<ArgumentNullException>(
                 "source", () => nullValue.LastOrDefault(default, default)
             );
-#pragma warning restore CS8604 // Possible null reference argument.
 #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
 
@@ -488,29 +484,27 @@ namespace Acolyte.Collections.Tests
         public void Call_SingleOrDefault_ForNullValue()
         {
             // Arrange.
-            IEnumerable<int>? nullValue = null;
+            const IEnumerable<int>? nullValue = null;
 
             // Act & Assert.
-#pragma warning disable CS8604 // Possible null reference argument.
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             Assert.Throws<ArgumentNullException>(
                 "source", () => nullValue.SingleOrDefault(default)
             );
-#pragma warning restore CS8604 // Possible null reference argument.
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
 
         [Fact]
         public void Call_SingleOrDefault_WithPredicate_ForNullValue()
         {
             // Arrange.
-            IEnumerable<int>? nullValue = null;
+            const IEnumerable<int>? nullValue = null;
 
             // Act & Assert.
-#pragma warning disable CS8604 // Possible null reference argument.
 #pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             Assert.Throws<ArgumentNullException>(
                 "source", () => nullValue.SingleOrDefault(default, default)
             );
-#pragma warning restore CS8604 // Possible null reference argument.
 #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
 
@@ -736,12 +730,12 @@ namespace Acolyte.Collections.Tests
         public void Call_IndexOf_ForNullValue()
         {
             // Arrange.
-            IEnumerable<int>? nullValue = null;
+            const IEnumerable<int>? nullValue = null;
 
             // Act & Assert.
-#pragma warning disable CS8604 // Possible null reference argument.
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             Assert.Throws<ArgumentNullException>("source", () => nullValue.IndexOf(_ => default));
-#pragma warning restore CS8604 // Possible null reference argument.
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
 
         [Fact]
@@ -760,26 +754,26 @@ namespace Acolyte.Collections.Tests
         public void Call_IndexOf_Item_ForNullValue()
         {
             // Arrange.
-            IEnumerable<int>? nullValue = null;
+            const IEnumerable<int>? nullValue = null;
 
             // Act & Assert.
-#pragma warning disable CS8604 // Possible null reference argument.
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             Assert.Throws<ArgumentNullException>("source", () => nullValue.IndexOf(default(int)));
-#pragma warning restore CS8604 // Possible null reference argument.
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
 
         [Fact]
         public void Call_IndexOf_ItemWithComparer_ForNullValue()
         {
             // Arrange.
-            IEnumerable<int>? nullValue = null;
+            const IEnumerable<int>? nullValue = null;
 
             // Act & Assert.
-#pragma warning disable CS8604 // Possible null reference argument.
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             Assert.Throws<ArgumentNullException>(
                 "source", () => nullValue.IndexOf(default, EqualityComparer<int>.Default)
             );
-#pragma warning restore CS8604 // Possible null reference argument.
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
 
         [Fact]
@@ -1095,7 +1089,226 @@ namespace Acolyte.Collections.Tests
 
         #region Tests for "To Read-Only Collections" section
 
-        // TODO: write tests.
+        [Fact]
+        public void Call_ToReadOnlyDictionary_WithKeySelector_ForNullValue()
+        {
+            // Arrange.
+            const IEnumerable<int>? nullValue = null;
+            const Func<int, Guid>? nullKeySelector = null;
+
+            // Act & Assert.
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+            Assert.Throws<ArgumentNullException>(
+                "source", () => nullValue.ToReadOnlyDictionary(nullKeySelector)
+            );
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+        }
+
+        [Fact]
+        public void Call_ToReadOnlyDictionary_WithKeySelector_ForNullKeySelector()
+        {
+            // Arrange.
+            IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
+            const Func<int, Guid>? nullKeySelector = null;
+
+            // Act & Assert.
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+            Assert.Throws<ArgumentNullException>(
+                "keySelector", () => emptyCollection.ToReadOnlyDictionary(nullKeySelector)
+            );
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+        }
+
+        [Fact]
+        public void Call_ToReadOnlyDictionary_WithKeySelectorAndComparer_ForNullValue()
+        {
+            // Arrange.
+            const IEnumerable<int>? nullValue = null;
+            const Func<int, Guid>? nullKeySelector = null;
+
+            // Act & Assert.
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+            Assert.Throws<ArgumentNullException>(
+                "source", () => nullValue.ToReadOnlyDictionary(nullKeySelector, null)
+            );
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+        }
+
+        [Fact]
+        public void Call_ToReadOnlyDictionary_WithKeySelectorAndComparer_ForNullKeySelector()
+        {
+            // Arrange.
+            IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
+            const Func<int, Guid>? nullKeySelector = null;
+
+            // Act & Assert.
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+            Assert.Throws<ArgumentNullException>(
+                "keySelector", () => emptyCollection.ToReadOnlyDictionary(nullKeySelector, null)
+            );
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+        }
+
+        [Fact]
+        public void Call_ToReadOnlyDictionary_WithKeySelectorAndComparer_ForNullComparer()
+        {
+            // Arrange.
+            IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
+
+            // Act & Assert.
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+            Assert.Throws<ArgumentNullException>(
+                "comparer",
+                () => emptyCollection.ToReadOnlyDictionary(TestDataCreator.SimpleKeySelector, null)
+            );
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+        }
+
+        [Fact]
+        public void Call_ToReadOnlyDictionary_WithKeyElementSelector_ForNullValue()
+        {
+            // Arrange.
+            const IEnumerable<int>? nullValue = null;
+            const Func<int, Guid>? nullKeySelector = null;
+            const Func<int, int>? nullElementSelector = null;
+
+            // Act & Assert.
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+            Assert.Throws<ArgumentNullException>(
+                "source", () => nullValue.ToReadOnlyDictionary(nullKeySelector, nullElementSelector)
+            );
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+        }
+
+        [Fact]
+        public void Call_ToReadOnlyDictionary_WithKeyElementSelector_ForNullKeySelector()
+        {
+            // Arrange.
+            IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
+            const Func<int, Guid>? nullKeySelector = null;
+            const Func<int, int>? nullElementSelector = null;
+
+            // Act & Assert.
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+            Assert.Throws<ArgumentNullException>(
+                "keySelector",
+                () => emptyCollection.ToReadOnlyDictionary(nullKeySelector, nullElementSelector)
+            );
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+        }
+
+        [Fact]
+        public void Call_ToReadOnlyDictionary_WithKeyElementSelector_ForNullElementSelector()
+        {
+            // Arrange.
+            IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
+            const Func<int, int>? nullElementSelector = null;
+
+            // Act & Assert.
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+            Assert.Throws<ArgumentNullException>(
+                "elementSelector",
+                () => emptyCollection.ToReadOnlyDictionary(
+                    TestDataCreator.SimpleKeySelector, nullElementSelector
+                )
+            );
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+        }
+
+        [Fact]
+        public void Call_ToReadOnlyDictionary_WithKeyElementSelectorAndComparer_ForNullValue()
+        {
+            // Arrange.
+            const IEnumerable<int>? nullValue = null;
+            const Func<int, Guid>? nullKeySelector = null;
+            const Func<int, int>? nullElementSelector = null;
+
+            // Act & Assert.
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+            Assert.Throws<ArgumentNullException>(
+                "source",
+                () => nullValue.ToReadOnlyDictionary(nullKeySelector, nullElementSelector, null)
+            );
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+        }
+
+        [Fact]
+        public void Call_ToReadOnlyDictionary_WithKeyElementSelectorAndComparer_ForNullKeySelector()
+        {
+            // Arrange.
+            IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
+            const Func<int, Guid>? nullKeySelector = null;
+            const Func<int, int>? nullElementSelector = null;
+
+            // Act & Assert.
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+            Assert.Throws<ArgumentNullException>(
+                "keySelector",
+                () => emptyCollection.ToReadOnlyDictionary(
+                    nullKeySelector, nullElementSelector, null
+                )
+            );
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+        }
+
+        [Fact]
+        public void Call_ToReadOnlyDictionary_WithKeyElementSelectorAndComparer_ForNullElementSelector()
+        {
+            // Arrange.
+            IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
+            const Func<int, int>? nullElementSelector = null;
+
+            // Act & Assert.
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+            Assert.Throws<ArgumentNullException>(
+                "elementSelector",
+                () => emptyCollection.ToReadOnlyDictionary(
+                    TestDataCreator.SimpleKeySelector, nullElementSelector, null
+                )
+            );
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+        }
+
+        [Fact]
+        public void Call_ToReadOnlyDictionary_WithKeyElementSelectorAndComparer_ForNullComparer()
+        {
+            // Arrange.
+            IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
+
+            // Act & Assert.
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+            Assert.Throws<ArgumentNullException>(
+                "comparer",
+                () => emptyCollection.ToReadOnlyDictionary(
+                    TestDataCreator.SimpleKeySelector, i => i, null
+                )
+            );
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+        }
+
+        [Fact]
+        public void Call_ToReadOnlyList_ForNullValue()
+        {
+            // Arrange.
+            const IEnumerable<int>? nullValue = null;
+
+            // Act & Assert.
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+            Assert.Throws<ArgumentNullException>("source", () => nullValue.ToReadOnlyList());
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+        }
+
+        [Fact]
+        public void Call_ToReadOnlyCollection_ForNullValue()
+        {
+            // Arrange.
+            const IEnumerable<int>? nullValue = null;
+
+            // Act & Assert.
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+            Assert.Throws<ArgumentNullException>("source", () => nullValue.ToReadOnlyList());
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+        }
 
         #endregion
 
