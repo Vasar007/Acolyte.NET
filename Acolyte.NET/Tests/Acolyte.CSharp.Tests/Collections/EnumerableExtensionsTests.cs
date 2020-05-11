@@ -1352,7 +1352,7 @@ namespace Acolyte.Collections.Tests
 
         #endregion
 
-        #region Tests for "Enmumerable To String" section
+        #region Tests for "To Single String" section
 
         // TODO: write tests.
 

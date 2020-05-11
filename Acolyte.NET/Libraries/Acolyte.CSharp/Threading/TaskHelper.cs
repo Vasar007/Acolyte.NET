@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Acolyte.Assertions;
+using Acolyte.Common;
 
 namespace Acolyte.Threading
 {
@@ -14,25 +15,25 @@ namespace Acolyte.Threading
     {
         #region When All Results Or Exceptions
 
-        public static Task<ResultOrException<TResult>[]> WhenAllResultsOrExceptions<TResult>(
+        public static Task<Result<TResult, Exception>[]> WhenAllResultsOrExceptions<TResult>(
             params Task<TResult>[] tasks)
         {
             return Task.WhenAll(tasks.Select(task => task.WrapResultOrExceptionAsync()));
         }
 
-        public static Task<ResultOrException<TResult>[]> WhenAllResultsOrExceptions<TResult>(
+        public static Task<Result<TResult, Exception>[]> WhenAllResultsOrExceptions<TResult>(
             IEnumerable<Task<TResult>> tasks)
         {
             return Task.WhenAll(tasks.Select(task => task.WrapResultOrExceptionAsync()));
         }
 
-        public static Task<ResultOrException<NoneResult>[]> WhenAllResultsOrExceptions(
+        public static Task<Result<NoneResult, Exception>[]> WhenAllResultsOrExceptions(
             params Task[] tasks)
         {
             return Task.WhenAll(tasks.Select(task => task.WrapResultOrExceptionAsync()));
         }
 
-        public static Task<ResultOrException<NoneResult>[]> WhenAllResultsOrExceptions(
+        public static Task<Result<NoneResult, Exception>[]> WhenAllResultsOrExceptions(
             IEnumerable<Task> tasks)
         {
             return Task.WhenAll(tasks.Select(task => task.WrapResultOrExceptionAsync()));

@@ -1898,7 +1898,7 @@ namespace Acolyte.Collections
 
         #endregion
 
-        #region Enmumerable To String
+        #region To Single String
 
         /// <summary>
         /// Transforms sequence to the string.
@@ -1911,9 +1911,9 @@ namespace Acolyte.Collections
         /// The string which represent converted value of sequence or special message if 
         /// <paramref name="source" /> is <c>null</c> or contains no elements.
         /// </returns>
-        public static string EnumerableToOneString<TSource>(this IEnumerable<TSource>? source)
+        public static string ToSingleString<TSource>(this IEnumerable<TSource>? source)
         {
-            return source.EnumerableToOneString(
+            return source.ToSingleString(
                 separator: ", ",
                 emptyCollectionMessage: "None",
                 selector: item => item is null ? string.Empty : $"'{item.ToString()}'"
@@ -1938,10 +1938,10 @@ namespace Acolyte.Collections
         /// <exception cref="ArgumentNullException">
         /// <paramref name="emptyCollectionMessage" /> is <c>null</c>.
         /// </exception>
-        public static string EnumerableToOneString<TSource>(this IEnumerable<TSource>? source,
+        public static string ToSingleString<TSource>(this IEnumerable<TSource>? source,
             string emptyCollectionMessage)
         {
-            return source.EnumerableToOneString(
+            return source.ToSingleString(
                 separator: ", ",
                 emptyCollectionMessage: emptyCollectionMessage,
                 selector: item => item is null ? string.Empty : $"'{item.ToString()}'"
@@ -1970,10 +1970,10 @@ namespace Acolyte.Collections
         /// <exception cref="ArgumentNullException">
         /// <paramref name="emptyCollectionMessage" /> is <c>null</c>.
         /// </exception>
-        public static string EnumerableToOneString<TSource>(this IEnumerable<TSource>? source,
+        public static string ToSingleString<TSource>(this IEnumerable<TSource>? source,
             string emptyCollectionMessage, string? separator)
         {
-            return source.EnumerableToOneString(
+            return source.ToSingleString(
                 emptyCollectionMessage: emptyCollectionMessage,
                 separator: separator,
                 selector: item => item is null ? string.Empty : $"'{item.ToString()}'"
@@ -1996,10 +1996,10 @@ namespace Acolyte.Collections
         /// <exception cref="ArgumentNullException">
         /// <paramref name="selector" /> is <c>null</c>.
         /// </exception>
-        public static string EnumerableToOneString<TSource>(this IEnumerable<TSource>? source,
+        public static string ToSingleString<TSource>(this IEnumerable<TSource>? source,
             Func<TSource, string> selector)
         {
-            return source.EnumerableToOneString(
+            return source.ToSingleString(
                 emptyCollectionMessage: "None",
                 separator: ", ",
                 selector: selector
@@ -2027,10 +2027,10 @@ namespace Acolyte.Collections
         /// <paramref name="emptyCollectionMessage" /> is <c>null</c>. -or-
         /// <paramref name="selector" /> is <c>null</c>.
         /// </exception>
-        public static string EnumerableToOneString<TSource>(this IEnumerable<TSource>? source,
+        public static string ToSingleString<TSource>(this IEnumerable<TSource>? source,
             string emptyCollectionMessage, Func<TSource, string> selector)
         {
-            return source.EnumerableToOneString(
+            return source.ToSingleString(
                 emptyCollectionMessage: emptyCollectionMessage,
                 separator: ", ",
                 selector: selector
@@ -2063,7 +2063,7 @@ namespace Acolyte.Collections
         /// <paramref name="emptyCollectionMessage" /> is <c>null</c>. -or-
         /// <paramref name="selector" /> is <c>null</c>.
         /// </exception>
-        public static string EnumerableToOneString<TSource>(this IEnumerable<TSource>? source,
+        public static string ToSingleString<TSource>(this IEnumerable<TSource>? source,
             string emptyCollectionMessage, string? separator, Func<TSource, string> selector)
         {
             // Null check for "selector" parameter is provided by Enumerable.Select method.

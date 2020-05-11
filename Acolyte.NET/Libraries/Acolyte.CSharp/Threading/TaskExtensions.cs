@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Acolyte.Assertions;
+using Acolyte.Common;
 using Acolyte.Exceptions;
 
 namespace Acolyte.Threading
@@ -15,7 +16,7 @@ namespace Acolyte.Threading
     {
         #region Results Or Exceptions
 
-        public static async Task<ResultOrException<TResult>> WrapResultOrExceptionAsync<TResult>(
+        public static async Task<Result<TResult, Exception>> WrapResultOrExceptionAsync<TResult>(
             this Task<TResult> task)
         {
             _ = task.ThrowIfNull(nameof(task));
@@ -23,15 +24,15 @@ namespace Acolyte.Threading
             try
             {
                 TResult taskResult = await task;
-                return new ResultOrException<TResult>(taskResult);
+                return Result.Ok(taskResult);
             }
             catch (Exception ex)
             {
-                return new ResultOrException<TResult>(ex);
+                return Result.Error(ex);
             }
         }
 
-        public static async Task<ResultOrException<NoneResult>> WrapResultOrExceptionAsync(
+        public static async Task<Result<NoneResult, Exception>> WrapResultOrExceptionAsync(
             this Task task)
         {
             _ = task.ThrowIfNull(nameof(task));
@@ -39,41 +40,47 @@ namespace Acolyte.Threading
             try
             {
                 await task;
-                return new ResultOrException<NoneResult>(new NoneResult());
+                return Result.Ok(new NoneResult());
             }
             catch (Exception ex)
             {
-                return new ResultOrException<NoneResult>(ex);
+                return Result.Error(ex);
             }
         }
 
         public static IReadOnlyList<Exception> UnwrapResultsOrExceptions(
-            this IEnumerable<ResultOrException<NoneResult>> source)
+            this IEnumerable<Result<NoneResult, Exception>> source)
         {
             source.ThrowIfNull(nameof(source));
 
+#pragma warning disable CS8619 // Nullability of reference types in value doesn't match target type.
             return source
-                .Where(item => !item.IsSuccess)
-                .Select(item => item.Exception)
+                .Where(item => item.IsError && !(item.Error is null)) // Filter null exceptions.
+                .Select(item => item.Error)
                 .ToList();
+#pragma warning restore CS8619 // Nullability of reference types in value doesn't match target type.
         }
 
         public static (IReadOnlyList<TResult> taskResults, IReadOnlyList<Exception> taskExceptions)
-            UnwrapResultsOrExceptions<TResult>(this IEnumerable<ResultOrException<TResult>> source)
+            UnwrapResultsOrExceptions<TResult>(this IEnumerable<Result<TResult, Exception>> source)
         {
             source.ThrowIfNull(nameof(source));
 
             var taskResults = new List<TResult>();
             var taskExceptions = new List<Exception>();
-            foreach (ResultOrException<TResult> item in source)
+            foreach (Result<TResult, Exception> item in source)
             {
-                if (item.IsSuccess)
+                if (!item.IsError)
+                {
                     // List allows to pass null values.
 #pragma warning disable CS8604 // Possible null reference argument.
-                    taskResults.Add(item.Result);
+                    taskResults.Add(item.Ok);
 #pragma warning restore CS8604 // Possible null reference argument.
-                else
-                    taskExceptions.Add(item.Exception);
+                }
+                else if (!(item.Error is null)) // Filter null exceptions.
+                {
+                    taskExceptions.Add(item.Error);
+                }
             }
 
             return (taskResults, taskExceptions);
