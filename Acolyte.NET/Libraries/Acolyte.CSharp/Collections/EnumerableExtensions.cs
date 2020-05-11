@@ -422,6 +422,82 @@ namespace Acolyte.Collections
 
         /// <summary>
         /// Creates a <see cref="IReadOnlyDictionary{TKey, TValue}" /> from an
+        /// <see cref="IEnumerable{T}" /> according to a specified key selector function.
+        /// </summary>
+        /// <typeparam name="TSource">
+        /// The type of the elements of <paramref name="source" />.
+        /// </typeparam>
+        /// <typeparam name="TKey">
+        /// The type of the key returned by <paramref name="keySelector" />.
+        /// </typeparam>
+        /// <param name="source">
+        /// An <see cref="IEnumerable{T}" /> to create
+        /// <see cref="IReadOnlyDictionary{TKey, TValue}" /> from.
+        /// </param>
+        /// <param name="keySelector">A function to extract a key from each element.</param>
+        /// <returns>
+        /// A <see cref="IReadOnlyDictionary{TKey, TValue}" /> that contains keys and values.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="source" /> is <c>null</c>. -or-
+        /// <paramref name="keySelector" /> is <c>null</c>. -or-
+        /// <paramref name="keySelector" /> produces a key that is <c>null</c>.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        /// <paramref name="keySelector" /> produces duplicate keys for two elements.
+        /// </exception>
+        public static IReadOnlyDictionary<TKey, TSource>
+            ToReadOnlyDictionary<TKey, TSource>(
+                this IEnumerable<TSource> source,
+                Func<TSource, TKey> keySelector)
+            where TKey: notnull
+        {
+            // Null checks for parameters are provided by Enumerable.ToDictionary method.
+            return source.ToDictionary(keySelector);
+        }
+
+        /// <summary>
+        /// Creates a <see cref="IReadOnlyDictionary{TKey, TValue}" /> from an
+        /// <see cref="IEnumerable{T}" /> according to a specified key selector function and key
+        /// comparer.
+        /// </summary>
+        /// <typeparam name="TSource">
+        /// The type of the elements of <paramref name="source" />.
+        /// </typeparam>
+        /// <typeparam name="TKey">
+        /// The type of the key returned by <paramref name="keySelector" />.
+        /// </typeparam>
+        /// <param name="source">
+        /// An <see cref="IEnumerable{T}" /> to create
+        /// <see cref="IReadOnlyDictionary{TKey, TValue}" /> from.
+        /// </param>
+        /// <param name="keySelector">A function to extract a key from each element.</param>
+        /// <param name="comparer">An <see cref="IEqualityComparer{T}" /> to compare keys.</param>
+        /// <returns>
+        /// A <see cref="IReadOnlyDictionary{TKey, TValue}" /> that contains keys and values.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="source" /> is <c>null</c>. -or-
+        /// <paramref name="keySelector" /> is <c>null</c>. -or-
+        /// <paramref name="comparer" /> is <c>null</c>. -or-
+        /// <paramref name="keySelector" /> produces a key that is <c>null</c>.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        /// <paramref name="keySelector" /> produces duplicate keys for two elements.
+        /// </exception>
+        public static IReadOnlyDictionary<TKey, TSource>
+            ToReadOnlyDictionary<TKey, TSource>(
+                this IEnumerable<TSource> source,
+                Func<TSource, TKey> keySelector,
+                IEqualityComparer<TKey> comparer)
+            where TKey : notnull
+        {
+            // Null checks for parameters are provided by Enumerable.ToDictionary method.
+            return source.ToDictionary(keySelector, comparer);
+        }
+
+        /// <summary>
+        /// Creates a <see cref="IReadOnlyDictionary{TKey, TValue}" /> from an
         /// <see cref="IEnumerable{T}" /> according to specified key selector and element selector
         /// functions.
         /// </summary>
@@ -432,8 +508,8 @@ namespace Acolyte.Collections
         /// The type of the key returned by <paramref name="keySelector" />.
         /// </typeparam>
         /// <typeparam name="TElement">
-        /// The type of the value returned by <paramref name="elementSelector" />
-        /// .</typeparam>
+        /// The type of the value returned by <paramref name="elementSelector" />.
+        /// </typeparam>
         /// <param name="source">
         /// An <see cref="IEnumerable{T}" /> to create
         /// <see cref="IReadOnlyDictionary{TKey, TValue}" /> from.
@@ -447,7 +523,8 @@ namespace Acolyte.Collections
         /// <typeparamref name="TElement" /> selected from the input sequence.
         /// </returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="source" /> or <paramref name="keySelector" /> or
+        /// <paramref name="source" /> is <c>null</c>. -or-
+        /// <paramref name="keySelector" /> is <c>null</c>. -or-
         /// <paramref name="elementSelector" /> is <c>null</c>. -or-
         /// <paramref name="keySelector" /> produces a key that is <c>null</c>.
         /// </exception>
@@ -459,10 +536,59 @@ namespace Acolyte.Collections
                 this IEnumerable<TSource> source,
                 Func<TSource, TKey> keySelector,
                 Func<TSource, TElement> elementSelector)
-            where TKey: notnull
+            where TKey : notnull
         {
             // Null checks for parameters are provided by Enumerable.ToDictionary method.
             return source.ToDictionary(keySelector, elementSelector);
+        }
+
+        /// <summary>
+        /// Creates a <see cref="IReadOnlyDictionary{TKey, TValue}" /> from an
+        /// <see cref="IEnumerable{T}" /> to a specified key selector function, a comparer, and an
+        /// element selector function.
+        /// </summary>
+        /// <typeparam name="TSource">
+        /// The type of the elements of <paramref name="source" />.
+        /// </typeparam>
+        /// <typeparam name="TKey">
+        /// The type of the key returned by <paramref name="keySelector" />.
+        /// </typeparam>
+        /// <typeparam name="TElement">
+        /// The type of the value returned by <paramref name="elementSelector" />.
+        /// </typeparam>
+        /// <param name="source">
+        /// An <see cref="IEnumerable{T}" /> to create
+        /// <see cref="IReadOnlyDictionary{TKey, TValue}" /> from.
+        /// </param>
+        /// <param name="keySelector">A function to extract a key from each element.</param>
+        /// <param name="elementSelector">
+        /// A transform function to produce a result element value from each element.
+        /// </param>
+        /// <param name="comparer">An <see cref="IEqualityComparer{T}" /> to compare keys.</param>
+        /// <returns>
+        /// A <see cref="IReadOnlyDictionary{TKey, TValue}" /> that contains values of type
+        /// <typeparamref name="TElement" /> selected from the input sequence.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="source" /> is <c>null</c>. -or-
+        /// <paramref name="keySelector" /> is <c>null</c>. -or-
+        /// <paramref name="elementSelector" /> is <c>null</c>. -or-
+        /// <paramref name="comparer" /> is <c>null</c>. -or-
+        /// <paramref name="keySelector" /> produces a key that is <c>null</c>.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        /// <paramref name="keySelector" /> produces duplicate keys for two elements.
+        /// </exception>
+        public static IReadOnlyDictionary<TKey, TElement>
+            ToReadOnlyDictionary<TSource, TKey, TElement>(
+                this IEnumerable<TSource> source,
+                Func<TSource, TKey> keySelector,
+                Func<TSource, TElement> elementSelector,
+                IEqualityComparer<TKey> comparer)
+            where TKey : notnull
+        {
+            // Null checks for parameters are provided by Enumerable.ToDictionary method.
+            return source.ToDictionary(keySelector, elementSelector, comparer);
         }
 
         /// <summary>
@@ -481,7 +607,7 @@ namespace Acolyte.Collections
         public static IReadOnlyList<TSource> ToReadOnlyList<TSource>(
             this IEnumerable<TSource> source)
         {
-            // Null check for "source" parameter is provided by Enumerable.Select method.
+            // Null check for "source" parameter is provided by Enumerable.ToList method.
             return source.ToList();
         }
 
@@ -504,7 +630,7 @@ namespace Acolyte.Collections
         public static IReadOnlyCollection<TSource> ToReadOnlyCollection<TSource>(
             this IEnumerable<TSource> source)
         {
-            // Null check for "source" parameter is provided by Enumerable.Select method.
+            // Null check for "source" parameter is provided by Enumerable.ToList method.
             return source.ToList();
         }
 
