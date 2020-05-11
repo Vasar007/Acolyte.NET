@@ -3,9 +3,9 @@ using System.Linq;
 
 namespace Acolyte.Tests
 {
-    internal static class HelperExtensions
+    public static class HelperExtensions
     {
-        internal static IReadOnlyList<int?> ToNullable(this IEnumerable<int> source)
+        public static IReadOnlyList<int?> ToNullable(this IEnumerable<int> source)
         {
             // Null check for "source" parameter is provided by Enumerable.Select method.
             return source

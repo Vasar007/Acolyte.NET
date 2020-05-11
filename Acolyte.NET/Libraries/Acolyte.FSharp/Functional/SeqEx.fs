@@ -8,14 +8,14 @@ let skipSafe (count: int32) (source: seq<'a>) : seq<'a> =
     Throw.checkIfNull source "source"
 
     seq {
-        use e = source.GetEnumerator()
-        let idx = ref 0
+        use enumerator = source.GetEnumerator()
+        let index = ref 0
         let loop = ref true
-        while !idx < count && !loop do
-            if not(e.MoveNext()) then
+        while !index < count && !loop do
+            if not(enumerator.MoveNext()) then
                 loop := false
-            idx := !idx + 1
+            index := !index + 1
 
-        while e.MoveNext() do
-            yield e.Current 
+        while enumerator.MoveNext() do
+            yield enumerator.Current 
     }

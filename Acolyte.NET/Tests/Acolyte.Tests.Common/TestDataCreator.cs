@@ -7,16 +7,16 @@ using Acolyte.Collections;
 namespace Acolyte.Tests
 {
     // TODO: move some methods to Acolyte.Charp assembly because it can be useful.
-    internal static class TestDataCreator
+    public static class TestDataCreator
     {
         private static readonly Random RandomInstance = new Random();
 
-        internal static bool IsEven(int value)
+        public static bool IsEven(int value)
         {
             return (value & 1) == 0;
         }
 
-        internal static string CreateRandomString(int length, Random? random = null)
+        public static string CreateRandomString(int length, Random? random = null)
         {
             if (length <= 0)
             {
@@ -35,7 +35,7 @@ namespace Acolyte.Tests
             );
         }
 
-        internal static int CreateRandomNonNegativeInt32(Random? random = null)
+        public static int CreateRandomNonNegativeInt32(Random? random = null)
         {
             random ??= RandomInstance;
 
@@ -43,7 +43,7 @@ namespace Acolyte.Tests
             return random.Next();
         }
 
-        internal static int CreateRandomNonNegativeInt32(int maxValue, Random? random = null)
+        public static int CreateRandomNonNegativeInt32(int maxValue, Random? random = null)
         {
             random ??= RandomInstance;
 
@@ -51,26 +51,26 @@ namespace Acolyte.Tests
             return random.Next(maxValue);
         }
 
-        internal static int CreateRandomInt32(int minValue, int maxValue, Random? random = null)
+        public static int CreateRandomInt32(int minValue, int maxValue, Random? random = null)
         {
             random ??= RandomInstance;
 
             return random.Next(minValue, maxValue);
         }
 
-        internal static int CreateRandomInt32(Random? random = null)
+        public static int CreateRandomInt32(Random? random = null)
         {
             return CreateRandomInt32(int.MinValue, int.MaxValue, random);
         }
 
-        internal static double CreateRandomDouble(Random? random = null)
+        public static double CreateRandomDouble(Random? random = null)
         {
             random ??= RandomInstance;
 
             return random.NextDouble();
         }
 
-        internal static IReadOnlyList<int> CreateRandomInt32List(int count, Random? random = null)
+        public static IReadOnlyList<int> CreateRandomInt32List(int count, Random? random = null)
         {
             if (count <= 0)
             {
@@ -85,7 +85,7 @@ namespace Acolyte.Tests
                 .ToReadOnlyList();
         }
 
-        internal static IReadOnlyList<int> CreateRandomInt32List(Random? random = null)
+        public static IReadOnlyList<int> CreateRandomInt32List(Random? random = null)
         {
             random ??= RandomInstance;
 
@@ -94,7 +94,7 @@ namespace Acolyte.Tests
             return CreateRandomInt32List(count, random);
         }
 
-        internal static (TSource item, int index) ChoiceWithIndex<TSource>(
+        public static (TSource item, int index) ChoiceWithIndex<TSource>(
             IReadOnlyList<TSource> source, Random? random = null)
         {
             source.ThrowIfNullOrEmpty(nameof(source));
@@ -105,7 +105,7 @@ namespace Acolyte.Tests
             return (source[randomItemIndex], randomItemIndex);
         }
 
-        internal static TSource Choice<TSource>(IReadOnlyList<TSource> source,
+        public static TSource Choice<TSource>(IReadOnlyList<TSource> source,
             Random? random = null)
         {
             return ChoiceWithIndex(source, random).item;
