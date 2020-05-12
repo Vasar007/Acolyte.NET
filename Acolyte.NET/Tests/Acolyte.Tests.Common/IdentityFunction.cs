@@ -2,8 +2,8 @@
 
 namespace Acolyte.Tests
 {
-    public class IdentityFunction<TElement>
+    public static class IdentityFunction<TElement>
     {
-        public static Func<TElement, TElement> Instance => x => x;
+        public static Func<TElement, TElement> Instance { get; } = x => x;
     }
 }

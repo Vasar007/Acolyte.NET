@@ -42,7 +42,6 @@ namespace Acolyte.Collections.Tests
         [InlineData(TestHelper.TenCollectionSize)]
         [InlineData(TestHelper.HundredCollectionSize)]
         [InlineData(TestHelper.TenThousandCollectionSize)]
-        [InlineData(TestHelper.MaxCollectionSize)]
         public void Call_IsNullOrEmpty_ForCollectionWithSomeItems(int count)
         {
             // Arrange.
@@ -59,13 +58,12 @@ namespace Acolyte.Collections.Tests
             int count = TestDataCreator.CreateRandomNonNegativeInt32(TestHelper.MaxCollectionSize);
             IEnumerable<int> collectionWithRandomSize =
                 TestDataCreator.CreateRandomInt32List(count);
+            bool expectedResult = !collectionWithRandomSize.Any();
 
             // Act.
             bool actualResult = collectionWithRandomSize.IsNullOrEmpty();
 
             // Assert.
-            bool expectedResult = !collectionWithRandomSize.Any();
-
             Assert.Equal(expectedResult, actualResult);
         }
 
@@ -80,13 +78,12 @@ namespace Acolyte.Collections.Tests
                 // Convert all even valies to null.
                 .Select(value => TestDataCreator.IsEven(value) ? value : (int?) null)
                 .ToReadOnlyList();
+            bool expectedResult = !collectionWithRandomSize.Any();
 
             // Act.
             bool actualResult = collectionWithRandomSize.IsNullOrEmpty();
 
             // Assert.
-            bool expectedResult = !collectionWithRandomSize.Any();
-
             Assert.Equal(expectedResult, actualResult);
         }
 
@@ -169,7 +166,6 @@ namespace Acolyte.Collections.Tests
         [InlineData(TestHelper.TenCollectionSize)]
         [InlineData(TestHelper.HundredCollectionSize)]
         [InlineData(TestHelper.TenThousandCollectionSize)]
-        [InlineData(TestHelper.MaxCollectionSize)]
         public void Call_FirstOrDefault_ForCollectionWithSomeItems_ShouldReturnFirstItem(int count)
         {
             // Arrange.
@@ -190,7 +186,6 @@ namespace Acolyte.Collections.Tests
         [InlineData(TestHelper.TenCollectionSize)]
         [InlineData(TestHelper.HundredCollectionSize)]
         [InlineData(TestHelper.TenThousandCollectionSize)]
-        [InlineData(TestHelper.MaxCollectionSize)]
         public void Call_FirstOrDefault_WithPredicate_ForCollectionWithSomeItems_ShouldReturnFirstItem(
             int count)
         {
@@ -214,7 +209,6 @@ namespace Acolyte.Collections.Tests
         [InlineData(TestHelper.TenCollectionSize)]
         [InlineData(TestHelper.HundredCollectionSize)]
         [InlineData(TestHelper.TenThousandCollectionSize)]
-        [InlineData(TestHelper.MaxCollectionSize)]
         public void Call_FirstOrDefault_WithPredicate_ForCollectionWithSomeItems_ShouldReturnDefaultItem(
             int count)
         {
@@ -365,7 +359,6 @@ namespace Acolyte.Collections.Tests
         [InlineData(TestHelper.TenCollectionSize)]
         [InlineData(TestHelper.HundredCollectionSize)]
         [InlineData(TestHelper.TenThousandCollectionSize)]
-        [InlineData(TestHelper.MaxCollectionSize)]
         public void Call_LastOrDefault_ForCollectionWithSomeItems_ShouldReturnLastItem(int count)
         {
             // Arrange.
@@ -386,7 +379,6 @@ namespace Acolyte.Collections.Tests
         [InlineData(TestHelper.TenCollectionSize)]
         [InlineData(TestHelper.HundredCollectionSize)]
         [InlineData(TestHelper.TenThousandCollectionSize)]
-        [InlineData(TestHelper.MaxCollectionSize)]
         public void Call_LastOrDefault_WithPredicate_ForCollectionWithSomeItems_ShouldReturnLastItem(
             int count)
         {
@@ -410,7 +402,6 @@ namespace Acolyte.Collections.Tests
         [InlineData(TestHelper.TenCollectionSize)]
         [InlineData(TestHelper.HundredCollectionSize)]
         [InlineData(TestHelper.TenThousandCollectionSize)]
-        [InlineData(TestHelper.MaxCollectionSize)]
         public void Call_LastOrDefault_WithPredicate_ForCollectionWithSomeItems_ShouldReturnDefaultItem(
             int count)
         {
@@ -594,7 +585,6 @@ namespace Acolyte.Collections.Tests
         [InlineData(TestHelper.TenCollectionSize)]
         [InlineData(TestHelper.HundredCollectionSize)]
         [InlineData(TestHelper.TenThousandCollectionSize)]
-        [InlineData(TestHelper.MaxCollectionSize)]
         public void Call_SingleOrDefault_ForCollectionWithSomeItems_ShouldThrow(int count)
         {
             // Arrange.
@@ -613,7 +603,6 @@ namespace Acolyte.Collections.Tests
         [InlineData(TestHelper.TenCollectionSize)]
         [InlineData(TestHelper.HundredCollectionSize)]
         [InlineData(TestHelper.TenThousandCollectionSize)]
-        [InlineData(TestHelper.MaxCollectionSize)]
         public void Call_SingleOrDefault_WithPredicate_ForCollectionWithSomeItems_ShouldThrow(
             int count)
         {
@@ -634,7 +623,6 @@ namespace Acolyte.Collections.Tests
         [InlineData(TestHelper.TenCollectionSize)]
         [InlineData(TestHelper.HundredCollectionSize)]
         [InlineData(TestHelper.TenThousandCollectionSize)]
-        [InlineData(TestHelper.MaxCollectionSize)]
         public void Call_SingleOrDefault_WithPredicate_ForCollectionWithSomeItems_ShouldReturnDefaultItem(
             int count)
         {
@@ -843,7 +831,6 @@ namespace Acolyte.Collections.Tests
         [InlineData(TestHelper.TenCollectionSize)]
         [InlineData(TestHelper.HundredCollectionSize)]
         [InlineData(TestHelper.TenThousandCollectionSize)]
-        [InlineData(TestHelper.MaxCollectionSize)]
         public void Call_IndexOf_ForCollectionWithSomeItems_ShouldReturnIndexOfRandomlySelectedItem(
             int count)
         {
@@ -867,7 +854,6 @@ namespace Acolyte.Collections.Tests
         [InlineData(TestHelper.TenCollectionSize)]
         [InlineData(TestHelper.HundredCollectionSize)]
         [InlineData(TestHelper.TenThousandCollectionSize)]
-        [InlineData(TestHelper.MaxCollectionSize)]
         public void Call_IndexOf_Item_ForCollectionWithSomeItems_ShouldReturnIndexOfRandomlySelectedItem(
             int count)
         {
@@ -891,7 +877,6 @@ namespace Acolyte.Collections.Tests
         [InlineData(TestHelper.TenCollectionSize)]
         [InlineData(TestHelper.HundredCollectionSize)]
         [InlineData(TestHelper.TenThousandCollectionSize)]
-        [InlineData(TestHelper.MaxCollectionSize)]
         public void Call_IndexOf_ItemWithComparer_ForCollectionWithSomeItems_ShouldReturnIndexOfRandomlySelectedItem(
             int count)
         {
@@ -917,7 +902,6 @@ namespace Acolyte.Collections.Tests
         [InlineData(TestHelper.TenCollectionSize)]
         [InlineData(TestHelper.HundredCollectionSize)]
         [InlineData(TestHelper.TenThousandCollectionSize)]
-        [InlineData(TestHelper.MaxCollectionSize)]
         public void Call_IndexOf_ForCollectionWithSomeItems_ShouldReturnNotFoundIndex(int count)
         {
             // Arrange.
@@ -938,7 +922,6 @@ namespace Acolyte.Collections.Tests
         [InlineData(TestHelper.TenCollectionSize)]
         [InlineData(TestHelper.HundredCollectionSize)]
         [InlineData(TestHelper.TenThousandCollectionSize)]
-        [InlineData(TestHelper.MaxCollectionSize)]
         public void Call_IndexOf_Item_ForCollectionWithSomeItems_ShouldReturnNotFoundIndex(
             int count)
         {
@@ -962,7 +945,6 @@ namespace Acolyte.Collections.Tests
         [InlineData(TestHelper.TenCollectionSize)]
         [InlineData(TestHelper.HundredCollectionSize)]
         [InlineData(TestHelper.TenThousandCollectionSize)]
-        [InlineData(TestHelper.MaxCollectionSize)]
         public void Call_IndexOf_ItemWithComparer_ForCollectionWithSomeItems_ShouldReturnNotFoundIndex(
             int count)
         {
@@ -1158,24 +1140,21 @@ namespace Acolyte.Collections.Tests
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
+            var expectedDictionary = emptyCollection.ToDictionary(KeyFunction<int>.Simple, null);
 
-            // Act
+            // Act.
             var actualDictionary = emptyCollection.ToReadOnlyDictionary(
                 KeyFunction<int>.Simple, null
             );
 
             // Assert.
-            var expectedDictionary = Enumerable
-                .Empty<int>()
-                .ToDictionary(KeyFunction<int>.Simple, null);
-
             Assert.NotNull(actualDictionary);
             Assert.Empty(actualDictionary);
             Assert.Equal(expectedDictionary, actualDictionary);
         }
 
         [Fact]
-        public void Call_ToReadOnlyDictionary_WithKeyElementSelector_ForNullValue()
+        public void Call_ToReadOnlyDictionary_WithKeyElementSelectors_ForNullValue()
         {
             // Arrange.
             const IEnumerable<int>? nullValue = null;
@@ -1191,7 +1170,7 @@ namespace Acolyte.Collections.Tests
         }
 
         [Fact]
-        public void Call_ToReadOnlyDictionary_WithKeyElementSelector_ForNullKeySelector()
+        public void Call_ToReadOnlyDictionary_WithKeyElementSelectors_ForNullKeySelector()
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
@@ -1208,7 +1187,7 @@ namespace Acolyte.Collections.Tests
         }
 
         [Fact]
-        public void Call_ToReadOnlyDictionary_WithKeyElementSelector_ForNullElementSelector()
+        public void Call_ToReadOnlyDictionary_WithKeyElementSelectors_ForNullElementSelector()
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
@@ -1226,7 +1205,7 @@ namespace Acolyte.Collections.Tests
         }
 
         [Fact]
-        public void Call_ToReadOnlyDictionary_WithKeyElementSelectorAndComparer_ForNullValue()
+        public void Call_ToReadOnlyDictionary_WithKeyElementSelectorsAndComparer_ForNullValue()
         {
             // Arrange.
             const IEnumerable<int>? nullValue = null;
@@ -1243,7 +1222,7 @@ namespace Acolyte.Collections.Tests
         }
 
         [Fact]
-        public void Call_ToReadOnlyDictionary_WithKeyElementSelectorAndComparer_ForNullKeySelector()
+        public void Call_ToReadOnlyDictionary_WithKeyElementSelectorsAndComparer_ForNullKeySelector()
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
@@ -1262,7 +1241,7 @@ namespace Acolyte.Collections.Tests
         }
 
         [Fact]
-        public void Call_ToReadOnlyDictionary_WithKeyElementSelectorAndComparer_ForNullElementSelector()
+        public void Call_ToReadOnlyDictionary_WithKeyElementSelectorsAndComparer_ForNullElementSelector()
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
@@ -1280,21 +1259,20 @@ namespace Acolyte.Collections.Tests
         }
 
         [Fact]
-        public void Call_ToReadOnlyDictionary_WithKeyElementSelectorAndComparer_ForNullComparer()
+        public void Call_ToReadOnlyDictionary_WithKeyElementSelectorsAndComparer_ForNullComparer()
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
+            var expectedDictionary = emptyCollection.ToDictionary(
+                KeyFunction<int>.Simple, IdentityFunction<int>.Instance, null
+            );
 
-            // Act
+            // Act.
             var actualDictionary = emptyCollection.ToReadOnlyDictionary(
                 KeyFunction<int>.Simple, IdentityFunction<int>.Instance, null
             );
 
             // Assert.
-            var expectedDictionary = Enumerable
-                .Empty<int>()
-                .ToDictionary(KeyFunction<int>.Simple, IdentityFunction<int>.Instance, null);
-
             Assert.NotNull(actualDictionary);
             Assert.Empty(actualDictionary);
             Assert.Equal(expectedDictionary, actualDictionary);
@@ -1324,7 +1302,460 @@ namespace Acolyte.Collections.Tests
 #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
 
-        // TODO: write additional tests.
+        [Fact]
+        public void Call_ToReadOnlyDictionary_WithKeySelector_ForEmptyCollection()
+        {
+            // Arrange.
+            IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
+
+            // Act.
+            var actualDictionary = emptyCollection.ToReadOnlyDictionary(KeyFunction<int>.Simple);
+
+            // Assert.
+            var expectedDictionary = emptyCollection.ToDictionary(KeyFunction<int>.Simple);
+
+            Assert.NotNull(actualDictionary);
+            Assert.Empty(actualDictionary);
+            Assert.Equal(expectedDictionary, actualDictionary);
+        }
+
+        [Fact]
+        public void Call_ToReadOnlyDictionary_WithKeySelectorAndComparer_ForEmptyCollection()
+        {
+            // Arrange.
+            IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
+
+            // Act.
+            var actualDictionary = emptyCollection.ToReadOnlyDictionary(
+                KeyFunction<int>.Simple, EqualityComparer<Guid>.Default
+            );
+
+            // Assert.
+            var expectedDictionary = emptyCollection.ToDictionary(
+                KeyFunction<int>.Simple, EqualityComparer<Guid>.Default
+            );
+
+            Assert.NotNull(actualDictionary);
+            Assert.Empty(actualDictionary);
+            Assert.Equal(expectedDictionary, actualDictionary);
+        }
+
+        [Fact]
+        public void Call_ToReadOnlyDictionary_WithKeyElementSelector_ForEmptyCollection()
+        {
+            // Arrange.
+            IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
+
+            // Act.
+            var actualDictionary = emptyCollection.ToReadOnlyDictionary(
+                KeyFunction<int>.Simple, IdentityFunction<int>.Instance
+            );
+
+            // Assert.
+            var expectedDictionary = emptyCollection.ToDictionary(
+                KeyFunction<int>.Simple, IdentityFunction<int>.Instance
+            );
+
+            Assert.NotNull(actualDictionary);
+            Assert.Empty(actualDictionary);
+            Assert.Equal(expectedDictionary, actualDictionary);
+        }
+
+        [Fact]
+        public void Call_ToReadOnlyDictionary_WithKeyElementSelectorsAndComparer_ForEmptyCollection()
+        {
+            // Arrange.
+            IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
+
+            // Act.
+            var actualDictionary = emptyCollection.ToReadOnlyDictionary(
+                KeyFunction<int>.Simple,
+                IdentityFunction<int>.Instance,
+                EqualityComparer<Guid>.Default
+            );
+
+            // Assert.
+            var expectedDictionary = emptyCollection.ToDictionary(
+                KeyFunction<int>.Simple,
+                IdentityFunction<int>.Instance,
+                EqualityComparer<Guid>.Default
+            );
+
+            Assert.NotNull(actualDictionary);
+            Assert.Empty(actualDictionary);
+            Assert.Equal(expectedDictionary, actualDictionary);
+        }
+
+        [Fact]
+        public void Call_ToReadOnlyList_ForEmptyCollection()
+        {
+            // Arrange.
+            IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
+
+            // Act.
+            var actualList = emptyCollection.ToReadOnlyList();
+
+            // Assert.
+            var expectedList = emptyCollection.ToList();
+
+            Assert.NotNull(actualList);
+            Assert.Empty(actualList);
+            Assert.Equal(expectedList, actualList);
+        }
+
+        [Fact]
+        public void Call_ToReadOnlyCollection_ForEmptyCollection()
+        {
+            // Arrange.
+            IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
+
+            // Act.
+            var actualCollection = emptyCollection.ToReadOnlyList();
+
+            // Assert.
+            IReadOnlyCollection<int> expectedCollection = emptyCollection.ToList();
+
+            Assert.NotNull(actualCollection);
+            Assert.Empty(actualCollection);
+            Assert.Equal(expectedCollection, actualCollection);
+        }
+
+        [Theory]
+        [InlineData(TestHelper.OneCollectionSize)]
+        [InlineData(TestHelper.TwoCollectionSize)]
+        [InlineData(TestHelper.FiveCollectionSie)]
+        [InlineData(TestHelper.TenCollectionSize)]
+        [InlineData(TestHelper.HundredCollectionSize)]
+        [InlineData(TestHelper.TenThousandCollectionSize)]
+        public void Call_ToReadOnlyDictionary_WithKeySelector_ForCollectionWithSomeItems(int count)
+        {
+            // Arrange.
+            IEnumerable<int> collectionWithSomeItems = TestDataCreator.CreateRandomInt32List(count);
+            var keyGenerator = new IncrementalKeyGenerator<int>();
+            var expectedDictionary = collectionWithSomeItems.ToDictionary(keyGenerator.GetKey);
+
+            // Act.
+            keyGenerator.Reset();
+            var actualDictionary = collectionWithSomeItems.ToReadOnlyDictionary(
+                keyGenerator.GetKey
+            );
+
+            // Assert.
+            Assert.NotNull(actualDictionary);
+            Assert.NotEmpty(actualDictionary);
+            Assert.Equal(expectedDictionary, actualDictionary);
+        }
+
+        [Theory]
+        [InlineData(TestHelper.OneCollectionSize)]
+        [InlineData(TestHelper.TwoCollectionSize)]
+        [InlineData(TestHelper.FiveCollectionSie)]
+        [InlineData(TestHelper.TenCollectionSize)]
+        [InlineData(TestHelper.HundredCollectionSize)]
+        [InlineData(TestHelper.TenThousandCollectionSize)]
+        public void Call_ToReadOnlyDictionary_WithKeySelectorAndComparer_ForCollectionWithSomeItems(
+            int count)
+        {
+            // Arrange.
+            IEnumerable<int> collectionWithSomeItems = TestDataCreator.CreateRandomInt32List(count);
+            var keyGenerator = new IncrementalKeyGenerator<int>();
+            var expectedDictionary = collectionWithSomeItems.ToDictionary(
+                keyGenerator.GetKey, EqualityComparer<long>.Default
+            );
+
+            // Act.
+            keyGenerator.Reset();
+            var actualDictionary = collectionWithSomeItems.ToReadOnlyDictionary(
+                keyGenerator.GetKey, EqualityComparer<long>.Default
+            );
+
+            // Assert.
+            Assert.NotNull(actualDictionary);
+            Assert.NotEmpty(actualDictionary);
+            Assert.Equal(expectedDictionary, actualDictionary);
+        }
+
+        [Theory]
+        [InlineData(TestHelper.OneCollectionSize)]
+        [InlineData(TestHelper.TwoCollectionSize)]
+        [InlineData(TestHelper.FiveCollectionSie)]
+        [InlineData(TestHelper.TenCollectionSize)]
+        [InlineData(TestHelper.HundredCollectionSize)]
+        [InlineData(TestHelper.TenThousandCollectionSize)]
+        public void Call_ToReadOnlyDictionary_WithKeyElementSelector_ForCollectionWithSomeItems(
+            int count)
+        {
+            // Arrange.
+            IEnumerable<int> collectionWithSomeItems = TestDataCreator.CreateRandomInt32List(count);
+            var keyGenerator = new IncrementalKeyGenerator<int>();
+            var expectedDictionary = collectionWithSomeItems.ToDictionary(
+                keyGenerator.GetKey, IdentityFunction<int>.Instance
+            );
+
+            // Act.
+            keyGenerator.Reset();
+            var actualDictionary = collectionWithSomeItems.ToReadOnlyDictionary(
+                keyGenerator.GetKey, IdentityFunction<int>.Instance
+            );
+
+            // Assert.
+            Assert.NotNull(actualDictionary);
+            Assert.NotEmpty(actualDictionary);
+            Assert.Equal(expectedDictionary, actualDictionary);
+        }
+
+        [Theory]
+        [InlineData(TestHelper.OneCollectionSize)]
+        [InlineData(TestHelper.TwoCollectionSize)]
+        [InlineData(TestHelper.FiveCollectionSie)]
+        [InlineData(TestHelper.TenCollectionSize)]
+        [InlineData(TestHelper.HundredCollectionSize)]
+        [InlineData(TestHelper.TenThousandCollectionSize)]
+        public void Call_ToReadOnlyDictionary_WithKeyElementSelectorsAndComparer_ForCollectionWithSomeItems(
+            int count)
+        {
+            // Arrange.
+            IEnumerable<int> collectionWithSomeItems = TestDataCreator.CreateRandomInt32List(count);
+            var keyGenerator = new IncrementalKeyGenerator<int>();
+            var expectedDictionary = collectionWithSomeItems.ToDictionary(
+                keyGenerator.GetKey,
+                IdentityFunction<int>.Instance,
+                EqualityComparer<long>.Default
+            );
+
+            // Act.
+            keyGenerator.Reset();
+            var actualDictionary = collectionWithSomeItems.ToReadOnlyDictionary(
+                keyGenerator.GetKey,
+                IdentityFunction<int>.Instance,
+                EqualityComparer<long>.Default
+            );
+
+            // Assert.
+            Assert.NotNull(actualDictionary);
+            Assert.NotEmpty(actualDictionary);
+            Assert.Equal(expectedDictionary, actualDictionary);
+        }
+
+        [Theory]
+        [InlineData(TestHelper.OneCollectionSize)]
+        [InlineData(TestHelper.TwoCollectionSize)]
+        [InlineData(TestHelper.FiveCollectionSie)]
+        [InlineData(TestHelper.TenCollectionSize)]
+        [InlineData(TestHelper.HundredCollectionSize)]
+        [InlineData(TestHelper.TenThousandCollectionSize)]
+        public void Call_ToReadOnlyList_ForCollectionWithSomeItems(int count)
+        {
+            // Arrange.
+            IEnumerable<int> collectionWithSomeItems = TestDataCreator.CreateRandomInt32List(count);
+            var expectedList = collectionWithSomeItems.ToList();
+
+            // Act.
+            var actualList = collectionWithSomeItems.ToReadOnlyList();
+
+            // Assert.
+            Assert.NotNull(actualList);
+            Assert.NotEmpty(actualList);
+            Assert.Equal(expectedList, actualList);
+        }
+
+        [Theory]
+        [InlineData(TestHelper.OneCollectionSize)]
+        [InlineData(TestHelper.TwoCollectionSize)]
+        [InlineData(TestHelper.FiveCollectionSie)]
+        [InlineData(TestHelper.TenCollectionSize)]
+        [InlineData(TestHelper.HundredCollectionSize)]
+        [InlineData(TestHelper.TenThousandCollectionSize)]
+        public void Call_ToReadOnlyCollection_ForCollectionWithSomeItems(int count)
+        {
+            // Arrange.
+            IEnumerable<int> collectionWithSomeItems = TestDataCreator.CreateRandomInt32List(count);
+            IReadOnlyCollection<int> expectedCollection = collectionWithSomeItems.ToList();
+
+            // Act.
+            var actualCollection = collectionWithSomeItems.ToReadOnlyList();
+
+            // Assert.
+            Assert.NotNull(actualCollection);
+            Assert.NotEmpty(actualCollection);
+            Assert.Equal(expectedCollection, actualCollection);
+        }
+
+        [Fact]
+        public void Call_ToReadOnlyDictionary_WithKeySelector_ForCollectionWithRandomSize()
+        {
+            // Arrange.
+            int count = TestDataCreator.CreateRandomNonNegativeInt32(TestHelper.MaxCollectionSize);
+            IEnumerable<int> collectionWithRandomSize =
+                TestDataCreator.CreateRandomInt32List(count);
+            var keyGenerator = new IncrementalKeyGenerator<int>();
+            var expectedDictionary = collectionWithRandomSize.ToDictionary(keyGenerator.GetKey);
+
+            // Act.
+            keyGenerator.Reset();
+            var actualDictionary = collectionWithRandomSize.ToReadOnlyDictionary(
+                keyGenerator.GetKey
+            );
+
+            // Assert.
+            Assert.NotNull(actualDictionary);
+            if (collectionWithRandomSize.Any())
+            {
+                Assert.NotEmpty(actualDictionary);
+            }
+            else
+            {
+                Assert.Empty(actualDictionary);
+            }
+            Assert.Equal(expectedDictionary, actualDictionary);
+        }
+
+        [Fact]
+        public void Call_ToReadOnlyDictionary_WithKeySelectorAndComparer_ForCollectionWithRandomSize()
+        {
+            // Arrange.
+            int count = TestDataCreator.CreateRandomNonNegativeInt32(TestHelper.MaxCollectionSize);
+            IEnumerable<int> collectionWithRandomSize =
+                TestDataCreator.CreateRandomInt32List(count);
+            var keyGenerator = new IncrementalKeyGenerator<int>();
+            var expectedDictionary = collectionWithRandomSize.ToDictionary(
+                keyGenerator.GetKey, EqualityComparer<long>.Default
+            );
+
+            // Act.
+            keyGenerator.Reset();
+            var actualDictionary = collectionWithRandomSize.ToReadOnlyDictionary(
+                keyGenerator.GetKey, EqualityComparer<long>.Default
+            );
+
+            // Assert.
+            Assert.NotNull(actualDictionary);
+            if (collectionWithRandomSize.Any())
+            {
+                Assert.NotEmpty(actualDictionary);
+            }
+            else
+            {
+                Assert.Empty(actualDictionary);
+            }
+            Assert.Equal(expectedDictionary, actualDictionary);
+        }
+
+        [Fact]
+        public void Call_ToReadOnlyDictionary_WithKeyElementSelector_ForCollectionWithRandomSize()
+        {
+            // Arrange.
+            int count = TestDataCreator.CreateRandomNonNegativeInt32(TestHelper.MaxCollectionSize);
+            IEnumerable<int> collectionWithRandomSize =
+                TestDataCreator.CreateRandomInt32List(count);
+            var keyGenerator = new IncrementalKeyGenerator<int>();
+            var expectedDictionary = collectionWithRandomSize.ToDictionary(
+                keyGenerator.GetKey, IdentityFunction<int>.Instance
+            );
+
+            // Act.
+            keyGenerator.Reset();
+            var actualDictionary = collectionWithRandomSize.ToReadOnlyDictionary(
+                keyGenerator.GetKey, IdentityFunction<int>.Instance
+            );
+
+            // Assert.
+            Assert.NotNull(actualDictionary);
+            if (collectionWithRandomSize.Any())
+            {
+                Assert.NotEmpty(actualDictionary);
+            }
+            else
+            {
+                Assert.Empty(actualDictionary);
+            }
+            Assert.Equal(expectedDictionary, actualDictionary);
+        }
+
+        [Fact]
+        public void Call_ToReadOnlyDictionary_WithKeyElementSelectorsAndComparer_ForCollectionWithRandomSize()
+        {
+            // Arrange.
+            int count = TestDataCreator.CreateRandomNonNegativeInt32(TestHelper.MaxCollectionSize);
+            IEnumerable<int> collectionWithRandomSize =
+                TestDataCreator.CreateRandomInt32List(count);
+            var keyGenerator = new IncrementalKeyGenerator<int>();
+            var expectedDictionary = collectionWithRandomSize.ToDictionary(
+                keyGenerator.GetKey,
+                IdentityFunction<int>.Instance,
+                EqualityComparer<long>.Default
+            );
+
+            // Act.
+            keyGenerator.Reset();
+            var actualDictionary = collectionWithRandomSize.ToReadOnlyDictionary(
+                keyGenerator.GetKey,
+                IdentityFunction<int>.Instance,
+                EqualityComparer<long>.Default
+            );
+
+            // Assert.
+            Assert.NotNull(actualDictionary);
+            if (collectionWithRandomSize.Any())
+            {
+                Assert.NotEmpty(actualDictionary);
+            }
+            else
+            {
+                Assert.Empty(actualDictionary);
+            }
+            Assert.Equal(expectedDictionary, actualDictionary);
+        }
+
+        [Fact]
+        public void Call_ToReadOnlyList_ForCollectionWithRandomSize()
+        {
+            // Arrange.
+            int count = TestDataCreator.CreateRandomNonNegativeInt32(TestHelper.MaxCollectionSize);
+            IEnumerable<int> collectionWithRandomSize =
+                TestDataCreator.CreateRandomInt32List(count);
+            var expectedList = collectionWithRandomSize.ToList();
+
+            // Act.
+            var actualList = collectionWithRandomSize.ToReadOnlyList();
+
+            // Assert.
+            Assert.NotNull(actualList);
+            if (collectionWithRandomSize.Any())
+            {
+                Assert.NotEmpty(actualList);
+            }
+            else
+            {
+                Assert.Empty(actualList);
+            }
+            Assert.Equal(expectedList, actualList);
+        }
+
+        [Fact]
+        public void Call_ToReadOnlyCollection_ForCollectionWithRandomSize()
+        {
+            // Arrange.
+            int count = TestDataCreator.CreateRandomNonNegativeInt32(TestHelper.MaxCollectionSize);
+            IEnumerable<int> collectionWithRandomSize =
+                TestDataCreator.CreateRandomInt32List(count);
+            IReadOnlyCollection<int> expectedCollection = collectionWithRandomSize.ToList();
+
+            // Act.
+            var actualCollection = collectionWithRandomSize.ToReadOnlyList();
+
+            // Assert.
+            Assert.NotNull(actualCollection);
+            if (collectionWithRandomSize.Any())
+            {
+                Assert.NotEmpty(actualCollection);
+            }
+            else
+            {
+                Assert.Empty(actualCollection);
+            }
+            Assert.Equal(expectedCollection, actualCollection);
+        }
 
         #endregion
 

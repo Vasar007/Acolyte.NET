@@ -22,7 +22,6 @@ let ``Method "skipSafe" throw an exception if argument is null`` () =
 [<InlineData(TestHelper.NegativeTenCollectionSize)>]
 [<InlineData(TestHelper.NegativeHundredCollectionSize)>]
 [<InlineData(TestHelper.NegativeTenThousandCollectionSize)>]
-[<InlineData(TestHelper.NegativeMaxCollectionSize)>]
 let ``Method "skipSafe" does not skip any items if "count" parameter is not positive``
     (count: int32) =
     // Arrange.
@@ -45,7 +44,6 @@ let ``Method "skipSafe" does not skip any items if "count" parameter is not posi
 [<InlineData(TestHelper.TenCollectionSize)>]
 [<InlineData(TestHelper.HundredCollectionSize)>]
 [<InlineData(TestHelper.TenThousandCollectionSize)>]
-[<InlineData(TestHelper.MaxCollectionSize)>]
 let ``Method "skipSafe" can skip specified number of items if "count" parameter is less than collection length``
     (count: int32) =
     // Arrange.
@@ -73,7 +71,6 @@ let ``Method "skipSafe" can skip specified number of items if "count" parameter 
 [<InlineData(TestHelper.TenCollectionSize)>]
 [<InlineData(TestHelper.HundredCollectionSize)>]
 [<InlineData(TestHelper.TenThousandCollectionSize)>]
-[<InlineData(TestHelper.MaxCollectionSize)>]
 let ``Method "skipSafe" can skip specified number of items if "count" parameter is equal to collection length``
     (count: int32) =
     // Arrange.
@@ -96,7 +93,6 @@ let ``Method "skipSafe" can skip specified number of items if "count" parameter 
 [<InlineData(TestHelper.TenCollectionSize)>]
 [<InlineData(TestHelper.HundredCollectionSize)>]
 [<InlineData(TestHelper.TenThousandCollectionSize)>]
-[<InlineData(TestHelper.MaxCollectionSize)>]
 let ``Method "skipSafe" can skip specified number of items if "count" parameter is greater than collection length``
     (count: int32) =
     // Arrange.
