@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Acolyte.Tests
+namespace Acolyte.Tests.Functions
 {
     public static class KeyFunction<TElement>
     {

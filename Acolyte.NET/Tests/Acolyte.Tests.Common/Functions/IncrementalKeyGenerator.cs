@@ -1,6 +1,6 @@
 ﻿using System.Threading;
 
-namespace Acolyte.Tests
+namespace Acolyte.Tests.Functions
 {
     public sealed class IncrementalKeyGenerator<TElement>
     {

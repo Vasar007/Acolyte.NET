@@ -4,7 +4,7 @@ using System.Linq;
 using Acolyte.Assertions;
 using Acolyte.Collections;
 
-namespace Acolyte.Tests
+namespace Acolyte.Tests.Creators
 {
     // TODO: move some methods to Acolyte.Charp assembly because it can be useful.
     public static class TestDataCreator

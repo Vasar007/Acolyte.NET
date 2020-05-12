@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Xunit;
-using Acolyte.Tests;
-using System;
 using Acolyte.Common;
+using Acolyte.Tests;
+using Acolyte.Tests.Creators;
+using Acolyte.Tests.Functions;
 
 namespace Acolyte.Collections.Tests
 {
