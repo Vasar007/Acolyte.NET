@@ -13,7 +13,7 @@ So, do not reinvent the wheel, use this library instead!
 |                      | Stable (master)                                                                                  | Pre-release (develop)                     |
 | -------------------: | :----------------------------------------------------------------------------------------------: | :---------------------------------------: |
 |  **Build**           | ![AppVeyor branch](https://img.shields.io/appveyor/build/Vasar007/acolyte-net/master) | ![AppVeyor branch](https://img.shields.io/appveyor/build/Vasar007/acolyte-net/develop) |
-|  **GitHub Release**  | ![GitHub release (latest by date)](https://img.shields.io/github/v/release/Vasar007/Acolyte.NET) |               -                           |
+|  **GitHub Release**  | ![GitHub release (latest by date)](https://img.shields.io/github/v/release/Vasar007/Acolyte.NET) | — |
 
 ## Installation
 
