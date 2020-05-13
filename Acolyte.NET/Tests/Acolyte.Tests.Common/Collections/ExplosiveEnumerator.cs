@@ -37,12 +37,15 @@ namespace Acolyte.Tests.Collections
 
         public bool MoveNext()
         {
-            if (_currentIndex == _explosiveIndex) throw new ExplosiveException(_explosiveIndex);
 
             if (!_originalEnumerator.MoveNext()) return false;
 
             ++_currentIndex;
             Current = _originalEnumerator.Current;
+
+            // Check explosion condition.
+            if (_currentIndex == _explosiveIndex) throw new ExplosiveException(_explosiveIndex);
+
             return true;
         }
 
