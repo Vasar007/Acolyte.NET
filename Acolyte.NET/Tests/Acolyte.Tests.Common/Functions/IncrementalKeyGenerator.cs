@@ -6,9 +6,16 @@ namespace Acolyte.Tests.Functions
     {
         private long _counter;
 
+
         public IncrementalKeyGenerator()
         {
             _counter = 0;
+        }
+
+        public IncrementalKeyGenerator(
+            long startValue)
+        {
+            _counter = startValue;
         }
 
         // Keep parameter to allow use this function directly in LINQ methods.
