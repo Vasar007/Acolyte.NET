@@ -1,20 +1,19 @@
 # Acolyte.NET
 
-[![nuget](https://img.shields.io/nuget/v/Acolyte.NET.svg)](https://www.nuget.org/packages/Acolyte.NET)
-[![License](https://img.shields.io/hexpm/l/plug.svg)](https://github.com/Vasar007/Acolyte.NET/blob/master/LICENSE)
-[![AppVeyor branch](https://img.shields.io/appveyor/ci/Vasar007/acolyte-net/master.svg)](https://ci.appveyor.com/project/Vasar007/acolyte.net)
-
 ![Acolyte.NET icon](Media/AcolyteIcon.png "Acolyte.NET icon")
 
 Acolyte.NET is a helper library with a lot of useful classes and extension methods that you need in your everyday work.
 So, do not reinvent the wheel, use this library instead!
 
+[![nuget](https://img.shields.io/nuget/v/Acolyte.NET.svg)](https://www.nuget.org/packages/Acolyte.NET)
+[![License](https://img.shields.io/hexpm/l/plug.svg)](https://github.com/Vasar007/Acolyte.NET/blob/master/LICENSE)
+
 ## Build and Release Status
 
-|                      |           Stable (master)                        |            Pre-release (develop)          |
-| -------------------: | :----------------------------------------------: | :---------------------------------------: |
-|           **Build**  |       ![VSTS][master-build-badge]                |       ![VSTS][develop-build-badge]        |
-|  **GitHub Release**  |[![Github Release][github-rel-badge]][github-rel] |               -                           |
+|                      | Stable (master)                                                                                  | Pre-release (develop)                     |
+| -------------------: | :----------------------------------------------------------------------------------------------: | :---------------------------------------: |
+|  **Build**           | ![AppVeyor branch](https://img.shields.io/appveyor/build/Vasar007/acolyte-net/master) | ![AppVeyor branch](https://img.shields.io/appveyor/build/Vasar007/acolyte-net/develop) |
+|  **GitHub Release**  | ![GitHub release (latest by date)](https://img.shields.io/github/v/release/Vasar007/Acolyte.NET) |               -                           |
 
 ## Installation
 
