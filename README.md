@@ -9,6 +9,13 @@
 Acolyte.NET is a helper library with a lot of useful classes and extension methods that you need in your everyday work.
 So, do not reinvent the wheel, use this library instead!
 
+## Build and Release Status
+
+|                      |           Stable (master)                        |            Pre-release (develop)          |
+| -------------------: | :----------------------------------------------: | :---------------------------------------: |
+|           **Build**  |       ![VSTS][master-build-badge]                |       ![VSTS][develop-build-badge]        |
+|  **GitHub Release**  |[![Github Release][github-rel-badge]][github-rel] |               -                           |
+
 ## Installation
 
 Install [NuGet package](https://www.nuget.org/packages/Acolyte.NET).
