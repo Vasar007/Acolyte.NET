@@ -6,6 +6,7 @@ using Acolyte.Common;
 using Acolyte.Tests;
 using Acolyte.Tests.Creators;
 using Acolyte.Tests.Functions;
+using Acolyte.Tests.Collections;
 
 namespace Acolyte.Collections.Tests
 {
@@ -86,6 +87,25 @@ namespace Acolyte.Collections.Tests
             bool actualResult = collectionWithRandomSize.IsNullOrEmpty();
 
             // Assert.
+            Assert.Equal(expectedResult, actualResult);
+        }
+
+        [Fact]
+        public void IsNullOrEmpty_ShouldLookOnlyAtFirstItemFromCollection()
+        {
+            // Arrange.
+            const int count = 2;
+            var explosiveCollection = ExplosiveCollection.Create(
+                TestDataCreator.CreateRandomInt32List(count),
+                explosiveIndex: Constants.FirstIndex + 1
+            );
+            bool expectedResult = !explosiveCollection.Any();
+
+            // Act.
+            bool actualResult = explosiveCollection.IsNullOrEmpty();
+
+            // Assert.
+            Assert.Equal(expected: 1, explosiveCollection.VisitedItemsNumber);
             Assert.Equal(expectedResult, actualResult);
         }
 
@@ -233,15 +253,14 @@ namespace Acolyte.Collections.Tests
             IEnumerable<int> collectionWithRandomSize =
                 TestDataCreator.CreateRandomInt32List(count);
             int defaultResult = TestDataCreator.CreateRandomInt32();
+            int expectedValue = collectionWithRandomSize.Any()
+                ? collectionWithRandomSize.First()
+                : defaultResult;
 
             // Act.
             int actualValue = collectionWithRandomSize.FirstOrDefault(defaultResult);
 
             // Assert.
-            int expectedValue = collectionWithRandomSize.Any()
-                ? collectionWithRandomSize.First()
-                : defaultResult;
-
             Assert.Equal(expectedValue, actualValue);
         }
 
@@ -254,15 +273,14 @@ namespace Acolyte.Collections.Tests
                 TestDataCreator.CreateRandomInt32List(count);
             int defaultResult = TestDataCreator.CreateRandomInt32();
             Func<int, bool> predicate = TestDataCreator.IsEven;
+            int expectedValue = collectionWithRandomSize.Any()
+                ? collectionWithRandomSize.First(predicate)
+                : defaultResult;
 
             // Act.
             int actualValue = collectionWithRandomSize.FirstOrDefault(predicate, defaultResult);
 
             // Assert.
-            int expectedValue = collectionWithRandomSize.Any()
-                ? collectionWithRandomSize.First(predicate)
-                : defaultResult;
-
             Assert.Equal(expectedValue, actualValue);
         }
 
@@ -279,6 +297,63 @@ namespace Acolyte.Collections.Tests
             int actualValue = collectionWithRandomSize.FirstOrDefault(_ => false, expectedValue);
 
             // Assert.
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Fact]
+        public void FirstOrDefault_ShouldLookOnlyAtFirstItemFromCollection()
+        {
+            // Arrange.
+            const int count = 2;
+            var explosiveCollection = ExplosiveCollection.Create(
+                TestDataCreator.CreateRandomInt32List(count),
+                explosiveIndex: Constants.FirstIndex + 1
+            );
+            int expectedValue = explosiveCollection.First();
+
+            // Act.
+            int actualValue = explosiveCollection.FirstOrDefault(default);
+
+            // Assert.
+            Assert.Equal(expected: 1, explosiveCollection.VisitedItemsNumber);
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Fact]
+        public void FirstOrDefault_WithPredicate_ShouldLookOnlyAtFirstFoundItemFromCollection()
+        {
+            // Arrange.
+            // Do not use random because we should find exactly second item.
+            var collection = new[] { 1, 2, 3, 4 };
+            var explosiveCollection = ExplosiveCollection.Create(
+                collection,
+                explosiveIndex: Constants.FirstIndex + 2
+            );
+            int expectedValue = explosiveCollection.Skip(1).First();
+
+            // Act.
+            int actualValue = explosiveCollection.FirstOrDefault(
+                i => i.Equals(expectedValue), default
+            );
+
+            // Assert.
+            Assert.Equal(expected: 2, explosiveCollection.VisitedItemsNumber);
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Fact]
+        public void FirstOrDefault_WithPredicate_ShouldLookWholeCollectionToFindItem()
+        {
+            // Arrange.
+            var collection = new[] { 1, 2, 3, 4 };
+            var explosiveCollection = ExplosiveCollection.CreateNotExplosive(collection);
+            int expectedValue = explosiveCollection.Skip(1).First();
+
+            // Act.
+            int actualValue = explosiveCollection.FirstOrDefault(_ => false, expectedValue);
+
+            // Assert.
+            Assert.Equal(expected: collection.Length, explosiveCollection.VisitedItemsNumber);
             Assert.Equal(expectedValue, actualValue);
         }
 
@@ -472,6 +547,41 @@ namespace Acolyte.Collections.Tests
             int actualValue = collectionWithRandomSize.LastOrDefault(_ => false, expectedValue);
 
             // Assert.
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Fact]
+        public void LastOrDefault_WithPredicate_ShouldLookWholeCollectionToFindItemAfterItFoundSomething()
+        {
+            // Arrange.
+            var collection = new[] { 1, 2, 3, 4 };
+            var explosiveCollection = ExplosiveCollection.CreateNotExplosive(collection);
+            int expectedValue = explosiveCollection.Skip(1).First();
+
+            // Act.
+            int actualValue = explosiveCollection.LastOrDefault(_ => false, expectedValue);
+
+            // Assert.
+            Assert.Equal(expected: collection.Length, explosiveCollection.VisitedItemsNumber);
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Fact]
+        public void LastOrDefault_WithPredicate_ShouldLookWholeCollectionToFindItem()
+        {
+            // Arrange.
+            // Do not use random because we should find exactly second item.
+            var collection = new[] { 1, 2, 3, 4 };
+            var explosiveCollection = ExplosiveCollection.CreateNotExplosive(collection);
+            int expectedValue = explosiveCollection.Skip(1).First();
+
+            // Act.
+            int actualValue = explosiveCollection.LastOrDefault(
+                i => i.Equals(expectedValue), default
+            );
+
+            // Assert.
+            Assert.Equal(collection.Length, explosiveCollection.VisitedItemsNumber);
             Assert.Equal(expectedValue, actualValue);
         }
 
@@ -714,6 +824,63 @@ namespace Acolyte.Collections.Tests
 
             // Assert.
             Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Fact]
+        public void SingleOrDefault_ShouldLookOnlyAtFirstAndSecondItemsFromCollectionBeforeThrow()
+        {
+            // Arrange.
+            var collection = new[] { 1, 2, 3, 4 };
+            var explosiveCollection = ExplosiveCollection.Create(
+                collection,
+                explosiveIndex: Constants.FirstIndex + 2
+            );
+            int expectedValue = explosiveCollection.First();
+
+            // Act & Assert.
+            Assert.Throws(
+                Error.MoreThanOneElement().GetType(),
+                () => explosiveCollection.SingleOrDefault(default)
+            );
+
+            Assert.Equal(expected: 2, explosiveCollection.VisitedItemsNumber);
+        }
+
+        [Fact]
+        public void SingleOrDefault_WithPredicate_ShouldLookOnlyWholeCollectionToEnsureAppropriateItemIsSingle()
+        {
+            // Arrange.
+            // Do not use random because we should find exactly second item.
+            var collection = new[] { 1, 2, 3, 4 };
+            var explosiveCollection = ExplosiveCollection.CreateNotExplosive(collection);
+            int expectedValue = explosiveCollection.Skip(1).First();
+
+            // Act.
+            int actualValue = explosiveCollection.SingleOrDefault(
+                i => i.Equals(expectedValue), default
+            );
+
+            // Assert.
+            Assert.Equal(collection.Length, explosiveCollection.VisitedItemsNumber);
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Fact]
+        public void SingleOrDefault_WithPredicate_ShouldThrowAsSoonAsSecondAppropriateItemWasFound()
+        {
+            // Arrange.
+            // Do not use random because we should find exactly two equal items.
+            var collection = new[] { 1, 2, 3, 2, 5 };
+            var explosiveCollection = ExplosiveCollection.CreateNotExplosive(collection);
+            int expectedValue = explosiveCollection.Skip(1).First();
+
+            // Act & Assert.
+            Assert.Throws(
+             Error.MoreThanOneElement().GetType(),
+             () => explosiveCollection.SingleOrDefault(i => i.Equals(expectedValue), default)
+         );
+
+            Assert.Equal(expected: 4, explosiveCollection.VisitedItemsNumber);
         }
 
         #endregion
