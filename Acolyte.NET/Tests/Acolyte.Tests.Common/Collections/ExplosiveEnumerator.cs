@@ -4,6 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using Acolyte.Assertions;
 using Acolyte.Common;
 using Acolyte.Exceptions;
+using Acolyte.Tests.Common;
 
 namespace Acolyte.Tests.Collections
 {
@@ -13,9 +14,9 @@ namespace Acolyte.Tests.Collections
 
         private readonly int _explosiveIndex;
 
-        private bool _disposed;
+        private readonly CounterInt32 _visitedItemsNumber;
 
-        private int _currentIndex;
+        private bool _disposed;
 
         [AllowNull, MaybeNull]
         public T Current { get; private set; }
@@ -25,26 +26,26 @@ namespace Acolyte.Tests.Collections
 
         public ExplosiveEnumerator(
             IEnumerator<T> originalEnumerator,
-            int explosiveIndex)
+            int explosiveIndex,
+            CounterInt32 visitedItemsNumber)
         {
             _originalEnumerator = originalEnumerator.ThrowIfNull(nameof(originalEnumerator));
-            _explosiveIndex =
-                explosiveIndex.ThrowIfValueIsOutOfRange(nameof(explosiveIndex), 0, int.MaxValue);
+            _explosiveIndex = explosiveIndex.ThrowIfValueIsOutOfRange(
+                nameof(explosiveIndex), Constants.NotFoundIndex, int.MaxValue
+            );
+            _visitedItemsNumber = visitedItemsNumber.ThrowIfNull(nameof(visitedItemsNumber));
 
             Current = default;
-            _currentIndex = Constants.NotFoundIndex;
         }
 
         public bool MoveNext()
         {
-
             if (!_originalEnumerator.MoveNext()) return false;
 
-            ++_currentIndex;
+            _visitedItemsNumber.Increment();
             Current = _originalEnumerator.Current;
 
-            // Check explosion condition.
-            if (_currentIndex == _explosiveIndex) throw new ExplosiveException(_explosiveIndex);
+            if (ShouldExplode()) throw new ExplosiveException(_explosiveIndex);
 
             return true;
         }
@@ -66,6 +67,11 @@ namespace Acolyte.Tests.Collections
         }
 
         #endregion
+
+        private bool ShouldExplode()
+        {
+            return _visitedItemsNumber.Value == _explosiveIndex + 1;
+        }
     }
 
 
@@ -73,11 +79,13 @@ namespace Acolyte.Tests.Collections
     {
         public static ExplosiveEnumerator<T> Create<T>(
             IEnumerator<T> originalEnumerator,
-            int explosiveIndex)
+            int explosiveIndex,
+            CounterInt32 visitedItemsNumber)
         {
             return new ExplosiveEnumerator<T>(
                 originalEnumerator: originalEnumerator,
-                explosiveIndex: explosiveIndex
+                explosiveIndex: explosiveIndex,
+                visitedItemsNumber: visitedItemsNumber
             );
         }
     }

@@ -29,7 +29,8 @@ namespace Acolyte.Tests.Creators
 
             const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
             return new string(
-                Enumerable.Repeat(chars, length)
+                Enumerable
+                    .Repeat(chars, length)
                     .Select(str => str[random.Next(str.Length)])
                     .ToArray()
             );
@@ -48,14 +49,14 @@ namespace Acolyte.Tests.Creators
             random ??= RandomInstance;
 
             // Random.Next lower bound is equal to zero.
-            return random.Next(maxValue);
+            return random.Next(GetUpperBound(maxValue));
         }
 
         public static int CreateRandomInt32(int minValue, int maxValue, Random? random = null)
         {
             random ??= RandomInstance;
 
-            return random.Next(minValue, maxValue);
+            return random.Next(minValue, GetUpperBound(maxValue));
         }
 
         public static int CreateRandomInt32(Random? random = null)
@@ -90,7 +91,7 @@ namespace Acolyte.Tests.Creators
             random ??= RandomInstance;
 
             // Random.Next return non-negative values.
-            int count = random.Next();
+            int count = random.Next(GetUpperBound(TestHelper.MaxCollectionSize));
             return CreateRandomInt32List(count, random);
         }
 
@@ -109,6 +110,13 @@ namespace Acolyte.Tests.Creators
             Random? random = null)
         {
             return ChoiceWithIndex(source, random).item;
+        }
+
+        private static int GetUpperBound(int potentionUpperBound)
+        {
+            return potentionUpperBound == int.MaxValue
+                ? potentionUpperBound
+                : potentionUpperBound + 1;
         }
     }
 }

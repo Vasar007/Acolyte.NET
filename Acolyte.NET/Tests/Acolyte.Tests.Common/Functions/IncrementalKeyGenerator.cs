@@ -1,32 +1,32 @@
-﻿using System.Threading;
+﻿using Acolyte.Tests.Common;
 
 namespace Acolyte.Tests.Functions
 {
     public sealed class IncrementalKeyGenerator<TElement>
     {
-        private long _counter;
+        private readonly CounterInt64 _counter;
 
 
         public IncrementalKeyGenerator()
         {
-            _counter = 0;
+            _counter = new CounterInt64();
         }
 
         public IncrementalKeyGenerator(
             long startValue)
         {
-            _counter = startValue;
+            _counter = new CounterInt64(startValue);
         }
 
         // Keep parameter to allow use this function directly in LINQ methods.
         public long GetKey(TElement _)
         {
-            return Interlocked.Increment(ref _counter);
+            return _counter.ExchangeIncrement();
         }
 
         public long Reset()
         {
-            return Interlocked.Exchange(ref _counter, 0);
+            return _counter.Reset();
         }
     }
 }

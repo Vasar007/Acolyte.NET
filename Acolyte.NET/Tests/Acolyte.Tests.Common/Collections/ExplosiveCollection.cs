@@ -1,7 +1,8 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using Acolyte.Assertions;
+using Acolyte.Common;
+using Acolyte.Tests.Common;
 
 namespace Acolyte.Tests.Collections
 {
@@ -11,14 +12,20 @@ namespace Acolyte.Tests.Collections
 
         private readonly int _explosiveIndex;
 
+        private readonly CounterInt32 _visitedItemsNumber;
+        public int VisitedItemsNumber => _visitedItemsNumber.Value;
+
 
         public ExplosiveCollection(
             IEnumerable<T> originalCollection,
             int explosiveIndex)
         {
             _originalCollection = originalCollection.ThrowIfNull(nameof(originalCollection));
-            _explosiveIndex =
-                explosiveIndex.ThrowIfValueIsOutOfRange(nameof(explosiveIndex), 0, int.MaxValue);
+            _explosiveIndex = explosiveIndex.ThrowIfValueIsOutOfRange(
+                nameof(explosiveIndex), Constants.NotFoundIndex, int.MaxValue
+            );
+
+            _visitedItemsNumber = new CounterInt32();
         }
 
         #region IEnumerable<T> Implementation
@@ -27,7 +34,8 @@ namespace Acolyte.Tests.Collections
         {
             return ExplosiveEnumerator.Create(
                 _originalCollection.GetEnumerator(),
-                _explosiveIndex
+                _explosiveIndex,
+                _visitedItemsNumber.Reset()
             );
         }
 
@@ -52,6 +60,15 @@ namespace Acolyte.Tests.Collections
             return new ExplosiveCollection<T>(
                 originalCollection: originalCollection,
                 explosiveIndex: explosiveIndex
+            );
+        }
+
+        public static ExplosiveCollection<T> CreateNotExplosive<T>(
+           IEnumerable<T> originalCollection)
+        {
+            return new ExplosiveCollection<T>(
+                originalCollection: originalCollection,
+                explosiveIndex: Constants.NotFoundIndex
             );
         }
     }
