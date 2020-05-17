@@ -320,14 +320,13 @@ namespace Acolyte.Collections.Tests
         }
 
         [Fact]
-        public void FirstOrDefault_WithPredicate_ShouldLookOnlyAtFirstFoundItemFromCollection()
+        public void FirstOrDefault_WithPredicate_ShouldStopAfterFoundItemFromCollection()
         {
             // Arrange.
             // Do not use random because we should find exactly second item.
             var collection = new[] { 1, 2, 3, 4 };
             var explosiveCollection = ExplosiveCollection.Create(
-                collection,
-                explosiveIndex: Constants.FirstIndex + 2
+                collection, explosiveIndex: Constants.FirstIndex + 2
             );
             int expectedValue = explosiveCollection.Skip(1).First();
 
@@ -832,8 +831,7 @@ namespace Acolyte.Collections.Tests
             // Arrange.
             var collection = new[] { 1, 2, 3, 4 };
             var explosiveCollection = ExplosiveCollection.Create(
-                collection,
-                explosiveIndex: Constants.FirstIndex + 2
+                collection, explosiveIndex: Constants.FirstIndex + 2
             );
             int expectedValue = explosiveCollection.First();
 
@@ -847,7 +845,7 @@ namespace Acolyte.Collections.Tests
         }
 
         [Fact]
-        public void SingleOrDefault_WithPredicate_ShouldLookOnlyWholeCollectionToEnsureAppropriateItemIsSingle()
+        public void SingleOrDefault_WithPredicate_ShouldLookWholeCollectionToEnsureAppropriateItemIsSingle()
         {
             // Arrange.
             // Do not use random because we should find exactly second item.
@@ -1238,6 +1236,116 @@ namespace Acolyte.Collections.Tests
 
             // Assert.
             Assert.Equal(expectedIndex, actualIndex);
+        }
+
+        [Fact]
+        public void IndexOf_ShouldStopAfterFoundItemFromCollection()
+        {
+            // Arrange.
+            // Do not use random because we should find exactly second item.
+            var collection = new[] { 1, 2, 3, 4 };
+            var explosiveCollection = ExplosiveCollection.Create(
+                collection, explosiveIndex: Constants.FirstIndex + 2
+            );
+            int expectedValue = explosiveCollection.Skip(1).First();
+            const int expectedIndex = 1;
+
+            // Act.
+            int actualIndex = explosiveCollection.IndexOf(i => i.Equals(expectedValue));
+
+            // Assert.
+            Assert.Equal(expected: 2, explosiveCollection.VisitedItemsNumber);
+            Assert.Equal(expectedIndex, actualIndex);
+        }
+
+        [Fact]
+        public void IndexOf_ShouldLookWholeCollectionToFindItem()
+        {
+            // Arrange.
+            var collection = new[] { 1, 2, 3, 4 };
+            var explosiveCollection = ExplosiveCollection.CreateNotExplosive(collection);
+            int expectedValue = Constants.NotFoundIndex;
+
+            // Act.
+            int actualIndex = explosiveCollection.IndexOf(_ => false);
+
+            // Assert.
+            Assert.Equal(expected: collection.Length, explosiveCollection.VisitedItemsNumber);
+            Assert.Equal(expectedValue, actualIndex);
+        }
+
+        [Fact]
+        public void IndexOf_Item_ShouldStopAfterFoundItemFromCollection()
+        {
+            // Arrange.
+            // Do not use random because we should find exactly second item.
+            var collection = new[] { 1, 2, 3, 4 };
+            var explosiveCollection = ExplosiveCollection.Create(
+                collection, explosiveIndex: Constants.FirstIndex + 2
+            );
+            int value = explosiveCollection.Skip(1).First();
+            const int expectedIndex = 1;
+
+            // Act.
+            int actualIndex = explosiveCollection.IndexOf(value);
+
+            // Assert.
+            Assert.Equal(expected: 2, explosiveCollection.VisitedItemsNumber);
+            Assert.Equal(expectedIndex, actualIndex);
+        }
+
+        [Fact]
+        public void IndexOf_Item_ShouldLookWholeCollectionToFindItem()
+        {
+            // Arrange.
+            var collection = new[] { 1, 2, 3, 4 };
+            var explosiveCollection = ExplosiveCollection.CreateNotExplosive(collection);
+            int expectedValue = Constants.NotFoundIndex;
+
+            // Act.
+            int actualIndex = explosiveCollection.IndexOf(value: 0);
+
+            // Assert.
+            Assert.Equal(expected: collection.Length, explosiveCollection.VisitedItemsNumber);
+            Assert.Equal(expectedValue, actualIndex);
+        }
+
+        [Fact]
+        public void IndexOf_ItemWithComparer_ShouldStopAfterFoundItemFromCollection()
+        {
+            // Arrange.
+            // Do not use random because we should find exactly second item.
+            var collection = new[] { 1, 2, 3, 4 };
+            var explosiveCollection = ExplosiveCollection.Create(
+                collection, explosiveIndex: Constants.FirstIndex + 2
+            );
+            int value = explosiveCollection.Skip(1).First();
+            const int expectedIndex = 1;
+
+            // Act.
+            int actualIndex = explosiveCollection.IndexOf(
+                value, EqualityComparer<int>.Default
+            );
+
+            // Assert.
+            Assert.Equal(expected: 2, explosiveCollection.VisitedItemsNumber);
+            Assert.Equal(expectedIndex, actualIndex);
+        }
+
+        [Fact]
+        public void IndexOf_ItemWithComparer_ShouldLookWholeCollectionToFindItem()
+        {
+            // Arrange.
+            var collection = new[] { 1, 2, 3, 4 };
+            var explosiveCollection = ExplosiveCollection.CreateNotExplosive(collection);
+            int expectedValue = Constants.NotFoundIndex;
+
+            // Act.
+            int actualIndex = explosiveCollection.IndexOf(value: 0, EqualityComparer<int>.Default);
+
+            // Assert.
+            Assert.Equal(expected: collection.Length, explosiveCollection.VisitedItemsNumber);
+            Assert.Equal(expectedValue, actualIndex);
         }
 
         #endregion
