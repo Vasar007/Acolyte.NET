@@ -3,6 +3,7 @@
 [![nuget](https://img.shields.io/nuget/v/Acolyte.NET.svg)](https://www.nuget.org/packages/Acolyte.NET)
 [![License](https://img.shields.io/hexpm/l/plug.svg)](https://github.com/Vasar007/Acolyte.NET/blob/master/LICENSE)
 [![AppVeyor branch](https://img.shields.io/appveyor/ci/Vasar007/acolyte-net/master.svg)](https://ci.appveyor.com/project/Vasar007/acolyte.net)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FVasar007%2FAcolyte.NET.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2FVasar007%2FAcolyte.NET?ref=badge_shield)
 
 ![Acolyte.NET icon](Media/AcolyteIcon.png "Acolyte.NET icon")
 
@@ -176,3 +177,6 @@ Target .NET Standard is 2.1 for libraries. Version of C# is 8.0, version of F# i
 ## License information
 
 This project is licensed under the terms of the [Apache License 2.0](LICENSE).
+
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FVasar007%2FAcolyte.NET.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FVasar007%2FAcolyte.NET?ref=badge_large)
