@@ -7,6 +7,7 @@ So, do not reinvent the wheel, use this library instead!
 
 [![nuget](https://img.shields.io/nuget/v/Acolyte.NET.svg)](https://www.nuget.org/packages/Acolyte.NET)
 [![License](https://img.shields.io/hexpm/l/plug.svg)](https://github.com/Vasar007/Acolyte.NET/blob/master/LICENSE)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FVasar007%2FAcolyte.NET.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2FVasar007%2FAcolyte.NET?ref=badge_shield)
 
 ## Build and Release Status
 
@@ -182,3 +183,5 @@ Target .NET Standard is 2.1 for libraries. Version of C# is 8.0, version of F# i
 ## License information
 
 This project is licensed under the terms of the [Apache License 2.0](LICENSE).
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FVasar007%2FAcolyte.NET.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FVasar007%2FAcolyte.NET?ref=badge_large)
