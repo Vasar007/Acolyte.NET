@@ -22,6 +22,17 @@ namespace Acolyte.Common.Monads
         }
 
         [return: MaybeNull]
+        public static TResult Maybe<TMaybe, TResult>(this TMaybe? maybe, Func<TMaybe, TResult> just)
+            where TMaybe : struct
+        {
+            just.ThrowIfNull(nameof(just));
+
+            return !maybe.HasValue
+                ? default
+                : just(maybe.Value);
+        }
+
+        [return: MaybeNull]
         public static TResult With<TSource, TResult>([AllowNull] this TSource source,
             Func<TSource, TResult> func)
             where TSource : class?
