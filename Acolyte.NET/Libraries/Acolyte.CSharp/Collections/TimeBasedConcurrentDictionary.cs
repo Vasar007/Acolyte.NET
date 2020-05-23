@@ -262,7 +262,11 @@ namespace Acolyte.Collections
             return _dictionary.ContainsKey(key);
         }
 
+        // Suppress warning because ConcurrentDictionary from .NET does not have
+        // nullable attributes.
+#pragma warning disable CS8767 // Nullability of reference types in type of parameter doesn't match implicitly implemented member (possibly because of nullability attributes).
         public bool TryGetValue([DisallowNull] TKey key, [MaybeNullWhen(false)] out TValue value)
+#pragma warning restore CS8767 // Nullability of reference types in type of parameter doesn't match implicitly implemented member (possibly because of nullability attributes).
         {
             return _dictionary.TryGetValue(key, out value);
         }

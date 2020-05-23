@@ -643,10 +643,10 @@ namespace Acolyte.Collections
         /// The type of the elements of <paramref name="source" />.
         /// </typeparam>
         /// <param name="source">
-        /// A sequence of values to determine the minimum and maximum values of.
+        /// A sequence of values to determine the minimum value of.
         /// </param>
         /// <param name="comparer">An element comparer.</param>
-        /// <returns>The minimum and maximum values in the sequence.</returns>
+        /// <returns>The minimum value in the sequence.</returns>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="source" /> is <c>null</c>. -or-
         /// <paramref name="comparer" /> is <c>null</c>.
@@ -695,16 +695,16 @@ namespace Acolyte.Collections
         }
 
         /// <summary>
-        /// Returns the minimum value in a generic sequence with proivided comparer.
+        /// Returns the maximum value in a generic sequence with proivided comparer.
         /// </summary>
         /// <typeparam name="TSource">
         /// The type of the elements of <paramref name="source" />.
         /// </typeparam>
         /// <param name="source">
-        /// A sequence of values to determine the minimum and maximum values of.
+        /// A sequence of values to determine the maximum value of.
         /// </param>
         /// <param name="comparer">An element comparer.</param>
-        /// <returns>The minimum and maximum values in the sequence.</returns>
+        /// <returns>The maximum value in the sequence.</returns>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="source" /> is <c>null</c>. -or-
         /// <paramref name="comparer" /> is <c>null</c>.

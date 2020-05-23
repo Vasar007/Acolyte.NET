@@ -18,7 +18,7 @@ namespace Acolyte.Tests.Collections
 
         private bool _disposed;
 
-        [AllowNull, MaybeNull]
+        [AllowNull]
         public T Current { get; private set; }
 
         object? IEnumerator.Current => Current;

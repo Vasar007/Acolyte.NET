@@ -5,10 +5,10 @@ namespace Acolyte.Common
 {
     public readonly struct Result<TOk, TError> : IEquatable<Result<TOk, TError>>
     {
-        [AllowNull, MaybeNull]
+        [AllowNull]
         private readonly TOk _ok;
 
-        [AllowNull, MaybeNull]
+        [AllowNull]
         private readonly TError _error;
 
         public bool IsError { get; }
@@ -173,7 +173,7 @@ namespace Acolyte.Common
 
     public readonly struct DelayedValue<T>
     {
-        [AllowNull, MaybeNull]
+        [AllowNull]
         public T Value { get; }
 
         public DelayedValue([AllowNull] T value)
@@ -184,7 +184,7 @@ namespace Acolyte.Common
 
     public readonly struct DelayedError<T>
     {
-        [AllowNull, MaybeNull]
+        [AllowNull]
         public T Value { get; }
 
         public DelayedError([AllowNull] T value)

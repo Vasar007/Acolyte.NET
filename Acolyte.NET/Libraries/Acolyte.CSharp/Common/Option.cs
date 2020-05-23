@@ -12,7 +12,7 @@ namespace Acolyte.Common
         /// <summary>
         /// Field that hold value object reference.
         /// </summary>
-        [AllowNull, MaybeNull]
+        [AllowNull]
         private readonly T _value;
 
         /// <summary>
