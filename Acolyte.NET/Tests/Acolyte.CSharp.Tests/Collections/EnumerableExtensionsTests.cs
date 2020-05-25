@@ -2325,7 +2325,183 @@ namespace Acolyte.Collections.Tests
 
         #region Tests for "MinMax" section
 
-        // TODO: write tests.
+        #region MinMax Overloads Without Selector
+
+        #region MinMax For Int32
+
+        [Fact]
+        public void Call_MinMax_Int32_ForNullValue()
+        {
+            // Arrange.
+            const IEnumerable<int>? nullValue = null;
+
+            // Act & Assert.
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+            Assert.Throws<ArgumentNullException>(
+                "source", () => nullValue.MinMax()
+            );
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+        }
+
+        [Fact]
+        public void Call_MinMax_NullableInt32_ForNullValue()
+        {
+            // Arrange.
+            const IEnumerable<int?>? nullValue = null;
+
+            // Act & Assert.
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+            Assert.Throws<ArgumentNullException>(
+                "source", () => nullValue.MinMax()
+            );
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+        }
+
+        #endregion
+
+        #region MinMax For Int64
+
+        [Fact]
+        public void Call_MinMax_Int64_ForNullValue()
+        {
+            // Arrange.
+            const IEnumerable<long>? nullValue = null;
+
+            // Act & Assert.
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+            Assert.Throws<ArgumentNullException>(
+                "source", () => nullValue.MinMax()
+            );
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+        }
+
+        [Fact]
+        public void Call_MinMax_NullableInt64_ForNullValue()
+        {
+            // Arrange.
+            const IEnumerable<long?>? nullValue = null;
+
+            // Act & Assert.
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+            Assert.Throws<ArgumentNullException>(
+                "source", () => nullValue.MinMax()
+            );
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+        }
+
+        #endregion
+
+        #region MinMax For Single
+
+        [Fact]
+        public void Call_MinMax_Single_ForNullValue()
+        {
+            // Arrange.
+            const IEnumerable<float>? nullValue = null;
+
+            // Act & Assert.
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+            Assert.Throws<ArgumentNullException>(
+                "source", () => nullValue.MinMax()
+            );
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+        }
+
+        [Fact]
+        public void Call_MinMax_NullableSingle_ForNullValue()
+        {
+            // Arrange.
+            const IEnumerable<float?>? nullValue = null;
+
+            // Act & Assert.
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+            Assert.Throws<ArgumentNullException>(
+                "source", () => nullValue.MinMax()
+            );
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+        }
+
+        #endregion
+
+        #region MinMax For Double
+
+        [Fact]
+        public void Call_MinMax_Double_ForNullValue()
+        {
+            // Arrange.
+            const IEnumerable<double>? nullValue = null;
+
+            // Act & Assert.
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+            Assert.Throws<ArgumentNullException>(
+                "source", () => nullValue.MinMax()
+            );
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+        }
+
+        [Fact]
+        public void Call_MinMax_NullableDouble_ForNullValue()
+        {
+            // Arrange.
+            const IEnumerable<double?>? nullValue = null;
+
+            // Act & Assert.
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+            Assert.Throws<ArgumentNullException>(
+                "source", () => nullValue.MinMax()
+            );
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+        }
+
+        #endregion
+
+        #region MinMax For Generic Types
+
+        [Fact]
+        public void Call_MinMax_GenericTypes_ForNullValue()
+        {
+            // Arrange.
+            const IEnumerable<string>? nullValue = null;
+
+            // Act & Assert.
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+            Assert.Throws<ArgumentNullException>(
+                "source", () => nullValue.MinMax()
+            );
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+        }
+
+        [Fact]
+        public void Call_MinMax_GenericTypes_WithComparer_ForNullValue()
+        {
+            // Arrange.
+            const IEnumerable<string>? nullValue = null;
+
+            // Act & Assert.
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+            Assert.Throws<ArgumentNullException>(
+                "source", () => nullValue.MinMax(Comparer<string>.Default)
+            );
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+        }
+
+        [Fact]
+        public void Call_MinMax_GenericTypes_WithComparer_ForNullComparer()
+        {
+            // Arrange.
+            IEnumerable<string> emptyCollection = Enumerable.Empty<string>();
+
+            // Act & Assert.
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+            Assert.Throws<ArgumentNullException>(
+                "comparer", () => emptyCollection.MinMax(comparer: null)
+            );
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+        }
+
+        #endregion
+
+        #endregion
 
         #endregion
 
