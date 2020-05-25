@@ -16,6 +16,8 @@ namespace Acolyte.Collections.Tests
         {
         }
 
+        // TODO: write mock equality comprarer to test overloads with it.
+
         #region Tests for "Is Null Or Empty" section
 
         [Fact]
@@ -2038,7 +2040,286 @@ namespace Acolyte.Collections.Tests
 
         #region Tests for "Min/Max For Generic Types With Comparer" section
 
-        // TODO: write tests.
+        [Fact]
+        public void Call_Min_WithComparer_ForNullValue()
+        {
+            // Arrange.
+            const IEnumerable<int>? nullValue = null;
+
+            // Act & Assert.
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+            Assert.Throws<ArgumentNullException>(
+                "source", () => nullValue.Min(Comparer<int>.Default)
+            );
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+        }
+
+        [Fact]
+        public void Call_Min_WithComparer_ForNullComparer()
+        {
+            // Arrange.
+            IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
+
+            // Act & Assert.
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+            Assert.Throws<ArgumentNullException>("comparer", () => emptyCollection.Min(null));
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+        }
+
+        [Fact]
+        public void Call_Max_WithComparer_ForNullValue()
+        {
+            // Arrange.
+            const IEnumerable<int>? nullValue = null;
+
+            // Act & Assert.
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+            Assert.Throws<ArgumentNullException>(
+                "source", () => nullValue.Max(Comparer<int>.Default)
+            );
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+        }
+
+        [Fact]
+        public void Call_Max_WithComparer_ForNullValueComparer()
+        {
+            // Arrange.
+            IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
+
+            // Act & Assert.
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+            Assert.Throws<ArgumentNullException>("comparer", () => emptyCollection.Max(null));
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+        }
+
+        [Fact]
+        public void Call_Min_WithComparer_ForEmptyCollection_ShouldRetrurnNullForReferenceTypes()
+        {
+            // Arrange.
+            IEnumerable<string> emptyCollection = Enumerable.Empty<string>();
+            const string? expectedValue = null;
+
+            // Act.
+            string? actualValue = emptyCollection.Min(Comparer<string>.Default);
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Fact]
+        public void Call_Min_WithComparer_ForEmptyCollection_ShouldRetrurnNullForNullableTypes()
+        {
+            // Arrange.
+            IEnumerable<int?> emptyCollection = Enumerable.Empty<int?>();
+            int? expectedValue = null;
+
+            // Act.
+            int? actualValue = emptyCollection.Min(Comparer<int?>.Default);
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Fact]
+        public void Call_Min_WithComparer_ForEmptyCollection_ShouldThrowForValueTypes()
+        {
+            // Arrange.
+            IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
+
+            // Act & Assert.
+            Assert.Throws(
+                Error.NoElements().GetType(), () => emptyCollection.Max(Comparer<int>.Default)
+            );
+        }
+
+        [Fact]
+        public void Call_Max_WithComparer_ForEmptyCollection_ShouldRetrurnNullForReferenceTypes()
+        {
+            // Arrange.
+            IEnumerable<string> emptyCollection = Enumerable.Empty<string>();
+            const string? expectedValue = null;
+
+            // Act.
+            string? actualValue = emptyCollection.Max(Comparer<string>.Default);
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Fact]
+        public void Call_Max_WithComparer_ForEmptyCollection_ShouldRetrurnNullForNullableTypes()
+        {
+            // Arrange.
+            IEnumerable<int?> emptyCollection = Enumerable.Empty<int?>();
+            int? expectedValue = null;
+
+            // Act.
+            int? actualValue = emptyCollection.Min(Comparer<int?>.Default);
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Fact]
+        public void Call_Max_WithComparer_ForEmptyCollection_ShouldThrowForValueTypes()
+        {
+            // Arrange.
+            IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
+            int expectedValue = TestDataCreator.CreateRandomInt32();
+
+            // Act & Assert.
+            Assert.Throws(
+                Error.NoElements().GetType(), () => emptyCollection.Max(Comparer<int>.Default)
+            );
+        }
+
+        [Theory]
+        [InlineData(TestHelper.OneCollectionSize)]
+        [InlineData(TestHelper.TwoCollectionSize)]
+        [InlineData(TestHelper.FiveCollectionSie)]
+        [InlineData(TestHelper.TenCollectionSize)]
+        [InlineData(TestHelper.HundredCollectionSize)]
+        [InlineData(TestHelper.TenThousandCollectionSize)]
+        public void Call_Min_WithCompare_ForCollectionWithSomeItems(int count)
+        {
+            // Arrange.
+            IEnumerable<int> collectionWithSomeItems = TestDataCreator.CreateRandomInt32List(count);
+            int expectedValue = collectionWithSomeItems.Min();
+
+            // Act.
+            int actualValue = collectionWithSomeItems.Min(Comparer<int>.Default);
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Theory]
+        [InlineData(TestHelper.OneCollectionSize)]
+        [InlineData(TestHelper.TwoCollectionSize)]
+        [InlineData(TestHelper.FiveCollectionSie)]
+        [InlineData(TestHelper.TenCollectionSize)]
+        [InlineData(TestHelper.HundredCollectionSize)]
+        [InlineData(TestHelper.TenThousandCollectionSize)]
+        public void Call_Max_WithCompare_ForCollectionWithSomeItems(int count)
+        {
+            // Arrange.
+            IEnumerable<int> collectionWithSomeItems = TestDataCreator.CreateRandomInt32List(count);
+            int expectedValue = collectionWithSomeItems.Max();
+
+            // Act.
+            int actualValue = collectionWithSomeItems.Max(Comparer<int>.Default);
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Theory]
+        [InlineData(TestHelper.OneCollectionSize)]
+        [InlineData(TestHelper.TwoCollectionSize)]
+        [InlineData(TestHelper.FiveCollectionSie)]
+        [InlineData(TestHelper.TenCollectionSize)]
+        [InlineData(TestHelper.HundredCollectionSize)]
+        [InlineData(TestHelper.TenThousandCollectionSize)]
+        public void Call_Min_WithCompare_ForCollectionWithTheSameItems(int count)
+        {
+            // Arrange.
+            IEnumerable<int> collectionWithTheSameItems = Enumerable
+                .Range(1, count)
+                .Select(_ => count);
+            int expectedValue = count;
+
+            // Act.
+            int actualValue = collectionWithTheSameItems.Min(Comparer<int>.Default);
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Theory]
+        [InlineData(TestHelper.OneCollectionSize)]
+        [InlineData(TestHelper.TwoCollectionSize)]
+        [InlineData(TestHelper.FiveCollectionSie)]
+        [InlineData(TestHelper.TenCollectionSize)]
+        [InlineData(TestHelper.HundredCollectionSize)]
+        [InlineData(TestHelper.TenThousandCollectionSize)]
+        public void Call_Max_WithCompare_ForCollectionWithTheSameItems(int count)
+        {
+            // Arrange.
+            IEnumerable<int> collectionWithTheSameItems = Enumerable
+                .Range(1, count)
+                .Select(_ => count);
+            int expectedValue = count;
+
+            // Act.
+            int actualValue = collectionWithTheSameItems.Max(Comparer<int>.Default);
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Fact]
+        public void Call_Min_WithCompare_ForCollectionWithRandomSize()
+        {
+            // Arrange.
+            int count = TestDataCreator.CreateRandomNonNegativeInt32(TestHelper.MaxCollectionSize);
+            IEnumerable<int> collectionWithRandomSize =
+                TestDataCreator.CreateRandomInt32List(count);
+            int expectedValue = collectionWithRandomSize.Min();
+
+            // Act.
+            int actualValue = collectionWithRandomSize.Min(Comparer<int>.Default);
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Fact]
+        public void Call_Max_WithCompare_ForCollectionWithRandomSize()
+        {
+            // Arrange.
+            int count = TestDataCreator.CreateRandomNonNegativeInt32(TestHelper.MaxCollectionSize);
+            IEnumerable<int> collectionWithRandomSize =
+                TestDataCreator.CreateRandomInt32List(count);
+            int expectedValue = collectionWithRandomSize.Max();
+
+            // Act.
+            int actualValue = collectionWithRandomSize.Max(Comparer<int>.Default);
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Fact]
+        public void Min_WithCompare_ShouldLookWholeCollectionToFindItem()
+        {
+            // Arrange.
+            var collection = new[] { 1, 2, 3, 4 };
+            var explosiveCollection = ExplosiveCollection.CreateNotExplosive(collection);
+            int expectedValue = explosiveCollection.Min();
+
+            // Act.
+            int actualValue = explosiveCollection.Min(Comparer<int>.Default);
+
+            // Assert.
+            Assert.Equal(expected: collection.Length, explosiveCollection.VisitedItemsNumber);
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Fact]
+        public void Max_WithCompare_ShouldLookWholeCollectionToFindItem()
+        {
+            // Arrange.
+            var collection = new[] { 4, 3, 2, 1 };
+            var explosiveCollection = ExplosiveCollection.CreateNotExplosive(collection);
+            int expectedValue = explosiveCollection.Max();
+
+            // Act.
+            int actualValue = explosiveCollection.Max(Comparer<int>.Default);
+
+            // Assert.
+            Assert.Equal(expected: collection.Length, explosiveCollection.VisitedItemsNumber);
+            Assert.Equal(expectedValue, actualValue);
+        }
 
         #endregion
 
