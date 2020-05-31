@@ -6,7 +6,7 @@ using Acolyte.Collections;
 
 namespace Acolyte.Tests.Creators
 {
-    // TODO: move some methods to Acolyte.Charp assembly because it can be useful.
+    // TODO: move some methods to Acolyte.CSharp assembly because it can be useful.
     public static class TestDataCreator
     {
         private static readonly Random RandomInstance = new Random();
@@ -14,6 +14,14 @@ namespace Acolyte.Tests.Creators
         public static bool IsEven(int value)
         {
             return (value & 1) == 0;
+        }
+
+        public static int? ReturnNullIfOdd(int value)
+        {
+            // Convert all odd valies to null.
+            return IsEven(value)
+                ? value
+                : (int?) null;
         }
 
         public static string CreateRandomString(int length, Random? random = null)
@@ -61,14 +69,9 @@ namespace Acolyte.Tests.Creators
 
         public static int CreateRandomInt32(Random? random = null)
         {
-            return CreateRandomInt32(int.MinValue, int.MaxValue, random);
-        }
-
-        public static double CreateRandomDouble(Random? random = null)
-        {
             random ??= RandomInstance;
 
-            return random.NextDouble();
+            return CreateRandomInt32(int.MinValue, int.MaxValue, random);
         }
 
         public static IReadOnlyList<int> CreateRandomInt32List(int count, Random? random = null)
@@ -80,6 +83,8 @@ namespace Acolyte.Tests.Creators
                 );
             }
 
+            random ??= RandomInstance;
+
             return Enumerable
                 .Range(1, count)
                 .Select(i => CreateRandomInt32(random))
@@ -90,9 +95,85 @@ namespace Acolyte.Tests.Creators
         {
             random ??= RandomInstance;
 
-            // Random.Next return non-negative values.
-            int count = random.Next(GetUpperBound(TestHelper.MaxCollectionSize));
+            int count = CreateRandomNonNegativeInt32(TestHelper.MaxCollectionSize, random);
             return CreateRandomInt32List(count, random);
+        }
+
+        public static IReadOnlyList<int?> CreateRandomNullableInt32List(int count,
+            Func<int, int?>? valueTransformer, Random? random = null)
+        {
+            if (count <= 0)
+            {
+                throw new ArgumentOutOfRangeException(
+                    nameof(count), count, "Count parameter must be positive."
+                );
+            }
+
+            random ??= RandomInstance;
+            valueTransformer ??= ReturnNullIfOdd;
+
+            return Enumerable
+                .Range(1, count)
+                .Select(i => CreateRandomNonNegativeInt32(random))
+                .Select(value => valueTransformer(value))
+                .ToReadOnlyList();
+        }
+
+        public static IReadOnlyList<int?> CreateRandomNullableInt32List(int count,
+            Random? random = null)
+        {
+            random ??= RandomInstance;
+
+            return CreateRandomNullableInt32List(count, ReturnNullIfOdd, random);
+        }
+
+        public static IReadOnlyList<int?> CreateRandomNullableInt32List(
+            Func<int, int?>? valueTransformer, Random? random = null)
+        {
+            random ??= RandomInstance;
+            valueTransformer ??= ReturnNullIfOdd;
+
+            int count = CreateRandomNonNegativeInt32(TestHelper.MaxCollectionSize, random);
+            return CreateRandomNullableInt32List(count, valueTransformer, random);
+        }
+
+        public static IReadOnlyList<int?> CreateRandomNullableInt32List(Random? random = null)
+        {
+            random ??= RandomInstance;
+
+            return CreateRandomNullableInt32List(ReturnNullIfOdd, random);
+        }
+
+        public static double CreateRandomDouble(Random? random = null)
+        {
+            random ??= RandomInstance;
+
+            return random.NextDouble();
+        }
+
+        public static IReadOnlyList<double> CreateRandomDoubleList(int count, Random? random = null)
+        {
+            if (count <= 0)
+            {
+                throw new ArgumentOutOfRangeException(
+                    nameof(count), count, "Count parameter must be positive."
+                );
+            }
+
+            random ??= RandomInstance;
+
+            return Enumerable
+                .Range(1, count)
+                .Select(i => CreateRandomDouble(random))
+                .ToReadOnlyList();
+        }
+
+        public static IReadOnlyList<double> CreateRandomDoubleList(Random? random = null)
+        {
+            random ??= RandomInstance;
+
+            int count = CreateRandomNonNegativeInt32(TestHelper.MaxCollectionSize, random);
+            return CreateRandomDoubleList(count, random);
         }
 
         public static (TSource item, int index) ChoiceWithIndex<TSource>(
@@ -109,6 +190,8 @@ namespace Acolyte.Tests.Creators
         public static TSource Choice<TSource>(IReadOnlyList<TSource> source,
             Random? random = null)
         {
+            random ??= RandomInstance;
+
             return ChoiceWithIndex(source, random).item;
         }
 

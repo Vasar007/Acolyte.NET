@@ -77,13 +77,8 @@ namespace Acolyte.Collections.Tests
         public void Call_IsNullOrEmpty_ForCollectionWithRandomNumberAndNullValues()
         {
             // Arrange.
-            int count = TestDataCreator.CreateRandomNonNegativeInt32(TestHelper.MaxCollectionSize);
-            IEnumerable<int?> collectionWithRandomSize = Enumerable
-                .Range(1, count)
-                .Select(i => TestDataCreator.CreateRandomNonNegativeInt32())
-                // Convert all even valies to null.
-                .Select(value => TestDataCreator.IsEven(value) ? value : (int?) null)
-                .ToReadOnlyList();
+            IEnumerable<int?> collectionWithRandomSize =
+                TestDataCreator.CreateRandomNullableInt32List();
             bool expectedResult = !collectionWithRandomSize.Any();
 
             // Act.
@@ -2384,6 +2379,49 @@ namespace Acolyte.Collections.Tests
             Assert.Equal(expectedValue, actualValue);
         }
 
+        [Theory]
+        [InlineData(TestHelper.OneCollectionSize)]
+        [InlineData(TestHelper.TwoCollectionSize)]
+        [InlineData(TestHelper.FiveCollectionSie)]
+        [InlineData(TestHelper.TenCollectionSize)]
+        [InlineData(TestHelper.HundredCollectionSize)]
+        [InlineData(TestHelper.TenThousandCollectionSize)]
+        public void Call_MinMax_Int32_ForCollectionWithSomeItems(int count)
+        {
+            // Arrange.
+            IEnumerable<int> collectionWithSomeItems = TestDataCreator.CreateRandomInt32List(count);
+            (int minValue, int maxValue) expectedValue =
+                 (collectionWithSomeItems.Min(), collectionWithSomeItems.Max());
+
+            // Act.
+            var actualValue = collectionWithSomeItems.MinMax();
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Theory]
+        [InlineData(TestHelper.OneCollectionSize)]
+        [InlineData(TestHelper.TwoCollectionSize)]
+        [InlineData(TestHelper.FiveCollectionSie)]
+        [InlineData(TestHelper.TenCollectionSize)]
+        [InlineData(TestHelper.HundredCollectionSize)]
+        [InlineData(TestHelper.TenThousandCollectionSize)]
+        public void Call_MinMax_NullableInt32_ForCollectionWithSomeItems(int count)
+        {
+            // Arrange.
+            IEnumerable<int?> collectionWithSomeItems =
+                TestDataCreator.CreateRandomNullableInt32List(count);
+            (int? minValue, int? maxValue) expectedValue =
+                (collectionWithSomeItems.Min(), collectionWithSomeItems.Max());
+
+            // Act.
+            var actualValue = collectionWithSomeItems.MinMax();
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+        }
+
         #endregion
 
         #region MinMax For Int64
@@ -2550,6 +2588,64 @@ namespace Acolyte.Collections.Tests
             // Arrange.
             IEnumerable<double?> emptyCollection = Enumerable.Empty<double?>();
             (double? minValue, double? maxValue) expectedValue = (null, null);
+
+            // Act.
+            var actualValue = emptyCollection.MinMax();
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        #endregion
+
+        #region MinMax For Decimal
+
+        [Fact]
+        public void Call_MinMax_Decimal_ForNullValue()
+        {
+            // Arrange.
+            const IEnumerable<decimal>? nullValue = null;
+
+            // Act & Assert.
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+            Assert.Throws<ArgumentNullException>(
+                "source", () => nullValue.MinMax()
+            );
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+        }
+
+        [Fact]
+        public void Call_MinMax_NullableDecimal_ForNullValue()
+        {
+            // Arrange.
+            const IEnumerable<decimal?>? nullValue = null;
+
+            // Act & Assert.
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+            Assert.Throws<ArgumentNullException>(
+                "source", () => nullValue.MinMax()
+            );
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+        }
+
+        [Fact]
+        public void Call_MinMax_Decimal_ForEmptyCollection_ShouldThrow()
+        {
+            // Arrange.
+            IEnumerable<decimal> emptyCollection = Enumerable.Empty<decimal>();
+
+            // Act & Assert.
+            Assert.Throws(
+                Error.NoElements().GetType(), () => emptyCollection.MinMax()
+            );
+        }
+
+        [Fact]
+        public void Call_MinMax_NullableDecimal_ForEmptyCollection_ShouldReturnNull()
+        {
+            // Arrange.
+            IEnumerable<decimal?> emptyCollection = Enumerable.Empty<decimal?>();
+            (decimal? minValue, decimal? maxValue) expectedValue = (null, null);
 
             // Act.
             var actualValue = emptyCollection.MinMax();
