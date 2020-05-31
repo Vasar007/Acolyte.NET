@@ -7,6 +7,7 @@ using Acolyte.Tests;
 using Acolyte.Tests.Creators;
 using Acolyte.Tests.Functions;
 using Acolyte.Tests.Collections;
+using Acolyte.Tests.Objects;
 
 namespace Acolyte.Collections.Tests
 {
@@ -2093,34 +2094,6 @@ namespace Acolyte.Collections.Tests
         }
 
         [Fact]
-        public void Call_Min_WithComparer_ForEmptyCollection_ShouldRetrurnNullForReferenceTypes()
-        {
-            // Arrange.
-            IEnumerable<string> emptyCollection = Enumerable.Empty<string>();
-            const string? expectedValue = null;
-
-            // Act.
-            string? actualValue = emptyCollection.Min(Comparer<string>.Default);
-
-            // Assert.
-            Assert.Equal(expectedValue, actualValue);
-        }
-
-        [Fact]
-        public void Call_Min_WithComparer_ForEmptyCollection_ShouldRetrurnNullForNullableTypes()
-        {
-            // Arrange.
-            IEnumerable<int?> emptyCollection = Enumerable.Empty<int?>();
-            int? expectedValue = null;
-
-            // Act.
-            int? actualValue = emptyCollection.Min(Comparer<int?>.Default);
-
-            // Assert.
-            Assert.Equal(expectedValue, actualValue);
-        }
-
-        [Fact]
         public void Call_Min_WithComparer_ForEmptyCollection_ShouldThrowForValueTypes()
         {
             // Arrange.
@@ -2133,21 +2106,7 @@ namespace Acolyte.Collections.Tests
         }
 
         [Fact]
-        public void Call_Max_WithComparer_ForEmptyCollection_ShouldRetrurnNullForReferenceTypes()
-        {
-            // Arrange.
-            IEnumerable<string> emptyCollection = Enumerable.Empty<string>();
-            const string? expectedValue = null;
-
-            // Act.
-            string? actualValue = emptyCollection.Max(Comparer<string>.Default);
-
-            // Assert.
-            Assert.Equal(expectedValue, actualValue);
-        }
-
-        [Fact]
-        public void Call_Max_WithComparer_ForEmptyCollection_ShouldRetrurnNullForNullableTypes()
+        public void Call_Min_WithComparer_ForEmptyCollection_ShouldReturnNullForNullableValueTypes()
         {
             // Arrange.
             IEnumerable<int?> emptyCollection = Enumerable.Empty<int?>();
@@ -2155,6 +2114,20 @@ namespace Acolyte.Collections.Tests
 
             // Act.
             int? actualValue = emptyCollection.Min(Comparer<int?>.Default);
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Fact]
+        public void Call_Min_WithComparer_ForEmptyCollection_ShouldReturnNullForReferenceTypes()
+        {
+            // Arrange.
+            IEnumerable<string> emptyCollection = Enumerable.Empty<string>();
+            const string? expectedValue = null;
+
+            // Act.
+            string? actualValue = emptyCollection.Min(Comparer<string>.Default);
 
             // Assert.
             Assert.Equal(expectedValue, actualValue);
@@ -2171,6 +2144,34 @@ namespace Acolyte.Collections.Tests
             Assert.Throws(
                 Error.NoElements().GetType(), () => emptyCollection.Max(Comparer<int>.Default)
             );
+        }
+
+        [Fact]
+        public void Call_Max_WithComparer_ForEmptyCollection_ShouldReturnNullForNullableValueTypes()
+        {
+            // Arrange.
+            IEnumerable<int?> emptyCollection = Enumerable.Empty<int?>();
+            int? expectedValue = null;
+
+            // Act.
+            int? actualValue = emptyCollection.Min(Comparer<int?>.Default);
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Fact]
+        public void Call_Max_WithComparer_ForEmptyCollection_ShouldReturnNullForReferenceTypes()
+        {
+            // Arrange.
+            IEnumerable<string> emptyCollection = Enumerable.Empty<string>();
+            const string? expectedValue = null;
+
+            // Act.
+            string? actualValue = emptyCollection.Max(Comparer<string>.Default);
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
         }
 
         [Theory]
@@ -2357,6 +2358,32 @@ namespace Acolyte.Collections.Tests
 #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
 
+        [Fact]
+        public void Call_MinMax_Int32_ForEmptyCollection_ShouldThrow()
+        {
+            // Arrange.
+            IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
+
+            // Act & Assert.
+            Assert.Throws(
+                Error.NoElements().GetType(), () => emptyCollection.MinMax()
+            );
+        }
+
+        [Fact]
+        public void Call_MinMax_NullableInt32_ForEmptyCollection_ShouldReturnNull()
+        {
+            // Arrange.
+            IEnumerable<int?> emptyCollection = Enumerable.Empty<int?>();
+            (int? minValue, int? maxValue) expectedValue = (null, null);
+
+            // Act.
+            var actualValue = emptyCollection.MinMax();
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+        }
+
         #endregion
 
         #region MinMax For Int64
@@ -2387,6 +2414,32 @@ namespace Acolyte.Collections.Tests
                 "source", () => nullValue.MinMax()
             );
 #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+        }
+
+        [Fact]
+        public void Call_MinMax_Int64_ForEmptyCollection_ShouldThrow()
+        {
+            // Arrange.
+            IEnumerable<long> emptyCollection = Enumerable.Empty<long>();
+
+            // Act & Assert.
+            Assert.Throws(
+                Error.NoElements().GetType(), () => emptyCollection.MinMax()
+            );
+        }
+
+        [Fact]
+        public void Call_MinMax_NullableInt64_ForEmptyCollection_ShouldReturnNull()
+        {
+            // Arrange.
+            IEnumerable<long?> emptyCollection = Enumerable.Empty<long?>();
+            (long? minValue, long? maxValue) expectedValue = (null, null);
+
+            // Act.
+            var actualValue = emptyCollection.MinMax();
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
         }
 
         #endregion
@@ -2421,6 +2474,32 @@ namespace Acolyte.Collections.Tests
 #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
 
+        [Fact]
+        public void Call_MinMax_Single_ForEmptyCollection_ShouldThrow()
+        {
+            // Arrange.
+            IEnumerable<float> emptyCollection = Enumerable.Empty<float>();
+
+            // Act & Assert.
+            Assert.Throws(
+                Error.NoElements().GetType(), () => emptyCollection.MinMax()
+            );
+        }
+
+        [Fact]
+        public void Call_MinMax_NullableSingle_ForEmptyCollection_ShouldReturnNull()
+        {
+            // Arrange.
+            IEnumerable<float?> emptyCollection = Enumerable.Empty<float?>();
+            (float? minValue, float? maxValue) expectedValue = (null, null);
+
+            // Act.
+            var actualValue = emptyCollection.MinMax();
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+        }
+
         #endregion
 
         #region MinMax For Double
@@ -2451,6 +2530,32 @@ namespace Acolyte.Collections.Tests
                 "source", () => nullValue.MinMax()
             );
 #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+        }
+
+        [Fact]
+        public void Call_MinMax_Double_ForEmptyCollection_ShouldThrow()
+        {
+            // Arrange.
+            IEnumerable<double> emptyCollection = Enumerable.Empty<double>();
+
+            // Act & Assert.
+            Assert.Throws(
+                Error.NoElements().GetType(), () => emptyCollection.MinMax()
+            );
+        }
+
+        [Fact]
+        public void Call_MinMax_NullableDouble_ForEmptyCollection_ShouldReturnNull()
+        {
+            // Arrange.
+            IEnumerable<double?> emptyCollection = Enumerable.Empty<double?>();
+            (double? minValue, double? maxValue) expectedValue = (null, null);
+
+            // Act.
+            var actualValue = emptyCollection.MinMax();
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
         }
 
         #endregion
@@ -2497,6 +2602,91 @@ namespace Acolyte.Collections.Tests
                 "comparer", () => emptyCollection.MinMax(comparer: null)
             );
 #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+        }
+
+        [Fact]
+        public void Call_MinMax_GenericTypes_ForEmptyCollection_ShouldThrowForValueTypes()
+        {
+            // Arrange.
+            // Using user-defined struct to test generic overload.
+            IEnumerable<DummyStruct> emptyCollection = Enumerable.Empty<DummyStruct>();
+
+            // Act & Assert.
+            Assert.Throws(
+                Error.NoElements().GetType(), () => emptyCollection.MinMax()
+            );
+        }
+
+        [Fact]
+        public void Call_MinMax_GenericTypes_ForEmptyCollection_ShouldReturnNullForNullableValueTypes()
+        {
+            // Arrange.
+            // Using user-defined struct to test generic overload.
+            IEnumerable<DummyStruct?> emptyCollection = Enumerable.Empty<DummyStruct?>();
+            (DummyStruct? minValue, DummyStruct? maxValue) expectedValue = (null, null);
+
+            // Act.
+            var actualValue = emptyCollection.MinMax();
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Fact]
+        public void Call_MinMax_GenericTypes_ForEmptyCollection_ShouldReturnNullForReferenceTypes()
+        {
+            // Arrange.
+            IEnumerable<string> emptyCollection = Enumerable.Empty<string>();
+            (string? minValue, string? maxValue) expectedValue = (null, null);
+
+            // Act.
+            var actualValue = emptyCollection.MinMax();
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Fact]
+        public void Call_MinMax_GenericTypes_WithComparer_ForEmptyCollection_ShouldThrowForValueTypes()
+        {
+            // Arrange.
+            // Using user-defined struct to test generic overload.
+            IEnumerable<DummyStruct> emptyCollection = Enumerable.Empty<DummyStruct>();
+
+            // Act & Assert.
+            Assert.Throws(
+                Error.NoElements().GetType(),
+                () => emptyCollection.MinMax(Comparer<DummyStruct>.Default)
+            );
+        }
+
+        [Fact]
+        public void Call_MinMax_GenericTypes_WithComparer_ForEmptyCollection_ShouldReturnNullForNullableValueTypes()
+        {
+            // Arrange.
+            // Using user-defined struct to test generic overload.
+            IEnumerable<DummyStruct?> emptyCollection = Enumerable.Empty<DummyStruct?>();
+            (DummyStruct? minValue, DummyStruct? maxValue) expectedValue = (null, null);
+
+            // Act.
+            var actualValue = emptyCollection.MinMax(Comparer<DummyStruct?>.Default);
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Fact]
+        public void Call_MinMax_GenericTypes_WithComparer_ForEmptyCollection_ShouldReturnNullForReferenceTypes()
+        {
+            // Arrange.
+            IEnumerable<string> emptyCollection = Enumerable.Empty<string>();
+            (string? minValue, string? maxValue) expectedValue = (null, null);
+
+            // Act.
+            var actualValue = emptyCollection.MinMax(Comparer<string>.Default);
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
         }
 
         #endregion
