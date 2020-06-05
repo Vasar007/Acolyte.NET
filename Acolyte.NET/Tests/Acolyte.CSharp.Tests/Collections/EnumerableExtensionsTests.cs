@@ -1240,8 +1240,8 @@ namespace Acolyte.Collections.Tests
         public void IndexOf_ShouldStopAfterFoundItemFromCollection()
         {
             // Arrange.
-            // Do not use random because we should find exactly second item.
-            var collection = new[] { 1, 2, 3, 4 };
+            // Do not use random because we should find exactly second item (2).
+            var collection = new[] { 1, 2, 2, 2 };
             var explosiveCollection = ExplosiveCollection.Create(
                 collection, explosiveIndex: Constants.FirstIndex + 2
             );
@@ -1276,8 +1276,8 @@ namespace Acolyte.Collections.Tests
         public void IndexOf_Item_ShouldStopAfterFoundItemFromCollection()
         {
             // Arrange.
-            // Do not use random because we should find exactly second item.
-            var collection = new[] { 1, 2, 3, 4 };
+            // Do not use random because we should find exactly second item (2).
+            var collection = new[] { 1, 2, 2, 2 };
             var explosiveCollection = ExplosiveCollection.Create(
                 collection, explosiveIndex: Constants.FirstIndex + 2
             );
@@ -1312,8 +1312,8 @@ namespace Acolyte.Collections.Tests
         public void IndexOf_ItemWithComparer_ShouldStopAfterFoundItemFromCollection()
         {
             // Arrange.
-            // Do not use random because we should find exactly second item.
-            var collection = new[] { 1, 2, 3, 4 };
+            // Do not use random because we should find exactly second item (2).
+            var collection = new[] { 1, 2, 2, 2 };
             var explosiveCollection = ExplosiveCollection.Create(
                 collection, explosiveIndex: Constants.FirstIndex + 2
             );
@@ -2419,6 +2419,75 @@ namespace Acolyte.Collections.Tests
             var actualValue = collectionWithSomeItems.MinMax();
 
             // Assert.
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Fact]
+        public void Call_MinMax_Int32_ForCollectionWithRandomSize()
+        {
+            // Arrange.
+            int count = TestDataCreator.CreateRandomNonNegativeInt32(TestHelper.MaxCollectionSize);
+            IEnumerable<int> collectionWithRandomSize = TestDataCreator
+               .CreateRandomInt32List(count);
+            (int minValue, int maxValue) expectedValue =
+                (collectionWithRandomSize.Min(), collectionWithRandomSize.Max());
+
+            // Act.
+            var actualValue = collectionWithRandomSize.MinMax();
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Fact]
+        public void Call_MinMax_NullableInt32_ForCollectionWithRandomSize()
+        {
+            // Arrange.
+            int count = TestDataCreator.CreateRandomNonNegativeInt32(TestHelper.MaxCollectionSize);
+            IEnumerable<int?> collectionWithRandomSize = TestDataCreator
+               .CreateRandomInt32List(count)
+               .ToNullable();
+            (int? minValue, int? maxValue) expectedValue =
+                (collectionWithRandomSize.Min(), collectionWithRandomSize.Max());
+
+            // Act.
+            var actualValue = collectionWithRandomSize.MinMax();
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Fact]
+        public void MinMax_Int32_ShouldLookWholeCollectionToFindValues()
+        {
+            // Arrange.
+            var collection = new[] { 1, 2, 3, 4 };
+            var explosiveCollection = ExplosiveCollection.CreateNotExplosive(collection);
+            (int minValue, int maxValue) expectedValue =
+                (explosiveCollection.Min(), explosiveCollection.Max());
+
+            // Act.
+            var actualValue = explosiveCollection.MinMax();
+
+            // Assert.
+            Assert.Equal(expected: collection.Length, explosiveCollection.VisitedItemsNumber);
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Fact]
+        public void MinMax_NullableInt32_ShouldLookWholeCollectionToFindValues()
+        {
+            // Arrange.
+            var collection = new int?[] { 1, 2, 3, 4 };
+            var explosiveCollection = ExplosiveCollection.CreateNotExplosive(collection);
+            (int? minValue, int? maxValue) expectedValue =
+                (explosiveCollection.Min(), explosiveCollection.Max());
+
+            // Act.
+            var actualValue = explosiveCollection.MinMax();
+
+            // Assert.
+            Assert.Equal(expected: collection.Length, explosiveCollection.VisitedItemsNumber);
             Assert.Equal(expectedValue, actualValue);
         }
 
