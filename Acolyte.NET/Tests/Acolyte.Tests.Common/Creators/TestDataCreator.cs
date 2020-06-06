@@ -28,6 +28,30 @@ namespace Acolyte.Tests.Creators
                 : potentionUpperBound + 1;
         }
 
+        private static float GetUpperBound(float potentionUpperBound)
+        {
+            // Do not use "operator ==" to check floating-points on equality!
+            return potentionUpperBound.IsEqual(float.MaxValue)
+                ? potentionUpperBound
+                : potentionUpperBound + 1;
+        }
+
+        private static double GetUpperBound(double potentionUpperBound)
+        {
+            // Do not use "operator ==" to check floating-points on equality!
+            return potentionUpperBound.IsEqual(double.MaxValue)
+                ? potentionUpperBound
+                : potentionUpperBound + 1;
+        }
+
+        private static decimal GetUpperBound(decimal potentionUpperBound)
+        {
+            // Do not use "operator ==" to check floating-points on equality!
+            return potentionUpperBound.IsEqual(decimal.MaxValue)
+                ? potentionUpperBound
+                : potentionUpperBound + 1;
+        }
+
         #endregion
 
         #region Int32 Helpers
@@ -99,6 +123,29 @@ namespace Acolyte.Tests.Creators
             return IsEven(mark)
                 ? value
                 : (decimal?) null;
+        }
+
+        #endregion
+
+        #region Choise Item
+
+        public static (TSource item, int index) ChoiceWithIndex<TSource>(
+            IReadOnlyList<TSource> source, Random? random = null)
+        {
+            source.ThrowIfNullOrEmpty(nameof(source));
+
+            random ??= RandomInstance;
+
+            int randomItemIndex = random.Next(source.Count);
+            return (source[randomItemIndex], randomItemIndex);
+        }
+
+        public static TSource Choice<TSource>(IReadOnlyList<TSource> source,
+            Random? random = null)
+        {
+            random ??= RandomInstance;
+
+            return ChoiceWithIndex(source, random).item;
         }
 
         #endregion
@@ -290,36 +337,107 @@ namespace Acolyte.Tests.Creators
 
         #endregion
 
+        #region Create Single
+
+        public static float CreateRandomNonNegativeSingle(Random? random = null)
+        {
+            random ??= RandomInstance;
+
+            // "RandomExtensions.NextSingle" method returns values within a range [0.0f, 1.0f).
+            return random.NextSingle();
+        }
+
+        public static float CreateRandomNonNegativeSingle(float maxValue, Random? random = null)
+        {
+            random ??= RandomInstance;
+
+            // "RandomExtensions.NextSingle" method lower bound is equal to zero.
+            return random.NextSingle(GetUpperBound(maxValue));
+        }
+
+        public static float CreateRandomSingle(float minValue, float maxValue,
+            Random? random = null)
+        {
+            random ??= RandomInstance;
+
+            return random.NextSingle(minValue, GetUpperBound(maxValue));
+        }
+
+        public static float CreateRandomSingle(Random? random = null)
+        {
+            random ??= RandomInstance;
+
+            return CreateRandomSingle(float.MinValue, float.MaxValue, random);
+        }
+
+        #endregion
+
         #region Create Double
+
+        public static double CreateRandomNonNegativeDouble(Random? random = null)
+        {
+            random ??= RandomInstance;
+
+            // "RandomExtensions.NextDouble" method returns values within a range [0.0, 1.0).
+            return random.NextDouble();
+        }
+
+        public static double CreateRandomNonNegativeDouble(double maxValue, Random? random = null)
+        {
+            random ??= RandomInstance;
+
+            // "RandomExtensions.NextDouble" method lower bound is equal to zero.
+            return random.NextDouble(GetUpperBound(maxValue));
+        }
+
+        public static double CreateRandomDouble(double minValue, double maxValue,
+            Random? random = null)
+        {
+            random ??= RandomInstance;
+
+            return random.NextDouble(minValue, GetUpperBound(maxValue));
+        }
 
         public static double CreateRandomDouble(Random? random = null)
         {
             random ??= RandomInstance;
 
-            return random.NextDouble();
+            return CreateRandomDouble(double.MinValue, double.MaxValue, random);
         }
 
         #endregion
 
-        #region Choise Item
+        #region Create Decimal
 
-        public static (TSource item, int index) ChoiceWithIndex<TSource>(
-            IReadOnlyList<TSource> source, Random? random = null)
+        public static decimal CreateRandomNonNegativeDecimal(Random? random = null)
         {
-            source.ThrowIfNullOrEmpty(nameof(source));
-
             random ??= RandomInstance;
 
-            int randomItemIndex = random.Next(source.Count);
-            return (source[randomItemIndex], randomItemIndex);
+            // "RandomExtensions.NextDecimal" method returns values within a range [0.0m, 1.0m).
+            return random.NextDecimal();
         }
 
-        public static TSource Choice<TSource>(IReadOnlyList<TSource> source,
+        public static decimal CreateRandomNonNegativeDecimal(decimal maxValue, Random? random = null)
+        {
+            random ??= RandomInstance;
+
+            // "RandomExtensions.NextDecimal" method lower bound is equal to decimal.Zero.
+            return random.NextDecimal(GetUpperBound(maxValue));
+        }
+
+        public static decimal CreateRandomDecimal(decimal minValue, decimal maxValue,
             Random? random = null)
         {
             random ??= RandomInstance;
 
-            return ChoiceWithIndex(source, random).item;
+            return random.NextDecimal(minValue, GetUpperBound(maxValue));
+        }
+
+        public static decimal CreateRandomDecimal(Random? random = null)
+        {
+            random ??= RandomInstance;
+
+            return CreateRandomDecimal(decimal.MinValue, decimal.MaxValue, random);
         }
 
         #endregion
