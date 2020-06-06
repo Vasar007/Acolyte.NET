@@ -270,7 +270,7 @@ namespace Acolyte.Collections.Tests
             IEnumerable<int> collectionWithRandomSize =
                 TestDataCreator.CreateRandomInt32List(count);
             int defaultResult = TestDataCreator.CreateRandomInt32();
-            Func<int, bool> predicate = TestDataCreator.IsEven;
+            Func<int, bool> predicate = i => TestDataCreator.IsEven(i);
             int expectedValue = collectionWithRandomSize.Any()
                 ? collectionWithRandomSize.First(predicate)
                 : defaultResult;
@@ -518,7 +518,7 @@ namespace Acolyte.Collections.Tests
             IEnumerable<int> collectionWithRandomSize =
                 TestDataCreator.CreateRandomInt32List(count);
             int defaultResult = TestDataCreator.CreateRandomInt32();
-            Func<int, bool> predicate = TestDataCreator.IsEven;
+            Func<int, bool> predicate = i => TestDataCreator.IsEven(i);
 
             // Act.
             int actualValue = collectionWithRandomSize.LastOrDefault(predicate, defaultResult);
@@ -783,7 +783,7 @@ namespace Acolyte.Collections.Tests
             IReadOnlyList<int> collectionWithRandomSize =
                 TestDataCreator.CreateRandomInt32List(count);
             int defaultResult = TestDataCreator.CreateRandomInt32();
-            Func<int, bool> predicate = TestDataCreator.IsEven;
+            Func<int, bool> predicate = i => TestDataCreator.IsEven(i);
 
             // Act & Assert.
             int foundValuesCount = collectionWithRandomSize.Count(predicate);
