@@ -547,7 +547,7 @@ namespace Acolyte.Tests.Creators
             Func<long, long?>? valueTransformer, Random? random = null)
         {
             random ??= RandomInstance;
-            valueTransformer ??= i => ReturnNullIfOdd(i);
+            valueTransformer ??= l => ReturnNullIfOdd(l);
 
             return CreateList(
                 count: count,
@@ -572,7 +572,7 @@ namespace Acolyte.Tests.Creators
             Func<long, long?>? valueTransformer, Random? random = null)
         {
             random ??= RandomInstance;
-            valueTransformer ??= i => ReturnNullIfOdd(i);
+            valueTransformer ??= l => ReturnNullIfOdd(l);
 
             int count = GetRandomCountNumber(random);
             return CreateRandomNullableInt64List(
@@ -589,7 +589,81 @@ namespace Acolyte.Tests.Creators
             int count = GetRandomCountNumber(random);
             return CreateRandomNullableInt64List(
                 count: count,
-                valueTransformer: i => ReturnNullIfOdd(i),
+                valueTransformer: l => ReturnNullIfOdd(l),
+                random: random
+            );
+        }
+
+        #endregion
+
+        #region Create Single List
+
+        public static IReadOnlyList<float> CreateRandomSingleList(int count, Random? random = null)
+        {
+            random ??= RandomInstance;
+
+            return CreateList(
+                count: count,
+                valueFactory: (i, rand) => CreateRandomSingle(rand),
+                random: random
+            );
+        }
+
+        public static IReadOnlyList<float> CreateRandomSingleList(Random? random = null)
+        {
+            random ??= RandomInstance;
+
+            int count = GetRandomCountNumber(random);
+            return CreateRandomSingleList(count, random);
+        }
+
+        public static IReadOnlyList<float?> CreateRandomNullableSingleList(int count,
+           Func<float, float?>? valueTransformer, Random? random = null)
+        {
+            random ??= RandomInstance;
+            valueTransformer ??= f => ReturnNullIfRandomInt32IsOdd(f);
+
+            return CreateList(
+                count: count,
+                valueFactory: (i, rand) => valueTransformer(CreateRandomSingle(rand)),
+                random: random
+            );
+        }
+
+        public static IReadOnlyList<float?> CreateRandomNullableSingleList(int count,
+            Random? random = null)
+        {
+            random ??= RandomInstance;
+
+            return CreateRandomNullableSingleList(
+                count: count,
+                valueTransformer: f => ReturnNullIfRandomInt32IsOdd(f),
+                random: random
+            );
+        }
+
+        public static IReadOnlyList<float?> CreateRandomNullableSingleList(
+            Func<float, float?>? valueTransformer, Random? random = null)
+        {
+            random ??= RandomInstance;
+            valueTransformer ??= f => ReturnNullIfRandomInt32IsOdd(f);
+
+            int count = GetRandomCountNumber(random);
+            return CreateRandomNullableSingleList(
+                count: count,
+                valueTransformer: valueTransformer,
+                random: random
+            );
+        }
+
+        public static IReadOnlyList<float?> CreateRandomNullableSingleList(Random? random = null)
+        {
+            random ??= RandomInstance;
+
+            int count = GetRandomCountNumber(random);
+            return CreateRandomNullableSingleList(
+                count: count,
+                valueTransformer: f => ReturnNullIfRandomInt32IsOdd(f),
                 random: random
             );
         }
@@ -662,6 +736,81 @@ namespace Acolyte.Tests.Creators
 
             int count = GetRandomCountNumber(random);
             return CreateRandomNullableDoubleList(
+                count: count,
+                valueTransformer: d => ReturnNullIfRandomInt32IsOdd(d),
+                random: random
+            );
+        }
+
+        #endregion
+
+        #region Create Decimal List
+
+        public static IReadOnlyList<decimal> CreateRandomDecimalList(int count,
+            Random? random = null)
+        {
+            random ??= RandomInstance;
+
+            return CreateList(
+                count: count,
+                valueFactory: (i, rand) => CreateRandomDecimal(rand),
+                random: random
+            );
+        }
+
+        public static IReadOnlyList<decimal> CreateRandomDecimalList(Random? random = null)
+        {
+            random ??= RandomInstance;
+
+            int count = GetRandomCountNumber(random);
+            return CreateRandomDecimalList(count, random);
+        }
+
+        public static IReadOnlyList<decimal?> CreateRandomNullableDecimalList(int count,
+           Func<decimal, decimal?>? valueTransformer, Random? random = null)
+        {
+            random ??= RandomInstance;
+            valueTransformer ??= d => ReturnNullIfRandomInt32IsOdd(d);
+
+            return CreateList(
+                count: count,
+                valueFactory: (i, rand) => valueTransformer(CreateRandomDecimal(rand)),
+                random: random
+            );
+        }
+
+        public static IReadOnlyList<decimal?> CreateRandomNullableDecimalList(int count,
+            Random? random = null)
+        {
+            random ??= RandomInstance;
+
+            return CreateRandomNullableDecimalList(
+                count: count,
+                valueTransformer: d => ReturnNullIfRandomInt32IsOdd(d),
+                random: random
+            );
+        }
+
+        public static IReadOnlyList<decimal?> CreateRandomNullableDecimalList(
+            Func<decimal, decimal?>? valueTransformer, Random? random = null)
+        {
+            random ??= RandomInstance;
+            valueTransformer ??= d => ReturnNullIfRandomInt32IsOdd(d);
+
+            int count = GetRandomCountNumber(random);
+            return CreateRandomNullableDecimalList(
+                count: count,
+                valueTransformer: valueTransformer,
+                random: random
+            );
+        }
+
+        public static IReadOnlyList<decimal?> CreateRandomNullableDecimalList(Random? random = null)
+        {
+            random ??= RandomInstance;
+
+            int count = GetRandomCountNumber(random);
+            return CreateRandomNullableDecimalList(
                 count: count,
                 valueTransformer: d => ReturnNullIfRandomInt32IsOdd(d),
                 random: random
