@@ -61,7 +61,7 @@ namespace Acolyte.Collections.Tests
         public void Call_IsNullOrEmpty_ForCollectionWithRandomSize()
         {
             // Arrange.
-            int count = TestDataCreator.CreateRandomNonNegativeInt32(TestHelper.MaxCollectionSize);
+            int count = TestDataCreator.GetRandomCountNumber();
             IEnumerable<int> collectionWithRandomSize =
                 TestDataCreator.CreateRandomInt32List(count);
             bool expectedResult = !collectionWithRandomSize.Any();
@@ -247,7 +247,7 @@ namespace Acolyte.Collections.Tests
         public void Call_FirstOrDefault_ForCollectionWithRandomSize()
         {
             // Arrange.
-            int count = TestDataCreator.CreateRandomNonNegativeInt32(TestHelper.MaxCollectionSize);
+            int count = TestDataCreator.GetRandomCountNumber();
             IEnumerable<int> collectionWithRandomSize =
                 TestDataCreator.CreateRandomInt32List(count);
             int defaultResult = TestDataCreator.CreateRandomInt32();
@@ -266,7 +266,7 @@ namespace Acolyte.Collections.Tests
         public void Call_FirstOrDefault_WithPredicate_ForCollectionWithRandomSize()
         {
             // Arrange.
-            int count = TestDataCreator.CreateRandomNonNegativeInt32(TestHelper.MaxCollectionSize);
+            int count = TestDataCreator.GetRandomCountNumber();
             IEnumerable<int> collectionWithRandomSize =
                 TestDataCreator.CreateRandomInt32List(count);
             int defaultResult = TestDataCreator.CreateRandomInt32();
@@ -286,7 +286,7 @@ namespace Acolyte.Collections.Tests
         public void Call_FirstOrDefault_WithPredicate_ForCollectionWithRandomSize_ShouldReturnDefaultItem()
         {
             // Arrange.
-            int count = TestDataCreator.CreateRandomNonNegativeInt32(TestHelper.MaxCollectionSize);
+            int count = TestDataCreator.GetRandomCountNumber();
             IEnumerable<int> collectionWithRandomSize =
                 TestDataCreator.CreateRandomInt32List(count);
             int expectedValue = TestDataCreator.CreateRandomInt32();
@@ -494,7 +494,7 @@ namespace Acolyte.Collections.Tests
         public void Call_LastOrDefault_ForCollectionWithRandomSize()
         {
             // Arrange.
-            int count = TestDataCreator.CreateRandomNonNegativeInt32(TestHelper.MaxCollectionSize);
+            int count = TestDataCreator.GetRandomCountNumber();
             IEnumerable<int> collectionWithRandomSize =
                 TestDataCreator.CreateRandomInt32List(count);
             int defaultResult = TestDataCreator.CreateRandomInt32();
@@ -514,7 +514,7 @@ namespace Acolyte.Collections.Tests
         public void Call_LastOrDefault_WithPredicate_ForCollectionWithRandomSize()
         {
             // Arrange.
-            int count = TestDataCreator.CreateRandomNonNegativeInt32(TestHelper.MaxCollectionSize);
+            int count = TestDataCreator.GetRandomCountNumber();
             IEnumerable<int> collectionWithRandomSize =
                 TestDataCreator.CreateRandomInt32List(count);
             int defaultResult = TestDataCreator.CreateRandomInt32();
@@ -535,7 +535,7 @@ namespace Acolyte.Collections.Tests
         public void Call_LastOrDefault_WithPredicate_ForCollectionWithRandomSize_ShouldReturnDefaultItem()
         {
             // Arrange.
-            int count = TestDataCreator.CreateRandomNonNegativeInt32(TestHelper.MaxCollectionSize);
+            int count = TestDataCreator.GetRandomCountNumber();
             IEnumerable<int> collectionWithRandomSize =
                 TestDataCreator.CreateRandomInt32List(count);
             int expectedValue = TestDataCreator.CreateRandomInt32();
@@ -750,7 +750,7 @@ namespace Acolyte.Collections.Tests
         public void Call_SingleOrDefault_ForCollectionWithRandomSize()
         {
             // Arrange.
-            int count = TestDataCreator.CreateRandomNonNegativeInt32(TestHelper.MaxCollectionSize);
+            int count = TestDataCreator.GetRandomCountNumber();
             IReadOnlyList<int> collectionWithRandomSize =
                 TestDataCreator.CreateRandomInt32List(count);
             int defaultResult = TestDataCreator.CreateRandomInt32();
@@ -779,7 +779,7 @@ namespace Acolyte.Collections.Tests
         public void Call_SingleOrDefault_WithPredicate_ForCollectionWithRandomSize()
         {
             // Arrange.
-            int count = TestDataCreator.CreateRandomNonNegativeInt32(TestHelper.MaxCollectionSize);
+            int count = TestDataCreator.GetRandomCountNumber();
             IReadOnlyList<int> collectionWithRandomSize =
                 TestDataCreator.CreateRandomInt32List(count);
             int defaultResult = TestDataCreator.CreateRandomInt32();
@@ -811,7 +811,7 @@ namespace Acolyte.Collections.Tests
         public void Call_SingleOrDefault_WithPredicate_ForCollectionWithRandomSize_ShouldReturnDefaultItem()
         {
             // Arrange.
-            int count = TestDataCreator.CreateRandomNonNegativeInt32(TestHelper.MaxCollectionSize);
+            int count = TestDataCreator.GetRandomCountNumber();
             IEnumerable<int> collectionWithRandomSize =
                 TestDataCreator.CreateRandomInt32List(count);
             int expectedValue = TestDataCreator.CreateRandomInt32();
@@ -1133,7 +1133,7 @@ namespace Acolyte.Collections.Tests
         {
             // Arrange.
             // Count should be positive.
-            int count = TestDataCreator.CreateRandomInt32(1, TestHelper.MaxCollectionSize);
+            int count = TestDataCreator.GetRandomCountNumber();
             IReadOnlyList<int> collectionWithRandomSize =
                 TestDataCreator.CreateRandomInt32List(count);
             (int randomItem, int expectedIndex) =
@@ -1150,8 +1150,7 @@ namespace Acolyte.Collections.Tests
         public void Call_IndexOf_Item_ForCollectionWithRandomSize_ShouldReturnIndexOfRandomlySelectedItem()
         {
             // Arrange.
-            // Count should be positive.
-            int count = TestDataCreator.CreateRandomInt32(1, TestHelper.MaxCollectionSize);
+            int count = TestDataCreator.GetRandomCountNumber();
             IReadOnlyList<int> collectionWithRandomSize =
                 TestDataCreator.CreateRandomInt32List(count);
             (int randomItem, int expectedIndex) =
@@ -1168,8 +1167,7 @@ namespace Acolyte.Collections.Tests
         public void Call_IndexOf_ItemWithComparer_ForCollectionWithRandomSize_ShouldReturnIndexOfRandomlySelectedItem()
         {
             // Arrange.
-            // Count should be positive.
-            int count = TestDataCreator.CreateRandomInt32(1, TestHelper.MaxCollectionSize);
+            int count = TestDataCreator.GetRandomCountNumber();
             IReadOnlyList<int> collectionWithRandomSize =
                 TestDataCreator.CreateRandomInt32List(count);
             (int randomItem, int expectedIndex) =
@@ -1188,7 +1186,7 @@ namespace Acolyte.Collections.Tests
         public void Call_IndexOf_ForCollectionWithRandomSize_ShouldReturnNotFoundIndex()
         {
             // Arrange.
-            int count = TestDataCreator.CreateRandomNonNegativeInt32(TestHelper.MaxCollectionSize);
+            int count = TestDataCreator.GetRandomCountNumber();
             IEnumerable<int> collectionWithRandomSize =
                 TestDataCreator.CreateRandomInt32List(count);
             int expectedIndex = Constants.NotFoundIndex;
@@ -1204,7 +1202,7 @@ namespace Acolyte.Collections.Tests
         public void Call_IndexOf_Item_ForCollectionWithRandomSize_ShouldReturnNotFoundIndex()
         {
             // Arrange.
-            int count = TestDataCreator.CreateRandomNonNegativeInt32(TestHelper.MaxCollectionSize);
+            int count = TestDataCreator.GetRandomCountNumber();
             IEnumerable<int?> collectionWithRandomSize = TestDataCreator
                .CreateRandomInt32List(count)
                .ToNullable();
@@ -1221,7 +1219,7 @@ namespace Acolyte.Collections.Tests
         public void Call_IndexOf_ItemWithComparer_ForCollectionWithRandomSize_ShouldReturnNotFoundIndex()
         {
             // Arrange.
-            int count = TestDataCreator.CreateRandomNonNegativeInt32(TestHelper.MaxCollectionSize);
+            int count = TestDataCreator.GetRandomCountNumber();
             IEnumerable<int?> collectionWithRandomSize = TestDataCreator
                 .CreateRandomInt32List(count)
                 .ToNullable();
@@ -1860,7 +1858,7 @@ namespace Acolyte.Collections.Tests
         public void Call_ToReadOnlyDictionary_WithKeySelector_ForCollectionWithRandomSize()
         {
             // Arrange.
-            int count = TestDataCreator.CreateRandomNonNegativeInt32(TestHelper.MaxCollectionSize);
+            int count = TestDataCreator.GetRandomCountNumber();
             IEnumerable<int> collectionWithRandomSize =
                 TestDataCreator.CreateRandomInt32List(count);
             var keyGenerator = new IncrementalKeyGenerator<int>();
@@ -1889,7 +1887,7 @@ namespace Acolyte.Collections.Tests
         public void Call_ToReadOnlyDictionary_WithKeySelectorAndComparer_ForCollectionWithRandomSize()
         {
             // Arrange.
-            int count = TestDataCreator.CreateRandomNonNegativeInt32(TestHelper.MaxCollectionSize);
+            int count = TestDataCreator.GetRandomCountNumber();
             IEnumerable<int> collectionWithRandomSize =
                 TestDataCreator.CreateRandomInt32List(count);
             var keyGenerator = new IncrementalKeyGenerator<int>();
@@ -1920,7 +1918,7 @@ namespace Acolyte.Collections.Tests
         public void Call_ToReadOnlyDictionary_WithKeyElementSelector_ForCollectionWithRandomSize()
         {
             // Arrange.
-            int count = TestDataCreator.CreateRandomNonNegativeInt32(TestHelper.MaxCollectionSize);
+            int count = TestDataCreator.GetRandomCountNumber();
             IEnumerable<int> collectionWithRandomSize =
                 TestDataCreator.CreateRandomInt32List(count);
             var keyGenerator = new IncrementalKeyGenerator<int>();
@@ -1951,7 +1949,7 @@ namespace Acolyte.Collections.Tests
         public void Call_ToReadOnlyDictionary_WithKeyElementSelectorsAndComparer_ForCollectionWithRandomSize()
         {
             // Arrange.
-            int count = TestDataCreator.CreateRandomNonNegativeInt32(TestHelper.MaxCollectionSize);
+            int count = TestDataCreator.GetRandomCountNumber();
             IEnumerable<int> collectionWithRandomSize =
                 TestDataCreator.CreateRandomInt32List(count);
             var keyGenerator = new IncrementalKeyGenerator<int>();
@@ -1986,7 +1984,7 @@ namespace Acolyte.Collections.Tests
         public void Call_ToReadOnlyList_ForCollectionWithRandomSize()
         {
             // Arrange.
-            int count = TestDataCreator.CreateRandomNonNegativeInt32(TestHelper.MaxCollectionSize);
+            int count = TestDataCreator.GetRandomCountNumber();
             IEnumerable<int> collectionWithRandomSize =
                 TestDataCreator.CreateRandomInt32List(count);
             var expectedList = collectionWithRandomSize.ToList();
@@ -2011,7 +2009,7 @@ namespace Acolyte.Collections.Tests
         public void Call_ToReadOnlyCollection_ForCollectionWithRandomSize()
         {
             // Arrange.
-            int count = TestDataCreator.CreateRandomNonNegativeInt32(TestHelper.MaxCollectionSize);
+            int count = TestDataCreator.GetRandomCountNumber();
             IEnumerable<int> collectionWithRandomSize =
                 TestDataCreator.CreateRandomInt32List(count);
             IReadOnlyCollection<int> expectedCollection = collectionWithRandomSize.ToList();
@@ -2257,7 +2255,7 @@ namespace Acolyte.Collections.Tests
         public void Call_Min_WithCompare_ForCollectionWithRandomSize()
         {
             // Arrange.
-            int count = TestDataCreator.CreateRandomNonNegativeInt32(TestHelper.MaxCollectionSize);
+            int count = TestDataCreator.GetRandomCountNumber();
             IEnumerable<int> collectionWithRandomSize =
                 TestDataCreator.CreateRandomInt32List(count);
             int expectedValue = collectionWithRandomSize.Min();
@@ -2273,7 +2271,7 @@ namespace Acolyte.Collections.Tests
         public void Call_Max_WithCompare_ForCollectionWithRandomSize()
         {
             // Arrange.
-            int count = TestDataCreator.CreateRandomNonNegativeInt32(TestHelper.MaxCollectionSize);
+            int count = TestDataCreator.GetRandomCountNumber();
             IEnumerable<int> collectionWithRandomSize =
                 TestDataCreator.CreateRandomInt32List(count);
             int expectedValue = collectionWithRandomSize.Max();
@@ -2426,7 +2424,7 @@ namespace Acolyte.Collections.Tests
         public void Call_MinMax_Int32_ForCollectionWithRandomSize()
         {
             // Arrange.
-            int count = TestDataCreator.CreateRandomNonNegativeInt32(TestHelper.MaxCollectionSize);
+            int count = TestDataCreator.GetRandomCountNumber();
             IEnumerable<int> collectionWithRandomSize = TestDataCreator
                .CreateRandomInt32List(count);
             (int minValue, int maxValue) expectedValue =
@@ -2443,7 +2441,7 @@ namespace Acolyte.Collections.Tests
         public void Call_MinMax_NullableInt32_ForCollectionWithRandomSize()
         {
             // Arrange.
-            int count = TestDataCreator.CreateRandomNonNegativeInt32(TestHelper.MaxCollectionSize);
+            int count = TestDataCreator.GetRandomCountNumber();
             IEnumerable<int?> collectionWithRandomSize = TestDataCreator
                .CreateRandomInt32List(count)
                .ToNullable();
