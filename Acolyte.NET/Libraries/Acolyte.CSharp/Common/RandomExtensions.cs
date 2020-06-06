@@ -74,7 +74,7 @@ namespace Acolyte.Common
         /// </exception>
         public static long NextInt64(this Random random, long maxValue)
         {
-            return random.NextInt64(0, maxValue);
+            return random.NextInt64(minValue: 0L, maxValue);
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Acolyte.Common
         /// </exception>
         public static long NextInt64(this Random random)
         {
-            return random.NextInt64(minValue: 0, long.MaxValue);
+            return random.NextInt64(minValue: 0L, long.MaxValue);
         }
 
         /// <summary>
@@ -132,24 +132,24 @@ namespace Acolyte.Common
         /// <paramref name="maxValue" />.
         /// </summary>
         /// <param name="random">The given random instance.</param>
-        /// <param name="maxValue">The exclusive maximum bound. Must be greater than 0.0f.</param>
+        /// <param name="maxValue">The exclusive maximum bound. Must be greater than 0.0F.</param>
         /// <returns>
-        /// A random floating-point number from 0.0f (inclusive) to max (exclusive).
+        /// A random floating-point number from 0.0F (inclusive) to max (exclusive).
         /// </returns>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="random" /> is <c>null</c>.
         /// </exception>
         /// <exception cref="ArgumentOutOfRangeException">
-        /// <paramref name="maxValue" /> is less or equal to 0.0f.
+        /// <paramref name="maxValue" /> is less or equal to 0.0F.
         /// </exception>
         public static float NextSingle(this Random random, float maxValue)
         {
-            return random.NextSingle(minValue: 0.0f, maxValue);
+            return random.NextSingle(minValue: 0.0F, maxValue);
         }
 
         /// <summary>
-        /// Returns a random floating-point number that is greater than or equal to 0.0f,
-        /// and less than 1.0f.
+        /// Returns a random floating-point number that is greater than or equal to 0.0F,
+        /// and less than 1.0F.
         /// </summary>
         /// <param name="random">The given random instance.</param>
         /// <returns>A random non-negative long number.</returns>
@@ -251,7 +251,7 @@ namespace Acolyte.Common
         {
             random.ThrowIfNull(nameof(random));
 
-            decimal sample = 1m;
+            decimal sample = 1M;
             // After ~200 million tries this never took more than one attempt but it is possible
             // to generate combinations of a, b, and c with the approach below resulting in
             // a sample >= 1.
@@ -272,7 +272,7 @@ namespace Acolyte.Common
         /// </summary>
         /// <param name="random">The given random instance.</param>
         /// <param name="maxValue">
-        /// The exclusive maximum bound. Must be greater than <see cref="decimal.Zero" /> (0.0m).
+        /// The exclusive maximum bound. Must be greater than <see cref="decimal.Zero" /> (0.0M).
         /// </param>
         /// <returns>
         /// A random floating-point number from min (inclusive) to max (exclusive).
@@ -281,7 +281,7 @@ namespace Acolyte.Common
         /// <paramref name="random" /> is <c>null</c>.
         /// </exception>
         /// <exception cref="ArgumentOutOfRangeException">
-        /// <paramref name="maxValue" /> is less or equal to <see cref="decimal.Zero" /> (0.0m).
+        /// <paramref name="maxValue" /> is less or equal to <see cref="decimal.Zero" /> (0.0M).
         /// </exception>
         public static decimal NextDecimal(this Random random, decimal maxValue)
         {
