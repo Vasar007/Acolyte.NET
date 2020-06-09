@@ -200,6 +200,18 @@ namespace Acolyte.Tests.Creators
             );
         }
 
+        public static IReadOnlyList<TItem> CreateList<TItem>(int count, Random? random = null)
+            where TItem : new()
+        {
+            random ??= RandomInstance;
+
+            return CreateList(
+                count: count,
+                valueFactory: () => new TItem(),
+                random: random
+            );
+        }
+
         public static IReadOnlyList<TItem> CreateList<TItem>(Func<int, Random, TItem> valueFactory,
             Random? random = null)
         {
@@ -236,6 +248,15 @@ namespace Acolyte.Tests.Creators
             return CreateList(count, valueFactory, random);
         }
 
+        public static IReadOnlyList<TItem> CreateList<TItem>(Random? random = null)
+            where TItem : new()
+        {
+            random ??= RandomInstance;
+
+            int count = GetRandomCountNumber();
+            return CreateList<TItem>(count, random);
+        }
+
         #endregion
 
         #region Create String
@@ -258,6 +279,14 @@ namespace Acolyte.Tests.Creators
                     .Select(str => str[random.Next(str.Length)])
                     .ToArray()
             );
+        }
+
+        public static string CreateRandomString(Random? random = null)
+        {
+            random ??= RandomInstance;
+
+            int length = GetRandomCountNumber(random);
+            return CreateRandomString(length, random);
         }
 
         #endregion
@@ -299,6 +328,13 @@ namespace Acolyte.Tests.Creators
             random ??= RandomInstance;
 
             return CreateRandomNonNegativeInt32(TestHelper.MaxCollectionSize, random);
+        }
+
+        public static int GetRandomSmallCountNumber(Random? random = null)
+        {
+            random ??= RandomInstance;
+
+            return CreateRandomNonNegativeInt32(TestHelper.HundredCollectionSize, random);
         }
 
         #endregion
@@ -438,6 +474,33 @@ namespace Acolyte.Tests.Creators
             random ??= RandomInstance;
 
             return CreateRandomDecimal(decimal.MinValue, decimal.MaxValue, random);
+        }
+
+        #endregion
+
+        #region Create String List
+
+        public static IReadOnlyList<string> CreateRandomStringList(int count, Random? random = null)
+        {
+            random ??= RandomInstance;
+
+            return CreateList(
+                count: count,
+                valueFactory: (i, rand) => CreateRandomString(rand),
+                random: random
+            );
+        }
+
+        public static IReadOnlyList<string> CreateRandomStringList(Random? random = null)
+        {
+            random ??= RandomInstance;
+
+            int count = GetRandomCountNumber(random);
+            return CreateList(
+                count: count,
+                valueFactory: (i, rand) => CreateRandomString(rand),
+                random: random
+            );
         }
 
         #endregion
