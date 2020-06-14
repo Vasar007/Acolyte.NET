@@ -157,11 +157,14 @@ namespace Acolyte.Tests.Creators
         {
             random ??= RandomInstance;
 
-            // "Enumerable.Range" method throws exception when "count" < 0.
-            return Enumerable
+            // "Enumerable.Range" method and "List" constructor throw exception when "count" < 0.
+            var values = Enumerable
                 .Range(0, count)
-                .Select(i => valueFactory(i, random))
-                .ToReadOnlyList();
+                .Select(i => valueFactory(i, random));
+
+            var result = new List<TItem>(capacity: count);
+            result.AddRange(values);
+            return result;
         }
 
         public static IReadOnlyList<TItem> CreateList<TItem>(int count,
