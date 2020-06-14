@@ -269,7 +269,11 @@ namespace Acolyte.Tests.Creators
         {
             random ??= RandomInstance;
 
-            int length = GetRandomSmallCountNumber(random);
+            int randomCount = GetRandomSmallCountNumber(random);
+            int length = randomCount == 0
+                ? 1
+                : randomCount;
+
             return CreateRandomString(length, random);
         }
 
