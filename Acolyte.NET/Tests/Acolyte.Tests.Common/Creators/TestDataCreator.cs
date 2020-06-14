@@ -269,7 +269,7 @@ namespace Acolyte.Tests.Creators
         {
             random ??= RandomInstance;
 
-            int length = GetRandomCountNumber(random);
+            int length = GetRandomSmallCountNumber(random);
             return CreateRandomString(length, random);
         }
 
@@ -363,7 +363,7 @@ namespace Acolyte.Tests.Creators
         {
             random ??= RandomInstance;
 
-            // "RandomExtensions.NextSingle" method returns values within a range [0.0f, 1.0f).
+            // "RandomExtensions.NextSingle" method returns values within a range [0.0F, 1.0F).
             return random.NextSingle();
         }
 
@@ -433,11 +433,12 @@ namespace Acolyte.Tests.Creators
         {
             random ??= RandomInstance;
 
-            // "RandomExtensions.NextDecimal" method returns values within a range [0.0m, 1.0m).
+            // "RandomExtensions.NextDecimal" method returns values within a range [0.0M, 1.0M).
             return random.NextDecimal();
         }
 
-        public static decimal CreateRandomNonNegativeDecimal(decimal maxValue, Random? random = null)
+        public static decimal CreateRandomNonNegativeDecimal(decimal maxValue,
+            Random? random = null)
         {
             random ??= RandomInstance;
 
