@@ -2425,16 +2425,25 @@ namespace Acolyte.Collections.Tests
         {
             // Arrange.
             int count = TestDataCreator.GetRandomSmallCountNumber();
-            IEnumerable<int> collectionWithRandomSize = TestDataCreator
+            IReadOnlyList<int> collectionWithRandomSize = TestDataCreator
                 .CreateRandomInt32List(count);
-            (int minValue, int maxValue) expectedValue =
-                (collectionWithRandomSize.Min(), collectionWithRandomSize.Max());
 
-            // Act.
-            var actualValue = collectionWithRandomSize.MinMax();
+            // Act & Assert.
+            if (collectionWithRandomSize.Count > 0)
+            {
+                (int minValue, int maxValue) expectedValue =
+                    (collectionWithRandomSize.Min(), collectionWithRandomSize.Max());
 
-            // Assert.
-            Assert.Equal(expectedValue, actualValue);
+                var actualValue = collectionWithRandomSize.MinMax();
+
+                Assert.Equal(expectedValue, actualValue);
+            }
+            else
+            {
+                Assert.Throws(
+                    Error.NoElements().GetType(), () => collectionWithRandomSize.MinMax()
+                );
+            }
         }
 
         [Fact]
@@ -2596,16 +2605,25 @@ namespace Acolyte.Collections.Tests
         {
             // Arrange.
             int count = TestDataCreator.GetRandomSmallCountNumber();
-            IEnumerable<long> collectionWithRandomSize = TestDataCreator
+            IReadOnlyList<long> collectionWithRandomSize = TestDataCreator
                 .CreateRandomInt64List(count);
-            (long minValue, long maxValue) expectedValue =
-                (collectionWithRandomSize.Min(), collectionWithRandomSize.Max());
 
-            // Act.
-            var actualValue = collectionWithRandomSize.MinMax();
+            // Act & Assert.
+            if (collectionWithRandomSize.Count > 0)
+            {
+                (long minValue, long maxValue) expectedValue =
+                    (collectionWithRandomSize.Min(), collectionWithRandomSize.Max());
 
-            // Assert.
-            Assert.Equal(expectedValue, actualValue);
+                var actualValue = collectionWithRandomSize.MinMax();
+
+                Assert.Equal(expectedValue, actualValue);
+            }
+            else
+            {
+                Assert.Throws(
+                    Error.NoElements().GetType(), () => collectionWithRandomSize.MinMax()
+                );
+            }
         }
 
         [Fact]
@@ -2767,16 +2785,25 @@ namespace Acolyte.Collections.Tests
         {
             // Arrange.
             int count = TestDataCreator.GetRandomSmallCountNumber();
-            IEnumerable<float> collectionWithRandomSize = TestDataCreator
+            IReadOnlyList<float> collectionWithRandomSize = TestDataCreator
                 .CreateRandomSingleList(count);
-            (float minValue, float maxValue) expectedValue =
-                (collectionWithRandomSize.Min(), collectionWithRandomSize.Max());
 
-            // Act.
-            var actualValue = collectionWithRandomSize.MinMax();
+            // Act & Assert.
+            if (collectionWithRandomSize.Count > 0)
+            {
+                (float minValue, float maxValue) expectedValue =
+                    (collectionWithRandomSize.Min(), collectionWithRandomSize.Max());
 
-            // Assert.
-            Assert.Equal(expectedValue, actualValue);
+                var actualValue = collectionWithRandomSize.MinMax();
+
+                Assert.Equal(expectedValue, actualValue);
+            }
+            else
+            {
+                Assert.Throws(
+                    Error.NoElements().GetType(), () => collectionWithRandomSize.MinMax()
+                );
+            }
         }
 
         [Fact]
@@ -2938,16 +2965,25 @@ namespace Acolyte.Collections.Tests
         {
             // Arrange.
             int count = TestDataCreator.GetRandomSmallCountNumber();
-            IEnumerable<double> collectionWithRandomSize = TestDataCreator
+            IReadOnlyList<double> collectionWithRandomSize = TestDataCreator
                 .CreateRandomDoubleList(count);
-            (double minValue, double maxValue) expectedValue =
-                (collectionWithRandomSize.Min(), collectionWithRandomSize.Max());
 
-            // Act.
-            var actualValue = collectionWithRandomSize.MinMax();
+            // Act & Assert.
+            if (collectionWithRandomSize.Count > 0)
+            {
+                (double minValue, double maxValue) expectedValue =
+                    (collectionWithRandomSize.Min(), collectionWithRandomSize.Max());
 
-            // Assert.
-            Assert.Equal(expectedValue, actualValue);
+                var actualValue = collectionWithRandomSize.MinMax();
+
+                Assert.Equal(expectedValue, actualValue);
+            }
+            else
+            {
+                Assert.Throws(
+                    Error.NoElements().GetType(), () => collectionWithRandomSize.MinMax()
+                );
+            }
         }
 
         [Fact]
@@ -3109,16 +3145,25 @@ namespace Acolyte.Collections.Tests
         {
             // Arrange.
             int count = TestDataCreator.GetRandomSmallCountNumber();
-            IEnumerable<decimal> collectionWithRandomSize = TestDataCreator
+            IReadOnlyList<decimal> collectionWithRandomSize = TestDataCreator
                 .CreateRandomDecimalList(count);
-            (decimal minValue, decimal maxValue) expectedValue =
-                (collectionWithRandomSize.Min(), collectionWithRandomSize.Max());
 
-            // Act.
-            var actualValue = collectionWithRandomSize.MinMax();
+            // Act & Assert.
+            if (collectionWithRandomSize.Count > 1)
+            {
+                (decimal minValue, decimal maxValue) expectedValue =
+                    (collectionWithRandomSize.Min(), collectionWithRandomSize.Max());
 
-            // Assert.
-            Assert.Equal(expectedValue, actualValue);
+                var actualValue = collectionWithRandomSize.MinMax();
+
+                Assert.Equal(expectedValue, actualValue);
+            }
+            else
+            {
+                Assert.Throws(
+                    Error.NoElements().GetType(), () => collectionWithRandomSize.MinMax()
+                );
+            }
         }
 
         [Fact]
@@ -3202,7 +3247,7 @@ namespace Acolyte.Collections.Tests
             // Act & Assert.
 #pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             Assert.Throws<ArgumentNullException>(
-                "source", () => nullValue.MinMax(Comparer<DummyClass>.Default)
+                "source", () => nullValue.MinMax(comparer: default)
             );
 #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
@@ -3409,6 +3454,491 @@ namespace Acolyte.Collections.Tests
             Assert.Equal(expected: collection.Length, explosiveCollection.VisitedItemsNumber);
             Assert.Equal(expectedValue, actualValue);
         }
+
+        #endregion
+
+        #endregion
+
+        #region MinMax Overloads With Selector
+
+        #region MinMax For Int32
+
+        [Fact]
+        public void Call_MinMax_WithSelector_Int32_ForNullValue()
+        {
+            // Arrange.
+            const IEnumerable<int>? nullValue = null;
+
+            // Act & Assert.
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+            Assert.Throws<ArgumentNullException>(
+                "source", () => nullValue.MinMax(selector: default)
+            );
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+        }
+
+        [Fact]
+        public void Call_MinMax_WithSelector_Int32_ForNullSelector()
+        {
+            // Arrange.
+            IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
+
+            // Act & Assert.
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+            Assert.Throws<ArgumentNullException>(
+                "selector", () => emptyCollection.MinMax(selector: null)
+            );
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+        }
+
+        [Fact]
+        public void Call_MinMax_WithSelector_NullableInt32_ForNullValue()
+        {
+            // Arrange.
+            const IEnumerable<int?>? nullValue = null;
+
+            // Act & Assert.
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+            Assert.Throws<ArgumentNullException>(
+                "source", () => nullValue.MinMax(selector: default)
+            );
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+        }
+
+        [Fact]
+        public void Call_MinMax_WithSelector_NullableInt32_ForNullSelector()
+        {
+            // Arrange.
+            IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
+
+            // Act & Assert.
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+            Assert.Throws<ArgumentNullException>(
+                "selector", () => emptyCollection.MinMax(selector: null)
+            );
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+        }
+
+        [Fact]
+        public void Call_MinMax_WithSelector_Int32_ForEmptyCollection_ShouldThrow()
+        {
+            // Arrange.
+            IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
+
+            // Act & Assert.
+            Assert.Throws(
+                Error.NoElements().GetType(),
+                () => emptyCollection.MinMax(MultiplyFunction.RedoubleInt32)
+            );
+        }
+
+        [Fact]
+        public void Call_MinMax_WithSelector_NullableInt32_ForEmptyCollection_ShouldReturnNull()
+        {
+            // Arrange.
+            IEnumerable<int?> emptyCollection = Enumerable.Empty<int?>();
+            (int? minValue, int? maxValue) expectedValue = (null, null);
+
+            // Act.
+            var actualValue = emptyCollection.MinMax(MultiplyFunction.RedoubleNullableInt32);
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Theory]
+        [InlineData(TestHelper.OneCollectionSize)]
+        [InlineData(TestHelper.TwoCollectionSize)]
+        [InlineData(TestHelper.FiveCollectionSie)]
+        [InlineData(TestHelper.TenCollectionSize)]
+        [InlineData(TestHelper.HundredCollectionSize)]
+        [InlineData(TestHelper.TenThousandCollectionSize)]
+        public void Call_MinMax_WithSelector_Int32_ForCollectionWithSomeItems(int count)
+        {
+            // Arrange.
+            IEnumerable<int> collectionWithSomeItems = TestDataCreator.CreateRandomInt32List(count);
+            (int minValue, int maxValue) expectedValue =
+            (
+                collectionWithSomeItems.Min(MultiplyFunction.RedoubleInt32),
+                collectionWithSomeItems.Max(MultiplyFunction.RedoubleInt32)
+            );
+
+            // Act.
+            var actualValue = collectionWithSomeItems.MinMax(MultiplyFunction.RedoubleInt32);
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Theory]
+        [InlineData(TestHelper.OneCollectionSize)]
+        [InlineData(TestHelper.TwoCollectionSize)]
+        [InlineData(TestHelper.FiveCollectionSie)]
+        [InlineData(TestHelper.TenCollectionSize)]
+        [InlineData(TestHelper.HundredCollectionSize)]
+        [InlineData(TestHelper.TenThousandCollectionSize)]
+        public void Call_MinMax_WithSelector_NullableInt32_ForCollectionWithSomeItems(int count)
+        {
+            // Arrange.
+            IEnumerable<int?> collectionWithSomeItems =
+                TestDataCreator.CreateRandomNullableInt32List(count);
+            (int? minValue, int? maxValue) expectedValue =
+             (
+                 collectionWithSomeItems.Min(MultiplyFunction.RedoubleNullableInt32),
+                 collectionWithSomeItems.Max(MultiplyFunction.RedoubleNullableInt32)
+             );
+
+            // Act.
+            var actualValue =
+                collectionWithSomeItems.MinMax(MultiplyFunction.RedoubleNullableInt32);
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Fact]
+        public void Call_MinMax_WithSelector_Int32_ForCollectionWithRandomSize()
+        {
+            // Arrange.
+            int count = TestDataCreator.GetRandomSmallCountNumber();
+            IReadOnlyList<int> collectionWithRandomSize = TestDataCreator
+                .CreateRandomInt32List(count);
+
+            // Act & Assert.
+            if (collectionWithRandomSize.Count > 0)
+            {
+                (int minValue, int maxValue) expectedValue =
+                (
+                    collectionWithRandomSize.Min(MultiplyFunction.RedoubleInt32),
+                    collectionWithRandomSize.Max(MultiplyFunction.RedoubleInt32)
+                );
+
+                var actualValue = collectionWithRandomSize.MinMax(MultiplyFunction.RedoubleInt32);
+
+                Assert.Equal(expectedValue, actualValue);
+            }
+            else
+            {
+                Assert.Throws(
+                    Error.NoElements().GetType(), () => collectionWithRandomSize.MinMax()
+                );
+            }
+        }
+
+        [Fact]
+        public void Call_MinMax_WithSelector_NullableInt32_ForCollectionWithRandomSize()
+        {
+            // Arrange.
+            int count = TestDataCreator.GetRandomSmallCountNumber();
+            IEnumerable<int?> collectionWithRandomSize = TestDataCreator
+                .CreateRandomInt32List(count)
+                .ToNullable();
+            (int? minValue, int? maxValue) expectedValue =
+            (
+                collectionWithRandomSize.Min(MultiplyFunction.RedoubleNullableInt32),
+                collectionWithRandomSize.Max(MultiplyFunction.RedoubleNullableInt32)
+            );
+
+            // Act.
+            var actualValue =
+                collectionWithRandomSize.MinMax(MultiplyFunction.RedoubleNullableInt32);
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Fact]
+        public void MinMax_Int32_WithSelector_ShouldLookWholeCollectionToFindValues()
+        {
+            // Arrange.
+            var collection = new int[] { 1, 2, 3, 4 };
+            var explosiveCollection = ExplosiveCollection.CreateNotExplosive(collection);
+            (int minValue, int maxValue) expectedValue =
+            (
+                explosiveCollection.Min(MultiplyFunction.RedoubleInt32),
+                explosiveCollection.Max(MultiplyFunction.RedoubleInt32)
+            );
+
+            // Act.
+            var actualValue = explosiveCollection.MinMax(MultiplyFunction.RedoubleInt32);
+
+            // Assert.
+            Assert.Equal(expected: collection.Length, explosiveCollection.VisitedItemsNumber);
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Fact]
+        public void MinMax_WithSelector_NullableInt32_ShouldLookWholeCollectionToFindValues()
+        {
+            // Arrange.
+            var collection = new int?[] { 1, 2, 3, 4 };
+            var explosiveCollection = ExplosiveCollection.CreateNotExplosive(collection);
+            (int? minValue, int? maxValue) expectedValue =
+             (
+                 explosiveCollection.Min(MultiplyFunction.RedoubleNullableInt32),
+                 explosiveCollection.Max(MultiplyFunction.RedoubleNullableInt32)
+             );
+
+            // Act.
+            var actualValue = explosiveCollection.MinMax(MultiplyFunction.RedoubleNullableInt32);
+
+            // Assert.
+            Assert.Equal(expected: collection.Length, explosiveCollection.VisitedItemsNumber);
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        #endregion
+
+        #region MinMax For Int64
+
+        [Fact]
+        public void Call_MinMax_WithSelector_Int64_ForNullValue()
+        {
+            // Arrange.
+            const IEnumerable<long>? nullValue = null;
+
+            // Act & Assert.
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+            Assert.Throws<ArgumentNullException>(
+                "source", () => nullValue.MinMax(selector: default)
+            );
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+        }
+
+        [Fact]
+        public void Call_MinMax_WithSelector_Int64_ForNullSelector()
+        {
+            // Arrange.
+            IEnumerable<long> emptyCollection = Enumerable.Empty<long>();
+
+            // Act & Assert.
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+            Assert.Throws<ArgumentNullException>(
+                "selector", () => emptyCollection.MinMax(selector: null)
+            );
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+        }
+
+        [Fact]
+        public void Call_MinMax_WithSelector_NullableInt64_ForNullValue()
+        {
+            // Arrange.
+            const IEnumerable<long?>? nullValue = null;
+
+            // Act & Assert.
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+            Assert.Throws<ArgumentNullException>(
+                "source", () => nullValue.MinMax(selector: default)
+            );
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+        }
+
+        [Fact]
+        public void Call_MinMax_WithSelector_NullableInt64_ForNullSelector()
+        {
+            // Arrange.
+            IEnumerable<long?> emptyCollection = Enumerable.Empty<long?>();
+
+            // Act & Assert.
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+            Assert.Throws<ArgumentNullException>(
+                "selector", () => emptyCollection.MinMax(selector: null)
+            );
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+        }
+
+        [Fact]
+        public void Call_MinMax_WithSelector_Int64_ForEmptyCollection_ShouldThrow()
+        {
+            // Arrange.
+            IEnumerable<long> emptyCollection = Enumerable.Empty<long>();
+
+            // Act & Assert.
+            Assert.Throws(
+                Error.NoElements().GetType(),
+                () => emptyCollection.MinMax(MultiplyFunction.RedoubleInt64)
+            );
+        }
+
+        [Fact]
+        public void Call_MinMax_WithSelector_NullableInt64_ForEmptyCollection_ShouldReturnNull()
+        {
+            // Arrange.
+            IEnumerable<long?> emptyCollection = Enumerable.Empty<long?>();
+            (long? minValue, long? maxValue) expectedValue = (null, null);
+
+            // Act.
+            var actualValue = emptyCollection.MinMax(MultiplyFunction.RedoubleNullableInt64);
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Theory]
+        [InlineData(TestHelper.OneCollectionSize)]
+        [InlineData(TestHelper.TwoCollectionSize)]
+        [InlineData(TestHelper.FiveCollectionSie)]
+        [InlineData(TestHelper.TenCollectionSize)]
+        [InlineData(TestHelper.HundredCollectionSize)]
+        [InlineData(TestHelper.TenThousandCollectionSize)]
+        public void Call_MinMax_WithSelector_Int64_ForCollectionWithSomeItems(int count)
+        {
+            // Arrange.
+            IEnumerable<long> collectionWithSomeItems =
+                TestDataCreator.CreateRandomInt64List(count);
+            (long minValue, long maxValue) expectedValue =
+            (
+                collectionWithSomeItems.Min(MultiplyFunction.RedoubleInt64),
+                collectionWithSomeItems.Max(MultiplyFunction.RedoubleInt64)
+            );
+
+            // Act.
+            var actualValue = collectionWithSomeItems.MinMax(MultiplyFunction.RedoubleInt64);
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Theory]
+        [InlineData(TestHelper.OneCollectionSize)]
+        [InlineData(TestHelper.TwoCollectionSize)]
+        [InlineData(TestHelper.FiveCollectionSie)]
+        [InlineData(TestHelper.TenCollectionSize)]
+        [InlineData(TestHelper.HundredCollectionSize)]
+        [InlineData(TestHelper.TenThousandCollectionSize)]
+        public void Call_MinMax_WithSelector_NullableInt64_ForCollectionWithSomeItems(int count)
+        {
+            // Arrange.
+            IEnumerable<long?> collectionWithSomeItems =
+                TestDataCreator.CreateRandomNullableInt64List(count);
+            (long? minValue, long? maxValue) expectedValue =
+            (
+                collectionWithSomeItems.Min(MultiplyFunction.RedoubleNullableInt64),
+                collectionWithSomeItems.Max(MultiplyFunction.RedoubleNullableInt64)
+            );
+
+            // Act.
+            var actualValue =
+                collectionWithSomeItems.MinMax(MultiplyFunction.RedoubleNullableInt64);
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Fact]
+        public void Call_MinMax_WithSelector_Int64_ForCollectionWithRandomSize()
+        {
+            // Arrange.
+            int count = TestDataCreator.GetRandomSmallCountNumber();
+            IReadOnlyList<long> collectionWithRandomSize = TestDataCreator
+                .CreateRandomInt64List(count);
+
+            // Act & Assert.
+            if (collectionWithRandomSize.Count > 0)
+            {
+                (long minValue, long maxValue) expectedValue =
+                (
+                    collectionWithRandomSize.Min(MultiplyFunction.RedoubleInt64),
+                    collectionWithRandomSize.Max(MultiplyFunction.RedoubleInt64)
+                );
+
+                var actualValue = collectionWithRandomSize.MinMax(MultiplyFunction.RedoubleInt64);
+
+                Assert.Equal(expectedValue, actualValue);
+            }
+            else
+            {
+                Assert.Throws(
+                    Error.NoElements().GetType(), () => collectionWithRandomSize.MinMax()
+                );
+            }
+        }
+
+        [Fact]
+        public void Call_MinMax_WithSelector_NullableInt64_ForCollectionWithRandomSize()
+        {
+            // Arrange.
+            int count = TestDataCreator.GetRandomSmallCountNumber();
+            IEnumerable<long?> collectionWithRandomSize = TestDataCreator
+                .CreateRandomInt64List(count)
+                .ToNullable();
+            (long? minValue, long? maxValue) expectedValue =
+            (
+                collectionWithRandomSize.Min(MultiplyFunction.RedoubleNullableInt64),
+                collectionWithRandomSize.Max(MultiplyFunction.RedoubleNullableInt64)
+            );
+
+            // Act.
+            var actualValue =
+                collectionWithRandomSize.MinMax(MultiplyFunction.RedoubleNullableInt64);
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Fact]
+        public void MinMax_Int64_WithSelector_ShouldLookWholeCollectionToFindValues()
+        {
+            // Arrange.
+            var collection = new long[] { 1L, 2L, 3L, 4L };
+            var explosiveCollection = ExplosiveCollection.CreateNotExplosive(collection);
+            (long minValue, long maxValue) expectedValue =
+            (
+                explosiveCollection.Min(MultiplyFunction.RedoubleInt64),
+                explosiveCollection.Max(MultiplyFunction.RedoubleInt64)
+            );
+
+            // Act.
+            var actualValue = explosiveCollection.MinMax(MultiplyFunction.RedoubleInt64);
+
+            // Assert.
+            Assert.Equal(expected: collection.Length, explosiveCollection.VisitedItemsNumber);
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Fact]
+        public void MinMax_WithSelector_NullableInt64_ShouldLookWholeCollectionToFindValues()
+        {
+            // Arrange.
+            var collection = new long?[] { 1L, 2L, 3L, 4L };
+            var explosiveCollection = ExplosiveCollection.CreateNotExplosive(collection);
+            (long? minValue, long? maxValue) expectedValue =
+            (
+                explosiveCollection.Min(MultiplyFunction.RedoubleNullableInt64),
+                explosiveCollection.Max(MultiplyFunction.RedoubleNullableInt64)
+            );
+
+            // Act.
+            var actualValue = explosiveCollection.MinMax(MultiplyFunction.RedoubleNullableInt64);
+
+            // Assert.
+            Assert.Equal(expected: collection.Length, explosiveCollection.VisitedItemsNumber);
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        #endregion
+
+        #region MinMax For Single
+
+
+
+        #endregion
+
+        #region MinMax For Double
+
+
+
+        #endregion
+
+        #region MinMax For Decimal
+
+
+
+        #endregion
+
+        #region MinMax For Generic Types
+
+
 
         #endregion
 
