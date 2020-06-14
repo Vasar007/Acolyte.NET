@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Acolyte.Assertions;
 using Acolyte.Common;
-using Acolyte.Collections;
 
 namespace Acolyte.Tests.Creators
 {
@@ -170,8 +169,6 @@ namespace Acolyte.Tests.Creators
         public static IReadOnlyList<TItem> CreateList<TItem>(int count,
             Func<Random, TItem> valueFactory, Random? random = null)
         {
-            random ??= RandomInstance;
-
             return CreateList(
                 count: count,
                 valueFactory: (i, rand) => valueFactory(rand),
@@ -182,8 +179,6 @@ namespace Acolyte.Tests.Creators
         public static IReadOnlyList<TItem> CreateList<TItem>(int count,
             Func<int, TItem> valueFactory, Random? random = null)
         {
-            random ??= RandomInstance;
-
             return CreateList(
                 count: count,
                 valueFactory: (i, rand) => valueFactory(i),
@@ -194,8 +189,6 @@ namespace Acolyte.Tests.Creators
         public static IReadOnlyList<TItem> CreateList<TItem>(int count, Func<TItem> valueFactory,
             Random? random = null)
         {
-            random ??= RandomInstance;
-
             return CreateList(
                 count: count,
                 valueFactory: (i, rand) => valueFactory(),
@@ -206,8 +199,6 @@ namespace Acolyte.Tests.Creators
         public static IReadOnlyList<TItem> CreateList<TItem>(int count, Random? random = null)
             where TItem : new()
         {
-            random ??= RandomInstance;
-
             return CreateList(
                 count: count,
                 valueFactory: () => new TItem(),
@@ -218,8 +209,6 @@ namespace Acolyte.Tests.Creators
         public static IReadOnlyList<TItem> CreateList<TItem>(Func<int, Random, TItem> valueFactory,
             Random? random = null)
         {
-            random ??= RandomInstance;
-
             int count = GetRandomCountNumber();
             return CreateList(count, valueFactory, random);
         }
@@ -227,8 +216,6 @@ namespace Acolyte.Tests.Creators
         public static IReadOnlyList<TItem> CreateList<TItem>(Func<Random, TItem> valueFactory,
             Random? random = null)
         {
-            random ??= RandomInstance;
-
             int count = GetRandomCountNumber();
             return CreateList(count, valueFactory, random);
         }
@@ -236,8 +223,6 @@ namespace Acolyte.Tests.Creators
         public static IReadOnlyList<TItem> CreateList<TItem>(Func<int, TItem> valueFactory,
             Random? random = null)
         {
-            random ??= RandomInstance;
-
             int count = GetRandomCountNumber();
             return CreateList(count, valueFactory, random);
         }
@@ -245,8 +230,6 @@ namespace Acolyte.Tests.Creators
         public static IReadOnlyList<TItem> CreateList<TItem>(Func<TItem> valueFactory,
             Random? random = null)
         {
-            random ??= RandomInstance;
-
             int count = GetRandomCountNumber();
             return CreateList(count, valueFactory, random);
         }
@@ -254,8 +237,6 @@ namespace Acolyte.Tests.Creators
         public static IReadOnlyList<TItem> CreateList<TItem>(Random? random = null)
             where TItem : new()
         {
-            random ??= RandomInstance;
-
             int count = GetRandomCountNumber();
             return CreateList<TItem>(count, random);
         }
@@ -485,8 +466,6 @@ namespace Acolyte.Tests.Creators
 
         public static IReadOnlyList<string> CreateRandomStringList(int count, Random? random = null)
         {
-            random ??= RandomInstance;
-
             return CreateList(
                 count: count,
                 valueFactory: (i, rand) => CreateRandomString(rand),
@@ -512,8 +491,6 @@ namespace Acolyte.Tests.Creators
 
         public static IReadOnlyList<int> CreateRandomInt32List(int count, Random? random = null)
         {
-            random ??= RandomInstance;
-
             return CreateList(
                 count: count,
                 valueFactory: (i, rand) => CreateRandomInt32(rand),
@@ -535,7 +512,6 @@ namespace Acolyte.Tests.Creators
         public static IReadOnlyList<int?> CreateRandomNullableInt32List(int count,
             Func<int, int?>? valueTransformer, Random? random = null)
         {
-            random ??= RandomInstance;
             valueTransformer ??= i => ReturnNullIfOdd(i);
 
             return CreateList(
@@ -548,8 +524,6 @@ namespace Acolyte.Tests.Creators
         public static IReadOnlyList<int?> CreateRandomNullableInt32List(int count,
             Random? random = null)
         {
-            random ??= RandomInstance;
-
             return CreateRandomNullableInt32List(
                 count: count,
                 valueTransformer: i => ReturnNullIfOdd(i),
@@ -589,8 +563,6 @@ namespace Acolyte.Tests.Creators
 
         public static IReadOnlyList<long> CreateRandomInt64List(int count, Random? random = null)
         {
-            random ??= RandomInstance;
-
             return CreateList(
                 count: count,
                 valueFactory: (i, rand) => CreateRandomInt64(rand),
@@ -612,7 +584,6 @@ namespace Acolyte.Tests.Creators
         public static IReadOnlyList<long?> CreateRandomNullableInt64List(int count,
             Func<long, long?>? valueTransformer, Random? random = null)
         {
-            random ??= RandomInstance;
             valueTransformer ??= l => ReturnNullIfOdd(l);
 
             return CreateList(
@@ -625,8 +596,6 @@ namespace Acolyte.Tests.Creators
         public static IReadOnlyList<long?> CreateRandomNullableInt64List(int count,
             Random? random = null)
         {
-            random ??= RandomInstance;
-
             return CreateRandomNullableInt64List(
                 count: count,
                 valueTransformer: i => ReturnNullIfOdd(i),
@@ -666,8 +635,6 @@ namespace Acolyte.Tests.Creators
 
         public static IReadOnlyList<float> CreateRandomSingleList(int count, Random? random = null)
         {
-            random ??= RandomInstance;
-
             return CreateList(
                 count: count,
                 valueFactory: (i, rand) => CreateRandomSingle(rand),
@@ -686,7 +653,6 @@ namespace Acolyte.Tests.Creators
         public static IReadOnlyList<float?> CreateRandomNullableSingleList(int count,
            Func<float, float?>? valueTransformer, Random? random = null)
         {
-            random ??= RandomInstance;
             valueTransformer ??= f => ReturnNullIfRandomInt32IsOdd(f);
 
             return CreateList(
@@ -699,8 +665,6 @@ namespace Acolyte.Tests.Creators
         public static IReadOnlyList<float?> CreateRandomNullableSingleList(int count,
             Random? random = null)
         {
-            random ??= RandomInstance;
-
             return CreateRandomNullableSingleList(
                 count: count,
                 valueTransformer: f => ReturnNullIfRandomInt32IsOdd(f),
@@ -740,8 +704,6 @@ namespace Acolyte.Tests.Creators
 
         public static IReadOnlyList<double> CreateRandomDoubleList(int count, Random? random = null)
         {
-            random ??= RandomInstance;
-
             return CreateList(
                 count: count,
                 valueFactory: (i, rand) => CreateRandomDouble(rand),
@@ -760,7 +722,6 @@ namespace Acolyte.Tests.Creators
         public static IReadOnlyList<double?> CreateRandomNullableDoubleList(int count,
            Func<double, double?>? valueTransformer, Random? random = null)
         {
-            random ??= RandomInstance;
             valueTransformer ??= d => ReturnNullIfRandomInt32IsOdd(d);
 
             return CreateList(
@@ -773,8 +734,6 @@ namespace Acolyte.Tests.Creators
         public static IReadOnlyList<double?> CreateRandomNullableDoubleList(int count,
             Random? random = null)
         {
-            random ??= RandomInstance;
-
             return CreateRandomNullableDoubleList(
                 count: count,
                 valueTransformer: d => ReturnNullIfRandomInt32IsOdd(d),
@@ -815,8 +774,6 @@ namespace Acolyte.Tests.Creators
         public static IReadOnlyList<decimal> CreateRandomDecimalList(int count,
             Random? random = null)
         {
-            random ??= RandomInstance;
-
             return CreateList(
                 count: count,
                 valueFactory: (i, rand) => CreateRandomDecimal(rand),
@@ -835,7 +792,6 @@ namespace Acolyte.Tests.Creators
         public static IReadOnlyList<decimal?> CreateRandomNullableDecimalList(int count,
            Func<decimal, decimal?>? valueTransformer, Random? random = null)
         {
-            random ??= RandomInstance;
             valueTransformer ??= d => ReturnNullIfRandomInt32IsOdd(d);
 
             return CreateList(
@@ -848,8 +804,6 @@ namespace Acolyte.Tests.Creators
         public static IReadOnlyList<decimal?> CreateRandomNullableDecimalList(int count,
             Random? random = null)
         {
-            random ??= RandomInstance;
-
             return CreateRandomNullableDecimalList(
                 count: count,
                 valueTransformer: d => ReturnNullIfRandomInt32IsOdd(d),
