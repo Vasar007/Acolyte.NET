@@ -3188,7 +3188,7 @@ namespace Acolyte.Collections.Tests
         public void MinMax_Decimal_ShouldLookWholeCollectionToFindValues()
         {
             // Arrange.
-            var collection = new decimal[] { 1M, 2M, 3M, 4M };
+            var collection = new decimal[] { 1.0M, 2.0M, 3.0M, 4.0M };
             var explosiveCollection = ExplosiveCollection.CreateNotExplosive(collection);
             (decimal minValue, decimal maxValue) expectedValue =
                 (explosiveCollection.Min(), explosiveCollection.Max());
@@ -3205,7 +3205,7 @@ namespace Acolyte.Collections.Tests
         public void MinMax_NullableDecimal_ShouldLookWholeCollectionToFindValues()
         {
             // Arrange.
-            var collection = new decimal?[] { 1M, 2M, 3M, 4M };
+            var collection = new decimal?[] { 1.0M, 2.0M, 3.0M, 4.0M };
             var explosiveCollection = ExplosiveCollection.CreateNotExplosive(collection);
             (decimal? minValue, decimal? maxValue) expectedValue =
                 (explosiveCollection.Min(), explosiveCollection.Max());
@@ -4386,7 +4386,231 @@ namespace Acolyte.Collections.Tests
 
         #region MinMax For Decimal
 
+        [Fact]
+        public void Call_MinMax_WithSelector_Decimal_ForNullValue()
+        {
+            // Arrange.
+            const IEnumerable<decimal>? nullValue = null;
 
+            // Act & Assert.
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+            Assert.Throws<ArgumentNullException>(
+                "source", () => nullValue.MinMax(selector: default)
+            );
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+        }
+
+        [Fact]
+        public void Call_MinMax_WithSelector_Decimal_ForNullSelector()
+        {
+            // Arrange.
+            IEnumerable<decimal> emptyCollection = Enumerable.Empty<decimal>();
+
+            // Act & Assert.
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+            Assert.Throws<ArgumentNullException>(
+                "selector", () => emptyCollection.MinMax(selector: null)
+            );
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+        }
+
+        [Fact]
+        public void Call_MinMax_WithSelector_NullableDecimal_ForNullValue()
+        {
+            // Arrange.
+            const IEnumerable<decimal?>? nullValue = null;
+
+            // Act & Assert.
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+            Assert.Throws<ArgumentNullException>(
+                "source", () => nullValue.MinMax(selector: default)
+            );
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+        }
+
+        [Fact]
+        public void Call_MinMax_WithSelector_NullableDecimal_ForNullSelector()
+        {
+            // Arrange.
+            IEnumerable<decimal?> emptyCollection = Enumerable.Empty<decimal?>();
+
+            // Act & Assert.
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+            Assert.Throws<ArgumentNullException>(
+                "selector", () => emptyCollection.MinMax(selector: null)
+            );
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+        }
+
+        [Fact]
+        public void Call_MinMax_WithSelector_Decimal_ForEmptyCollection_ShouldThrow()
+        {
+            // Arrange.
+            IEnumerable<decimal> emptyCollection = Enumerable.Empty<decimal>();
+
+            // Act & Assert.
+            Assert.Throws(
+                Error.NoElements().GetType(),
+                () => emptyCollection.MinMax(MultiplyFunction.RedoubleDecimal)
+            );
+        }
+
+        [Fact]
+        public void Call_MinMax_WithSelector_NullableDecimal_ForEmptyCollection_ShouldReturnNull()
+        {
+            // Arrange.
+            IEnumerable<decimal?> emptyCollection = Enumerable.Empty<decimal?>();
+            (decimal? minValue, decimal? maxValue) expectedValue = (null, null);
+
+            // Act.
+            var actualValue = emptyCollection.MinMax(MultiplyFunction.RedoubleNullableDecimal);
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Theory]
+        [InlineData(TestHelper.OneCollectionSize)]
+        [InlineData(TestHelper.TwoCollectionSize)]
+        [InlineData(TestHelper.FiveCollectionSie)]
+        [InlineData(TestHelper.TenCollectionSize)]
+        [InlineData(TestHelper.HundredCollectionSize)]
+        [InlineData(TestHelper.TenThousandCollectionSize)]
+        public void Call_MinMax_WithSelector_Decimal_ForCollectionWithSomeItems(int count)
+        {
+            // Arrange.
+            IEnumerable<decimal> collectionWithSomeItems =
+                TestDataCreator.CreateRandomDecimalList(count);
+            (decimal minValue, decimal maxValue) expectedValue =
+            (
+                collectionWithSomeItems.Min(MultiplyFunction.RedoubleDecimal),
+                collectionWithSomeItems.Max(MultiplyFunction.RedoubleDecimal)
+            );
+
+            // Act.
+            var actualValue = collectionWithSomeItems.MinMax(MultiplyFunction.RedoubleDecimal);
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Theory]
+        [InlineData(TestHelper.OneCollectionSize)]
+        [InlineData(TestHelper.TwoCollectionSize)]
+        [InlineData(TestHelper.FiveCollectionSie)]
+        [InlineData(TestHelper.TenCollectionSize)]
+        [InlineData(TestHelper.HundredCollectionSize)]
+        [InlineData(TestHelper.TenThousandCollectionSize)]
+        public void Call_MinMax_WithSelector_NullableDecimal_ForCollectionWithSomeItems(int count)
+        {
+            // Arrange.
+            IEnumerable<decimal?> collectionWithSomeItems =
+                TestDataCreator.CreateRandomNullableDecimalList(count);
+            (decimal? minValue, decimal? maxValue) expectedValue =
+            (
+                collectionWithSomeItems.Min(MultiplyFunction.RedoubleNullableDecimal),
+                collectionWithSomeItems.Max(MultiplyFunction.RedoubleNullableDecimal)
+            );
+
+            // Act.
+            var actualValue =
+                collectionWithSomeItems.MinMax(MultiplyFunction.RedoubleNullableDecimal);
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Fact]
+        public void Call_MinMax_WithSelector_Decimal_ForCollectionWithRandomSize()
+        {
+            // Arrange.
+            int count = TestDataCreator.GetRandomSmallCountNumber();
+            IReadOnlyList<decimal> collectionWithRandomSize = TestDataCreator
+                .CreateRandomDecimalList(count);
+
+            // Act & Assert.
+            if (collectionWithRandomSize.Count > 1)
+            {
+                (decimal minValue, decimal maxValue) expectedValue =
+                (
+                    collectionWithRandomSize.Min(MultiplyFunction.RedoubleDecimal),
+                    collectionWithRandomSize.Max(MultiplyFunction.RedoubleDecimal)
+                );
+
+                var actualValue = collectionWithRandomSize.MinMax(MultiplyFunction.RedoubleDecimal);
+
+                Assert.Equal(expectedValue, actualValue);
+            }
+            else
+            {
+                Assert.Throws(
+                    Error.NoElements().GetType(),
+                    () => collectionWithRandomSize.MinMax(MultiplyFunction.RedoubleDecimal)
+                );
+            }
+        }
+
+        [Fact]
+        public void Call_MinMax_WithSelector_NullableDecimal_ForCollectionWithRandomSize()
+        {
+            // Arrange.
+            int count = TestDataCreator.GetRandomSmallCountNumber();
+            IEnumerable<decimal?> collectionWithRandomSize = TestDataCreator
+                .CreateRandomDecimalList(count)
+                .ToNullable();
+            (decimal? minValue, decimal? maxValue) expectedValue =
+            (
+                collectionWithRandomSize.Min(MultiplyFunction.RedoubleNullableDecimal),
+                collectionWithRandomSize.Max(MultiplyFunction.RedoubleNullableDecimal)
+            );
+
+            // Act.
+            var actualValue =
+                collectionWithRandomSize.MinMax(MultiplyFunction.RedoubleNullableDecimal);
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Fact]
+        public void MinMax_WithSelector_Decimal_ShouldLookWholeCollectionToFindValues()
+        {
+            // Arrange.
+            var collection = new decimal[] { 1.0M, 2.0M, 3.0M, 4.0M };
+            var explosiveCollection = ExplosiveCollection.CreateNotExplosive(collection);
+            (decimal minValue, decimal maxValue) expectedValue =
+            (
+                explosiveCollection.Min(MultiplyFunction.RedoubleDecimal),
+                explosiveCollection.Max(MultiplyFunction.RedoubleDecimal)
+            );
+
+            // Act.
+            var actualValue = explosiveCollection.MinMax(MultiplyFunction.RedoubleDecimal);
+
+            // Assert.
+            Assert.Equal(expected: collection.Length, explosiveCollection.VisitedItemsNumber);
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Fact]
+        public void MinMax_WithSelector_NullableDecimal_ShouldLookWholeCollectionToFindValues()
+        {
+            // Arrange.
+            var collection = new decimal?[] { 1.0M, 2.0M, 3.0M, 4.0M };
+            var explosiveCollection = ExplosiveCollection.CreateNotExplosive(collection);
+            (decimal? minValue, decimal? maxValue) expectedValue =
+            (
+                explosiveCollection.Min(MultiplyFunction.RedoubleNullableDecimal),
+                explosiveCollection.Max(MultiplyFunction.RedoubleNullableDecimal)
+            );
+
+            // Act.
+            var actualValue = explosiveCollection.MinMax(MultiplyFunction.RedoubleNullableDecimal);
+
+            // Assert.
+            Assert.Equal(expected: collection.Length, explosiveCollection.VisitedItemsNumber);
+            Assert.Equal(expectedValue, actualValue);
+        }
 
         #endregion
 

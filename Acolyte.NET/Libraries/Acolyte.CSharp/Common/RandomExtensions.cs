@@ -251,7 +251,7 @@ namespace Acolyte.Common
         {
             random.ThrowIfNull(nameof(random));
 
-            decimal sample = 1M;
+            decimal sample = decimal.One;
             // After ~200 million tries this never took more than one attempt but it is possible
             // to generate combinations of a, b, and c with the approach below resulting in
             // a sample >= 1.
