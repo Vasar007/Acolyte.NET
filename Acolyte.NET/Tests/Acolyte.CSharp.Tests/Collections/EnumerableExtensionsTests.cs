@@ -18,6 +18,7 @@ namespace Acolyte.Collections.Tests
         }
 
         // TODO: write mock equality comprarer to test overloads with it.
+        // TODO: split this class by regions on several files and place them in one folder.
 
         #region Tests for "Is Null Or Empty" section
 
@@ -1571,7 +1572,7 @@ namespace Acolyte.Collections.Tests
 
             // Act & Assert.
 #pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
-            Assert.Throws<ArgumentNullException>("source", () => nullValue.ToReadOnlyList());
+            Assert.Throws<ArgumentNullException>("source", () => nullValue.ToReadOnlyCollection());
 #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
 
@@ -1683,7 +1684,7 @@ namespace Acolyte.Collections.Tests
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
 
             // Act.
-            var actualCollection = emptyCollection.ToReadOnlyList();
+            var actualCollection = emptyCollection.ToReadOnlyCollection();
 
             // Assert.
             IReadOnlyCollection<int> expectedCollection = emptyCollection.ToList();
@@ -1846,7 +1847,7 @@ namespace Acolyte.Collections.Tests
             IReadOnlyCollection<int> expectedCollection = collectionWithSomeItems.ToList();
 
             // Act.
-            var actualCollection = collectionWithSomeItems.ToReadOnlyList();
+            var actualCollection = collectionWithSomeItems.ToReadOnlyCollection();
 
             // Assert.
             Assert.NotNull(actualCollection);
@@ -2015,7 +2016,7 @@ namespace Acolyte.Collections.Tests
             IReadOnlyCollection<int> expectedCollection = collectionWithRandomSize.ToList();
 
             // Act.
-            var actualCollection = collectionWithRandomSize.ToReadOnlyList();
+            var actualCollection = collectionWithRandomSize.ToReadOnlyCollection();
 
             // Assert.
             Assert.NotNull(actualCollection);
@@ -2028,6 +2029,235 @@ namespace Acolyte.Collections.Tests
                 Assert.Empty(actualCollection);
             }
             Assert.Equal(expectedCollection, actualCollection);
+        }
+
+        [Fact]
+        public void ToReadOnlyDictionary_WithKeySelector_ShouldReturnImmutableCollection()
+        {
+            // Arrange.
+            const int count = 5;
+            IEnumerable<int> collectionWithRandomSize =
+                TestDataCreator.CreateRandomInt32List(count);
+            var keyGenerator = new IncrementalKeyGenerator<int>();
+            var expectedDictionary = collectionWithRandomSize.ToDictionary(keyGenerator.GetKey);
+
+            // Act.
+            keyGenerator.Reset();
+            var actualDictionary = collectionWithRandomSize.ToReadOnlyDictionary(
+                keyGenerator.GetKey
+            );
+
+            // Assert.
+            if (actualDictionary is IDictionary<long, int> dictionary)
+            {
+                Assert.True(dictionary.IsReadOnly);
+                Assert.Throws<NotSupportedException>(() => dictionary.Add(default));
+                Assert.Throws<NotSupportedException>(() => dictionary.Add(default, default));
+                Assert.Throws<NotSupportedException>(() => dictionary.Clear());
+                Assert.Throws<NotSupportedException>(
+                    () => dictionary.Remove(default(KeyValuePair<long, int>))
+                );
+                Assert.Throws<NotSupportedException>(() => dictionary.Remove(default));
+                Assert.Throws<NotSupportedException>(() => dictionary[default] = default);
+            }
+            else
+            {
+                string message =
+                    $"Method '{nameof(EnumerableExtensions.ToReadOnlyCollection)}' " +
+                    $"returns collection with invalid type. Return type should be inherit from " +
+                    $"'{nameof(IDictionary<long, int>)}'.";
+                CustomAssert.Fail(message);
+            }
+        }
+
+        [Fact]
+        public void ToReadOnlyDictionary_WithKeySelectorAndComparer_ShouldReturnImmutableCollection()
+        {
+            // Arrange.
+            const int count = 5;
+            IEnumerable<int> collectionWithRandomSize =
+                TestDataCreator.CreateRandomInt32List(count);
+            var keyGenerator = new IncrementalKeyGenerator<int>();
+            var expectedDictionary = collectionWithRandomSize.ToDictionary(
+                keyGenerator.GetKey, EqualityComparer<long>.Default
+            );
+
+            // Act.
+            keyGenerator.Reset();
+            var actualDictionary = collectionWithRandomSize.ToReadOnlyDictionary(
+                keyGenerator.GetKey, EqualityComparer<long>.Default
+            );
+
+            // Assert.
+            if (actualDictionary is IDictionary<long, int> dictionary)
+            {
+                Assert.True(dictionary.IsReadOnly);
+                Assert.Throws<NotSupportedException>(() => dictionary.Add(default));
+                Assert.Throws<NotSupportedException>(() => dictionary.Add(default, default));
+                Assert.Throws<NotSupportedException>(() => dictionary.Clear());
+                Assert.Throws<NotSupportedException>(
+                    () => dictionary.Remove(default(KeyValuePair<long, int>))
+                );
+                Assert.Throws<NotSupportedException>(() => dictionary.Remove(default));
+                Assert.Throws<NotSupportedException>(() => dictionary[default] = default);
+            }
+            else
+            {
+                string message =
+                    $"Method '{nameof(EnumerableExtensions.ToReadOnlyCollection)}' " +
+                    $"returns collection with invalid type. Return type should be inherit from " +
+                    $"'{nameof(IDictionary<long, int>)}'.";
+                CustomAssert.Fail(message);
+            }
+        }
+
+        [Fact]
+        public void ToReadOnlyDictionary_WithKeyElementSelector_ShouldReturnImmutableCollection()
+        {
+            // Arrange.
+            const int count = 5;
+            IEnumerable<int> collectionWithRandomSize =
+                TestDataCreator.CreateRandomInt32List(count);
+            var keyGenerator = new IncrementalKeyGenerator<int>();
+            var expectedDictionary = collectionWithRandomSize.ToDictionary(
+                keyGenerator.GetKey, IdentityFunction<int>.Instance
+            );
+
+            // Act.
+            keyGenerator.Reset();
+            var actualDictionary = collectionWithRandomSize.ToReadOnlyDictionary(
+                keyGenerator.GetKey, IdentityFunction<int>.Instance
+            );
+
+            // Assert.
+            if (actualDictionary is IDictionary<long, int> dictionary)
+            {
+                Assert.True(dictionary.IsReadOnly);
+                Assert.Throws<NotSupportedException>(() => dictionary.Add(default));
+                Assert.Throws<NotSupportedException>(() => dictionary.Add(default, default));
+                Assert.Throws<NotSupportedException>(() => dictionary.Clear());
+                Assert.Throws<NotSupportedException>(
+                    () => dictionary.Remove(default(KeyValuePair<long, int>))
+                );
+                Assert.Throws<NotSupportedException>(() => dictionary.Remove(default));
+                Assert.Throws<NotSupportedException>(() => dictionary[default] = default);
+            }
+            else
+            {
+                string message =
+                    $"Method '{nameof(EnumerableExtensions.ToReadOnlyCollection)}' " +
+                    $"returns collection with invalid type. Return type should be inherit from " +
+                    $"'{nameof(IDictionary<long, int>)}'.";
+                CustomAssert.Fail(message);
+            }
+        }
+
+        [Fact]
+        public void ToReadOnlyDictionary_WithKeyElementSelectorsAndComparer_ShouldReturnImmutableCollection()
+        {
+            // Arrange.
+            const int count = 5;
+            IEnumerable<int> collectionWithRandomSize =
+                TestDataCreator.CreateRandomInt32List(count);
+            var keyGenerator = new IncrementalKeyGenerator<int>();
+            var expectedDictionary = collectionWithRandomSize.ToDictionary(
+                keyGenerator.GetKey,
+                IdentityFunction<int>.Instance,
+                EqualityComparer<long>.Default
+            );
+
+            // Act.
+            keyGenerator.Reset();
+            var actualDictionary = collectionWithRandomSize.ToReadOnlyDictionary(
+                keyGenerator.GetKey,
+                IdentityFunction<int>.Instance,
+                EqualityComparer<long>.Default
+            );
+
+            // Assert.
+            if (actualDictionary is IDictionary<long, int> dictionary)
+            {
+                Assert.True(dictionary.IsReadOnly);
+                Assert.Throws<NotSupportedException>(() => dictionary.Add(default));
+                Assert.Throws<NotSupportedException>(() => dictionary.Add(default, default));
+                Assert.Throws<NotSupportedException>(() => dictionary.Clear());
+                Assert.Throws<NotSupportedException>(
+                    () => dictionary.Remove(default(KeyValuePair<long, int>))
+                );
+                Assert.Throws<NotSupportedException>(() => dictionary.Remove(default));
+                Assert.Throws<NotSupportedException>(() => dictionary[default] = default);
+            }
+            else
+            {
+                string message =
+                    $"Method '{nameof(EnumerableExtensions.ToReadOnlyCollection)}' " +
+                    $"returns collection with invalid type. Return type should be inherit from " +
+                    $"'{nameof(IDictionary<long, int>)}'.";
+                CustomAssert.Fail(message);
+            }
+        }
+
+        [Fact]
+        public void ToReadOnlyList_ShouldReturnImmutableCollection()
+        {
+            // Arrange.
+            const int count = 5;
+            IEnumerable<int> collectionWithRandomSize =
+                TestDataCreator.CreateRandomInt32List(count);
+            var expectedList = collectionWithRandomSize.ToList();
+
+            // Act.
+            var actualList = collectionWithRandomSize.ToReadOnlyList();
+
+            // Assert.
+            if (actualList is IList<int> list)
+            {
+                Assert.True(list.IsReadOnly);
+                Assert.Throws<NotSupportedException>(() => list.Add(default));
+                Assert.Throws<NotSupportedException>(() => list.Clear());
+                Assert.Throws<NotSupportedException>(() => list.Remove(default));
+                Assert.Throws<NotSupportedException>(() => list[default] = default);
+                Assert.Throws<NotSupportedException>(() => list.Insert(default, default));
+                Assert.Throws<NotSupportedException>(() => list.RemoveAt(default));
+            }
+            else
+            {
+                string message =
+                    $"Method '{nameof(EnumerableExtensions.ToReadOnlyCollection)}' " +
+                    $"returns collection with invalid type. Return type should be inherit from " +
+                    $"'{nameof(IList<int>)}'.";
+                CustomAssert.Fail(message);
+            }
+        }
+
+        [Fact]
+        public void ToReadOnlyCollection_ShouldReturnImmutableCollection()
+        {
+            // Arrange.
+            const int count = 5;
+            IEnumerable<int> collectionWithRandomSize =
+                TestDataCreator.CreateRandomInt32List(count);
+            IReadOnlyCollection<int> expectedCollection = collectionWithRandomSize.ToList();
+
+            // Act.
+            var actualCollection = collectionWithRandomSize.ToReadOnlyCollection();
+
+            // Assert.
+            if (actualCollection is ICollection<int> collection)
+            {
+                Assert.True(collection.IsReadOnly);
+                Assert.Throws<NotSupportedException>(() => collection.Add(default));
+                Assert.Throws<NotSupportedException>(() => collection.Clear());
+                Assert.Throws<NotSupportedException>(() => collection.Remove(default));
+            }
+            else
+            {
+                string message =
+                    $"Method '{nameof(EnumerableExtensions.ToReadOnlyCollection)}' " +
+                    $"returns collection with invalid type. Return type should be inherit from " +
+                    $"'{nameof(ICollection<int>)}'.";
+                CustomAssert.Fail(message);
+            }
         }
 
         #endregion
@@ -4616,7 +4846,7 @@ namespace Acolyte.Collections.Tests
 
         #region MinMax For Generic Types
 
-
+        // TODO: add overloads with some value type to test uncovered cases in generic overloads.
 
         #endregion
 

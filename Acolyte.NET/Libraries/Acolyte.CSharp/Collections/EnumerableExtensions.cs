@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading;
@@ -453,7 +454,7 @@ namespace Acolyte.Collections
             where TKey: notnull
         {
             // Null checks for parameters are provided by Enumerable.ToDictionary method.
-            return source.ToDictionary(keySelector);
+            return new ReadOnlyDictionary<TKey, TSource>(source.ToDictionary(keySelector));
         }
 
         /// <summary>
@@ -492,7 +493,9 @@ namespace Acolyte.Collections
             where TKey : notnull
         {
             // Null checks for parameters are provided by Enumerable.ToDictionary method.
-            return source.ToDictionary(keySelector, comparer);
+            return new ReadOnlyDictionary<TKey, TSource>(
+                source.ToDictionary(keySelector, comparer)
+            );
         }
 
         /// <summary>
@@ -538,7 +541,9 @@ namespace Acolyte.Collections
             where TKey : notnull
         {
             // Null checks for parameters are provided by Enumerable.ToDictionary method.
-            return source.ToDictionary(keySelector, elementSelector);
+            return new ReadOnlyDictionary<TKey, TElement>(
+                source.ToDictionary(keySelector, elementSelector)
+            );
         }
 
         /// <summary>
@@ -586,7 +591,9 @@ namespace Acolyte.Collections
             where TKey : notnull
         {
             // Null checks for parameters are provided by Enumerable.ToDictionary method.
-            return source.ToDictionary(keySelector, elementSelector, comparer);
+            return new ReadOnlyDictionary<TKey, TElement>(
+                source.ToDictionary(keySelector, elementSelector, comparer)
+            );
         }
 
         /// <summary>
@@ -606,7 +613,7 @@ namespace Acolyte.Collections
             this IEnumerable<TSource> source)
         {
             // Null check for "source" parameter is provided by Enumerable.ToList method.
-            return source.ToList();
+            return source.ToList().AsReadOnly();
         }
 
         /// <summary>
@@ -629,7 +636,7 @@ namespace Acolyte.Collections
             this IEnumerable<TSource> source)
         {
             // Null check for "source" parameter is provided by Enumerable.ToList method.
-            return source.ToList();
+            return source.ToList().AsReadOnly();
         }
 
         #endregion
