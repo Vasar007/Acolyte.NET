@@ -297,6 +297,14 @@ namespace Acolyte.Tests.Creators
             return random.Next(GetUpperBound(maxValue));
         }
 
+        public static int CreateRandomPositiveInt32(int maxValue, Random? random = null)
+        {
+            random ??= RandomInstance;
+
+            // "Random.Next" method lower bound is equal to zero.
+            return random.Next(1, GetUpperBound(maxValue));
+        }
+
         public static int CreateRandomInt32(int minValue, int maxValue, Random? random = null)
         {
             random ??= RandomInstance;
@@ -318,11 +326,25 @@ namespace Acolyte.Tests.Creators
             return CreateRandomNonNegativeInt32(TestHelper.MaxCollectionSize, random);
         }
 
+        public static int GetRandomPositiveCountNumber(Random? random = null)
+        {
+            random ??= RandomInstance;
+
+            return CreateRandomPositiveInt32(TestHelper.MaxCollectionSize, random);
+        }
+
         public static int GetRandomSmallCountNumber(Random? random = null)
         {
             random ??= RandomInstance;
 
             return CreateRandomNonNegativeInt32(TestHelper.HundredCollectionSize, random);
+        }
+
+        public static int GetRandomPositiveSmallCountNumber(Random? random = null)
+        {
+            random ??= RandomInstance;
+
+            return CreateRandomPositiveInt32(TestHelper.HundredCollectionSize, random);
         }
 
         #endregion
