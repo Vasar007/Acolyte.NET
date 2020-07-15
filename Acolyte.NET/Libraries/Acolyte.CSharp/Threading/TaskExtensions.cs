@@ -55,7 +55,7 @@ namespace Acolyte.Threading
 
 #pragma warning disable CS8619 // Nullability of reference types in value doesn't match target type.
             return source
-                .Where(item => item.IsError && !(item.Error is null)) // Filter null exceptions.
+                .Where(item => item.IsSuccess && !(item.Error is null)) // Filter null exceptions.
                 .Select(item => item.Error)
                 .ToList();
 #pragma warning restore CS8619 // Nullability of reference types in value doesn't match target type.
@@ -70,7 +70,7 @@ namespace Acolyte.Threading
             var taskExceptions = new List<Exception>();
             foreach (Result<TResult, Exception> item in source)
             {
-                if (!item.IsError)
+                if (!item.IsSuccess)
                 {
                     // List allows to pass null values.
 #pragma warning disable CS8604 // Possible null reference argument.

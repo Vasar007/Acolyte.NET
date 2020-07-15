@@ -63,14 +63,23 @@ namespace Acolyte.Common
         /// Explicitly converts <see cref="Option{T}" /> to object of type
         /// <typeparamref name="T" />.
         /// </summary>
-        /// <param name="value">A value to convert.</param>
+        /// <param name="option">An option value to convert.</param>
         /// <exception cref="InvalidOperationException">
         /// <see cref="HasValue" /> property is <c>false</c>.
         /// </exception>
         [return: MaybeNull]
-        public static explicit operator T(Option<T> value)
+        public static explicit operator T(Option<T> option)
         {
-            return value.Value;
+            return option.Value;
+        }
+
+        /// <summary>
+        /// Implicitly converts object of type <see cref="Option{T}" /> to <see cref="bool" />.
+        /// </summary>
+        /// <param name="option">An option value to convert.</param>
+        public static implicit operator bool(Option<T> option)
+        {
+            return option.HasValue;
         }
 
         #region Object Overridden Methods

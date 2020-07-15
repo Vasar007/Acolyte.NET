@@ -11,33 +11,33 @@ namespace Acolyte.Common
         [AllowNull]
         private readonly TError _error;
 
-        public bool IsError { get; }
+        public bool IsSuccess { get; }
 
         [MaybeNull]
-        public TOk Ok => !IsError
+        public TOk Ok => IsSuccess
             ? _ok
             : throw new InvalidOperationException($"{nameof(Ok)} property was not active.");
 
         [MaybeNull]
-        public TError Error => IsError
+        public TError Error => !IsSuccess
             ? _error
             : throw new InvalidOperationException($"{nameof(Error)} property was not active.");
 
 
-        private Result([AllowNull] TOk ok, [AllowNull] TError error, bool isError)
+        private Result([AllowNull] TOk ok, [AllowNull] TError error, bool isSuccess)
         {
             _ok = ok;
             _error = error;
-            IsError = isError;
+            IsSuccess = isSuccess;
         }
 
         public Result([AllowNull] TOk ok)
-            : this(ok, default, false)
+            : this(ok, default, true)
         {
         }
 
         public Result([AllowNull] TError error)
-            : this(default, error, true)
+            : this(default, error, false)
         {
         }
 
@@ -56,15 +56,15 @@ namespace Acolyte.Common
         /// <inheritdoc />
         public override int GetHashCode()
         {
-            if (IsError)
+            if (IsSuccess)
             {
-                return !(_error is null)
-                    ? _error.GetHashCode()
+                return !(_ok is null)
+                    ? _ok.GetHashCode()
                     : 0;
             }
 
-            return !(_ok is null)
-                ? _ok.GetHashCode()
+            return !(_error is null)
+                ? _error.GetHashCode()
                 : 0;
         }
 
@@ -75,21 +75,26 @@ namespace Acolyte.Common
         /// <inheritdoc />
         public bool Equals(Result<TOk, TError> other)
         {
-            if (!IsError.Equals(other.IsError)) return false;
+            if (!IsSuccess.Equals(other.IsSuccess)) return false;
 
-            if (IsError)
+            if (IsSuccess)
             {
-                return !(_error is null)
-                    ? _error.Equals(other._error)
-                    : other._error is null;
+                return !(_ok is null)
+                    ? _ok.Equals(other._ok)
+                    : other._ok is null;
             }
 
-            return !(_ok is null)
-                ? _ok.Equals(other._ok)
-                : other._ok is null;
+            return !(_error is null)
+                ? _error.Equals(other._error)
+                : other._error is null;
         }
 
         #endregion
+
+        public static implicit operator bool(Result<TOk, TError> result)
+        {
+            return result.IsSuccess;
+        }
 
         /// <summary>
         /// Determines whether two specified instances of <see cref="Result{TValue, TError}" /> are
@@ -131,16 +136,16 @@ namespace Acolyte.Common
         /// specified default value.
         /// </summary>
         /// <param name="defaultValue">
-        /// A value to return if the <see cref="IsError" /> property is <c>true</c>.
+        /// A value to return if the <see cref="IsSuccess" /> property is <c>true</c>.
         /// </param>
         /// <returns>
-        /// The value of the <see cref="Result" /> property if the <see cref="IsError" /> property
+        /// The value of the <see cref="Result" /> property if the <see cref="IsSuccess" /> property
         /// is <c>false</c>; otherwise, the <paramref name="defaultValue" /> parameter.
         ///</returns>
         [return: MaybeNull]
         public TOk GetValueOrDefault([AllowNull] TOk defaultValue = default)
         {
-            return IsError
+            return IsSuccess
                 ? _ok
                 : defaultValue;
         }
@@ -150,7 +155,7 @@ namespace Acolyte.Common
         /// or the specified default exception value.
         /// </summary>
         /// <param name="defaultException">
-        /// An exception value to return if the <see cref="IsError" /> property is <c>false</c> and
+        /// An exception value to return if the <see cref="IsSuccess" /> property is <c>false</c> and
         /// exception value is not <c>null</c>.
         /// </param>
         /// <returns>
@@ -161,7 +166,7 @@ namespace Acolyte.Common
         [return: MaybeNull]
         public TError GetExceptionOrDefault([AllowNull] TError defaultException = default)
         {
-            return IsError
+            return !IsSuccess
                 ? _error
                 : defaultException;
         }
