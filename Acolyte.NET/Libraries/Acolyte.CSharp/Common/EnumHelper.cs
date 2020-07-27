@@ -92,6 +92,12 @@ namespace Acolyte.Common
             return GetValues<TEnum>().Max();
         }
 
+        public static TEnum GetMinValue<TEnum>()
+            where TEnum : struct, Enum
+        {
+            return GetValues<TEnum>().Min();
+        }
+
         #endregion
     }
 }

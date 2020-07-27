@@ -24,19 +24,24 @@ namespace Acolyte.Common
             : throw new InvalidOperationException($"{nameof(Error)} property was not active.");
 
 
-        private Result([AllowNull] TOk ok, [AllowNull] TError error, bool isSuccess)
+        private Result(
+            [AllowNull] TOk ok,
+            [AllowNull] TError error,
+            bool isSuccess)
         {
             _ok = ok;
             _error = error;
             IsSuccess = isSuccess;
         }
 
-        public Result([AllowNull] TOk ok)
+        public Result(
+            [AllowNull] TOk ok)
             : this(ok, default, true)
         {
         }
 
-        public Result([AllowNull] TError error)
+        public Result(
+            [AllowNull] TError error)
             : this(default, error, false)
         {
         }
@@ -56,16 +61,9 @@ namespace Acolyte.Common
         /// <inheritdoc />
         public override int GetHashCode()
         {
-            if (IsSuccess)
-            {
-                return !(_ok is null)
-                    ? _ok.GetHashCode()
-                    : 0;
-            }
-
-            return !(_error is null)
-                ? _error.GetHashCode()
-                : 0;
+            return IsSuccess
+                ? HashCode.Combine(_ok)
+                : HashCode.Combine(_error);
         }
 
         #endregion
@@ -79,14 +77,14 @@ namespace Acolyte.Common
 
             if (IsSuccess)
             {
-                return !(_ok is null)
-                    ? _ok.Equals(other._ok)
-                    : other._ok is null;
+                return _ok is null
+                    ? other._ok is null
+                    : _ok.Equals(other._ok);
             }
 
-            return !(_error is null)
-                ? _error.Equals(other._error)
-                : other._error is null;
+            return _error is null
+                ? other._error is null
+                : _error.Equals(other._error);
         }
 
         #endregion

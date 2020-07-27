@@ -9,7 +9,7 @@ namespace Acolyte.Tests.Creators
     // TODO: move some methods to Acolyte.CSharp assembly because it can be useful.
     public static class TestDataCreator
     {
-        private static readonly Random RandomInstance = new Random();
+        private static Random RandomInstance { get; } = new Random();
 
         #region Boundaries
 

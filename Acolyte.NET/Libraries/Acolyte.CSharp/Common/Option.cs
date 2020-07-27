@@ -42,7 +42,8 @@ namespace Acolyte.Common
         /// value.
         /// </summary>
         /// <param name="value">A reference type.</param>
-        public Option([AllowNull] T value)
+        public Option(
+            [AllowNull] T value)
             : this()
         {
             _value = value;
@@ -97,9 +98,9 @@ namespace Acolyte.Common
         /// <inheritdoc />
         public override int GetHashCode()
         {
-            return !HasValue || _value is null
+            return !HasValue
                 ? 0
-                : _value.GetHashCode();
+                : HashCode.Combine(_value);
         }
 
         #endregion
@@ -187,11 +188,11 @@ namespace Acolyte.Common
 
     public static class Option
     {
+        public static NoneOption None { get; } = new NoneOption();
+
         public static Option<T> Some<T>(T value)
         {
             return new Option<T>(value);
         }
-
-        public static NoneOption None { get; } = new NoneOption();
     }
 }
