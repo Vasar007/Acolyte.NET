@@ -2171,5 +2171,64 @@ namespace Acolyte.Collections
         }
 
         #endregion
+
+        #region Order By Sequence
+
+        public static IEnumerable<TSource> OrderBySequence<TSource>(
+            this IEnumerable<TSource> source,
+            IEnumerable<TSource> order)
+        {
+            return source.OrderBySequence(
+                order,
+                sourceItem => sourceItem,
+                orderItem => orderItem,
+                (sourceItem, orderItem) => sourceItem
+            );
+        }
+
+        public static IEnumerable<TSource> OrderBySequence<TSource, TOrder>(
+            this IEnumerable<TSource> source,
+            IEnumerable<TOrder> order,
+            Func<TSource, TOrder> sourceKeySelector)
+        {
+            return source.OrderBySequence(
+                order,
+                sourceKeySelector,
+                orderItem => orderItem,
+                (sourceItem, orderItem) => sourceItem
+            );
+        }
+
+        public static IEnumerable<TSource> OrderBySequence<TSource, TOrder, TKey>(
+            this IEnumerable<TSource> source,
+            IEnumerable<TOrder> order,
+            Func<TSource, TKey> sourceKeySelector,
+            Func<TOrder, TKey> orderKeySelector)
+        {
+            return source.OrderBySequence(
+                order,
+                sourceKeySelector,
+                orderKeySelector,
+                (sourceItem, orderItem) => sourceItem
+            );
+        }
+
+        public static IEnumerable<TResult> OrderBySequence<TSource, TOrder, TKey, TResult>(
+            this IEnumerable<TSource> source,
+            IEnumerable<TOrder> order,
+            Func<TSource, TKey> sourceKeySelector,
+            Func<TOrder, TKey> orderKeySelector,
+            Func<TSource, TOrder, TResult> resultSelector)
+        {
+            // Join method keeps order of the first collection, e.g. "order" in our case.
+            return order.Join(
+                source,
+                orderKeySelector,
+                sourceKeySelector,
+                (orderItem, sourceItem) => resultSelector(sourceItem, orderItem)
+            );
+        }
+
+        #endregion
     }
 }
