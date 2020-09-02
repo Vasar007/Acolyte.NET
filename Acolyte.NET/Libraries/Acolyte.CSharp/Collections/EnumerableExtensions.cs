@@ -2253,11 +2253,11 @@ namespace Acolyte.Collections
             return (firstList, secondList);
         }
 
-        public static IEnumerable<TResult> ZipThree<T1, T2, T3, TResult>(
-            this IEnumerable<T1> source,
-            IEnumerable<T2> second,
-            IEnumerable<T3> third,
-            Func<T1, T2, T3, TResult> func)
+        public static IEnumerable<TResult> ZipThree<TFirst, TSecond, TThird, TResult>(
+            this IEnumerable<TFirst> source,
+            IEnumerable<TSecond> second,
+            IEnumerable<TThird> third,
+            Func<TFirst, TSecond, TThird, TResult> func)
         {
             source.ThrowIfNull(nameof(source));
             second.ThrowIfNull(nameof(second));
@@ -2272,10 +2272,10 @@ namespace Acolyte.Collections
                 yield return func(e1.Current, e2.Current, e3.Current);
         }
 
-        public static IEnumerable<(T1, T2, T3)> ZipThree<T1, T2, T3>(
-            this IEnumerable<T1> source,
-            IEnumerable<T2> second,
-            IEnumerable<T3> third)
+        public static IEnumerable<(TFirst, TSecond, TThird)> ZipThree<TFirst, TSecond, TThird>(
+            this IEnumerable<TFirst> source,
+            IEnumerable<TSecond> second,
+            IEnumerable<TThird> third)
         {
             return source.ZipThree(
                 second: second,
