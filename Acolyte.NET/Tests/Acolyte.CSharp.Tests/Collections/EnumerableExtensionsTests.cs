@@ -55,5 +55,17 @@ namespace Acolyte.Collections.Tests
         // TODO: write tests.
 
         #endregion
+
+        #region Tests for "Order By Sequence" section
+
+        // TODO: write tests.
+
+        #endregion
+
+        #region Tests for "Zip And Unzip" section
+
+        // TODO: write tests.
+
+        #endregion
     }
 }

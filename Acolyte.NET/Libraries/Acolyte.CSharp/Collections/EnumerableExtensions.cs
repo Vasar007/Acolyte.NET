@@ -2230,5 +2230,60 @@ namespace Acolyte.Collections
         }
 
         #endregion
+
+        #region Zip And Unzip
+
+        public static (IReadOnlyList<T>, IReadOnlyList<U>) Unzip<T, U, K>(
+            this IEnumerable<K> source,
+            Func<K, (T, U)> selector)
+        {
+            source.ThrowIfNull(nameof(source));
+            selector.ThrowIfNull(nameof(selector));
+
+            var firstList = new List<T>();
+            var secondList = new List<U>();
+
+            foreach (K item in source)
+            {
+                var (first, second) = selector(item);
+                firstList.Add(first);
+                secondList.Add(second);
+            }
+
+            return (firstList, secondList);
+        }
+
+        public static IEnumerable<TResult> ZipThree<T1, T2, T3, TResult>(
+            this IEnumerable<T1> source,
+            IEnumerable<T2> second,
+            IEnumerable<T3> third,
+            Func<T1, T2, T3, TResult> func)
+        {
+            source.ThrowIfNull(nameof(source));
+            second.ThrowIfNull(nameof(second));
+            third.ThrowIfNull(nameof(third));
+            func.ThrowIfNull(nameof(func));
+
+            using var e1 = source.GetEnumerator();
+            using var e2 = second.GetEnumerator();
+            using var e3 = third.GetEnumerator();
+
+            while (e1.MoveNext() && e2.MoveNext() && e3.MoveNext())
+                yield return func(e1.Current, e2.Current, e3.Current);
+        }
+
+        public static IEnumerable<(T1, T2, T3)> ZipThree<T1, T2, T3>(
+            this IEnumerable<T1> source,
+            IEnumerable<T2> second,
+            IEnumerable<T3> third)
+        {
+            return source.ZipThree(
+                second: second,
+                third: third,
+                func: (sourceItem, secondItem, thirdItem) => (sourceItem, secondItem, thirdItem)
+            );
+        }
+
+        #endregion
     }
 }
