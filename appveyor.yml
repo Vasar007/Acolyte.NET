@@ -8,7 +8,7 @@ clone_folder: C:/projects/acolyte-net
 branches:
   only:
     - master
-    - dev
+    - develop
 
 configuration:
   - Debug
