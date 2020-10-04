@@ -5,7 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Acolyte.Assertions;
 
-namespace Acolyte.Collections
+namespace Acolyte.Collections.Concurrent
 {
     /// <summary>
     /// Represents a thread-safe set of values.

@@ -1,10 +1,9 @@
 ﻿using System;
 
-namespace Acolyte.Collections
+namespace Acolyte.Common
 {
     /// <summary>
-    /// Provides read-only <see cref="DateTime" /> property to use by
-    /// <see cref="TimeBasedConcurrentDictionary{TKey, TValue}" />.
+    /// Provides read-only <see cref="DateTime" /> property to store creation time.
     /// </summary>
     public interface IHaveCreationTime
     {

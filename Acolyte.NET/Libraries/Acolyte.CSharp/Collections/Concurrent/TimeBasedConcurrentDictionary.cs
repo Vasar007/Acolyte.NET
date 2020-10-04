@@ -4,8 +4,9 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Acolyte.Assertions;
+using Acolyte.Common;
 
-namespace Acolyte.Collections
+namespace Acolyte.Collections.Concurrent
 {
     /// <summary>
     /// Extends the standard <see cref="ConcurrentDictionary{TKey, TValue}" /> class with time-based
