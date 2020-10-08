@@ -6,8 +6,7 @@ namespace Acolyte.Tests.Common
     {
         private int _counter;
 
-        // Read Int32 is atomic operation on both x86 and x64.
-        public int Value => _counter;
+        public int Value => Interlocked.CompareExchange(ref _counter, 0, 0);
 
 
         public CounterInt32()
