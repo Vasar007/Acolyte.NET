@@ -6,7 +6,7 @@ namespace Acolyte.Tests.Common
     {
         private int _counter;
 
-        public int Value => Interlocked.CompareExchange(ref _counter, 0, 0);
+        public int Value => Thread.VolatileRead(ref _counter);
 
 
         public CounterInt32()

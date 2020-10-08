@@ -6,7 +6,7 @@ namespace Acolyte.Tests.Common
     {
         private long _counter;
 
-        public long Value => Interlocked.Read(ref _counter);
+        public long Value => Thread.VolatileRead(ref _counter);
 
 
         public CounterInt64()
