@@ -16,7 +16,8 @@ namespace Acolyte.Common
     /// <see cref="Reasonable{T}" /> can be use to bound any object in any case (failed or
     /// successful result) but <see cref="Result{TOk, TError}" /> can be used only with final
     /// result status. In short, <see cref="Reasonable{T}" /> is
-    /// Result&lt;<see cref="T" /> , <see cref="string" />&gt; without boolean flag IsSuccess.
+    /// Result&lt;<typeparamref name="T" /> , <see cref="string" />&gt; without boolean flag
+    /// IsSuccess. 
     /// </remarks>
     public readonly struct Reasonable<T> : IEquatable<Reasonable<T>>
     {
@@ -52,7 +53,7 @@ namespace Acolyte.Common
         {
             if (obj is null) return false;
 
-            if (!(obj is Reasonable<T> other)) return false;
+            if (obj is not Reasonable<T> other) return false;
 
             return Equals(other);
         }
@@ -60,10 +61,11 @@ namespace Acolyte.Common
         /// <inheritdoc />
         public override int GetHashCode()
         {
-            // Method "HashCode.Combine" acceps parameters with null values.
-#pragma warning disable CS8604 // Possible null reference argument.
-            return HashCode.Combine(Value, Reason);
-#pragma warning restore CS8604 // Possible null reference argument.
+#if NETSTANDARD2_1
+            return System.HashCode.Combine(Value, Reason);
+#else
+            return Acolyte.Common.HashCode.Combine(Value, Reason);
+#endif
         }
 
         /// <inheritdoc />
@@ -99,7 +101,7 @@ namespace Acolyte.Common
         /// </summary>
         /// <param name="left">Left hand side object to compare.</param>
         /// <param name="right">Right hand side object to compare.</param>
-        /// <returns><c>true</c> if values are memberwise equals, <c>false</c> otherwise.</returns>
+        /// <returns><see langword="true" /> if values are memberwise equals, <see langword="false" /> otherwise.</returns>
         public static bool operator ==(Reasonable<T> left, Reasonable<T> right)
         {
             return left.Equals(right);
@@ -112,7 +114,7 @@ namespace Acolyte.Common
         /// <param name="left">Left hand side object to compare.</param>
         /// <param name="right">Right hand side object to compare.</param>
         /// <returns>
-        /// <c>true</c> if values are not memberwise equals, <c>false</c> otherwise.
+        /// <see langword="true" /> if values are not memberwise equals, <see langword="false" /> otherwise.
         /// </returns>
         public static bool operator !=(Reasonable<T> left, Reasonable<T> right)
         {

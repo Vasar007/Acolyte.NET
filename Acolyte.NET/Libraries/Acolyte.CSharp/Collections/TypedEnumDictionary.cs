@@ -20,11 +20,15 @@ namespace Acolyte.Collections
         {
         }
 
+#if NETSTANDARD2_1
+
         public TypedEnumDictionary(
             IEnumerable<KeyValuePair<Type, Enum>> collection)
            : base(collection)
         {
         }
+
+#endif
 
         public TypedEnumDictionary(
             IEqualityComparer<Type> comparer)
@@ -45,12 +49,16 @@ namespace Acolyte.Collections
         {
         }
 
+#if NETSTANDARD2_1
+
         public TypedEnumDictionary(
             IEnumerable<KeyValuePair<Type, Enum>> collection,
             IEqualityComparer<Type> comparer)
             : base(collection, comparer)
         {
         }
+
+#endif
 
         public TypedEnumDictionary(
             int capacity,

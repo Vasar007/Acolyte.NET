@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Concurrent;
+using System.Collections.Generic;
 using Acolyte.Assertions;
 
 namespace Acolyte.Exceptions
@@ -9,26 +9,34 @@ namespace Acolyte.Exceptions
     /// </summary>
     public static class AppDomainUnhandledExceptionManager
     {
-        private static readonly ConcurrentBag<IUnhandledExceptionHandler> Handlers =
-            new ConcurrentBag<IUnhandledExceptionHandler>();
+        private static readonly List<IUnhandledExceptionHandler> Handlers = new();
+
+        private static readonly object Lock = new();
+
 
         public static void SetHandler(IUnhandledExceptionHandler handler)
         {
             handler.ThrowIfNull(nameof(handler));
 
-            Handlers.Add(handler);
+            lock (Lock)
+            {
+                Handlers.Add(handler);
+            }
 
             AppDomain.CurrentDomain.UnhandledException += handler.UnhandledExceptionEventHandler;
         }
 
         public static void RemoveHandlers()
         {
-            foreach (IUnhandledExceptionHandler handler in Handlers)
+            lock (Lock)
             {
-                AppDomain.CurrentDomain.UnhandledException -= handler.UnhandledExceptionEventHandler;
-            }
+                foreach (IUnhandledExceptionHandler handler in Handlers)
+                {
+                    AppDomain.CurrentDomain.UnhandledException -= handler.UnhandledExceptionEventHandler;
+                }
 
-            Handlers.Clear();
+                Handlers.Clear();
+            }
         }
     }
 }

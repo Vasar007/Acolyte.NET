@@ -44,7 +44,11 @@ namespace Acolyte.Common
         /// <inheritdoc />
         public override int GetHashCode()
         {
-            return HashCode.Combine(Value);
+#if NETSTANDARD2_1
+            return System.HashCode.Combine(Value);
+#else
+            return Acolyte.Common.HashCode.Combine(Value);
+#endif
         }
 
         /// <inheritdoc />
@@ -74,7 +78,7 @@ namespace Acolyte.Common
         /// </summary>
         /// <param name="left">Left hand side object to compare.</param>
         /// <param name="right">Right hand side object to compare.</param>
-        /// <returns><c>true</c> if values are memberwise equals, <c>false</c> otherwise.</returns>
+        /// <returns><see langword="true" /> if values are memberwise equals, <see langword="false" /> otherwise.</returns>
         public static bool operator ==(FormatString? left, FormatString? right)
         {
             return Equals(left, right);
@@ -86,7 +90,7 @@ namespace Acolyte.Common
         /// <param name="left">Left hand side object to compare.</param>
         /// <param name="right">Right hand side object to compare.</param>
         /// <returns>
-        /// <c>true</c> if values are not memberwise equals, <c>false</c> otherwise.
+        /// <see langword="true" /> if values are not memberwise equals, <see langword="false" /> otherwise.
         /// </returns>
         public static bool operator !=(FormatString? left, FormatString? right)
         {

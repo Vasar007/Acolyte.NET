@@ -26,11 +26,13 @@ namespace Acolyte.Common
         /// valid underlying value.
         /// </summary>
         /// <returns>
-        /// The value of the current object if the <see cref="HasValue" /> property is <c>true</c>.
-        /// An exception is thrown if the <see cref="HasValue" /> property is <c>false</c>.
+        /// The value of the current object if the <see cref="HasValue" /> property is
+        /// <see langword="true" />.
+        /// An exception is thrown if the <see cref="HasValue" /> property is
+        /// <see langword="false" />.
         /// </returns>
         /// <exception cref="InvalidOperationException">
-        /// <see cref="HasValue" /> property is <c>false</c>.
+        /// <see cref="HasValue" /> property is <see langword="false" />.
         /// </exception>
         [MaybeNull]
         public T Value => HasValue
@@ -66,7 +68,7 @@ namespace Acolyte.Common
         /// </summary>
         /// <param name="option">An option value to convert.</param>
         /// <exception cref="InvalidOperationException">
-        /// <see cref="HasValue" /> property is <c>false</c>.
+        /// <see cref="HasValue" /> property is <see langword="false" />.
         /// </exception>
         [return: MaybeNull]
         public static explicit operator T(Option<T> option)
@@ -90,7 +92,7 @@ namespace Acolyte.Common
         {
             if (obj is null) return false;
 
-            if (!(obj is Option<T> other)) return false;
+            if (obj is not Option<T> other) return false;
 
             return Equals(other);
         }
@@ -98,9 +100,15 @@ namespace Acolyte.Common
         /// <inheritdoc />
         public override int GetHashCode()
         {
+#if NETSTANDARD2_1
             return !HasValue
-                ? 0
-                : HashCode.Combine(_value);
+               ? 0
+               : System.HashCode.Combine(_value);
+#else
+            return !HasValue
+               ? 0
+               : Acolyte.Common.HashCode.Combine(_value);
+#endif
         }
 
         #endregion
@@ -124,7 +132,10 @@ namespace Acolyte.Common
         /// </summary>
         /// <param name="left">Left hand side object to compare.</param>
         /// <param name="right">Right hand side object to compare.</param>
-        /// <returns><c>true</c> if values are memberwise equals, <c>false</c> otherwise.</returns>
+        /// <returns>
+        /// <see langword="true" /> if values are memberwise equals,
+        /// <see langword="false" /> otherwise.
+        /// </returns>
         public static bool operator ==(Option<T> left, Option<T> right)
         {
             return left.Equals(right);
@@ -136,14 +147,15 @@ namespace Acolyte.Common
         /// <param name="left">Left hand side object to compare.</param>
         /// <param name="right">Right hand side object to compare.</param>
         /// <returns>
-        /// <c>true</c> if values are not memberwise equals, <c>false</c> otherwise.
+        /// <see langword="true" /> if values are not memberwise equals,
+        /// <see langword="false" /> otherwise.
         /// </returns>
         public static bool operator !=(Option<T> left, Option<T> right)
         {
             return !(left == right);
         }
 
-        public static implicit operator Option<T>(NoneOption none)
+        public static implicit operator Option<T>(NoneOption _)
         {
             return new Option<T>();
         }

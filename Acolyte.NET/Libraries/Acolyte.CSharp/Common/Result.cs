@@ -53,7 +53,7 @@ namespace Acolyte.Common
         {
             if (obj is null) return false;
 
-            if (!(obj is Result<TOk, TError> other)) return false;
+            if (obj is not Result<TOk, TError> other) return false;
 
             return Equals(other);
         }
@@ -62,10 +62,14 @@ namespace Acolyte.Common
         public override int GetHashCode()
         {
             return IsSuccess
-                ? HashCode.Combine(_ok)
-                : HashCode.Combine(_error);
+#if NETSTANDARD2_1
+                ? System.HashCode.Combine(_ok)
+                : System.HashCode.Combine(_error);
+#else
+                ? Acolyte.Common.HashCode.Combine(_ok)
+                : Acolyte.Common.HashCode.Combine(_error);
+#endif
         }
-
         #endregion
 
         #region IEquatable<Result<TOk, TError>> Implementation
@@ -100,7 +104,10 @@ namespace Acolyte.Common
         /// </summary>
         /// <param name="left">Left hand side object to compare.</param>
         /// <param name="right">Right hand side object to compare.</param>
-        /// <returns><c>true</c> if values are memberwise equals, <c>false</c> otherwise.</returns>
+        /// <returns>
+        /// <see langword="true" /> if values are memberwise equals,
+        /// <see langword="false" /> otherwise
+        /// .</returns>
         public static bool operator ==(Result<TOk, TError> left, Result<TOk, TError> right)
         {
             return left.Equals(right);
@@ -112,7 +119,8 @@ namespace Acolyte.Common
         /// <param name="left">Left hand side object to compare.</param>
         /// <param name="right">Right hand side object to compare.</param>
         /// <returns>
-        /// <c>true</c> if values are not memberwise equals, <c>false</c> otherwise.
+        /// <see langword="true" /> if values are not memberwise equals, <see langword="false" />
+        /// otherwise.
         /// </returns>
         public static bool operator !=(Result<TOk, TError> left, Result<TOk, TError> right)
         {
@@ -134,11 +142,11 @@ namespace Acolyte.Common
         /// specified default value.
         /// </summary>
         /// <param name="defaultValue">
-        /// A value to return if the <see cref="IsSuccess" /> property is <c>true</c>.
+        /// A value to return if the <see cref="IsSuccess" /> property is <see langword="true" />.
         /// </param>
         /// <returns>
         /// The value of the <see cref="Result" /> property if the <see cref="IsSuccess" /> property
-        /// is <c>false</c>; otherwise, the <paramref name="defaultValue" /> parameter.
+        /// is <see langword="false" />; otherwise, the <paramref name="defaultValue" /> parameter.
         ///</returns>
         [return: MaybeNull]
         public TOk GetValueOrDefault([AllowNull] TOk defaultValue = default)
@@ -153,12 +161,12 @@ namespace Acolyte.Common
         /// or the specified default exception value.
         /// </summary>
         /// <param name="defaultException">
-        /// An exception value to return if the <see cref="IsSuccess" /> property is <c>false</c> and
-        /// exception value is not <c>null</c>.
+        /// An exception value to return if the <see cref="IsSuccess" /> property is
+        /// <see langword="false" /> and exception value is not <see langword="null" />.
         /// </param>
         /// <returns>
         /// The exception value of the <see cref="Exception" /> property if the
-        /// <see cref="IsSuccess" /> property is <c>true</c>; otherwise, the
+        /// <see cref="IsSuccess" /> property is <see langword="true" />; otherwise, the
         /// <paramref name="defaultException" /> parameter.
         ///</returns>
         [return: MaybeNull]

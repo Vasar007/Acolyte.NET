@@ -15,7 +15,7 @@ namespace Acolyte.Threading
         /// <param name="outputObjects">Additional objects to append to message.</param>
         /// <returns>Message about current thread with specified data in message.</returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="outputObjects"/> is <c>null</c>.
+        /// <paramref name="outputObjects"/> is <see langword="null" />.
         /// </exception>
         public static string GetThreadInfoWithParams(params object[] outputObjects)
         {

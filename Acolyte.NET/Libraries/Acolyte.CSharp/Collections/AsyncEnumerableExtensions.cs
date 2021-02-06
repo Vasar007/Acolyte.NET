@@ -5,6 +5,7 @@ using Acolyte.Assertions;
 
 namespace Acolyte.Collections
 {
+#if NETSTANDARD2_1
     /// <summary>
     /// Contains useful methods to work with async enumerable items.
     /// </summary>
@@ -25,7 +26,7 @@ namespace Acolyte.Collections
         /// A <see cref="IEnumerable{T}" /> that contains elements from the input async sequence.
         /// </returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="source" /> is <c>null</c>.
+        /// <paramref name="source" /> is <see langword="null" />.
         /// </exception>
         public static async Task<IEnumerable<T>> AsEnumerable<T>(
             this IAsyncEnumerable<T> source)
@@ -41,4 +42,5 @@ namespace Acolyte.Collections
             return result;
         }
     }
+#endif
 }

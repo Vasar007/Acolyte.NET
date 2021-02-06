@@ -21,7 +21,7 @@ namespace Acolyte.Xml
         /// </summary>
         /// <param name="document">XML document to parse.</param>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="document" /> or it property <c>Root</c> is <c>null</c>.
+        /// <paramref name="document" /> or it property <c>Root</c> is <see langword="null" />.
         /// </exception>
         public XDocumentParser(XDocument document)
         {
@@ -38,8 +38,8 @@ namespace Acolyte.Xml
         /// <param name="attribute">Name of the attribute.</param>
         /// <returns>string value if found attribute, otherwise empty string.</returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="element" /> is <c>null</c>. -or-
-        /// <paramref name="attribute" /> is <c>null</c>.
+        /// <paramref name="element" /> is <see langword="null" />. -or-
+        /// <paramref name="attribute" /> is <see langword="null" />.
         /// </exception>
         /// <exception cref="ArgumentException">
         /// <paramref name="attribute" /> presents empty string.
@@ -63,8 +63,8 @@ namespace Acolyte.Xml
         /// Converted value if found attribute, otherwise exception could be thrown.
         /// </returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="element" /> is <c>null</c>. -or-
-        /// <paramref name="attribute" /> is <c>null</c>.
+        /// <paramref name="element" /> is <see langword="null" />. -or-
+        /// <paramref name="attribute" /> is <see langword="null" />.
         /// </exception>
         /// <exception cref="ArgumentException">
         /// <paramref name="attribute" /> presents empty string.
@@ -82,7 +82,7 @@ namespace Acolyte.Xml
         /// <param name="element">Element to process.</param>
         /// <returns>string value if element is valid, otherwise empty string.</returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="element" /> is <c>null</c>.
+        /// <paramref name="element" /> is <see langword="null" />.
         /// </exception>
         public static string GetElementValue(XElement element)
         {
@@ -101,7 +101,7 @@ namespace Acolyte.Xml
         /// Converted value if element is valid, otherwise exception could be thrown.
         /// </returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="element" /> is <c>null</c>.
+        /// <paramref name="element" /> is <see langword="null" />.
         /// </exception>
         public static T GetElementValue<T>(XElement element)
             where T : IConvertible
@@ -115,10 +115,10 @@ namespace Acolyte.Xml
         /// </summary>
         /// <param name="element">Element to process.</param>
         /// <param name="subelement">Name of the subelement to find.</param>
-        /// <returns>First found subelement which can be <c>null</c>.</returns>
+        /// <returns>First found subelement which can be <see langword="null" />.</returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="element" /> is <c>null</c>. -or-
-        /// <paramref name="subelement" /> is <c>null</c>.
+        /// <paramref name="element" /> is <see langword="null" />. -or-
+        /// <paramref name="subelement" /> is <see langword="null" />.
         /// </exception>
         /// <exception cref="ArgumentException">
         /// <paramref name="subelement" /> presents empty string.
@@ -137,7 +137,7 @@ namespace Acolyte.Xml
         /// <param name="element">Element to process.</param>
         /// <returns>Returns collection of the child elements of passed element.</returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="element" /> is <c>null</c>.
+        /// <paramref name="element" /> is <see langword="null" />.
         /// </exception>
         public static IEnumerable<XElement> FindSubelements(XElement element)
         {
@@ -153,8 +153,8 @@ namespace Acolyte.Xml
         /// <param name="attribute">Name of the attribute.</param>
         /// <returns>string value if found attribute, otherwise empty string.</returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="element" /> is <c>null</c>. -or-
-        /// <paramref name="attribute" /> is <c>null</c>.
+        /// <paramref name="element" /> is <see langword="null" />. -or-
+        /// <paramref name="attribute" /> is <see langword="null" />.
         /// </exception>
         /// <exception cref="ArgumentException">
         /// <paramref name="element" /> or <paramref name="attribute" /> presents empty string.
@@ -178,8 +178,8 @@ namespace Acolyte.Xml
         /// Converted value if found attribute, otherwise exception could be thrown.
         /// </returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="element" /> is <c>null</c>. -or-
-        /// <paramref name="attribute" /> is <c>null</c>.
+        /// <paramref name="element" /> is <see langword="null" />. -or-
+        /// <paramref name="attribute" /> is <see langword="null" />.
         /// </exception>
         /// <exception cref="ArgumentException">
         /// <paramref name="element" /> or <paramref name="attribute" /> presents empty string.
@@ -195,9 +195,9 @@ namespace Acolyte.Xml
         /// Finds element in XML document.
         /// </summary>
         /// <param name="element">Name of the element to find.</param>
-        /// <returns>First found element which can be <c>null</c>.</returns>
+        /// <returns>First found element which can be <see langword="null" />.</returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="element" /> is <c>null</c>.
+        /// <paramref name="element" /> is <see langword="null" />.
         /// </exception>
         /// <exception cref="ArgumentException">
         /// <paramref name="element" /> presents empty string.

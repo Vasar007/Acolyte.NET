@@ -23,7 +23,7 @@ namespace Acolyte.Common
         /// </param>
         /// <returns>A random long number from min (inclusive) to max (exclusive).</returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="random" /> is <c>null</c>.
+        /// <paramref name="random" /> is <see langword="null" />.
         /// </exception>
         /// <exception cref="ArgumentOutOfRangeException">
         /// <paramref name="maxValue" /> is less or equal to <paramref name="minValue" />.
@@ -67,7 +67,7 @@ namespace Acolyte.Common
         /// <param name="maxValue">The exclusive maximum bound. Must be greater than 0.</param>
         /// <returns>A random long number from 0 (inclusive) to max (exclusive).</returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="random" /> is <c>null</c>.
+        /// <paramref name="random" /> is <see langword="null" />.
         /// </exception>
         /// <exception cref="ArgumentOutOfRangeException">
         /// <paramref name="maxValue" /> is less or equal to 0.
@@ -84,7 +84,7 @@ namespace Acolyte.Common
         /// <param name="random">The given random instance.</param>
         /// <returns>A random non-negative long number.</returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="random" /> is <c>null</c>.
+        /// <paramref name="random" /> is <see langword="null" />.
         /// </exception>
         public static long NextInt64(this Random random)
         {
@@ -102,7 +102,7 @@ namespace Acolyte.Common
         /// </param>
         /// <returns>A random floating-point from min (inclusive) to max (exclusive).</returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="random" /> is <c>null</c>.
+        /// <paramref name="random" /> is <see langword="null" />.
         /// </exception>
         /// <exception cref="ArgumentOutOfRangeException">
         /// <paramref name="maxValue" /> is less or equal to <paramref name="minValue" />.
@@ -137,7 +137,7 @@ namespace Acolyte.Common
         /// A random floating-point number from 0.0F (inclusive) to max (exclusive).
         /// </returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="random" /> is <c>null</c>.
+        /// <paramref name="random" /> is <see langword="null" />.
         /// </exception>
         /// <exception cref="ArgumentOutOfRangeException">
         /// <paramref name="maxValue" /> is less or equal to 0.0F.
@@ -154,7 +154,7 @@ namespace Acolyte.Common
         /// <param name="random">The given random instance.</param>
         /// <returns>A random non-negative long number.</returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="random" /> is <c>null</c>.
+        /// <paramref name="random" /> is <see langword="null" />.
         /// </exception>
         public static float NextSingle(this Random random)
         {
@@ -174,7 +174,7 @@ namespace Acolyte.Common
         /// A random floating-point number from min (inclusive) to max (exclusive).
         /// </returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="random" /> is <c>null</c>.
+        /// <paramref name="random" /> is <see langword="null" />.
         /// </exception>
         /// <exception cref="ArgumentOutOfRangeException">
         /// <paramref name="maxValue" /> is less or equal to <paramref name="minValue" />.
@@ -206,7 +206,7 @@ namespace Acolyte.Common
         /// <param name="maxValue">The exclusive maximum bound. Must be greater than 0.0.</param>
         /// <returns>A random floating-point from 0.0 (inclusive) to max (exclusive).</returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="random" /> is <c>null</c>.
+        /// <paramref name="random" /> is <see langword="null" />.
         /// </exception>
         /// <exception cref="ArgumentOutOfRangeException">
         /// <paramref name="maxValue" /> is less or equal to 0.0.
@@ -225,7 +225,7 @@ namespace Acolyte.Common
         /// An integer value with a random number across the entire range of possible values.
         /// </returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="random" /> is <c>null</c>.
+        /// <paramref name="random" /> is <see langword="null" />.
         /// </exception>
         public static int NextFullRangeInt32(this Random random)
         {
@@ -278,7 +278,7 @@ namespace Acolyte.Common
         /// A random floating-point number from min (inclusive) to max (exclusive).
         /// </returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="random" /> is <c>null</c>.
+        /// <paramref name="random" /> is <see langword="null" />.
         /// </exception>
         /// <exception cref="ArgumentOutOfRangeException">
         /// <paramref name="maxValue" /> is less or equal to <see cref="decimal.Zero" /> (0.0M).
@@ -301,7 +301,7 @@ namespace Acolyte.Common
         /// A random floating-point number from min (inclusive) to max (exclusive).
         /// </returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="random" /> is <c>null</c>.
+        /// <paramref name="random" /> is <see langword="null" />.
         /// </exception>
         /// <exception cref="ArgumentOutOfRangeException">
         /// <paramref name="maxValue" /> is less or equal to <paramref name="minValue" />.

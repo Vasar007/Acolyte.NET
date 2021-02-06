@@ -69,17 +69,19 @@ namespace Acolyte.Collections.Concurrent
             _set = new HashSet<T>(comparer);
         }
 
-        public ConcurrentHashSet(int capacity)
-        {
-            _set = new HashSet<T>(capacity);
-        }
-
         public ConcurrentHashSet(IEnumerable<T> collection, IEqualityComparer<T> comparer)
         {
             collection.ThrowIfNull(nameof(collection));
             comparer.ThrowIfNull(nameof(comparer));
 
             _set = new HashSet<T>(collection, comparer);
+        }
+
+#if NETSTANDARD2_1
+
+        public ConcurrentHashSet(int capacity)
+        {
+            _set = new HashSet<T>(capacity);
         }
 
         public ConcurrentHashSet(int capacity, IEqualityComparer<T> comparer)
@@ -89,6 +91,8 @@ namespace Acolyte.Collections.Concurrent
 
             _set = new HashSet<T>(capacity, comparer);
         }
+
+#endif
 
         #endregion
 

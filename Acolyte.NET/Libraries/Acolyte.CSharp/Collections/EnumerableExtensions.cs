@@ -18,14 +18,14 @@ namespace Acolyte.Collections
         #region Is Null Or Empty
 
         /// <summary>
-        /// Checks if enumerable is <c>null</c> or empty without throwing exception.
+        /// Checks if enumerable is <see langword="null" /> or empty without throwing exception.
         /// </summary>
         /// <typeparam name="TSource">
         /// The type of the elements of <paramref name="source" />.
         /// </typeparam>
         /// <param name="source">The <see cref="IEnumerable{TSource}" /> to check.</param>
         /// <returns>
-        /// Returns <c>true</c> in case the enumerable is <c>null</c> or empty, <c>false</c> 
+        /// Returns <see langword="true" /> in case the enumerable is <see langword="null" /> or empty, <see langword="false" /> 
         /// otherwise.
         /// </returns>
         public static bool IsNullOrEmpty<TSource>(this IEnumerable<TSource>? source)
@@ -55,7 +55,7 @@ namespace Acolyte.Collections
         /// source.
         /// </returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="source" /> is <c>null</c>.
+        /// <paramref name="source" /> is <see langword="null" />.
         /// </exception>
         public static TSource FirstOrDefault<TSource>(this IEnumerable<TSource> source,
             TSource defaultValue)
@@ -98,8 +98,8 @@ namespace Acolyte.Collections
         /// <paramref name="predicate" />.
         /// </returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="source" /> is <c>null</c>. -or-
-        /// <paramref name="predicate" /> is <c>null</c>.
+        /// <paramref name="source" /> is <see langword="null" />. -or-
+        /// <paramref name="predicate" /> is <see langword="null" />.
         /// </exception>
         public static TSource FirstOrDefault<TSource>(this IEnumerable<TSource> source,
             Func<TSource, bool> predicate, TSource defaultValue)
@@ -137,7 +137,7 @@ namespace Acolyte.Collections
         /// source.
         /// </returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="source" /> is <c>null</c>.
+        /// <paramref name="source" /> is <see langword="null" />.
         /// </exception>
         public static TSource LastOrDefault<TSource>(this IEnumerable<TSource> source,
             TSource defaultValue)
@@ -190,8 +190,8 @@ namespace Acolyte.Collections
         /// <paramref name="predicate" />.
         /// </returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="source" /> is <c>null</c>. -or-
-        /// <paramref name="predicate" /> is <c>null</c>.
+        /// <paramref name="source" /> is <see langword="null" />. -or-
+        /// <paramref name="predicate" /> is <see langword="null" />.
         /// </exception>
         public static TSource LastOrDefault<TSource>(this IEnumerable<TSource> source,
             Func<TSource, bool> predicate, TSource defaultValue)
@@ -234,7 +234,7 @@ namespace Acolyte.Collections
         /// sequence contains no elements.
         /// </returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="source" /> is <c>null</c>.
+        /// <paramref name="source" /> is <see langword="null" />.
         /// </exception>
         /// <exception cref="InvalidOperationException">
         /// The input sequence contains more than one element.
@@ -285,8 +285,8 @@ namespace Acolyte.Collections
         /// <paramref name="defaultValue" /> if no such element is found.
         /// </returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="source" /> is <c>null</c>. -or-
-        /// <paramref name="predicate" /> is <c>null</c>.
+        /// <paramref name="source" /> is <see langword="null" />. -or-
+        /// <paramref name="predicate" /> is <see langword="null" />.
         /// </exception>
         /// <exception cref="InvalidOperationException">
         /// More than one element satisfies the condition in predicate.
@@ -344,8 +344,8 @@ namespace Acolyte.Collections
         /// <see cref="Constants.NotFoundIndex" /> (it's equal to -1).
         /// </returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="source" /> is <c>null</c>. -or-
-        /// <paramref name="predicate" /> is <c>null</c>.
+        /// <paramref name="source" /> is <see langword="null" />. -or-
+        /// <paramref name="predicate" /> is <see langword="null" />.
         /// </exception>
         public static int IndexOf<TSource>(this IEnumerable<TSource> source,
             Func<TSource, bool> predicate)
@@ -373,6 +373,7 @@ namespace Acolyte.Collections
         /// <param name="source">
         /// The <see cref="IEnumerable{TSource}" /> to find element index.
         /// </param>
+        /// <param name="value">Value to find index of.</param>
         /// <param name="comparer">
         /// An <see cref="IEqualityComparer{TSource}" /> to compare values with.
         /// </param>
@@ -382,8 +383,8 @@ namespace Acolyte.Collections
         /// <see cref="Constants.NotFoundIndex" /> (it's equal to -1).
         /// </returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="source" /> is <c>null</c>. -or-
-        /// <paramref name="comparer" /> is <c>null</c>.
+        /// <paramref name="source" /> is <see langword="null" />. -or-
+        /// <paramref name="comparer" /> is <see langword="null" />.
         /// </exception>
         public static int IndexOf<TSource>(this IEnumerable<TSource> source, TSource value,
             IEqualityComparer<TSource> comparer)
@@ -404,13 +405,14 @@ namespace Acolyte.Collections
         /// <param name="source">
         /// The <see cref="IEnumerable{TSource}" /> to find element index.
         /// </param>
+        /// <param name="value">Value to find index of.</param>
         /// <returns>
         /// The zero-based index of the first occurrence of an element that equals to the 
         /// <paramref name="value" />, if found; otherwise it will return
         /// <see cref="Constants.NotFoundIndex" /> (it's equal to -1).
         /// </returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="source" /> is <c>null</c>.
+        /// <paramref name="source" /> is <see langword="null" />.
         /// </exception>
         public static int IndexOf<TSource>(this IEnumerable<TSource> source, TSource value)
         {
@@ -440,9 +442,9 @@ namespace Acolyte.Collections
         /// A <see cref="IReadOnlyDictionary{TKey, TValue}" /> that contains keys and values.
         /// </returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="source" /> is <c>null</c>. -or-
-        /// <paramref name="keySelector" /> is <c>null</c>. -or-
-        /// <paramref name="keySelector" /> produces a key that is <c>null</c>.
+        /// <paramref name="source" /> is <see langword="null" />. -or-
+        /// <paramref name="keySelector" /> is <see langword="null" />. -or-
+        /// <paramref name="keySelector" /> produces a key that is <see langword="null" />.
         /// </exception>
         /// <exception cref="ArgumentException">
         /// <paramref name="keySelector" /> produces duplicate keys for two elements.
@@ -478,9 +480,9 @@ namespace Acolyte.Collections
         /// A <see cref="IReadOnlyDictionary{TKey, TValue}" /> that contains keys and values.
         /// </returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="source" /> is <c>null</c>. -or-
-        /// <paramref name="keySelector" /> is <c>null</c>. -or-
-        /// <paramref name="keySelector" /> produces a key that is <c>null</c>.
+        /// <paramref name="source" /> is <see langword="null" />. -or-
+        /// <paramref name="keySelector" /> is <see langword="null" />. -or-
+        /// <paramref name="keySelector" /> produces a key that is <see langword="null" />.
         /// </exception>
         /// <exception cref="ArgumentException">
         /// <paramref name="keySelector" /> produces duplicate keys for two elements.
@@ -525,10 +527,10 @@ namespace Acolyte.Collections
         /// <typeparamref name="TElement" /> selected from the input sequence.
         /// </returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="source" /> is <c>null</c>. -or-
-        /// <paramref name="keySelector" /> is <c>null</c>. -or-
-        /// <paramref name="elementSelector" /> is <c>null</c>. -or-
-        /// <paramref name="keySelector" /> produces a key that is <c>null</c>.
+        /// <paramref name="source" /> is <see langword="null" />. -or-
+        /// <paramref name="keySelector" /> is <see langword="null" />. -or-
+        /// <paramref name="elementSelector" /> is <see langword="null" />. -or-
+        /// <paramref name="keySelector" /> produces a key that is <see langword="null" />.
         /// </exception>
         /// <exception cref="ArgumentException">
         /// <paramref name="keySelector" /> produces duplicate keys for two elements.
@@ -574,10 +576,10 @@ namespace Acolyte.Collections
         /// <typeparamref name="TElement" /> selected from the input sequence.
         /// </returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="source" /> is <c>null</c>. -or-
-        /// <paramref name="keySelector" /> is <c>null</c>. -or-
-        /// <paramref name="elementSelector" /> is <c>null</c>. -or-
-        /// <paramref name="keySelector" /> produces a key that is <c>null</c>.
+        /// <paramref name="source" /> is <see langword="null" />. -or-
+        /// <paramref name="keySelector" /> is <see langword="null" />. -or-
+        /// <paramref name="elementSelector" /> is <see langword="null" />. -or-
+        /// <paramref name="keySelector" /> produces a key that is <see langword="null" />.
         /// </exception>
         /// <exception cref="ArgumentException">
         /// <paramref name="keySelector" /> produces duplicate keys for two elements.
@@ -607,7 +609,7 @@ namespace Acolyte.Collections
         /// A <see cref="IReadOnlyList{T}" /> that contains elements from the input sequence.
         /// </returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="source" /> is <c>null</c>.
+        /// <paramref name="source" /> is <see langword="null" />.
         /// </exception>
         public static IReadOnlyList<TSource> ToReadOnlyList<TSource>(
             this IEnumerable<TSource> source)
@@ -630,7 +632,7 @@ namespace Acolyte.Collections
         /// A <see cref="IReadOnlyCollection{T}" /> that contains elements from the input sequence.
         /// </returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="source" /> is <c>null</c>.
+        /// <paramref name="source" /> is <see langword="null" />.
         /// </exception>
         public static IReadOnlyCollection<TSource> ToReadOnlyCollection<TSource>(
             this IEnumerable<TSource> source)
@@ -655,8 +657,8 @@ namespace Acolyte.Collections
         /// <param name="comparer">An element comparer.</param>
         /// <returns>The minimum value in the sequence.</returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="source" /> is <c>null</c>. -or-
-        /// <paramref name="comparer" /> is <c>null</c>.
+        /// <paramref name="source" /> is <see langword="null" />. -or-
+        /// <paramref name="comparer" /> is <see langword="null" />.
         /// </exception>
         /// <exception cref="InvalidOperationException">
         /// <paramref name="source" /> contains no elements.
@@ -713,8 +715,8 @@ namespace Acolyte.Collections
         /// <param name="comparer">An element comparer.</param>
         /// <returns>The maximum value in the sequence.</returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="source" /> is <c>null</c>. -or-
-        /// <paramref name="comparer" /> is <c>null</c>.
+        /// <paramref name="source" /> is <see langword="null" />. -or-
+        /// <paramref name="comparer" /> is <see langword="null" />.
         /// </exception>
         /// <exception cref="InvalidOperationException">
         /// <paramref name="source" /> contains no elements.
@@ -744,7 +746,7 @@ namespace Acolyte.Collections
         /// </param>
         /// <returns>The minimum and maximum values in the sequence.</returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="source" /> is <c>null</c>.
+        /// <paramref name="source" /> is <see langword="null" />.
         /// </exception>
         /// <exception cref="InvalidOperationException">
         /// <paramref name="source" /> contains no elements.
@@ -789,7 +791,7 @@ namespace Acolyte.Collections
         /// maximum values in the sequence.
         /// </returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="source" /> is <c>null</c>.
+        /// <paramref name="source" /> is <see langword="null" />.
         /// </exception>
         public static (int? minValue, int? maxValue) MinMax(this IEnumerable<int?> source)
         {
@@ -818,7 +820,7 @@ namespace Acolyte.Collections
         /// </param>
         /// <returns>The minimum and maximum values in the sequence.</returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="source" /> is <c>null</c>.
+        /// <paramref name="source" /> is <see langword="null" />.
         /// </exception>
         /// <exception cref="InvalidOperationException">
         /// <paramref name="source" /> contains no elements.
@@ -863,7 +865,7 @@ namespace Acolyte.Collections
         /// maximum values in the sequence.
         /// </returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="source" /> is <c>null</c>.
+        /// <paramref name="source" /> is <see langword="null" />.
         /// </exception>
         public static (long? minValue, long? maxValue) MinMax(this IEnumerable<long?> source)
         {
@@ -893,7 +895,7 @@ namespace Acolyte.Collections
         /// </param>
         /// <returns>The minimum and maximum values in the sequence.</returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="source" /> is <c>null</c>.
+        /// <paramref name="source" /> is <see langword="null" />.
         /// </exception>
         /// <exception cref="InvalidOperationException">
         /// <paramref name="source" /> contains no elements.
@@ -950,7 +952,7 @@ namespace Acolyte.Collections
         /// maximum values in the sequence.
         /// </returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="source" /> is <c>null</c>.
+        /// <paramref name="source" /> is <see langword="null" />.
         /// </exception>
         /// <remarks>
         /// Normally NaN &lt; anything is false, as is anything &lt; NaN
@@ -988,7 +990,7 @@ namespace Acolyte.Collections
         /// </param>
         /// <returns>The minimum and maximum values in the sequence.</returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="source" /> is <c>null</c>.
+        /// <paramref name="source" /> is <see langword="null" />.
         /// </exception>
         /// <exception cref="InvalidOperationException">
         /// <paramref name="source" /> contains no elements.
@@ -1040,7 +1042,7 @@ namespace Acolyte.Collections
         /// maximum values in the sequence.
         /// </returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="source" /> is <c>null</c>.
+        /// <paramref name="source" /> is <see langword="null" />.
         /// </exception>
         /// <remarks>
         /// Normally NaN &lt; anything is false, as is anything &lt; NaN
@@ -1078,7 +1080,7 @@ namespace Acolyte.Collections
         /// </param>
         /// <returns>The minimum and maximum values in the sequence.</returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="source" /> is <c>null</c>.
+        /// <paramref name="source" /> is <see langword="null" />.
         /// </exception>
         /// <exception cref="InvalidOperationException">
         /// <paramref name="source" /> contains no elements.
@@ -1123,7 +1125,7 @@ namespace Acolyte.Collections
         /// maximum values in the sequence.
         /// </returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="source" /> is <c>null</c>.
+        /// <paramref name="source" /> is <see langword="null" />.
         /// </exception>
         public static (decimal? minValue, decimal? maxValue) MinMax(
             this IEnumerable<decimal?> source)
@@ -1155,25 +1157,28 @@ namespace Acolyte.Collections
         /// A sequence of values to determine the minimum and maximum values of.
         /// </param>
         /// <param name="comparer">An element comparer.</param>
-        /// <returns>The minimum and maximum values in the sequence.</returns>
+        /// <returns>
+        /// The minimum and maximum values in the sequence.
+        /// If <paramref name="source" /> contains no elements and <typeparamref name="TSource" />
+        /// is reference type, <see langword="null" /> values will be return.
+        /// </returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="source" /> is <c>null</c>. -or-
-        /// <paramref name="comparer" /> is <c>null</c>.
+        /// <paramref name="source" /> is <see langword="null" />. -or-
+        /// <paramref name="comparer" /> is <see langword="null" />..
         /// </exception>
         /// <exception cref="InvalidOperationException">
-        /// <paramref name="source" /> contains no elements.
+        /// <paramref name="source" /> contains no elements and <typeparamref name="TSource" /> is
+        /// value type.
         /// </exception>
-        public static (TSource minValue, TSource maxValue) MinMax<TSource>(
+        public static (TSource? minValue, TSource? maxValue) MinMax<TSource>(
             this IEnumerable<TSource> source,
             IComparer<TSource> comparer)
         {
             source.ThrowIfNull(nameof(source));
             comparer.ThrowIfNull(nameof(comparer));
 
-#pragma warning disable CS8653 // A default expression introduces a null value for a type parameter.
-            TSource minValue = default;
-            TSource maxValue = default;
-#pragma warning restore CS8653 // A default expression introduces a null value for a type parameter.
+            TSource? minValue = default;
+            TSource? maxValue = default;
 
             // Second part of check is redundant but otherwise compiler shows warning about
             // null reference assignment of maxValue variable in the else block.
@@ -1221,18 +1226,23 @@ namespace Acolyte.Collections
         /// <param name="source">
         /// A sequence of values to determine the minimum and maximum values of.
         /// </param>
-        /// <returns>The minimum and maximum values in the sequence.</returns>
+        /// <returns>
+        /// The minimum and maximum values in the sequence.
+        /// If <paramref name="source" /> contains no elements and <typeparamref name="TSource" />
+        /// is reference type, <see langword="null" /> values will be return.
+        /// </returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="source" /> is <c>null</c>.
+        /// <paramref name="source" /> is <see langword="null" />.
         /// </exception>
         /// <exception cref="InvalidOperationException">
-        /// <paramref name="source" /> contains no elements.
+        /// <paramref name="source" /> contains no elements and <typeparamref name="TSource" /> is
+        /// value type.
         /// </exception>
         /// <exception cref="ArgumentException">
         /// No object in <paramref name="source" /> implements the <see cref="IComparable" /> or
         /// <see cref="IComparable{TSource}" /> interface.
         /// </exception>
-        public static (TSource minValue, TSource maxValue) MinMax<TSource>(
+        public static (TSource? minValue, TSource? maxValue) MinMax<TSource>(
             this IEnumerable<TSource> source)
         {
             return source.MinMax(Comparer<TSource>.Default);
@@ -1259,7 +1269,7 @@ namespace Acolyte.Collections
         /// <param name="selector">A transform function to apply to each element.</param>
         /// <returns>The minimum and maximum values in the sequence.</returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="source" /> is <c>null</c>.
+        /// <paramref name="source" /> is <see langword="null" />.
         /// </exception>
         /// <exception cref="InvalidOperationException">
         /// <paramref name="source" /> contains no elements.
@@ -1289,7 +1299,7 @@ namespace Acolyte.Collections
         /// maximum values in the sequence.
         /// </returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="source" /> is <c>null</c>.
+        /// <paramref name="source" /> is <see langword="null" />.
         /// </exception>
         public static (int? minValue, int? maxValue) MinMax<TSource>(
             this IEnumerable<TSource> source,
@@ -1317,7 +1327,7 @@ namespace Acolyte.Collections
         /// <param name="selector">A transform function to apply to each element.</param>
         /// <returns>The minimum and maximum values in the sequence.</returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="source" /> is <c>null</c>.
+        /// <paramref name="source" /> is <see langword="null" />.
         /// </exception>
         /// <exception cref="InvalidOperationException">
         /// <paramref name="source" /> contains no elements.
@@ -1347,7 +1357,7 @@ namespace Acolyte.Collections
         /// maximum values in the sequence.
         /// </returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="source" /> is <c>null</c>.
+        /// <paramref name="source" /> is <see langword="null" />.
         /// </exception>
         public static (long? minValue, long? maxValue) MinMax<TSource>(
             this IEnumerable<TSource> source,
@@ -1375,7 +1385,7 @@ namespace Acolyte.Collections
         /// <param name="selector">A transform function to apply to each element.</param>
         /// <returns>The minimum and maximum values in the sequence.</returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="source" /> is <c>null</c>.
+        /// <paramref name="source" /> is <see langword="null" />.
         /// </exception>
         /// <exception cref="InvalidOperationException">
         /// <paramref name="source" /> contains no elements.
@@ -1412,7 +1422,7 @@ namespace Acolyte.Collections
         /// maximum values in the sequence.
         /// </returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="source" /> is <c>null</c>.
+        /// <paramref name="source" /> is <see langword="null" />.
         /// </exception>
         /// <remarks>
         /// Normally NaN &lt; anything is false, as is anything &lt; NaN
@@ -1447,7 +1457,7 @@ namespace Acolyte.Collections
         /// <param name="selector">A transform function to apply to each element.</param>
         /// <returns>The minimum and maximum values in the sequence.</returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="source" /> is <c>null</c>.
+        /// <paramref name="source" /> is <see langword="null" />.
         /// </exception>
         /// <exception cref="InvalidOperationException">
         /// <paramref name="source" /> contains no elements.
@@ -1484,7 +1494,7 @@ namespace Acolyte.Collections
         /// maximum values in the sequence.
         /// </returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="source" /> is <c>null</c>.
+        /// <paramref name="source" /> is <see langword="null" />.
         /// </exception>
         /// <remarks>
         /// Normally NaN &lt; anything is false, as is anything &lt; NaN
@@ -1519,7 +1529,7 @@ namespace Acolyte.Collections
         /// <param name="selector">A transform function to apply to each element.</param>
         /// <returns>The minimum and maximum values in the sequence.</returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="source" /> is <c>null</c>.
+        /// <paramref name="source" /> is <see langword="null" />.
         /// </exception>
         /// <exception cref="InvalidOperationException">
         /// <paramref name="source" /> contains no elements.
@@ -1549,7 +1559,7 @@ namespace Acolyte.Collections
         /// maximum values in the sequence.
         /// </returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="source" /> is <c>null</c>.
+        /// <paramref name="source" /> is <see langword="null" />.
         /// </exception>
         public static (decimal? minValue, decimal? maxValue) MinMax<TSource>(
             this IEnumerable<TSource> source,
@@ -1579,15 +1589,20 @@ namespace Acolyte.Collections
         /// </param>
         /// <param name="selector">A transform function to apply to each element.</param>
         /// <param name="comparer">An element comparer.</param>
-        /// <returns>The minimum and maximum values in the sequence.</returns>
+        /// <returns>
+        /// The minimum and maximum values in the sequence.
+        /// If <paramref name="source" /> contains no elements and <typeparamref name="TSource" />
+        /// is reference type, <see langword="null" /> values will be return.
+        /// </returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="source" /> is <c>null</c> -or-
-        /// <paramref name="comparer" /> is <c>null</c>.
+        /// <paramref name="source" /> is <see langword="null" /> -or-
+        /// <paramref name="comparer" /> is <see langword="null" />.
         /// </exception>
         /// <exception cref="InvalidOperationException">
-        /// <paramref name="source" /> contains no elements.
+        /// <paramref name="source" /> contains no elements and <typeparamref name="TResult" />  is
+        /// value type.
         /// </exception>
-        public static (TResult minValue, TResult maxValue) MinMax<TSource, TResult>(
+        public static (TResult? minValue, TResult? maxValue) MinMax<TSource, TResult>(
             this IEnumerable<TSource> source,
             Func<TSource, TResult> selector,
             IComparer<TResult> comparer)
@@ -1612,18 +1627,23 @@ namespace Acolyte.Collections
         /// A sequence of values to determine the minimum and maximum values of.
         /// </param>
         /// <param name="selector">A transform function to apply to each element.</param>
-        /// <returns>The minimum and maximum values in the sequence.</returns>
+        /// <returns>
+        /// The minimum and maximum values in the sequence.
+        /// If <paramref name="source" /> contains no elements and <typeparamref name="TSource" />
+        /// is reference type, <see langword="null" /> values will be return.
+        /// </returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="source" /> is <c>null</c>.
+        /// <paramref name="source" /> is <see langword="null" />.
         /// </exception>
         /// <exception cref="InvalidOperationException">
-        /// <paramref name="source" /> contains no elements.
+        /// <paramref name="source" /> contains no elements and <typeparamref name="TResult" /> is
+        /// value type.
         /// </exception>
         /// <exception cref="ArgumentException">
         /// No object in <paramref name="source" /> implements the <see cref="IComparable" /> or
         /// <see cref="IComparable{TResult}" /> interface.
         /// </exception>
-        public static (TResult minValue, TResult maxValue) MinMax<TSource, TResult>(
+        public static (TResult? minValue, TResult? maxValue) MinMax<TSource, TResult>(
             this IEnumerable<TSource> source,
             Func<TSource, TResult> selector)
         {
@@ -1654,9 +1674,9 @@ namespace Acolyte.Collections
         /// <param name="comparer">Key item comparer.</param>
         /// <returns>The minimum by key element in the sequence.</returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="source" /> is <c>null</c>. -or-
-        /// <paramref name="keySelector" /> is <c>null</c>. -or-
-        /// <paramref name="comparer" /> is <c>null</c>.
+        /// <paramref name="source" /> is <see langword="null" />. -or-
+        /// <paramref name="keySelector" /> is <see langword="null" />. -or-
+        /// <paramref name="comparer" /> is <see langword="null" />.
         /// </exception>
         /// <exception cref="InvalidOperationException">
         /// <paramref name="source" /> contains no elements.
@@ -1717,8 +1737,8 @@ namespace Acolyte.Collections
         /// <param name="keySelector">Selector that transform source item to key item.</param>
         /// <returns>The minimum by key element in the sequence.</returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="source" /> is <c>null</c>. -or-
-        /// <paramref name="keySelector" /> is <c>null</c>. -or-
+        /// <paramref name="source" /> is <see langword="null" />. -or-
+        /// <paramref name="keySelector" /> is <see langword="null" />. -or-
         /// </exception>
         /// <exception cref="InvalidOperationException">
         /// <paramref name="source" /> contains no elements.
@@ -1753,9 +1773,9 @@ namespace Acolyte.Collections
         /// <param name="comparer">Key item comparer.</param>
         /// <returns>The maximum by key element in the sequence.</returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="source" /> is <c>null</c>. -or-
-        /// <paramref name="keySelector" /> is <c>null</c>. -or-
-        /// <paramref name="comparer" /> is <c>null</c>.
+        /// <paramref name="source" /> is <see langword="null" />. -or-
+        /// <paramref name="keySelector" /> is <see langword="null" />. -or-
+        /// <paramref name="comparer" /> is <see langword="null" />.
         /// </exception>
         /// <exception cref="InvalidOperationException">
         /// <paramref name="source" /> contains no elements.
@@ -1783,8 +1803,8 @@ namespace Acolyte.Collections
         /// <param name="keySelector">Selector that transform source item to key item.</param>
         /// <returns>The maximum by key element in the sequence.</returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="source" /> is <c>null</c>. -or-
-        /// <paramref name="keySelector" /> is <c>null</c>. -or-
+        /// <paramref name="source" /> is <see langword="null" />. -or-
+        /// <paramref name="keySelector" /> is <see langword="null" />. -or-
         /// </exception>
         /// <exception cref="InvalidOperationException">
         /// <paramref name="source" /> contains no elements.
@@ -1819,16 +1839,21 @@ namespace Acolyte.Collections
         /// </param>
         /// <param name="keySelector">Selector that transform source item to key item.</param>
         /// <param name="comparer">Key item comparer.</param>
-        /// <returns>The minimum and maximum by key elements in the sequence.</returns>
+        /// <returns>
+        /// The minimum and maximum by key element in sequence in the sequence.
+        /// If <paramref name="source" /> contains no elements and <typeparamref name="TSource" />
+        /// is reference type, <see langword="null" /> values will be return.
+        /// </returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="source" /> is <c>null</c>. -or-
-        /// <paramref name="keySelector" /> is <c>null</c>. -or-
-        /// <paramref name="comparer" /> is <c>null</c>.
+        /// <paramref name="source" /> is <see langword="null" />. -or-
+        /// <paramref name="keySelector" /> is <see langword="null" />. -or-
+        /// <paramref name="comparer" /> is <see langword="null" />.
         /// </exception>
         /// <exception cref="InvalidOperationException">
-        /// <paramref name="source" /> contains no elements.
+        /// <paramref name="source" /> contains no elements and <typeparamref name="TSource" /> is
+        /// value type.
         /// </exception>
-        public static (TSource minValue, TSource maxValue) MinMaxBy<TSource, TKey>(
+        public static (TSource? minValue, TSource? maxValue) MinMaxBy<TSource, TKey>(
             this IEnumerable<TSource> source,
             Func<TSource, TKey> keySelector,
             IComparer<TKey> comparer)
@@ -1837,10 +1862,8 @@ namespace Acolyte.Collections
             keySelector.ThrowIfNull(nameof(keySelector));
             comparer.ThrowIfNull(nameof(comparer));
 
-#pragma warning disable CS8653 // A default expression introduces a null value for a type parameter.
-            TSource minValue = default;
-            TSource maxValue = default;
-#pragma warning restore CS8653 // A default expression introduces a null value for a type parameter.
+            TSource? minValue = default;
+            TSource? maxValue = default;
 
             using (IEnumerator<TSource> enumerator = source.GetEnumerator())
             {
@@ -1885,18 +1908,24 @@ namespace Acolyte.Collections
         /// </param>
         /// <param name="keySelector">Selector that transform source item to key item.</param>
         /// <returns>The minimum by key element in the sequence.</returns>
+        /// <returns>
+        /// The minimum and maximum by key element in the sequence.
+        /// If <paramref name="source" /> contains no elements and <typeparamref name="TSource" />
+        /// is reference type, <see langword="null" /> values will be return.
+        /// </returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="source" /> is <c>null</c>. -or-
-        /// <paramref name="keySelector" /> is <c>null</c>. -or-
+        /// <paramref name="source" /> is <see langword="null" />. -or-
+        /// <paramref name="keySelector" /> is <see langword="null" />. -or-
         /// </exception>
         /// <exception cref="InvalidOperationException">
-        /// <paramref name="source" /> contains no elements.
+        /// <paramref name="source" /> contains no elements and <typeparamref name="TSource" /> is
+        /// value type.
         /// </exception>
         /// <exception cref="ArgumentException">
         /// No object in <paramref name="source" /> implements the <see cref="IComparable" /> or
         /// <see cref="IComparable{TKey}" /> interface.
         /// </exception>
-        public static (TSource minValue, TSource maxValue) MinMaxBy<TSource, TKey>(
+        public static (TSource? minValue, TSource? maxValue) MinMaxBy<TSource, TKey>(
             this IEnumerable<TSource> source,
             Func<TSource, TKey> keySelector)
         {
@@ -1916,7 +1945,7 @@ namespace Acolyte.Collections
         /// <param name="source">A sequence of values to convert to string.</param>
         /// <returns>
         /// The string which represent converted value of sequence or special message if 
-        /// <paramref name="source" /> is <c>null</c> or contains no elements.
+        /// <paramref name="source" /> is <see langword="null" /> or contains no elements.
         /// </returns>
         public static string ToSingleString<TSource>(this IEnumerable<TSource>? source)
         {
@@ -1935,15 +1964,15 @@ namespace Acolyte.Collections
         /// </typeparam>
         /// <param name="source">A sequence of values to convert to string.</param>
         /// <param name="emptyCollectionMessage">
-        /// The string to return if <paramref name="source" /> is <c>null</c> or contains no
+        /// The string to return if <paramref name="source" /> is <see langword="null" /> or contains no
         /// elements.
         /// </param>
         /// <returns>
         /// The string which represent converted value of sequence or special message if 
-        /// <paramref name="source" /> is <c>null</c> or contains no elements.
+        /// <paramref name="source" /> is <see langword="null" /> or contains no elements.
         /// </returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="emptyCollectionMessage" /> is <c>null</c>.
+        /// <paramref name="emptyCollectionMessage" /> is <see langword="null" />.
         /// </exception>
         public static string ToSingleString<TSource>(this IEnumerable<TSource>? source,
             string emptyCollectionMessage)
@@ -1963,7 +1992,7 @@ namespace Acolyte.Collections
         /// .</typeparam>
         /// <param name="source">A sequence of values to convert to string.</param>
         /// <param name="emptyCollectionMessage">
-        /// The string to return if <paramref name="source" /> is <c>null</c> or contains no
+        /// The string to return if <paramref name="source" /> is <see langword="null" /> or contains no
         /// elements.
         /// </param>
         /// <param name="separator">
@@ -1972,10 +2001,10 @@ namespace Acolyte.Collections
         /// </param>
         /// <returns>
         /// The string which represent converted value of sequence or special message if
-        /// <paramref name="source" /> is <c>null</c> or contains no elements.
+        /// <paramref name="source" /> is <see langword="null" /> or contains no elements.
         /// </returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="emptyCollectionMessage" /> is <c>null</c>.
+        /// <paramref name="emptyCollectionMessage" /> is <see langword="null" />.
         /// </exception>
         public static string ToSingleString<TSource>(this IEnumerable<TSource>? source,
             string emptyCollectionMessage, string? separator)
@@ -1998,10 +2027,10 @@ namespace Acolyte.Collections
         /// <param name="selector">A transform function to apply to each element.</param>
         /// <returns>
         /// The string which represent converted value of sequence or special message if 
-        /// <paramref name="source" /> is <c>null</c> or contains no elements.
+        /// <paramref name="source" /> is <see langword="null" /> or contains no elements.
         /// </returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="selector" /> is <c>null</c>.
+        /// <paramref name="selector" /> is <see langword="null" />.
         /// </exception>
         public static string ToSingleString<TSource>(this IEnumerable<TSource>? source,
             Func<TSource, string> selector)
@@ -2022,17 +2051,17 @@ namespace Acolyte.Collections
         /// </typeparam>
         /// <param name="source">A sequence of values to convert to string.</param>
         /// <param name="emptyCollectionMessage">
-        /// The string to return if <paramref name="source" /> is <c>null</c> or contains no
+        /// The string to return if <paramref name="source" /> is <see langword="null" /> or contains no
         /// elements.
         /// </param>
         /// <param name="selector">A transform function to apply to each element.</param>
         /// <returns>
         /// The string which represent converted value of sequence or special message if 
-        /// <paramref name="source" /> is <c>null</c> or contains no elements.
+        /// <paramref name="source" /> is <see langword="null" /> or contains no elements.
         /// </returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="emptyCollectionMessage" /> is <c>null</c>. -or-
-        /// <paramref name="selector" /> is <c>null</c>.
+        /// <paramref name="emptyCollectionMessage" /> is <see langword="null" />. -or-
+        /// <paramref name="selector" /> is <see langword="null" />.
         /// </exception>
         public static string ToSingleString<TSource>(this IEnumerable<TSource>? source,
             string emptyCollectionMessage, Func<TSource, string> selector)
@@ -2054,7 +2083,7 @@ namespace Acolyte.Collections
         /// </typeparam>
         /// <param name="source">A sequence of values to convert to string.</param>
         /// <param name="emptyCollectionMessage">
-        /// The string to return if <paramref name="source" /> is <c>null</c> or contains no
+        /// The string to return if <paramref name="source" /> is <see langword="null" /> or contains no
         /// elements.
         /// </param>
         /// <param name="separator">
@@ -2064,11 +2093,11 @@ namespace Acolyte.Collections
         /// <param name="selector">A transform function to apply to each element.</param>
         /// <returns>
         /// The string which represent converted value of sequence or specified message if 
-        /// <paramref name="source" /> is <c>null</c> or contains no elements.
+        /// <paramref name="source" /> is <see langword="null" /> or contains no elements.
         /// </returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="emptyCollectionMessage" /> is <c>null</c>. -or-
-        /// <paramref name="selector" /> is <c>null</c>.
+        /// <paramref name="emptyCollectionMessage" /> is <see langword="null" />. -or-
+        /// <paramref name="selector" /> is <see langword="null" />.
         /// </exception>
         public static string ToSingleString<TSource>(this IEnumerable<TSource>? source,
             string emptyCollectionMessage, string? separator, Func<TSource, string> selector)

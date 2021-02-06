@@ -2,20 +2,25 @@
 
   <PropertyGroup>
     <Platforms>AnyCPU</Platforms>
-    <TargetFramework>netstandard2.1</TargetFramework>
+    <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
     <LangVersion>4.7</LangVersion>
     <RootNamespace>Acolyte</RootNamespace>
+    <IncludeSymbols>true</IncludeSymbols>
   </PropertyGroup>
 
   <PropertyGroup>
     <Authors>Vasily Vasilyev</Authors>
     <Product>Acolyte.FSharp</Product>
     <Description>This package is a part of Acolyte.NET library. Acolyte.NET is a helper library with a lot of useful classes and extension methods that you need in your everyday work. So, do not reinvent the wheel, use this library instead!</Description>
+    <Summary>This package is a part of Acolyte.NET library. Acolyte.NET is a helper library with a lot of useful classes and extension methods that you need in your everyday work. So, do not reinvent the wheel, use this library instead!</Summary>
     <PackageTags>acolyte, acolyte-net, net-acolyte, helper, helper-lib, classes, extension</PackageTags>
+    <NeutralLanguage>en-US</NeutralLanguage>
     <RepositoryUrl>https://github.com/Vasar007/Acolyte.NET.git</RepositoryUrl>
-    <AssemblyVersion>1.0.2.0</AssemblyVersion>
-    <FileVersion>1.0.2.0</FileVersion>
-    <Version>1.0.2</Version>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <AssemblyVersion>1.0.3.0</AssemblyVersion>
+    <FileVersion>1.0.3.0</FileVersion>
+    <Version>1.0.3</Version>
+    <PackageId>Acolyte.FSharp</PackageId>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageProjectUrl>https://github.com/Vasar007/Acolyte.NET</PackageProjectUrl>
     <RepositoryType>git</RepositoryType>
@@ -52,5 +57,14 @@
   <ItemGroup>
     <PackageReference Update="FSharp.Core" Version="4.7.1" />
   </ItemGroup>
+
+  <PropertyGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+    <AssemblyTitle>Acolyte.FSharp .NET Standard 2.0</AssemblyTitle>
+    <DefineConstants>NETSTANDARD2_0</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(TargetFramework)' == 'netstandard2.1'">
+    <AssemblyTitle>Acolyte.FSharp .NET Standard 2.1</AssemblyTitle>
+    <DefineConstants>NETSTANDARD2_1</DefineConstants>
+  </PropertyGroup>
 
 </Project>

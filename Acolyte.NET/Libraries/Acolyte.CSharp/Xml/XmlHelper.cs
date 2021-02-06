@@ -45,7 +45,7 @@ namespace Acolyte.Xml
         /// <param name="xmlData">XML data to deserialize.</param>
         /// <returns>Deserialized type of specified class.</returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="xmlData" /> is <c>null</c>.
+        /// <paramref name="xmlData" /> is <see langword="null" />.
         /// </exception>
         /// <exception cref="InvalidOperationException">
         /// An error occurred during deserialization. The original exception is available using the
