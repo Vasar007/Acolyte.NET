@@ -6,7 +6,7 @@ using Acolyte.Tests.Common;
 
 namespace Acolyte.Tests.Collections
 {
-    public sealed class ExplosiveCollection<T> : IEnumerable<T>, IEnumerable
+    public sealed class ExplosiveCollection<T> : IEnumerable<T?>, IEnumerable
     {
         private readonly IEnumerable<T> _originalCollection;
 
@@ -28,9 +28,9 @@ namespace Acolyte.Tests.Collections
             _visitedItemsNumber = new CounterInt32();
         }
 
-        #region IEnumerable<T> Implementation
+        #region IEnumerable<T?> Implementation
 
-        public IEnumerator<T> GetEnumerator()
+        public IEnumerator<T?> GetEnumerator()
         {
             return ExplosiveEnumerator.Create(
                 _originalCollection.GetEnumerator(),

@@ -22,13 +22,13 @@ namespace Acolyte.Collections.Concurrent
 
         public ConcurrentTwoWayDictionary(
             IEqualityComparer<TKey>? keyComparer)
-            : this(keyComparer, null)
+            : this(keyComparer, valueComparer: null)
         {
         }
 
         public ConcurrentTwoWayDictionary(
             IEqualityComparer<TValue>? valueComparer)
-            : this(null, valueComparer)
+            : this(keyComparer: null, valueComparer)
         {
         }
 
@@ -61,13 +61,12 @@ namespace Acolyte.Collections.Concurrent
             TwoWayDictionaryAddFlags flags)
         {
             return GetOrAdd(
-                key,
-                valueFactory,
-                flags,
-                ValueComparer,
-                FwdConcurrentDictionary,
-                RevConcurrentDictionary,
-                HandleKeyWithSameValue
+                source: key,
+                targetFactory: valueFactory,
+                flags: flags,
+                fwdConcurrentDictionary: FwdConcurrentDictionary,
+                revConcurrentDictionary: RevConcurrentDictionary,
+                errorHandler: HandleKeyWithSameValue
             );
         }
 
@@ -75,13 +74,12 @@ namespace Acolyte.Collections.Concurrent
             TwoWayDictionaryAddFlags flags)
         {
             return GetOrAdd(
-                value,
-                keyFactory,
-                flags,
-                KeyComparer,
-                RevConcurrentDictionary,
-                FwdConcurrentDictionary,
-                HandleValueWithSameKey
+                source: value,
+                targetFactory: keyFactory,
+                flags: flags,
+                fwdConcurrentDictionary: RevConcurrentDictionary,
+                revConcurrentDictionary: FwdConcurrentDictionary,
+                errorHandler: HandleValueWithSameKey
             );
         }
 
@@ -89,7 +87,6 @@ namespace Acolyte.Collections.Concurrent
             T1 source,
             Func<T1, T2> targetFactory,
             TwoWayDictionaryAddFlags flags,
-            IEqualityComparer<T2> targetComparer,
             ConcurrentDictionary<T1, T2> fwdConcurrentDictionary,
             ConcurrentDictionary<T2, T1> revConcurrentDictionary,
             HandleKeyWithSameItemDelegate<T1, T2> errorHandler)
@@ -121,11 +118,12 @@ namespace Acolyte.Collections.Concurrent
 
                 lock (_lock)
                 {
-                    T2 addededValue = fwdConcurrentDictionary.GetOrAdd(source, newTarget);
-                    if (!targetComparer.Equals(addededValue, newTarget))
+                    if (fwdConcurrentDictionary.TryGetValue(source, out T2 existed))
                     {
-                        return addededValue;
+                        return existed;
                     }
+
+                    fwdConcurrentDictionary.TryAdd(source, newTarget);
 
                     if (!revConcurrentDictionary.TryAdd(newTarget, source))
                     {

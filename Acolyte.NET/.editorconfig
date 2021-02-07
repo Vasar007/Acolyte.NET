@@ -1,6 +1,12 @@
 ﻿[*.{cs,vb}]
 
+insert_final_newline = true
+
 # IDE0071: Simplify interpolation
 dotnet_style_prefer_simplified_interpolation = false:suggestion
 
-insert_final_newline = true
+# IDE0005: Using directive is unnecessary.
+dotnet_diagnostic.IDE0005.severity = warning
+
+# IDE0039: Use local function
+dotnet_diagnostic.IDE0039.severity = silent

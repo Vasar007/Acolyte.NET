@@ -311,14 +311,10 @@ namespace Acolyte.Collections
                 }
             }
 
-            switch (count)
+            return count switch
             {
-                case 0:
-                case 1:
-                    return result;
-
-                default:
-                    throw Error.MoreThanOneMatch();
+                0 or 1 => result,
+                _ => throw Error.MoreThanOneMatch(),
             };
         }
 

@@ -14,7 +14,7 @@ namespace Acolyte.Common.Monads
         // not for Nullable<stuct> and expect that delegate will be called only when
         // source has value.
 
-        #region With Methods
+        #region With
 
         public static TResult? With<TSource, TResult>(this TSource? source,
             Func<TSource, TResult> func)
@@ -40,7 +40,7 @@ namespace Acolyte.Common.Monads
 
         #endregion
 
-        #region Do Methods
+        #region Do
 
         public static TSource? Do<TSource>(this TSource? source, Action<TSource> action)
             where TSource : class?
@@ -70,7 +70,7 @@ namespace Acolyte.Common.Monads
 
         #endregion
 
-        #region ApplyIf Methods
+        #region ApplyIf
 
         public static TSource ApplyIf<TSource>(this TSource source, Func<TSource, bool> condition,
             Func<TSource, TSource> func)
@@ -90,7 +90,7 @@ namespace Acolyte.Common.Monads
 
         #endregion
 
-        #region To Methods
+        #region To
 
         public static TResult? To<TResult>(this object? value)
         {

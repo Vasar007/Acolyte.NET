@@ -1,15 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Xunit;
-using Acolyte.Common;
-using Acolyte.Tests;
-using Acolyte.Tests.Creators;
-using Acolyte.Tests.Functions;
-using Acolyte.Tests.Collections;
-using Acolyte.Tests.Objects;
-
-namespace Acolyte.Collections.Tests
+﻿namespace Acolyte.Collections.Tests
 {
     public sealed class EnumerableExtensionsTests
     {

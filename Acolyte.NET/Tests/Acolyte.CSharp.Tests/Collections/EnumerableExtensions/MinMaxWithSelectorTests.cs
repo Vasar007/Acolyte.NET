@@ -1343,7 +1343,7 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
             // Arrange.
             IEnumerable<string> collectionWithSomeItems =
                 TestDataCreator.CreateRandomStringList(count);
-            (string minValue, string maxValue) expectedValue =
+            (string? minValue, string? maxValue) expectedValue =
                 (collectionWithSomeItems.Min(), collectionWithSomeItems.Max());
 
             // Act.
@@ -1365,7 +1365,7 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
             // Arrange.
             IEnumerable<string> collectionWithSomeItems =
                 TestDataCreator.CreateRandomStringList(count);
-            (string minValue, string maxValue) expectedValue =
+            (string? minValue, string? maxValue) expectedValue =
                 (collectionWithSomeItems.Min(), collectionWithSomeItems.Max());
 
             // Act.
@@ -1384,7 +1384,7 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
             int count = TestDataCreator.GetRandomSmallCountNumber();
             IEnumerable<string> collectionWithRandomSize = TestDataCreator
                 .CreateRandomStringList(count);
-            (string minValue, string maxValue) expectedValue =
+            (string? minValue, string? maxValue) expectedValue =
                 (collectionWithRandomSize.Min(), collectionWithRandomSize.Max());
 
             // Act.
@@ -1401,12 +1401,12 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
             int count = TestDataCreator.GetRandomSmallCountNumber();
             IEnumerable<string> collectionWithRandomSize = TestDataCreator
                 .CreateRandomStringList(count);
-            (string minValue, string maxValue) expectedValue =
+            (string? minValue, string? maxValue) expectedValue =
                 (collectionWithRandomSize.Min(), collectionWithRandomSize.Max());
 
             // Act.
             var actualValue = collectionWithRandomSize.MinMax(
-                IdentityFunction<string>.Instance, Comparer<string>.Default
+                IdentityFunction<string?>.Instance, Comparer<string?>.Default
             );
 
             // Assert.
@@ -1419,11 +1419,11 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
             // Arrange.
             var collection = new string[] { "1", "2", "3", "4" };
             var explosiveCollection = ExplosiveCollection.CreateNotExplosive(collection);
-            (string minValue, string maxValue) expectedValue =
+            (string? minValue, string? maxValue) expectedValue =
                 (explosiveCollection.Min(), explosiveCollection.Max());
 
             // Act.
-            var actualValue = explosiveCollection.MinMax(IdentityFunction<string>.Instance);
+            var actualValue = explosiveCollection.MinMax(IdentityFunction<string?>.Instance);
 
             // Assert.
             Assert.Equal(expected: collection.Length, explosiveCollection.VisitedItemsNumber);
@@ -1436,12 +1436,12 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
             // Arrange.
             var collection = new string[] { "1", "2", "3", "4" };
             var explosiveCollection = ExplosiveCollection.CreateNotExplosive(collection);
-            (string minValue, string maxValue) expectedValue =
+            (string? minValue, string? maxValue) expectedValue =
                 (explosiveCollection.Min(), explosiveCollection.Max());
 
             // Act.
             var actualValue = explosiveCollection.MinMax(
-                IdentityFunction<string>.Instance, Comparer<string>.Default
+                IdentityFunction<string?>.Instance, Comparer<string?>.Default
             );
 
             // Assert.
