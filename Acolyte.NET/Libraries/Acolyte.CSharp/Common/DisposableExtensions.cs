@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Acolyte.Common
 {
@@ -9,11 +8,11 @@ namespace Acolyte.Common
     {
         private const string ErrorFormat = "Failed to dispose \"{0}\"{1}Full callstack:{1}{2}";
 
-        public static void DisposeSafe([AllowNull] this IDisposable self)
+        public static void DisposeSafe(this IDisposable? self)
         {
             try
             {
-                if (!(self is null))
+                if (self is not null)
                 {
                     self.Dispose();
                 }
@@ -34,7 +33,7 @@ namespace Acolyte.Common
             }
         }
 
-        public static void DisposeSafe<T>([AllowNull] this Lazy<T> self)
+        public static void DisposeSafe<T>(this Lazy<T>? self)
             where T : IDisposable
         {
             if (self is null) return;
@@ -43,7 +42,7 @@ namespace Acolyte.Common
             self.Value.DisposeSafe();
         }
 
-        public static void DisposeSafe<T>([AllowNull] this ResetableLazy<T> self)
+        public static void DisposeSafe<T>(this ResetableLazy<T>? self)
             where T : IDisposable
         {
             if (self is null) return;
@@ -52,7 +51,7 @@ namespace Acolyte.Common
             self.Value.DisposeSafe();
         }
 
-        public static void DisposeSafe([AllowNull] this IEnumerable<IDisposable> self)
+        public static void DisposeSafe(this IEnumerable<IDisposable>? self)
         {
             if (self is null) return;
 

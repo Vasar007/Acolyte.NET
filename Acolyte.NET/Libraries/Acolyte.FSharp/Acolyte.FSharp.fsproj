@@ -6,6 +6,7 @@
     <LangVersion>4.7</LangVersion>
     <RootNamespace>Acolyte</RootNamespace>
     <IncludeSymbols>true</IncludeSymbols>
+    <IsPackable>true</IsPackable>
   </PropertyGroup>
 
   <PropertyGroup>

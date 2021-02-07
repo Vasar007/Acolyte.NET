@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
 using Acolyte.Assertions;
 
 namespace Acolyte.Common.Monads
@@ -9,45 +8,49 @@ namespace Acolyte.Common.Monads
     /// </summary>
     public static class MonadExtensions
     {
-        [return: MaybeNull]
-        public static TResult Maybe<TMaybe, TResult>([AllowNull] this TMaybe maybe,
-            Func<TMaybe, TResult> just)
-            where TMaybe : class?
-        {
-            just.ThrowIfNull(nameof(just));
+        // We cannot merge methods for class? and Nullable<stuct> because
+        // this lead to changing signature of delegates that passes in methods.
+        // I.g. user call some method and specify source Nullable<stuct> delegate for struct value,
+        // not for Nullable<stuct> and expect that delegate will be called only when
+        // source has value.
 
-            return maybe is null
-                ? default
-                : just(maybe);
-        }
+        #region With Methods
 
-        [return: MaybeNull]
-        public static TResult Maybe<TMaybe, TResult>(this TMaybe? maybe, Func<TMaybe, TResult> just)
-            where TMaybe : struct
-        {
-            just.ThrowIfNull(nameof(just));
-
-            return !maybe.HasValue
-                ? default
-                : just(maybe.Value);
-        }
-
-        [return: MaybeNull]
-        public static TResult With<TSource, TResult>([AllowNull] this TSource source,
+        public static TResult? With<TSource, TResult>(this TSource? source,
             Func<TSource, TResult> func)
             where TSource : class?
         {
+            func.ThrowIfNull(nameof(func));
+
             return source is null
                 ? default
                 : func(source);
         }
 
-        [return: MaybeNull]
-        public static TSource Do<TSource>([AllowNull] this TSource source, Action<TSource> action)
+        public static TResult? With<TSource, TResult>(this TSource? source,
+            Func<TSource, TResult> func)
+            where TSource : struct
+        {
+            func.ThrowIfNull(nameof(func));
+
+            return !source.HasValue
+                ? default
+                : func(source.Value);
+        }
+
+        #endregion
+
+        #region Do Methods
+
+        public static TSource? Do<TSource>(this TSource? source, Action<TSource> action)
             where TSource : class?
         {
-            if (!(source is null))
+            action.ThrowIfNull(nameof(action));
+
+            if (source is not null)
+            {
                 action(source);
+            }
 
             return source;
         }
@@ -55,38 +58,45 @@ namespace Acolyte.Common.Monads
         public static TSource? Do<TSource>(this TSource? source, Action<TSource> action)
             where TSource : struct
         {
+            action.ThrowIfNull(nameof(action));
+
             if (source.HasValue)
+            {
                 action(source.Value);
+            }
 
             return source;
         }
 
-        [return: MaybeNull]
-        public static TResult Return<TSource, TResult>(this TSource source,
-            Func<TSource, TResult> func)
-            where TSource : class?
+        #endregion
+
+        #region ApplyIf Methods
+
+        public static TSource ApplyIf<TSource>(this TSource source, Func<TSource, bool> condition,
+            Func<TSource, TSource> func)
         {
-            return Return(source, func, default);
+            return ApplyIf(source, condition, func, defaultValue: source);
         }
 
-        [return: MaybeNull]
-        public static TResult Return<TSource, TResult>([AllowNull] this TSource source,
-            Func<TSource, TResult> func, [AllowNull] TResult defaultValue)
-            where TSource : class?
+        public static TResult ApplyIf<TSource, TResult>(this TSource source,
+            Func<TSource, bool> condition, Func<TSource, TResult> func, TResult defaultValue)
         {
-            return source is null
-                ? defaultValue
-                : func(source);
+            func.ThrowIfNull(nameof(func));
+
+            return condition(source)
+                ? func(source)
+                : defaultValue;
         }
 
-        [return: MaybeNull]
-        public static TResult To<TResult>(this object? value)
+        #endregion
+
+        #region To Methods
+
+        public static TResult? To<TResult>(this object? value)
         {
             try
             {
-#pragma warning disable CS8601 // Possible null reference assignment.
-                return (TResult) value;
-#pragma warning restore CS8601 // Possible null reference assignment.
+                return (TResult?) value;
             }
             catch (InvalidCastException ex)
             {
@@ -96,9 +106,15 @@ namespace Acolyte.Common.Monads
             }
         }
 
+        #endregion
+
+        #region Helpers Methods
+
         private static string FormatErrorMessage<T>(object? value)
         {
-            return value is null ? InvalidNullCast<T>() : InvalidCast<T>(value);
+            return value is null
+                ? InvalidNullCast<T>()
+                : InvalidCast<T>(value);
         }
 
         private static string InvalidCast<T>(object value)
@@ -111,5 +127,7 @@ namespace Acolyte.Common.Monads
         {
             return $"The desired type '{typeof(T).Name}' does not support null objects.";
         }
+
+        #endregion
     }
 }

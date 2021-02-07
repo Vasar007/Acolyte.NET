@@ -78,7 +78,10 @@ namespace Acolyte.Common
         /// </summary>
         /// <param name="left">Left hand side object to compare.</param>
         /// <param name="right">Right hand side object to compare.</param>
-        /// <returns><see langword="true" /> if values are memberwise equals, <see langword="false" /> otherwise.</returns>
+        /// <returns>
+        /// <see langword="true" /> if values are memberwise equals, <see langword="false" />
+        /// otherwise.
+        /// </returns>
         public static bool operator ==(FormatString? left, FormatString? right)
         {
             return Equals(left, right);
@@ -90,7 +93,8 @@ namespace Acolyte.Common
         /// <param name="left">Left hand side object to compare.</param>
         /// <param name="right">Right hand side object to compare.</param>
         /// <returns>
-        /// <see langword="true" /> if values are not memberwise equals, <see langword="false" /> otherwise.
+        /// <see langword="true" /> if values are not memberwise equals, <see langword="false" />
+        /// otherwise.
         /// </returns>
         public static bool operator !=(FormatString? left, FormatString? right)
         {

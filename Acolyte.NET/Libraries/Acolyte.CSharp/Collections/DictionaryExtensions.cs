@@ -15,7 +15,7 @@ namespace Acolyte.Collections
         public static bool TryGetKey<TKey, TValue>(
             this IDictionary<TKey, TValue> dictionary,
             Func<KeyValuePair<TKey, TValue>, bool> predicate,
-            [NotNullWhen(true)] out TKey key)
+            [NotNullWhen(true)] out TKey? key)
             where TKey : notnull
         {
             dictionary.ThrowIfNull(nameof(dictionary));
@@ -32,16 +32,14 @@ namespace Acolyte.Collections
                 }
             }
 
-#pragma warning disable CS8601 // Possible null reference assignment.
             key = default;
-#pragma warning restore CS8601 // Possible null reference assignment.
             return false;
         }
 
         public static bool TryGetKey<TKey, TValue>(
             this IDictionary<TKey, TValue> dictionary,
             Func<TKey, bool> predicate,
-            [NotNullWhen(true)] out TKey key)
+            [NotNullWhen(true)] out TKey? key)
             where TKey : notnull
         {
             return dictionary.TryGetKey(kvPair => predicate(kvPair.Key), out key);
@@ -50,7 +48,7 @@ namespace Acolyte.Collections
         public static bool TryGetKey<TKey, TValue>(
             this IDictionary<TKey, TValue> dictionary,
             Func<TValue, bool> predicate,
-            [NotNullWhen(true)] out TKey key)
+            [NotNullWhen(true)] out TKey? key)
             where TKey : notnull
         {
             return dictionary.TryGetKey(kvPair => predicate(kvPair.Value), out key);
@@ -80,9 +78,7 @@ namespace Acolyte.Collections
                 }
             }
 
-#pragma warning disable CS8653 // A default expression introduces a null value for a type parameter.
             value = default;
-#pragma warning restore CS8653 // A default expression introduces a null value for a type parameter.
             return false;
         }
 

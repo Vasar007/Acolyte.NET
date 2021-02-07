@@ -43,7 +43,7 @@ namespace Acolyte.Common
         {
             lock (_lock)
             {
-                if (_lazy != null)
+                if (_lazy is not null)
                 {
                     if (IsValueCreated)
                     {
@@ -51,7 +51,7 @@ namespace Acolyte.Common
                     }
                 }
 
-                _lazy = new Lazy<T>(_valueFactory, true);
+                _lazy = new Lazy<T>(_valueFactory, isThreadSafe: true);
             }
         }
 
@@ -70,7 +70,7 @@ namespace Acolyte.Common
 
                 lock (_lock)
                 {
-                    _lazy = new Lazy<T>(() => value, true);
+                    _lazy = new Lazy<T>(() => value, isThreadSafe: true);
                 }
             }
         }
@@ -111,7 +111,7 @@ namespace Acolyte.Common
 
                     if (value)
                     {
-                        if (_lazy.Value == null)
+                        if (_lazy.Value is null)
                             return;
                     }
                     else
@@ -124,7 +124,10 @@ namespace Acolyte.Common
 
         private static void DefaultDisposeAction<TIn>(TIn value)
         {
-            (value as IDisposable).DisposeSafe();
+            if (value is IDisposable disposable)
+            {
+                disposable.DisposeSafe();
+            }
         }
     }
 }

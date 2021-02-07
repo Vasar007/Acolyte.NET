@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using Acolyte.Assertions;
 using Acolyte.Common;
 using Acolyte.Exceptions;
@@ -8,7 +7,7 @@ using Acolyte.Tests.Common;
 
 namespace Acolyte.Tests.Collections
 {
-    public sealed class ExplosiveEnumerator<T> : IEnumerator<T>, IEnumerator
+    public sealed class ExplosiveEnumerator<T> : IEnumerator<T?>, IEnumerator
     {
         private readonly IEnumerator<T> _originalEnumerator;
 
@@ -16,10 +15,7 @@ namespace Acolyte.Tests.Collections
 
         private readonly CounterInt32 _visitedItemsNumber;
 
-        private bool _disposed;
-
-        [AllowNull]
-        public T Current { get; private set; }
+        public T? Current { get; private set; }
 
         object? IEnumerator.Current => Current;
 
@@ -56,6 +52,11 @@ namespace Acolyte.Tests.Collections
         }
 
         #region IDisposable Implementation
+
+        /// <summary>
+        /// Boolean flag used to show that object has already been disposed.
+        /// </summary>
+        private bool _disposed;
 
         public void Dispose()
         {

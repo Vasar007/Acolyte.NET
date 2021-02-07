@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using Acolyte.Assertions;
 using Acolyte.Collections;
@@ -24,8 +23,7 @@ namespace Acolyte.Common
         /// <summary>
         /// Field that hold value.
         /// </summary>
-        [MaybeNull, AllowNull]
-        public T Value { get; }
+        public T? Value { get; }
 
         public T CheckedValue => Value is null
             ? throw new InvalidOperationException($"{nameof(Value)} property was null.")
@@ -39,7 +37,7 @@ namespace Acolyte.Common
 
 
         public Reasonable(
-            [AllowNull] T value,
+            T? value,
             object reason)
         {
             Value = value;
@@ -90,8 +88,7 @@ namespace Acolyte.Common
 
         #endregion
 
-        [return: MaybeNull]
-        public static implicit operator T(Reasonable<T> value)
+        public static implicit operator T?(Reasonable<T> value)
         {
             return value.Value;
         }
@@ -144,12 +141,12 @@ namespace Acolyte.Common
 
     public static class Reasonable
     {
-        public static Reasonable<T> Ok<T>(T value)
+        public static Reasonable<T> Ok<T>(T? value)
         {
             return Wrap(value, "Ok");
         }
 
-        public static Reasonable<T> Wrap<T>(T value, string reasonFormat, params object[] args)
+        public static Reasonable<T> Wrap<T>(T? value, string reasonFormat, params object[] args)
         {
             if (args.IsNullOrEmpty())
             {

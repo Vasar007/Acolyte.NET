@@ -30,7 +30,7 @@ namespace Acolyte.Assertions
         /// <paramref name="paramName" /> is <see langword="null" />.
         /// </exception>
         [return: NotNull]
-        public static T ThrowIfNull<T>([AllowNull] this T obj, string paramName)
+        public static T ThrowIfNull<T>(this T? obj, string paramName)
             where T : class?
         {
             if (paramName is null)
@@ -73,14 +73,14 @@ namespace Acolyte.Assertions
         /// In such cases, this restriction removes opportunity to use <see langword="null" /> check.
         /// </remarks>
         [return: NotNull]
-        public static T ThrowIfNullValue<T>([AllowNull] this T obj, string paramName,
+        public static T ThrowIfNullValue<T>(this T? obj, string paramName,
             bool assertOnPureValueTypes)
         {
             paramName.ThrowIfNull(nameof(paramName));
 
             if (assertOnPureValueTypes)
             {
-                if (!(default(T) is null))
+                if (default(T) is not null)
                 {
                     throw new ArgumentException(
                         "The passed parameter is a pure value type parameter.", paramName

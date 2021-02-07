@@ -1,12 +1,13 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <Platforms>AnyCPU</Platforms>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
     <LangVersion>4.7</LangVersion>
-    <IsPackable>false</IsPackable>
     <GenerateProgramFile>false</GenerateProgramFile>
     <RootNamespace>Acolyte</RootNamespace>
+    <IncludeSymbols>false</IncludeSymbols>
+    <IsPackable>false</IsPackable>
   </PropertyGroup>
 
   <ItemGroup>

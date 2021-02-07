@@ -1,32 +1,27 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Acolyte.Common
 {
     public readonly struct Result<TOk, TError> : IEquatable<Result<TOk, TError>>
     {
-        [AllowNull]
-        private readonly TOk _ok;
+        private readonly TOk? _ok;
 
-        [AllowNull]
-        private readonly TError _error;
+        private readonly TError? _error;
 
         public bool IsSuccess { get; }
 
-        [MaybeNull]
-        public TOk Ok => IsSuccess
+        public TOk? Ok => IsSuccess
             ? _ok
             : throw new InvalidOperationException($"{nameof(Ok)} property was not active.");
 
-        [MaybeNull]
-        public TError Error => !IsSuccess
+        public TError? Error => !IsSuccess
             ? _error
             : throw new InvalidOperationException($"{nameof(Error)} property was not active.");
 
 
         private Result(
-            [AllowNull] TOk ok,
-            [AllowNull] TError error,
+            TOk? ok,
+            TError? error,
             bool isSuccess)
         {
             _ok = ok;
@@ -35,13 +30,13 @@ namespace Acolyte.Common
         }
 
         public Result(
-            [AllowNull] TOk ok)
+            TOk? ok)
             : this(ok, default, true)
         {
         }
 
         public Result(
-            [AllowNull] TError error)
+            TError? error)
             : this(default, error, false)
         {
         }
@@ -148,8 +143,7 @@ namespace Acolyte.Common
         /// The value of the <see cref="Result" /> property if the <see cref="IsSuccess" /> property
         /// is <see langword="false" />; otherwise, the <paramref name="defaultValue" /> parameter.
         ///</returns>
-        [return: MaybeNull]
-        public TOk GetValueOrDefault([AllowNull] TOk defaultValue = default)
+        public TOk? GetValueOrDefault(TOk? defaultValue = default)
         {
             return IsSuccess
                 ? _ok
@@ -169,8 +163,7 @@ namespace Acolyte.Common
         /// <see cref="IsSuccess" /> property is <see langword="true" />; otherwise, the
         /// <paramref name="defaultException" /> parameter.
         ///</returns>
-        [return: MaybeNull]
-        public TError GetExceptionOrDefault([AllowNull] TError defaultException = default)
+        public TError? GetExceptionOrDefault(TError? defaultException = default)
         {
             return !IsSuccess
                 ? _error
@@ -184,10 +177,9 @@ namespace Acolyte.Common
 
     public readonly struct DelayedValue<T>
     {
-        [AllowNull]
-        public T Value { get; }
+        public T? Value { get; }
 
-        public DelayedValue([AllowNull] T value)
+        public DelayedValue(T? value)
         {
             Value = value;
         }
@@ -195,10 +187,9 @@ namespace Acolyte.Common
 
     public readonly struct DelayedError<T>
     {
-        [AllowNull]
-        public T Value { get; }
+        public T? Value { get; }
 
-        public DelayedError([AllowNull] T value)
+        public DelayedError(T? value)
         {
             Value = value;
         }

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
@@ -22,7 +21,7 @@ namespace Acolyte.Xml
         /// An error occurred during serialization. The original exception is available using the
         /// <see cref="Exception.InnerException" /> property.
         /// </exception>
-        public static string SerializeToStringXml<T>([AllowNull] T value)
+        public static string SerializeToStringXml<T>(T? value)
         {
             var xmlSerializer = new XmlSerializer(typeof(T));
 

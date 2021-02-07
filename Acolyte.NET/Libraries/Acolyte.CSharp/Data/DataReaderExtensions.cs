@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Data;
-using System.Diagnostics.CodeAnalysis;
 using Acolyte.Assertions;
 using Acolyte.Common.Monads;
 
@@ -21,8 +20,7 @@ namespace Acolyte.Data
             return reader(dataReader);
         }
 
-        [return: MaybeNull]
-        public static T GetClass<T>(this IDataReader dataReader, string name)
+        public static T? GetClass<T>(this IDataReader dataReader, string name)
             where T : class?
         {
             dataReader.ThrowIfNull(nameof(dataReader));
@@ -30,26 +28,21 @@ namespace Acolyte.Data
 
             object value = dataReader[name];
 
-#pragma warning disable CS8654 // A null literal introduces a null value for a type parameter.
             if (value == Convert.DBNull) return null;
-#pragma warning restore CS8654 // A null literal introduces a null value for a type parameter.
 
-            return value.To<T>();
+            return value.To<T?>();
         }
 
-        [return: MaybeNull]
-        public static T GetClass<T>(this IDataReader dataReader, int index)
+        public static T? GetClass<T>(this IDataReader dataReader, int index)
             where T : class?
         {
             dataReader.ThrowIfNull(nameof(dataReader));
 
             object value = dataReader[index];
 
-#pragma warning disable CS8654 // A null literal introduces a null value for a type parameter.
             if (value == Convert.DBNull) return null;
-#pragma warning restore CS8654 // A null literal introduces a null value for a type parameter.
 
-            return value.To<T>();
+            return value.To<T?>();
         }
 
         #endregion

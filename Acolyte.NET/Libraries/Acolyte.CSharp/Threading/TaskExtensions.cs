@@ -53,12 +53,17 @@ namespace Acolyte.Threading
         {
             source.ThrowIfNull(nameof(source));
 
-#pragma warning disable CS8619 // Nullability of reference types in value doesn't match target type.
-            return source
-                .Where(item => item.IsSuccess && !(item.Error is null)) // Filter null exceptions.
-                .Select(item => item.Error)
-                .ToList();
-#pragma warning restore CS8619 // Nullability of reference types in value doesn't match target type.
+            var exceptions = new List<Exception>();
+            foreach (Result<NoneResult, Exception> result in source)
+            {
+                // Filter null exceptions.
+                if (result.IsSuccess && result.Error is not null)
+                {
+                    exceptions.Add(result.Error);
+                }
+            }
+
+            return exceptions.AsReadOnly();
         }
 
         public static (IReadOnlyList<TResult> taskResults, IReadOnlyList<Exception> taskExceptions)
@@ -83,7 +88,7 @@ namespace Acolyte.Threading
                 }
             }
 
-            return (taskResults, taskExceptions);
+            return (taskResults.AsReadOnly(), taskExceptions.AsReadOnly());
         }
 
         #endregion

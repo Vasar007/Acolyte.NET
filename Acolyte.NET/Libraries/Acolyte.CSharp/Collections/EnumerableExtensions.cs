@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -655,16 +654,20 @@ namespace Acolyte.Collections
         /// A sequence of values to determine the minimum value of.
         /// </param>
         /// <param name="comparer">An element comparer.</param>
-        /// <returns>The minimum value in the sequence.</returns>
+        /// <returns>
+        /// The minimum value in the sequence.
+        /// If <paramref name="source" /> contains no elements and <typeparamref name="TSource" />
+        /// is reference type, <see langword="null" /> values will be return.
+        /// </returns>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="source" /> is <see langword="null" />. -or-
         /// <paramref name="comparer" /> is <see langword="null" />.
         /// </exception>
         /// <exception cref="InvalidOperationException">
-        /// <paramref name="source" /> contains no elements.
+        /// <paramref name="source" /> contains no elements and <typeparamref name="TSource" /> is
+        /// value type.
         /// </exception>
-        [return: MaybeNull]
-        public static TSource Min<TSource>(
+        public static TSource? Min<TSource>(
             this IEnumerable<TSource> source,
             IComparer<TSource> comparer)
         {
@@ -676,7 +679,7 @@ namespace Acolyte.Collections
             {
                 foreach (TSource x in source)
                 {
-                    if (!(x is null) && (minValue is null || comparer.Compare(x, minValue) < 0)) minValue = x;
+                    if (x is not null && (minValue is null || comparer.Compare(x, minValue) < 0)) minValue = x;
                 }
 
                 return minValue;
@@ -713,16 +716,20 @@ namespace Acolyte.Collections
         /// A sequence of values to determine the maximum value of.
         /// </param>
         /// <param name="comparer">An element comparer.</param>
-        /// <returns>The maximum value in the sequence.</returns>
+        /// <returns>
+        /// The maximum value in the sequence.
+        /// If <paramref name="source" /> contains no elements and <typeparamref name="TSource" />
+        /// is reference type, <see langword="null" /> values will be return.
+        /// </returns>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="source" /> is <see langword="null" />. -or-
         /// <paramref name="comparer" /> is <see langword="null" />.
         /// </exception>
         /// <exception cref="InvalidOperationException">
-        /// <paramref name="source" /> contains no elements.
+        /// <paramref name="source" /> contains no elements and <typeparamref name="TSource" /> is
+        /// value type.
         /// </exception>
-        [return: MaybeNull]
-        public static TSource Max<TSource>(
+        public static TSource? Max<TSource>(
             this IEnumerable<TSource> source,
             IComparer<TSource> comparer)
         {
@@ -1186,8 +1193,8 @@ namespace Acolyte.Collections
             {
                 foreach (TSource x in source)
                 {
-                    if (!(x is null) && (minValue is null || comparer.Compare(x, minValue) < 0)) minValue = x;
-                    if (!(x is null) && (maxValue is null || comparer.Compare(x, maxValue) > 0)) maxValue = x;
+                    if (x is not null && (minValue is null || comparer.Compare(x, minValue) < 0)) minValue = x;
+                    if (x is not null && (maxValue is null || comparer.Compare(x, maxValue) > 0)) maxValue = x;
                 }
 
                 return (minValue, maxValue);
@@ -1672,17 +1679,21 @@ namespace Acolyte.Collections
         /// </param>
         /// <param name="keySelector">Selector that transform source item to key item.</param>
         /// <param name="comparer">Key item comparer.</param>
-        /// <returns>The minimum by key element in the sequence.</returns>
+        /// <returns>
+        /// The minimum by key element in the sequence.
+        /// If <paramref name="source" /> contains no elements and <typeparamref name="TSource" />
+        /// is reference type, <see langword="null" /> values will be return.
+        /// </returns>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="source" /> is <see langword="null" />. -or-
         /// <paramref name="keySelector" /> is <see langword="null" />. -or-
         /// <paramref name="comparer" /> is <see langword="null" />.
         /// </exception>
         /// <exception cref="InvalidOperationException">
-        /// <paramref name="source" /> contains no elements.
+        /// <paramref name="source" /> contains no elements and <typeparamref name="TSource" /> is
+        /// value type.
         /// </exception>
-        [return: MaybeNull]
-        public static TSource MinBy<TSource, TKey>(
+        public static TSource? MinBy<TSource, TKey>(
             this IEnumerable<TSource> source,
             Func<TSource, TKey> keySelector,
             IComparer<TKey> comparer)
@@ -1691,9 +1702,7 @@ namespace Acolyte.Collections
             keySelector.ThrowIfNull(nameof(keySelector));
             comparer.ThrowIfNull(nameof(comparer));
 
-#pragma warning disable CS8653 // A default expression introduces a null value for a type parameter.
-            TSource minValue = default;
-#pragma warning restore CS8653 // A default expression introduces a null value for a type parameter.
+            TSource? minValue = default;
 
             using (IEnumerator<TSource> enumerator = source.GetEnumerator())
             {
@@ -1735,20 +1744,24 @@ namespace Acolyte.Collections
         /// A sequence of values to determine the minimum by key element of.
         /// </param>
         /// <param name="keySelector">Selector that transform source item to key item.</param>
-        /// <returns>The minimum by key element in the sequence.</returns>
+        /// <returns>
+        /// The minimum by key element in the sequence.
+        /// If <paramref name="source" /> contains no elements and <typeparamref name="TSource" />
+        /// is reference type, <see langword="null" /> values will be return.
+        /// </returns>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="source" /> is <see langword="null" />. -or-
         /// <paramref name="keySelector" /> is <see langword="null" />. -or-
         /// </exception>
         /// <exception cref="InvalidOperationException">
-        /// <paramref name="source" /> contains no elements.
+        /// <paramref name="source" /> contains no elements and <typeparamref name="TSource" /> is
+        /// value type.
         /// </exception>
         /// <exception cref="ArgumentException">
         /// No object in <paramref name="source" /> implements the <see cref="IComparable" /> or
         /// <see cref="IComparable{TKey}" /> interface.
         /// </exception>
-        [return: MaybeNull]
-        public static TSource MinBy<TSource, TKey>(
+        public static TSource? MinBy<TSource, TKey>(
             this IEnumerable<TSource> source,
             Func<TSource, TKey> keySelector)
         {
@@ -1771,17 +1784,21 @@ namespace Acolyte.Collections
         /// </param>
         /// <param name="keySelector">Selector that transform source item to key item.</param>
         /// <param name="comparer">Key item comparer.</param>
-        /// <returns>The maximum by key element in the sequence.</returns>
+        /// <returns>
+        /// The maximum by key element value in the sequence.
+        /// If <paramref name="source" /> contains no elements and <typeparamref name="TSource" />
+        /// is reference type, <see langword="null" /> values will be return.
+        /// </returns>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="source" /> is <see langword="null" />. -or-
         /// <paramref name="keySelector" /> is <see langword="null" />. -or-
         /// <paramref name="comparer" /> is <see langword="null" />.
         /// </exception>
         /// <exception cref="InvalidOperationException">
-        /// <paramref name="source" /> contains no elements.
+        /// <paramref name="source" /> contains no elements and <typeparamref name="TSource" /> is
+        /// value type.
         /// </exception>
-        [return: MaybeNull]
-        public static TSource MaxBy<TSource, TKey>(
+        public static TSource? MaxBy<TSource, TKey>(
             this IEnumerable<TSource> source,
             Func<TSource, TKey> keySelector,
             IComparer<TKey> comparer)
@@ -1801,20 +1818,24 @@ namespace Acolyte.Collections
         /// A sequence of values to determine the maximum by key element of.
         /// </param>
         /// <param name="keySelector">Selector that transform source item to key item.</param>
-        /// <returns>The maximum by key element in the sequence.</returns>
+        /// <returns>
+        /// The maximum by key value in the sequence.
+        /// If <paramref name="source" /> contains no elements and <typeparamref name="TSource" />
+        /// is reference type, <see langword="null" /> values will be return.
+        /// </returns>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="source" /> is <see langword="null" />. -or-
         /// <paramref name="keySelector" /> is <see langword="null" />. -or-
         /// </exception>
         /// <exception cref="InvalidOperationException">
-        /// <paramref name="source" /> contains no elements.
+        /// <paramref name="source" /> contains no elements and <typeparamref name="TSource" /> is
+        /// value type.
         /// </exception>
         /// <exception cref="ArgumentException">
         /// No object in <paramref name="source" /> implements the <see cref="IComparable" /> or
         /// <see cref="IComparable{TKey}" /> interface.
         /// </exception>
-        [return: MaybeNull]
-        public static TSource MaxBy<TSource, TKey>(
+        public static TSource? MaxBy<TSource, TKey>(
             this IEnumerable<TSource> source,
             Func<TSource, TKey> keySelector)
         {

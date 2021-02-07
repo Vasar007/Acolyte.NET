@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Acolyte.Common
 {
@@ -12,8 +11,7 @@ namespace Acolyte.Common
         /// <summary>
         /// Field that hold value object reference.
         /// </summary>
-        [AllowNull]
-        private readonly T _value;
+        private readonly T? _value;
 
         /// <summary>
         /// Gets a value indicating whether the current <see cref="Option{T}" /> object has a valid
@@ -34,8 +32,7 @@ namespace Acolyte.Common
         /// <exception cref="InvalidOperationException">
         /// <see cref="HasValue" /> property is <see langword="false" />.
         /// </exception>
-        [MaybeNull]
-        public T Value => HasValue
+        public T? Value => HasValue
             ? _value
             : throw new InvalidOperationException($"{nameof(Value)} is not active.");
 
@@ -45,7 +42,7 @@ namespace Acolyte.Common
         /// </summary>
         /// <param name="value">A reference type.</param>
         public Option(
-            [AllowNull] T value)
+            T? value)
             : this()
         {
             _value = value;
@@ -57,7 +54,7 @@ namespace Acolyte.Common
         /// <see cref="Option{T}" />.
         /// </summary>
         /// <param name="value">A reference type to convert.</param>
-        public static implicit operator Option<T>([AllowNull] T value)
+        public static implicit operator Option<T>(T? value)
         {
             return new Option<T>(value);
         }
@@ -70,8 +67,7 @@ namespace Acolyte.Common
         /// <exception cref="InvalidOperationException">
         /// <see cref="HasValue" /> property is <see langword="false" />.
         /// </exception>
-        [return: MaybeNull]
-        public static explicit operator T(Option<T> option)
+        public static explicit operator T?(Option<T> option)
         {
             return option.Value;
         }
@@ -100,13 +96,11 @@ namespace Acolyte.Common
         /// <inheritdoc />
         public override int GetHashCode()
         {
-#if NETSTANDARD2_1
             return !HasValue
                ? 0
+#if NETSTANDARD2_1
                : System.HashCode.Combine(_value);
 #else
-            return !HasValue
-               ? 0
                : Acolyte.Common.HashCode.Combine(_value);
 #endif
         }
@@ -120,7 +114,7 @@ namespace Acolyte.Common
         {
             if (!HasValue.Equals(other.HasValue)) return false;
 
-            return HasValue && !(_value is null)
+            return HasValue && _value is not null
                 ? _value.Equals(other._value)
                 : other._value is null;
         }
@@ -160,14 +154,14 @@ namespace Acolyte.Common
             return new Option<T>();
         }
 
-        public TOut Match<TOut>(Func<T, TOut> some, Func<TOut> none)
+        public TOut Match<TOut>(Func<T?, TOut> some, Func<TOut> none)
         {
             return HasValue
                 ? some(_value)
                 : none();
         }
 
-        public void Match(Action<T> some, Action none)
+        public void Match(Action<T?> some, Action none)
         {
             if (HasValue)
             {
@@ -179,14 +173,14 @@ namespace Acolyte.Common
             }
         }
 
-        public Option<TOut> Select<TOut>(Func<T, TOut> map)
+        public Option<TOut> Select<TOut>(Func<T?, TOut> map)
         {
             return HasValue
                 ? new Option<TOut>(map(_value))
                 : new Option<TOut>();
         }
 
-        public Option<TOut> Bind<TOut>(Func<T, Option<TOut>> bind)
+        public Option<TOut> Bind<TOut>(Func<T?, Option<TOut>> bind)
         {
             return HasValue
                 ? bind(_value)
@@ -202,7 +196,7 @@ namespace Acolyte.Common
     {
         public static NoneOption None { get; } = new NoneOption();
 
-        public static Option<T> Some<T>(T value)
+        public static Option<T> Some<T>(T? value)
         {
             return new Option<T>(value);
         }

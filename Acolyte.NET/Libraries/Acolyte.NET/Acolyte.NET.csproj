@@ -8,6 +8,7 @@
     <WarningsAsErrors>CS8600,CS8602,CS8603,CS8618,CS8625</WarningsAsErrors>
     <RootNamespace>Acolyte</RootNamespace>
     <IncludeSymbols>true</IncludeSymbols>
+    <IsPackable>true</IsPackable>
   </PropertyGroup>
 
   <PropertyGroup>

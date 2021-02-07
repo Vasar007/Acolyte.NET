@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Acolyte.Assertions;
 
@@ -134,7 +133,7 @@ namespace Acolyte.Collections.Concurrent
 
         #region ISet<T> Implementation
 
-        public bool Add([AllowNull] T item)
+        public bool Add(T? item)
         {
             lock (_lock)
             {
@@ -235,7 +234,7 @@ namespace Acolyte.Collections.Concurrent
             }
         }
 
-        public bool Remove([AllowNull] T item)
+        public bool Remove(T? item)
         {
             lock (_lock)
             {
@@ -254,7 +253,7 @@ namespace Acolyte.Collections.Concurrent
             }
         }
 
-        public bool Contains([AllowNull] T item)
+        public bool Contains(T? item)
         {
             lock (_lock)
             {
@@ -282,7 +281,7 @@ namespace Acolyte.Collections.Concurrent
             }
         }
 
-        void ICollection<T>.Add([AllowNull] T item)
+        void ICollection<T>.Add(T? item)
         {
             lock (_lock)
             {
@@ -301,7 +300,9 @@ namespace Acolyte.Collections.Concurrent
         {
             lock (_lock)
             {
-                return _set.GetEnumerator();
+                // Copy collection content to avoid possible issues during multithreading.
+                List<T> copied = _set.ToList();
+                return copied.GetEnumerator();
             }
         }
 

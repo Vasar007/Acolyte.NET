@@ -8,7 +8,7 @@ namespace Acolyte.Collections.Concurrent
 {
     public class ConcurrentTwoWayDictionary<TKey, TValue> : TwoWayDictionary<TKey, TValue>
     {
-        private readonly object _lock = new object();
+        private readonly object _lock;
 
         protected readonly IEqualityComparer<TKey> KeyComparer;
         protected readonly IEqualityComparer<TValue> ValueComparer;
@@ -45,7 +45,7 @@ namespace Acolyte.Collections.Concurrent
         private ConcurrentTwoWayDictionary(
             IEqualityComparer<TKey> keyComparer,
             IEqualityComparer<TValue> valueComparer,
-            bool validated)
+            bool _)
             : base(new ConcurrentDictionary<TKey, TValue>(keyComparer),
                    new ConcurrentDictionary<TValue, TKey>(valueComparer))
         {
@@ -53,6 +53,8 @@ namespace Acolyte.Collections.Concurrent
             ValueComparer = valueComparer;
             RevConcurrentDictionary = (ConcurrentDictionary<TValue, TKey>) RevDictionary;
             FwdConcurrentDictionary = (ConcurrentDictionary<TKey, TValue>) FwdDictionary;
+
+            _lock = new object();
         }
 
         public TValue GetOrAddValue(TKey key, Func<TKey, TValue> valueFactory,
@@ -190,7 +192,7 @@ namespace Acolyte.Collections.Concurrent
             {
                 if (FwdConcurrentDictionary.TryRemove(key, out TValue value))
                 {
-                    RevConcurrentDictionary.Remove(value);
+                    RevConcurrentDictionary.TryRemove(value, out _);
                 }
             }
         }
@@ -201,7 +203,7 @@ namespace Acolyte.Collections.Concurrent
             {
                 if (RevConcurrentDictionary.TryRemove(value, out TKey key))
                 {
-                    FwdConcurrentDictionary.Remove(key);
+                    FwdConcurrentDictionary.TryRemove(key, out _);
                 }
             }
         }

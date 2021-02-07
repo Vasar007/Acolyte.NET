@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
+using Acolyte.Common.Monads;
 
 namespace Acolyte.Collections
 {
@@ -19,16 +20,6 @@ namespace Acolyte.Collections
             : base(dictionary)
         {
         }
-
-#if NETSTANDARD2_1
-
-        public TypedEnumDictionary(
-            IEnumerable<KeyValuePair<Type, Enum>> collection)
-           : base(collection)
-        {
-        }
-
-#endif
 
         public TypedEnumDictionary(
             IEqualityComparer<Type> comparer)
@@ -49,7 +40,20 @@ namespace Acolyte.Collections
         {
         }
 
+        public TypedEnumDictionary(
+            int capacity,
+            IEqualityComparer<Type> comparer)
+            : base(capacity, comparer)
+        {
+        }
+
 #if NETSTANDARD2_1
+
+        public TypedEnumDictionary(
+            IEnumerable<KeyValuePair<Type, Enum>> collection)
+           : base(collection)
+        {
+        }
 
         public TypedEnumDictionary(
             IEnumerable<KeyValuePair<Type, Enum>> collection,
@@ -59,13 +63,6 @@ namespace Acolyte.Collections
         }
 
 #endif
-
-        public TypedEnumDictionary(
-            int capacity,
-            IEqualityComparer<Type> comparer)
-            : base(capacity, comparer)
-        {
-        }
 
         protected TypedEnumDictionary(
             SerializationInfo info,
@@ -85,7 +82,8 @@ namespace Acolyte.Collections
         public TEnum Get<TEnum>()
             where TEnum : struct, Enum
         {
-            return (TEnum) this[typeof(TEnum)];
+            Enum value = this[typeof(TEnum)];
+            return value.To<TEnum>();
         }
 
         public TEnum GetOrDefault<TEnum>()
@@ -101,7 +99,7 @@ namespace Acolyte.Collections
         {
             if (TryGetValue(typeof(TEnum), out Enum result))
             {
-                value = (TEnum) result;
+                value = result.To<TEnum>();
                 return true;
             }
 

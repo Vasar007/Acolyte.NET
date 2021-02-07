@@ -21,7 +21,8 @@ namespace Acolyte.Collections.Concurrent
         IDictionary<TKey, TValue>,
         IReadOnlyCollection<KeyValuePair<TKey, TValue>>,
         IReadOnlyDictionary<TKey, TValue>,
-        ICollection, IDictionary
+        ICollection,
+        IDictionary
         where TKey : notnull
         where TValue : IHaveCreationTime
     {
@@ -90,7 +91,8 @@ namespace Acolyte.Collections.Concurrent
 
         #region Excplicit Properties
 
-        bool ICollection<KeyValuePair<TKey, TValue>>.IsReadOnly => ((ICollection<KeyValuePair<TKey, TValue>>) _dictionary).IsReadOnly;
+        bool ICollection<KeyValuePair<TKey, TValue>>.IsReadOnly =>
+            ((ICollection<KeyValuePair<TKey, TValue>>) _dictionary).IsReadOnly;
 
         bool IDictionary.IsReadOnly => ((IDictionary) _dictionary).IsReadOnly;
 
@@ -233,7 +235,8 @@ namespace Acolyte.Collections.Concurrent
             return ((ICollection<KeyValuePair<TKey, TValue>>) _dictionary).Contains(item);
         }
 
-        void ICollection<KeyValuePair<TKey, TValue>>.CopyTo(KeyValuePair<TKey, TValue>[] array, int arrayIndex)
+        void ICollection<KeyValuePair<TKey, TValue>>.CopyTo(KeyValuePair<TKey, TValue>[] array,
+            int arrayIndex)
         {
             CleanupExpiredObjects();
             ((ICollection<KeyValuePair<TKey, TValue>>) _dictionary).CopyTo(array, arrayIndex);
