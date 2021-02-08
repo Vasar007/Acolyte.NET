@@ -16,7 +16,7 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_IndexOf_ForNullValue()
+        public void Call_IndexOf_ForNullValue_ShouldFail()
         {
             // Arrange.
             const IEnumerable<int>? nullValue = null;
@@ -28,7 +28,7 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_IndexOf_ForNullPredicate()
+        public void Call_IndexOf_ForNullPredicate_ShouldFail()
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
@@ -40,7 +40,7 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_IndexOf_Item_ForNullValue()
+        public void Call_IndexOf_Item_ForNullValue_ShouldFail()
         {
             // Arrange.
             const IEnumerable<int>? nullValue = null;
@@ -52,7 +52,7 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_IndexOf_ItemWithComparer_ForNullValue()
+        public void Call_IndexOf_ItemWithComparer_ForNullValue_ShouldFail()
         {
             // Arrange.
             const IEnumerable<int>? nullValue = null;
@@ -66,21 +66,24 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_IndexOf_ItemWithComparer_ForNullComparer()
+        public void Call_IndexOf_ItemWithComparer_ForNullComparer_ShouldUseDefaultComparer()
         {
             // Arrange.
-            IEnumerable<int> nullValue = Enumerable.Empty<int>();
+            int count = TestDataCreator.GetRandomPositiveCountNumber();
+            IReadOnlyList<int> collectionWithRandomSize =
+                TestDataCreator.CreateRandomInt32List(count);
+            (int randomItem, int expectedIndex) =
+                TestDataCreator.ChoiceWithIndex(collectionWithRandomSize);
 
-            // Act & Assert.
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
-            Assert.Throws<ArgumentNullException>(
-                "comparer", () => nullValue.IndexOf(default, default)
-            );
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+            // Act.
+            int actualIndex = collectionWithRandomSize.IndexOf(randomItem, comparer: null);
+
+            // Assert.
+            Assert.Equal(expectedIndex, actualIndex);
         }
 
         [Fact]
-        public void Call_IndexOf_ForEmptyCollection()
+        public void Call_IndexOf_ForEmptyCollection_ShouldReturnNotFoundIndex()
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
@@ -94,7 +97,7 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_IndexOf_Item_ForEmptyCollection()
+        public void Call_IndexOf_Item_ForEmptyCollection_ShouldReturnNotFoundIndex()
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
@@ -108,7 +111,7 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_IndexOf_ItemWithComparer_ForEmptyCollection()
+        public void Call_IndexOf_ItemWithComparer_ForEmptyCollection_ShouldReturnNotFoundIndex()
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();

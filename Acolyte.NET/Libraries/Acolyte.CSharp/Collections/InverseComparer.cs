@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Acolyte.Assertions;
 
 namespace Acolyte.Collections
 {
@@ -12,9 +11,10 @@ namespace Acolyte.Collections
         private readonly IComparer<T> _comparer;
 
 
-        public InverseComparer(IComparer<T> comparer)
+        public InverseComparer(
+            IComparer<T>? comparer)
         {
-            _comparer = comparer.ThrowIfNull(nameof(comparer));
+            _comparer = comparer ?? Comparer<T>.Default;
         }
 
         #region IComparer<T> Implementation

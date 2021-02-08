@@ -378,13 +378,12 @@ namespace Acolyte.Collections
         /// <see cref="Constants.NotFoundIndex" /> (it's equal to -1).
         /// </returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="source" /> is <see langword="null" />. -or-
-        /// <paramref name="comparer" /> is <see langword="null" />.
+        /// <paramref name="source" /> is <see langword="null" />.
         /// </exception>
         public static int IndexOf<TSource>(this IEnumerable<TSource> source, TSource value,
-            IEqualityComparer<TSource> comparer)
+            IEqualityComparer<TSource>? comparer)
         {
-            comparer.ThrowIfNull(nameof(comparer));
+            comparer ??= EqualityComparer<TSource>.Default;
 
             return source.IndexOf(item => comparer.Equals(item, value));
         }
@@ -656,8 +655,7 @@ namespace Acolyte.Collections
         /// is reference type, <see langword="null" /> values will be return.
         /// </returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="source" /> is <see langword="null" />. -or-
-        /// <paramref name="comparer" /> is <see langword="null" />.
+        /// <paramref name="source" /> is <see langword="null" />.
         /// </exception>
         /// <exception cref="InvalidOperationException">
         /// <paramref name="source" /> contains no elements and <typeparamref name="TSource" /> is
@@ -665,10 +663,10 @@ namespace Acolyte.Collections
         /// </exception>
         public static TSource? Min<TSource>(
             this IEnumerable<TSource> source,
-            IComparer<TSource> comparer)
+            IComparer<TSource>? comparer)
         {
             source.ThrowIfNull(nameof(source));
-            comparer.ThrowIfNull(nameof(comparer));
+            comparer ??= Comparer<TSource>.Default;
 
             TSource minValue = default;
             if (minValue is null)
@@ -718,8 +716,7 @@ namespace Acolyte.Collections
         /// is reference type, <see langword="null" /> values will be return.
         /// </returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="source" /> is <see langword="null" />. -or-
-        /// <paramref name="comparer" /> is <see langword="null" />.
+        /// <paramref name="source" /> is <see langword="null" />.
         /// </exception>
         /// <exception cref="InvalidOperationException">
         /// <paramref name="source" /> contains no elements and <typeparamref name="TSource" /> is
@@ -727,7 +724,7 @@ namespace Acolyte.Collections
         /// </exception>
         public static TSource? Max<TSource>(
             this IEnumerable<TSource> source,
-            IComparer<TSource> comparer)
+            IComparer<TSource>? comparer)
         {
             return source.Min(new InverseComparer<TSource>(comparer));
         }
@@ -1166,8 +1163,7 @@ namespace Acolyte.Collections
         /// is reference type, <see langword="null" /> values will be return.
         /// </returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="source" /> is <see langword="null" />. -or-
-        /// <paramref name="comparer" /> is <see langword="null" />..
+        /// <paramref name="source" /> is <see langword="null" />.
         /// </exception>
         /// <exception cref="InvalidOperationException">
         /// <paramref name="source" /> contains no elements and <typeparamref name="TSource" /> is
@@ -1175,10 +1171,10 @@ namespace Acolyte.Collections
         /// </exception>
         public static (TSource? minValue, TSource? maxValue) MinMax<TSource>(
             this IEnumerable<TSource> source,
-            IComparer<TSource> comparer)
+            IComparer<TSource>? comparer)
         {
             source.ThrowIfNull(nameof(source));
-            comparer.ThrowIfNull(nameof(comparer));
+            comparer ??= Comparer<TSource>.Default;
 
             TSource? minValue = default;
             TSource? maxValue = default;
@@ -1598,8 +1594,7 @@ namespace Acolyte.Collections
         /// is reference type, <see langword="null" /> values will be return.
         /// </returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="source" /> is <see langword="null" /> -or-
-        /// <paramref name="comparer" /> is <see langword="null" />.
+        /// <paramref name="source" /> is <see langword="null" />.
         /// </exception>
         /// <exception cref="InvalidOperationException">
         /// <paramref name="source" /> contains no elements and <typeparamref name="TResult" />  is
@@ -1608,7 +1603,7 @@ namespace Acolyte.Collections
         public static (TResult? minValue, TResult? maxValue) MinMax<TSource, TResult>(
             this IEnumerable<TSource> source,
             Func<TSource, TResult> selector,
-            IComparer<TResult> comparer)
+            IComparer<TResult>? comparer)
         {
             return source
                  .Select(selector)
@@ -1682,8 +1677,7 @@ namespace Acolyte.Collections
         /// </returns>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="source" /> is <see langword="null" />. -or-
-        /// <paramref name="keySelector" /> is <see langword="null" />. -or-
-        /// <paramref name="comparer" /> is <see langword="null" />.
+        /// <paramref name="keySelector" /> is <see langword="null" />.
         /// </exception>
         /// <exception cref="InvalidOperationException">
         /// <paramref name="source" /> contains no elements and <typeparamref name="TSource" /> is
@@ -1692,11 +1686,11 @@ namespace Acolyte.Collections
         public static TSource? MinBy<TSource, TKey>(
             this IEnumerable<TSource> source,
             Func<TSource, TKey> keySelector,
-            IComparer<TKey> comparer)
+            IComparer<TKey>? comparer)
         {
             source.ThrowIfNull(nameof(source));
             keySelector.ThrowIfNull(nameof(keySelector));
-            comparer.ThrowIfNull(nameof(comparer));
+            comparer ??= Comparer<TKey>.Default;
 
             TSource? minValue = default;
 
@@ -1787,8 +1781,7 @@ namespace Acolyte.Collections
         /// </returns>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="source" /> is <see langword="null" />. -or-
-        /// <paramref name="keySelector" /> is <see langword="null" />. -or-
-        /// <paramref name="comparer" /> is <see langword="null" />.
+        /// <paramref name="keySelector" /> is <see langword="null" />.
         /// </exception>
         /// <exception cref="InvalidOperationException">
         /// <paramref name="source" /> contains no elements and <typeparamref name="TSource" /> is
@@ -1797,7 +1790,7 @@ namespace Acolyte.Collections
         public static TSource? MaxBy<TSource, TKey>(
             this IEnumerable<TSource> source,
             Func<TSource, TKey> keySelector,
-            IComparer<TKey> comparer)
+            IComparer<TKey>? comparer)
         {
             return source.MinBy(keySelector, new InverseComparer<TKey>(comparer));
         }
@@ -1863,8 +1856,7 @@ namespace Acolyte.Collections
         /// </returns>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="source" /> is <see langword="null" />. -or-
-        /// <paramref name="keySelector" /> is <see langword="null" />. -or-
-        /// <paramref name="comparer" /> is <see langword="null" />.
+        /// <paramref name="keySelector" /> is <see langword="null" />.
         /// </exception>
         /// <exception cref="InvalidOperationException">
         /// <paramref name="source" /> contains no elements and <typeparamref name="TSource" /> is
@@ -1873,11 +1865,11 @@ namespace Acolyte.Collections
         public static (TSource? minValue, TSource? maxValue) MinMaxBy<TSource, TKey>(
             this IEnumerable<TSource> source,
             Func<TSource, TKey> keySelector,
-            IComparer<TKey> comparer)
+            IComparer<TKey>? comparer)
         {
             source.ThrowIfNull(nameof(source));
             keySelector.ThrowIfNull(nameof(keySelector));
-            comparer.ThrowIfNull(nameof(comparer));
+            comparer ??= Comparer<TKey>.Default;
 
             TSource? minValue = default;
             TSource? maxValue = default;

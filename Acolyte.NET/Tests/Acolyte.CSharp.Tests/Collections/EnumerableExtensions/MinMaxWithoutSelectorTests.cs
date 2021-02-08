@@ -948,17 +948,20 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_MinMax_GenericTypes_WithComparer_ForNullComparer()
+        public void Call_MinMax_GenericTypes_WithComparer_ForNullComparer_ShouldUseDefaultComparer()
         {
             // Arrange.
-            IEnumerable<DummyClass> emptyCollection = Enumerable.Empty<DummyClass>();
+            int count = TestDataCreator.GetRandomSmallCountNumber();
+            IEnumerable<string> collectionWithRandomSize = TestDataCreator
+                .CreateRandomStringList(count);
+            (string? minValue, string? maxValue) expectedValue =
+                (collectionWithRandomSize.Min(), collectionWithRandomSize.Max());
 
-            // Act & Assert.
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
-            Assert.Throws<ArgumentNullException>(
-                "comparer", () => emptyCollection.MinMax(comparer: null)
-            );
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+            // Act.
+            var actualValue = collectionWithRandomSize.MinMax(comparer: null);
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
         }
 
         [Fact]

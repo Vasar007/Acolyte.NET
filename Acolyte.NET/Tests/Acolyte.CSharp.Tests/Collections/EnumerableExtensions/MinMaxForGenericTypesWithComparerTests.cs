@@ -30,15 +30,20 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_Min_WithComparer_ForNullComparer()
+        public void Call_Min_WithComparer_ForNullComparer_ShouldUseDefaultComparer()
         {
             // Arrange.
-            IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
+            // Count should be positive.
+            int count = TestDataCreator.GetRandomPositiveCountNumber();
+            IEnumerable<int> collectionWithRandomSize =
+                TestDataCreator.CreateRandomInt32List(count);
+            int expectedValue = collectionWithRandomSize.Min();
 
-            // Act & Assert.
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
-            Assert.Throws<ArgumentNullException>("comparer", () => emptyCollection.Min(null));
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+            // Act.
+            int actualValue = collectionWithRandomSize.Min(comparer: null);
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
         }
 
         [Fact]
@@ -56,15 +61,20 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_Max_WithComparer_ForNullValueComparer()
+        public void Call_Max_WithComparer_ForNullValueComparer_ShouldUseDefaultComparer()
         {
             // Arrange.
-            IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
+            // Count should be positive.
+            int count = TestDataCreator.GetRandomPositiveCountNumber();
+            IEnumerable<int> collectionWithRandomSize =
+                TestDataCreator.CreateRandomInt32List(count);
+            int expectedValue = collectionWithRandomSize.Max();
 
-            // Act & Assert.
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
-            Assert.Throws<ArgumentNullException>("comparer", () => emptyCollection.Max(null));
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+            // Act.
+            int actualValue = collectionWithRandomSize.Max(comparer: null);
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
         }
 
         [Fact]
@@ -155,7 +165,7 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
         [InlineData(TestHelper.TenCollectionSize)]
         [InlineData(TestHelper.HundredCollectionSize)]
         [InlineData(TestHelper.TenThousandCollectionSize)]
-        public void Call_Min_WithCompare_ForCollectionWithSomeItems(int count)
+        public void Call_Min_WithComparer_ForCollectionWithSomeItems(int count)
         {
             // Arrange.
             IEnumerable<int> collectionWithSomeItems = TestDataCreator.CreateRandomInt32List(count);
@@ -175,7 +185,7 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
         [InlineData(TestHelper.TenCollectionSize)]
         [InlineData(TestHelper.HundredCollectionSize)]
         [InlineData(TestHelper.TenThousandCollectionSize)]
-        public void Call_Max_WithCompare_ForCollectionWithSomeItems(int count)
+        public void Call_Max_WithComparer_ForCollectionWithSomeItems(int count)
         {
             // Arrange.
             IEnumerable<int> collectionWithSomeItems = TestDataCreator.CreateRandomInt32List(count);
@@ -195,7 +205,7 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
         [InlineData(TestHelper.TenCollectionSize)]
         [InlineData(TestHelper.HundredCollectionSize)]
         [InlineData(TestHelper.TenThousandCollectionSize)]
-        public void Call_Min_WithCompare_ForCollectionWithTheSameItems(int count)
+        public void Call_Min_WithComparer_ForCollectionWithTheSameItems(int count)
         {
             // Arrange.
             IEnumerable<int> collectionWithTheSameItems = Enumerable
@@ -217,7 +227,7 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
         [InlineData(TestHelper.TenCollectionSize)]
         [InlineData(TestHelper.HundredCollectionSize)]
         [InlineData(TestHelper.TenThousandCollectionSize)]
-        public void Call_Max_WithCompare_ForCollectionWithTheSameItems(int count)
+        public void Call_Max_WithComparer_ForCollectionWithTheSameItems(int count)
         {
             // Arrange.
             IEnumerable<int> collectionWithTheSameItems = Enumerable
@@ -233,7 +243,7 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_Min_WithCompare_ForCollectionWithRandomSize()
+        public void Call_Min_WithComparer_ForCollectionWithRandomSize()
         {
             // Arrange.
             // Count should be positive.
@@ -250,7 +260,7 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_Max_WithCompare_ForCollectionWithRandomSize()
+        public void Call_Max_WithComparer_ForCollectionWithRandomSize()
         {
             // Arrange.
             // Count should be positive.
@@ -267,7 +277,7 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
         }
 
         [Fact]
-        public void Min_WithCompare_ShouldLookWholeCollectionToFindItem()
+        public void Min_WithComparer_ShouldLookWholeCollectionToFindItem()
         {
             // Arrange.
             var collection = new[] { 1, 2, 3, 4 };
@@ -283,7 +293,7 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
         }
 
         [Fact]
-        public void Max_WithCompare_ShouldLookWholeCollectionToFindItem()
+        public void Max_WithComparer_ShouldLookWholeCollectionToFindItem()
         {
             // Arrange.
             var collection = new[] { 4, 3, 2, 1 };
