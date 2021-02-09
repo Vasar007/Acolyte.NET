@@ -15,7 +15,7 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_IsNullOrEmpty_ForNullValue()
+        public void Call_IsNullOrEmpty_ForNullValue_ShouldReturnTrue()
         {
             // Arrange.
             const IEnumerable<int>? nullValue = null;
@@ -25,7 +25,7 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_IsNullOrEmpty_ForEmptyCollection()
+        public void Call_IsNullOrEmpty_ForEmptyCollection_ShouldReturnTrue()
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
@@ -41,7 +41,7 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
         [InlineData(TestHelper.TenCollectionSize)]
         [InlineData(TestHelper.HundredCollectionSize)]
         [InlineData(TestHelper.TenThousandCollectionSize)]
-        public void Call_IsNullOrEmpty_ForCollectionWithSomeItems(int count)
+        public void Call_IsNullOrEmpty_ForCollectionWithSomeItems_ShouldReturnFalse(int count)
         {
             // Arrange.
             IEnumerable<int> collectionWithSomeItems = TestDataCreator.CreateRandomInt32List(count);
@@ -51,7 +51,7 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_IsNullOrEmpty_ForCollectionWithRandomSize()
+        public void Call_IsNullOrEmpty_ForCollectionWithRandomSize_ShouldReturnProperResult()
         {
             // Arrange.
             int count = TestDataCreator.GetRandomCountNumber();
@@ -67,7 +67,7 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_IsNullOrEmpty_ForCollectionWithRandomNumberAndNullValues()
+        public void Call_IsNullOrEmpty_ForCollectionWithRandomNumberAndNullValues_ShouldReturnProperResult()
         {
             // Arrange.
             IEnumerable<int?> collectionWithRandomSize =

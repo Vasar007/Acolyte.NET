@@ -16,7 +16,7 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_Min_WithComparer_ForNullValue()
+        public void Call_Min_WithComparer_ForNullValue_ShouldFail()
         {
             // Arrange.
             const IEnumerable<int>? nullValue = null;
@@ -47,7 +47,7 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_Max_WithComparer_ForNullValue()
+        public void Call_Max_WithComparer_ForNullValue_ShouldFail()
         {
             // Arrange.
             const IEnumerable<int>? nullValue = null;
@@ -78,7 +78,7 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_Min_WithComparer_ForEmptyCollection_ShouldThrowForValueTypes()
+        public void Call_Min_WithComparer_ForEmptyCollection_ShouldFailForValueTypes()
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
@@ -118,7 +118,7 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_Max_WithComparer_ForEmptyCollection_ShouldThrowForValueTypes()
+        public void Call_Max_WithComparer_ForEmptyCollection_ShouldFailForValueTypes()
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
@@ -165,7 +165,7 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
         [InlineData(TestHelper.TenCollectionSize)]
         [InlineData(TestHelper.HundredCollectionSize)]
         [InlineData(TestHelper.TenThousandCollectionSize)]
-        public void Call_Min_WithComparer_ForCollectionWithSomeItems(int count)
+        public void Call_Min_WithComparer_ForCollectionWithSomeItems_ShouldReturnMin(int count)
         {
             // Arrange.
             IEnumerable<int> collectionWithSomeItems = TestDataCreator.CreateRandomInt32List(count);
@@ -185,7 +185,7 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
         [InlineData(TestHelper.TenCollectionSize)]
         [InlineData(TestHelper.HundredCollectionSize)]
         [InlineData(TestHelper.TenThousandCollectionSize)]
-        public void Call_Max_WithComparer_ForCollectionWithSomeItems(int count)
+        public void Call_Max_WithComparer_ForCollectionWithSomeItems_ShouldReturnMax(int count)
         {
             // Arrange.
             IEnumerable<int> collectionWithSomeItems = TestDataCreator.CreateRandomInt32List(count);
@@ -205,7 +205,7 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
         [InlineData(TestHelper.TenCollectionSize)]
         [InlineData(TestHelper.HundredCollectionSize)]
         [InlineData(TestHelper.TenThousandCollectionSize)]
-        public void Call_Min_WithComparer_ForCollectionWithTheSameItems(int count)
+        public void Call_Min_WithComparer_ForCollectionWithTheSameItems_ShouldReturnThatItem(int count)
         {
             // Arrange.
             IEnumerable<int> collectionWithTheSameItems = Enumerable
@@ -227,7 +227,7 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
         [InlineData(TestHelper.TenCollectionSize)]
         [InlineData(TestHelper.HundredCollectionSize)]
         [InlineData(TestHelper.TenThousandCollectionSize)]
-        public void Call_Max_WithComparer_ForCollectionWithTheSameItems(int count)
+        public void Call_Max_WithComparer_ForCollectionWithTheSameItems_ShouldReturnThatItem(int count)
         {
             // Arrange.
             IEnumerable<int> collectionWithTheSameItems = Enumerable
@@ -243,7 +243,7 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_Min_WithComparer_ForCollectionWithRandomSize()
+        public void Call_Min_WithComparer_ForCollectionWithRandomSize_ShouldReturnMin()
         {
             // Arrange.
             // Count should be positive.
@@ -260,7 +260,7 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_Max_WithComparer_ForCollectionWithRandomSize()
+        public void Call_Max_WithComparer_ForCollectionWithRandomSize_ShouldReturnMax()
         {
             // Arrange.
             // Count should be positive.
