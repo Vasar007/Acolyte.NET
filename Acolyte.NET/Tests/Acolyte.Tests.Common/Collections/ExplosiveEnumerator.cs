@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using Acolyte.Assertions;
 using Acolyte.Common;
-using Acolyte.Exceptions;
 using Acolyte.Tests.Common;
+using Acolyte.Tests.Exceptions;
 
 namespace Acolyte.Tests.Collections
 {

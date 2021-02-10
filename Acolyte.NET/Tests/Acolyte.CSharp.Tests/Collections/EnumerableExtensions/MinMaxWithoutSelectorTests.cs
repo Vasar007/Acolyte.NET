@@ -1150,6 +1150,8 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
                 (explosiveCollection.Min(), explosiveCollection.Max());
 
             // Act.
+            // Do not know why compiler decides that "explosiveCollection" should have "string?"
+            // I think that's because of the nullable return type.
             var actualValue = explosiveCollection.MinMax(Comparer<string?>.Default);
 
             // Assert.

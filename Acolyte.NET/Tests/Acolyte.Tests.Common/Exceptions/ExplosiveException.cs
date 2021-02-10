@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Acolyte.Exceptions
+namespace Acolyte.Tests.Exceptions
 {
     public sealed class ExplosiveException : Exception
     {
