@@ -10,14 +10,14 @@ using Acolyte.Tests.Functions;
 
 namespace Acolyte.Collections.Tests.EnumerableExtensions
 {
-    public sealed class MinByKeyTests
+    public sealed class MaxByKeyTests
     {
-        public MinByKeyTests()
+        public MaxByKeyTests()
         {
         }
 
         [Fact]
-        public void Call_MinBy_WithoutComparer_ForNullValue_ShouldFail()
+        public void Call_MaxBy_WithoutComparer_ForNullValue_ShouldFail()
         {
             // Arrange.
             const IEnumerable<int>? nullValue = null;
@@ -25,13 +25,13 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
             // Act & Assert.
 #pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             Assert.Throws<ArgumentNullException>(
-                "source", () => nullValue.MinBy(IdentityFunction<int>.Instance)
+                "source", () => nullValue.MaxBy(IdentityFunction<int>.Instance)
             );
 #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
 
         [Fact]
-        public void Call_MinBy_WithoutComparer_ForNullSelector_ShouldFail()
+        public void Call_MaxBy_WithoutComparer_ForNullSelector_ShouldFail()
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
@@ -40,13 +40,13 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
 #pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             const Func<int, int>? keySelector = null;
             Assert.Throws<ArgumentNullException>(
-                "keySelector", () => emptyCollection.MinBy(keySelector)
+                "keySelector", () => emptyCollection.MaxBy(keySelector)
             );
 #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
 
         [Fact]
-        public void Call_MinBy_WithComparer_ForNullValue_ShouldFail()
+        public void Call_MaxBy_WithComparer_ForNullValue_ShouldFail()
         {
             // Arrange.
             const IEnumerable<int>? nullValue = null;
@@ -54,13 +54,13 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
             // Act & Assert.
 #pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             Assert.Throws<ArgumentNullException>(
-                "source", () => nullValue.MinBy(keySelector: default, Comparer<int>.Default)
+                "source", () => nullValue.MaxBy(keySelector: default, Comparer<int>.Default)
             );
 #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
 
         [Fact]
-        public void Call_MinBy_WithComparer_ForNullSelector_ShouldFail()
+        public void Call_MaxBy_WithComparer_ForNullSelector_ShouldFail()
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
@@ -69,23 +69,23 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
 #pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             Assert.Throws<ArgumentNullException>(
                 "keySelector",
-                () => emptyCollection.MinBy(keySelector: default, Comparer<int>.Default)
+                () => emptyCollection.MaxBy(keySelector: default, Comparer<int>.Default)
             );
 #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
 
         [Fact]
-        public void Call_MinBy_WithComparer_ForNullComparer_ShouldUseDefaultComparer()
+        public void Call_MaxBy_WithComparer_ForNullComparer_ShouldUseDefaultComparer()
         {
             // Arrange.
             int count = TestDataCreator.GetRandomPositiveCountNumber();
             IReadOnlyList<int> collectionWithRandomSize =
                 TestDataCreator.CreateRandomInt32List(count);
-            int expectedValue = collectionWithRandomSize.Min();
+            int expectedValue = collectionWithRandomSize.Max();
 
             // Act.
             int actualValue =
-                collectionWithRandomSize.MinBy(IdentityFunction<int>.Instance, comparer: null);
+                collectionWithRandomSize.MaxBy(IdentityFunction<int>.Instance, comparer: null);
 
             // Assert.
             Assert.Equal(expectedValue, actualValue);
@@ -93,7 +93,7 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
 
 
         [Fact]
-        public void Call_MinBy_WithoutComparer_ForEmptyCollection_ShouldFailForValueTypes()
+        public void Call_MaxBy_WithoutComparer_ForEmptyCollection_ShouldFailForValueTypes()
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
@@ -101,40 +101,40 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
             // Act & Assert.
             Assert.Throws(
                 Error.NoElements().GetType(),
-                () => emptyCollection.MinBy(IdentityFunction<int>.Instance)
+                () => emptyCollection.MaxBy(IdentityFunction<int>.Instance)
             );
         }
 
         [Fact]
-        public void Call_MinBy_WithoutComparer_ForEmptyCollection_ShouldReturnNullForNullableValueTypes()
+        public void Call_MaxBy_WithoutComparer_ForEmptyCollection_ShouldReturnNullForNullableValueTypes()
         {
             // Arrange.
             IEnumerable<int?> emptyCollection = Enumerable.Empty<int?>();
             int? expectedValue = null;
 
             // Act.
-            int? actualValue = emptyCollection.MinBy(IdentityFunction<int?>.Instance);
+            int? actualValue = emptyCollection.MaxBy(IdentityFunction<int?>.Instance);
 
             // Assert.
             Assert.Equal(expectedValue, actualValue);
         }
 
         [Fact]
-        public void Call_MinBy_WithoutComparer_ForEmptyCollection_ShouldReturnNullForReferenceTypes()
+        public void Call_MaxBy_WithoutComparer_ForEmptyCollection_ShouldReturnNullForReferenceTypes()
         {
             // Arrange.
             IEnumerable<string> emptyCollection = Enumerable.Empty<string>();
             const string? expectedValue = null;
 
             // Act.
-            string? actualValue = emptyCollection.MinBy(IdentityFunction<string>.Instance);
+            string? actualValue = emptyCollection.MaxBy(IdentityFunction<string>.Instance);
 
             // Assert.
             Assert.Equal(expectedValue, actualValue);
         }
 
         [Fact]
-        public void Call_MinBy_WithComparer_ForEmptyCollection_ShouldFailForValueTypes()
+        public void Call_MaxBy_WithComparer_ForEmptyCollection_ShouldFailForValueTypes()
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
@@ -142,19 +142,19 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
             // Act & Assert.
             Assert.Throws(
                 Error.NoElements().GetType(),
-                () => emptyCollection.MinBy(IdentityFunction<int>.Instance, Comparer<int>.Default)
+                () => emptyCollection.MaxBy(IdentityFunction<int>.Instance, Comparer<int>.Default)
             );
         }
 
         [Fact]
-        public void Call_MinBy_WithComparer_ForEmptyCollection_ShouldReturnNullForNullableValueTypes()
+        public void Call_MaxBy_WithComparer_ForEmptyCollection_ShouldReturnNullForNullableValueTypes()
         {
             // Arrange.
             IEnumerable<int?> emptyCollection = Enumerable.Empty<int?>();
             int? expectedValue = null;
 
             // Act.
-            int? actualValue = emptyCollection.MinBy(
+            int? actualValue = emptyCollection.MaxBy(
                 IdentityFunction<int?>.Instance, Comparer<int?>.Default
             );
 
@@ -163,14 +163,14 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_MinBy_WithComparer_ForEmptyCollection_ShouldReturnNullForReferenceTypes()
+        public void Call_MaxBy_WithComparer_ForEmptyCollection_ShouldReturnNullForReferenceTypes()
         {
             // Arrange.
             IEnumerable<string> emptyCollection = Enumerable.Empty<string>();
             const string? expectedValue = null;
 
             // Act.
-            string? actualValue = emptyCollection.MinBy(
+            string? actualValue = emptyCollection.MaxBy(
                 IdentityFunction<string>.Instance, Comparer<string>.Default
             );
 
@@ -185,16 +185,16 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
         [InlineData(TestHelper.TenCollectionSize)]
         [InlineData(TestHelper.HundredCollectionSize)]
         [InlineData(TestHelper.TenThousandCollectionSize)]
-        public void Call_MinBy_WithoutComparer_ForCollectionWithSomeItems_ShouldReturnProperMin(int count)
+        public void Call_MaxBy_WithoutComparer_ForCollectionWithSomeItems_ShouldReturnProperMax(int count)
         {
             // Arrange.
             IEnumerable<int> collectionWithSomeItems = TestDataCreator.CreateRandomInt32List(count);
-            // Min with selector returns transformed value. Need to transform it back.
-            int minValue = collectionWithSomeItems.Min(InverseFunction.Int32);
-            int expectedValue = InverseFunction.Int32(minValue);
+            // Max with selector returns transformed value. Need to transform it back.
+            int maxValue = collectionWithSomeItems.Max(InverseFunction.Int32);
+            int expectedValue = InverseFunction.Int32(maxValue);
 
             // Act.
-            int actualValue = collectionWithSomeItems.MinBy(InverseFunction.Int32);
+            int actualValue = collectionWithSomeItems.MaxBy(InverseFunction.Int32);
 
             // Assert.
             Assert.Equal(expectedValue, actualValue);
@@ -207,16 +207,16 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
         [InlineData(TestHelper.TenCollectionSize)]
         [InlineData(TestHelper.HundredCollectionSize)]
         [InlineData(TestHelper.TenThousandCollectionSize)]
-        public void Call_MinBy_WithComparer_ForCollectionWithSomeItems_ShouldReturnProperMin(int count)
+        public void Call_MaxBy_WithComparer_ForCollectionWithSomeItems_ShouldReturnProperMax(int count)
         {
             // Arrange.
             IEnumerable<int> collectionWithSomeItems = TestDataCreator.CreateRandomInt32List(count);
-            // Min with selector returns transformed value. Need to transform it back.
-            int minValue = collectionWithSomeItems.Min(InverseFunction.Int32);
-            int expectedValue = InverseFunction.Int32(minValue);
+            // Max with selector returns transformed value. Need to transform it back.
+            int maxValue = collectionWithSomeItems.Max(InverseFunction.Int32);
+            int expectedValue = InverseFunction.Int32(maxValue);
 
             // Act.
-            int actualValue = collectionWithSomeItems.MinBy(
+            int actualValue = collectionWithSomeItems.MaxBy(
                 InverseFunction.Int32, Comparer<int>.Default
             );
 
@@ -231,7 +231,7 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
         [InlineData(TestHelper.TenCollectionSize)]
         [InlineData(TestHelper.HundredCollectionSize)]
         [InlineData(TestHelper.TenThousandCollectionSize)]
-        public void Call_MinBy_WithoutComparer_ForCollectionWithTheSameItems_ShouldReturnThatItem(int count)
+        public void Call_MaxBy_WithoutComparer_ForCollectionWithTheSameItems_ShouldReturnThatItem(int count)
         {
             // Arrange.
             IEnumerable<int> collectionWithTheSameItems = Enumerable
@@ -240,7 +240,7 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
             int expectedValue = count;
 
             // Act.
-            int actualValue = collectionWithTheSameItems.MinBy(InverseFunction.Int32);
+            int actualValue = collectionWithTheSameItems.MaxBy(InverseFunction.Int32);
 
             // Assert.
             Assert.Equal(expectedValue, actualValue);
@@ -253,7 +253,7 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
         [InlineData(TestHelper.TenCollectionSize)]
         [InlineData(TestHelper.HundredCollectionSize)]
         [InlineData(TestHelper.TenThousandCollectionSize)]
-        public void Call_MinBy_WithComparer_ForCollectionWithTheSameItems_ShouldReturnThatItem(int count)
+        public void Call_MaxBy_WithComparer_ForCollectionWithTheSameItems_ShouldReturnThatItem(int count)
         {
             // Arrange.
             IEnumerable<int> collectionWithTheSameItems = Enumerable
@@ -262,7 +262,7 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
             int expectedValue = count;
 
             // Act.
-            int actualValue = collectionWithTheSameItems.MinBy(
+            int actualValue = collectionWithTheSameItems.MaxBy(
                 InverseFunction.Int32, Comparer<int>.Default
             );
 
@@ -271,36 +271,36 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_MinBy_WithoutComparer_ForCollectionWithRandomSize_ShouldReturnMin()
+        public void Call_MaxBy_WithoutComparer_ForCollectionWithRandomSize_ShouldReturnMax()
         {
             // Arrange.
             int count = TestDataCreator.GetRandomPositiveCountNumber();
             IEnumerable<int> collectionWithRandomSize =
                 TestDataCreator.CreateRandomInt32List(count);
-            // Min with selector returns transformed value. Need to transform it back.
-            int minValue = collectionWithRandomSize.Min(InverseFunction.Int32);
-            int expectedValue = InverseFunction.Int32(minValue);
+            // Max with selector returns transformed value. Need to transform it back.
+            int maxValue = collectionWithRandomSize.Max(InverseFunction.Int32);
+            int expectedValue = InverseFunction.Int32(maxValue);
 
             // Act.
-            int actualValue = collectionWithRandomSize.MinBy(InverseFunction.Int32);
+            int actualValue = collectionWithRandomSize.MaxBy(InverseFunction.Int32);
 
             // Assert.
             Assert.Equal(expectedValue, actualValue);
         }
 
         [Fact]
-        public void Call_MinBy_WithComparer_ForCollectionWithRandomSize_ShouldReturnMin()
+        public void Call_MaxBy_WithComparer_ForCollectionWithRandomSize_ShouldReturnMax()
         {
             // Arrange.
             int count = TestDataCreator.GetRandomPositiveCountNumber();
             IEnumerable<int> collectionWithRandomSize =
                 TestDataCreator.CreateRandomInt32List(count);
-            // Min with selector returns transformed value. Need to transform it back.
-            int minValue = collectionWithRandomSize.Min(InverseFunction.Int32);
-            int expectedValue = InverseFunction.Int32(minValue);
+            // Max with selector returns transformed value. Need to transform it back.
+            int maxValue = collectionWithRandomSize.Max(InverseFunction.Int32);
+            int expectedValue = InverseFunction.Int32(maxValue);
 
             // Act.
-            int actualValue = collectionWithRandomSize.MinBy(
+            int actualValue = collectionWithRandomSize.MaxBy(
                 InverseFunction.Int32, Comparer<int>.Default
             );
 
@@ -309,17 +309,17 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
         }
 
         [Fact]
-        public void MinBy_WithoutComparer_ShouldLookWholeCollectionToFindItem()
+        public void MaxBy_WithoutComparer_ShouldLookWholeCollectionToFindItem()
         {
             // Arrange.
             var collection = new[] { 1, 2, 3, 4 };
             var explosiveCollection = ExplosiveCollection.CreateNotExplosive(collection);
-            // Min with selector returns transformed value. Need to transform it back.
-            int minValue = explosiveCollection.Min(InverseFunction.Int32);
-            int expectedValue = InverseFunction.Int32(minValue);
+            // Max with selector returns transformed value. Need to transform it back.
+            int maxValue = explosiveCollection.Max(InverseFunction.Int32);
+            int expectedValue = InverseFunction.Int32(maxValue);
 
             // Act.
-            int actualValue = explosiveCollection.MinBy(InverseFunction.Int32);
+            int actualValue = explosiveCollection.MaxBy(InverseFunction.Int32);
 
             // Assert.
             Assert.Equal(expected: collection.Length, explosiveCollection.VisitedItemsNumber);
@@ -327,17 +327,17 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
         }
 
         [Fact]
-        public void MinBy_WithComparer_ShouldLookWholeCollectionToFindItem()
+        public void MaxBy_WithComparer_ShouldLookWholeCollectionToFindItem()
         {
             // Arrange.
             var collection = new[] { 1, 2, 3, 4 };
             var explosiveCollection = ExplosiveCollection.CreateNotExplosive(collection);
-            // Min with selector returns transformed value. Need to transform it back.
-            int minValue = explosiveCollection.Min(InverseFunction.Int32);
-            int expectedValue = InverseFunction.Int32(minValue);
+            // Max with selector returns transformed value. Need to transform it back.
+            int maxValue = explosiveCollection.Max(InverseFunction.Int32);
+            int expectedValue = InverseFunction.Int32(maxValue);
 
             // Act.
-            int actualValue = explosiveCollection.MinBy(
+            int actualValue = explosiveCollection.MaxBy(
                 InverseFunction.Int32, Comparer<int>.Default
             );
 

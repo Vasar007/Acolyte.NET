@@ -30,10 +30,9 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_Max_WithComparer_ForNullValueComparer_ShouldUseDefaultComparer()
+        public void Call_Max_WithComparer_ForNullComparer_ShouldUseDefaultComparer()
         {
             // Arrange.
-            // Count should be positive.
             int count = TestDataCreator.GetRandomPositiveCountNumber();
             IEnumerable<int> collectionWithRandomSize =
                 TestDataCreator.CreateRandomInt32List(count);
@@ -51,7 +50,6 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
-            int expectedValue = TestDataCreator.CreateRandomInt32();
 
             // Act & Assert.
             Assert.Throws(
@@ -133,7 +131,6 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
         public void Call_Max_WithComparer_ForCollectionWithRandomSize_ShouldReturnMax()
         {
             // Arrange.
-            // Count should be positive.
             int count = TestDataCreator.GetRandomPositiveCountNumber();
             IEnumerable<int> collectionWithRandomSize =
                 TestDataCreator.CreateRandomInt32List(count);

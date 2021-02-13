@@ -7,19 +7,6 @@
         }
 
         // TODO: write mock equality comprarer to test overloads with it.
-        // TODO: split this class by regions on several files and place them in one folder.
-
-        #region Tests for "Min/Max By Key" section
-
-        // TODO: write tests.
-
-        #endregion
-
-        #region Tests for "MinMax By Key" section
-
-        // TODO: write tests.
-
-        #endregion
 
         #region Tests for "To Single String" section
 

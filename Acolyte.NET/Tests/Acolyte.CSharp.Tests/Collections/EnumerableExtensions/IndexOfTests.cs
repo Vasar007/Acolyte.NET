@@ -267,7 +267,6 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
         public void Call_IndexOf_ForCollectionWithRandomSize_ShouldReturnIndexOfRandomlySelectedItem()
         {
             // Arrange.
-            // Count should be positive.
             int count = TestDataCreator.GetRandomPositiveCountNumber();
             IReadOnlyList<int> collectionWithRandomSize =
                 TestDataCreator.CreateRandomInt32List(count);
@@ -302,7 +301,6 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
         public void Call_IndexOf_ItemWithComparer_ForCollectionWithRandomSize_ShouldReturnIndexOfRandomlySelectedItem()
         {
             // Arrange.
-            // Count should be positive.
             int count = TestDataCreator.GetRandomPositiveCountNumber();
             IReadOnlyList<int> collectionWithRandomSize =
                 TestDataCreator.CreateRandomInt32List(count);

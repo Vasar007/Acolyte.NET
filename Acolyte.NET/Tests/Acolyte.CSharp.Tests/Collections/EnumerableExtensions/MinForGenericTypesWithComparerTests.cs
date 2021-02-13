@@ -33,7 +33,6 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
         public void Call_Min_WithComparer_ForNullComparer_ShouldUseDefaultComparer()
         {
             // Arrange.
-            // Count should be positive.
             int count = TestDataCreator.GetRandomPositiveCountNumber();
             IEnumerable<int> collectionWithRandomSize =
                 TestDataCreator.CreateRandomInt32List(count);
@@ -132,7 +131,6 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
         public void Call_Min_WithComparer_ForCollectionWithRandomSize_ShouldReturnMin()
         {
             // Arrange.
-            // Count should be positive.
             int count = TestDataCreator.GetRandomPositiveCountNumber();
             IEnumerable<int> collectionWithRandomSize =
                 TestDataCreator.CreateRandomInt32List(count);
