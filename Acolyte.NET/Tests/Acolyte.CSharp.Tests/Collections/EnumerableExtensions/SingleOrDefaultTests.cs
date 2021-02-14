@@ -6,6 +6,7 @@ using Acolyte.Common;
 using Acolyte.Tests;
 using Acolyte.Tests.Collections;
 using Acolyte.Tests.Creators;
+using Acolyte.Tests.Functions;
 
 namespace Acolyte.Collections.Tests.EnumerableExtensions
 {
@@ -117,6 +118,49 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
             Assert.Equal(expectedValue, actualValue);
         }
 
+        [Fact]
+        public void Call_SingleOrDefault_ForPredefinedCollection_ShouldFail()
+        {
+            // Arrange.
+            IReadOnlyList<int> predefinedCollection = new[] { 1, 2, 3 };
+
+            // Act & Assert.
+            Assert.Throws(
+                Error.MoreThanOneElement().GetType(),
+                () => predefinedCollection.SingleOrDefault(default)
+            );
+        }
+
+        [Fact]
+        public void Call_SingleOrDefault_WithPredicate_ForPredefinedCollection_ShouldFailIfFoundTwoAndMoreItmsAccordingToPredicate()
+        {
+            // Arrange.
+            IReadOnlyList<int> predefinedCollection = new[] { 1, 2, 1 };
+            int expectedValue = predefinedCollection[0];
+
+            // Act & Assert.
+            Assert.Throws(
+                Error.MoreThanOneElement().GetType(),
+                () => predefinedCollection.SingleOrDefault(i => i.Equals(expectedValue), default)
+            );
+        }
+
+        [Fact]
+        public void Call_SingleOrDefault_WithPredicate_ForPredefinedCollection_ShouldReturnSingleItemAccordingToPredicate()
+        {
+            // Arrange.
+            IReadOnlyList<int> predefinedCollection = new[] { 1, 2, 3 };
+            int expectedValue = predefinedCollection[1];
+
+            // Act.
+            int actualValue = predefinedCollection.SingleOrDefault(
+                i => i.Equals(expectedValue), default
+            );
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+        }
+
         [Theory]
         [InlineData(TestHelper.TwoCollectionSize)]
         [InlineData(TestHelper.FiveCollectionSie)]
@@ -141,7 +185,7 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
         [InlineData(TestHelper.TenCollectionSize)]
         [InlineData(TestHelper.HundredCollectionSize)]
         [InlineData(TestHelper.TenThousandCollectionSize)]
-        public void Call_SingleOrDefault_WithPredicate_ForCollectionWithSomeItems_ShouldFail(
+        public void Call_SingleOrDefault_WithPredicate_ForCollectionWithSomeItems_ShouldFailIfFoundTwoAndMoreItmsAccordingToPredicate(
             int count)
         {
             // Arrange.
@@ -161,7 +205,7 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
         [InlineData(TestHelper.TenCollectionSize)]
         [InlineData(TestHelper.HundredCollectionSize)]
         [InlineData(TestHelper.TenThousandCollectionSize)]
-        public void Call_SingleOrDefault_WithPredicate_ForCollectionWithSomeItems_ShouldReturnDefaultItem(
+        public void Call_SingleOrDefault_WithPredicate_ForCollectionWithSomeItems_ShouldReturnDefaultItemIfFoundNoItemsAccordingToPredicate(
             int count)
         {
             // Arrange.
@@ -212,7 +256,7 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
             IReadOnlyList<int> collectionWithRandomSize =
                 TestDataCreator.CreateRandomInt32List(count);
             int defaultResult = TestDataCreator.CreateRandomInt32();
-            Func<int, bool> predicate = i => TestDataCreator.IsEven(i);
+            Func<int, bool> predicate = i => NumberParityFunction.IsEven(i);
 
             // Act & Assert.
             int foundValuesCount = collectionWithRandomSize.Count(predicate);

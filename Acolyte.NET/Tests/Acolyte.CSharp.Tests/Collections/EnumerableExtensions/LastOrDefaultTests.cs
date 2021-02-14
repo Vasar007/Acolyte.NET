@@ -5,6 +5,7 @@ using Xunit;
 using Acolyte.Tests;
 using Acolyte.Tests.Collections;
 using Acolyte.Tests.Creators;
+using Acolyte.Tests.Functions;
 
 namespace Acolyte.Collections.Tests.EnumerableExtensions
 {
@@ -77,6 +78,36 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
 
             // Act.
             int actualValue = emptyCollection.LastOrDefault(_ => default, expectedValue);
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Fact]
+        public void Call_LastOrDefault_ForPredefinedCollection_ShouldReturnLastItem()
+        {
+            // Arrange.
+            IReadOnlyList<int> predefinedCollection = new[] { 1, 2, 3 };
+            int expectedValue = predefinedCollection[^1];
+
+            // Act.
+            int actualValue = predefinedCollection.LastOrDefault(default);
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Fact]
+        public void Call_LastOrDefault_WithPredicate_ForPredefinedCollection_ShouldReturnLastItemAccordingToPredicate()
+        {
+            // Arrange.
+            IReadOnlyList<int> predefinedCollection = new[] { 1, 2, 3 };
+            int expectedValue = predefinedCollection[1];
+
+            // Act.
+            int actualValue = predefinedCollection.LastOrDefault(
+                i => i.Equals(expectedValue), default
+            );
 
             // Assert.
             Assert.Equal(expectedValue, actualValue);
@@ -174,7 +205,7 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
             IEnumerable<int> collectionWithRandomSize =
                 TestDataCreator.CreateRandomInt32List(count);
             int defaultResult = TestDataCreator.CreateRandomInt32();
-            Func<int, bool> predicate = i => TestDataCreator.IsEven(i);
+            Func<int, bool> predicate = i => NumberParityFunction.IsEven(i);
 
             // Act.
             int actualValue = collectionWithRandomSize.LastOrDefault(predicate, defaultResult);
@@ -204,18 +235,36 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
         }
 
         [Fact]
+        public void LastOrDefault_ShouldLookWholeCollectionToFindLastItem()
+        {
+            // Arrange.
+            IReadOnlyList<int> collection = new[] { 1, 2, 3, 4 };
+            var explosiveCollection = ExplosiveCollection.Create(
+                collection, explosiveIndex: collection.Count
+            );
+            int expectedValue = collection[^1];
+
+            // Act.
+            int actualValue = explosiveCollection.LastOrDefault(default);
+
+            // Assert.
+            Assert.Equal(expected: collection.Count, explosiveCollection.VisitedItemsNumber);
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Fact]
         public void LastOrDefault_WithPredicate_ShouldLookWholeCollectionToFindItemAfterItFoundSomething()
         {
             // Arrange.
-            var collection = new[] { 1, 2, 3, 4 };
+            IReadOnlyList<int> collection = new[] { 1, 2, 3, 4 };
             var explosiveCollection = ExplosiveCollection.CreateNotExplosive(collection);
-            int expectedValue = explosiveCollection.Skip(1).First();
+            int expectedValue = collection[1];
 
             // Act.
             int actualValue = explosiveCollection.LastOrDefault(_ => false, expectedValue);
 
             // Assert.
-            Assert.Equal(expected: collection.Length, explosiveCollection.VisitedItemsNumber);
+            Assert.Equal(expected: collection.Count, explosiveCollection.VisitedItemsNumber);
             Assert.Equal(expectedValue, actualValue);
         }
 
@@ -224,9 +273,9 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
         {
             // Arrange.
             // Do not use random because we should find exactly second item.
-            var collection = new[] { 1, 2, 3, 4 };
+            IReadOnlyList<int> collection = new[] { 1, 2, 3, 4 };
             var explosiveCollection = ExplosiveCollection.CreateNotExplosive(collection);
-            int expectedValue = explosiveCollection.Skip(1).First();
+            int expectedValue = collection[1];
 
             // Act.
             int actualValue = explosiveCollection.LastOrDefault(
@@ -234,7 +283,7 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
             );
 
             // Assert.
-            Assert.Equal(collection.Length, explosiveCollection.VisitedItemsNumber);
+            Assert.Equal(collection.Count, explosiveCollection.VisitedItemsNumber);
             Assert.Equal(expectedValue, actualValue);
         }
     }

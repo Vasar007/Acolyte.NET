@@ -178,6 +178,42 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
             Assert.Equal(expectedValue, actualValue);
         }
 
+
+        [Fact]
+        public void Call_MaxBy_WithComparer_ForPredefinedCollection_ShouldReturnProperMax()
+        {
+            // Arrange.
+            IReadOnlyList<int> predefinedCollection = new[] { 1, 2, 3 };
+            // Max with selector returns transformed value. Need to transform it back.
+            int maxValue = predefinedCollection.Max(InverseFunction.Int32);
+            int expectedValue = InverseFunction.Int32(maxValue);
+
+            // Act.
+            int actualValue = predefinedCollection.MaxBy(
+                InverseFunction.Int32, Comparer<int>.Default
+            );
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Fact]
+
+        public void Call_MaxBy_WithoutComparer_ForPredefinedCollection_ShouldReturnProperMax()
+        {
+            // Arrange.
+            IReadOnlyList<int> predefinedCollection = new[] { 1, 2, 3 };
+            // Max with selector returns transformed value. Need to transform it back.
+            int maxValue = predefinedCollection.Max(InverseFunction.Int32);
+            int expectedValue = InverseFunction.Int32(maxValue);
+
+            // Act.
+            int actualValue = predefinedCollection.MaxBy(InverseFunction.Int32);
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+        }
+
         [Theory]
         [InlineData(TestHelper.OneCollectionSize)]
         [InlineData(TestHelper.TwoCollectionSize)]
@@ -185,7 +221,8 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
         [InlineData(TestHelper.TenCollectionSize)]
         [InlineData(TestHelper.HundredCollectionSize)]
         [InlineData(TestHelper.TenThousandCollectionSize)]
-        public void Call_MaxBy_WithoutComparer_ForCollectionWithSomeItems_ShouldReturnProperMax(int count)
+        public void Call_MaxBy_WithoutComparer_ForCollectionWithSomeItems_ShouldReturnProperMax(
+    int count)
         {
             // Arrange.
             IEnumerable<int> collectionWithSomeItems = TestDataCreator.CreateRandomInt32List(count);
@@ -207,7 +244,8 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
         [InlineData(TestHelper.TenCollectionSize)]
         [InlineData(TestHelper.HundredCollectionSize)]
         [InlineData(TestHelper.TenThousandCollectionSize)]
-        public void Call_MaxBy_WithComparer_ForCollectionWithSomeItems_ShouldReturnProperMax(int count)
+        public void Call_MaxBy_WithComparer_ForCollectionWithSomeItems_ShouldReturnProperMax(
+            int count)
         {
             // Arrange.
             IEnumerable<int> collectionWithSomeItems = TestDataCreator.CreateRandomInt32List(count);
@@ -231,7 +269,8 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
         [InlineData(TestHelper.TenCollectionSize)]
         [InlineData(TestHelper.HundredCollectionSize)]
         [InlineData(TestHelper.TenThousandCollectionSize)]
-        public void Call_MaxBy_WithoutComparer_ForCollectionWithTheSameItems_ShouldReturnThatItem(int count)
+        public void Call_MaxBy_WithoutComparer_ForCollectionWithTheSameItems_ShouldReturnThatItem(
+            int count)
         {
             // Arrange.
             IEnumerable<int> collectionWithTheSameItems = Enumerable
@@ -253,7 +292,8 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
         [InlineData(TestHelper.TenCollectionSize)]
         [InlineData(TestHelper.HundredCollectionSize)]
         [InlineData(TestHelper.TenThousandCollectionSize)]
-        public void Call_MaxBy_WithComparer_ForCollectionWithTheSameItems_ShouldReturnThatItem(int count)
+        public void Call_MaxBy_WithComparer_ForCollectionWithTheSameItems_ShouldReturnThatItem(
+            int count)
         {
             // Arrange.
             IEnumerable<int> collectionWithTheSameItems = Enumerable

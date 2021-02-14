@@ -72,6 +72,36 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
             Assert.Equal(expectedValue, actualValue);
         }
 
+        [Fact]
+        public void Call_MinMax_Int32_ForPredefinedCollection_ShouldReturnMinMax()
+        {
+            // Arrange.
+            IReadOnlyList<int> predefinedCollection = new[] { 1, 2, 3 };
+            (int minValue, int maxValue) expectedValue =
+               (predefinedCollection[0], predefinedCollection[^1]);
+
+            // Act.
+            var actualValue = predefinedCollection.MinMax();
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Fact]
+        public void Call_MinMax_NullableInt32_ForPredefinedCollection_ShouldReturnMinMax()
+        {
+            // Arrange.
+            IReadOnlyList<int?> predefinedCollection = new int?[] { null, 1, null, 2, null, 3 };
+            (int? minValue, int? maxValue) expectedValue =
+                  (predefinedCollection[1], predefinedCollection[^1]);
+
+            // Act.
+            var actualValue = predefinedCollection.MinMax();
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+        }
+
         [Theory]
         [InlineData(TestHelper.OneCollectionSize)]
         [InlineData(TestHelper.TwoCollectionSize)]
@@ -100,7 +130,8 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
         [InlineData(TestHelper.TenCollectionSize)]
         [InlineData(TestHelper.HundredCollectionSize)]
         [InlineData(TestHelper.TenThousandCollectionSize)]
-        public void Call_MinMax_NullableInt32_ForCollectionWithSomeItems_ShouldReturnMinMax(int count)
+        public void Call_MinMax_NullableInt32_ForCollectionWithSomeItems_ShouldReturnMinMax(
+            int count)
         {
             // Arrange.
             IEnumerable<int?> collectionWithSomeItems =
@@ -251,6 +282,37 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
             Assert.Equal(expectedValue, actualValue);
         }
 
+        [Fact]
+        public void Call_MinMax_Int64_ForPredefinedCollection_ShouldReturnMinMax()
+        {
+            // Arrange.
+            IReadOnlyList<long> predefinedCollection = new[] { 1L, 2L, 3L };
+            (long minValue, long maxValue) expectedValue =
+               (predefinedCollection[0], predefinedCollection[^1]);
+
+            // Act.
+            var actualValue = predefinedCollection.MinMax();
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Fact]
+        public void Call_MinMax_NullableInt64_ForPredefinedCollection_ShouldReturnMinMax()
+        {
+            // Arrange.
+            IReadOnlyList <long?> predefinedCollection =
+                new long?[] { null, 1L, null, 2L, null, 3L };
+            (long? minValue, long? maxValue) expectedValue =
+                  (predefinedCollection[1], predefinedCollection[^1]);
+
+            // Act.
+            var actualValue = predefinedCollection.MinMax();
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+        }
+
         [Theory]
         [InlineData(TestHelper.OneCollectionSize)]
         [InlineData(TestHelper.TwoCollectionSize)]
@@ -280,7 +342,8 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
         [InlineData(TestHelper.TenCollectionSize)]
         [InlineData(TestHelper.HundredCollectionSize)]
         [InlineData(TestHelper.TenThousandCollectionSize)]
-        public void Call_MinMax_NullableInt64_ForCollectionWithSomeItems_ShouldReturnMinMax(int count)
+        public void Call_MinMax_NullableInt64_ForCollectionWithSomeItems_ShouldReturnMinMax(
+            int count)
         {
             // Arrange.
             IEnumerable<long?> collectionWithSomeItems =
@@ -431,6 +494,37 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
             Assert.Equal(expectedValue, actualValue);
         }
 
+        [Fact]
+        public void Call_MinMax_Single_ForPredefinedCollection_ShouldReturnMinMax()
+        {
+            // Arrange.
+            IReadOnlyList<float> predefinedCollection = new[] { 1.1F, 2.2F, 3.5F };
+            (float minValue, float maxValue) expectedValue =
+               (predefinedCollection[0], predefinedCollection[^1]);
+
+            // Act.
+            var actualValue = predefinedCollection.MinMax();
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Fact]
+        public void Call_MinMax_NullableSingle_ForPredefinedCollection_ShouldReturnMinMax()
+        {
+            // Arrange.
+            IReadOnlyList<float?> predefinedCollection =
+                new float?[] { null, 1.1F, null, 2.2F, null, 3.5F };
+            (float? minValue, float? maxValue) expectedValue =
+                  (predefinedCollection[1], predefinedCollection[^1]);
+
+            // Act.
+            var actualValue = predefinedCollection.MinMax();
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+        }
+
         [Theory]
         [InlineData(TestHelper.OneCollectionSize)]
         [InlineData(TestHelper.TwoCollectionSize)]
@@ -460,7 +554,8 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
         [InlineData(TestHelper.TenCollectionSize)]
         [InlineData(TestHelper.HundredCollectionSize)]
         [InlineData(TestHelper.TenThousandCollectionSize)]
-        public void Call_MinMax_NullableSingle_ForCollectionWithSomeItems_ShouldReturnMinMax(int count)
+        public void Call_MinMax_NullableSingle_ForCollectionWithSomeItems_ShouldReturnMinMax(
+            int count)
         {
             // Arrange.
             IEnumerable<float?> collectionWithSomeItems =
@@ -611,6 +706,37 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
             Assert.Equal(expectedValue, actualValue);
         }
 
+        [Fact]
+        public void Call_MinMax_Double_ForPredefinedCollection_ShouldReturnMinMax()
+        {
+            // Arrange.
+            IReadOnlyList<double> predefinedCollection = new[] { 1.1D, 2.2D, 3.5D };
+            (double minValue, double maxValue) expectedValue =
+               (predefinedCollection[0], predefinedCollection[^1]);
+
+            // Act.
+            var actualValue = predefinedCollection.MinMax();
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Fact]
+        public void Call_MinMax_NullableDouble_ForPredefinedCollection_ShouldReturnMinMax()
+        {
+            // Arrange.
+            IReadOnlyList<double?> predefinedCollection =
+                new double?[] { null, 1.1D, null, 2.2D, null, 3.5D };
+            (double? minValue, double? maxValue) expectedValue =
+                  (predefinedCollection[1], predefinedCollection[^1]);
+
+            // Act.
+            var actualValue = predefinedCollection.MinMax();
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+        }
+
         [Theory]
         [InlineData(TestHelper.OneCollectionSize)]
         [InlineData(TestHelper.TwoCollectionSize)]
@@ -640,7 +766,8 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
         [InlineData(TestHelper.TenCollectionSize)]
         [InlineData(TestHelper.HundredCollectionSize)]
         [InlineData(TestHelper.TenThousandCollectionSize)]
-        public void Call_MinMax_NullableDouble_ForCollectionWithSomeItems_ShouldReturnMinMax(int count)
+        public void Call_MinMax_NullableDouble_ForCollectionWithSomeItems_ShouldReturnMinMax(
+            int count)
         {
             // Arrange.
             IEnumerable<double?> collectionWithSomeItems =
@@ -791,6 +918,37 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
             Assert.Equal(expectedValue, actualValue);
         }
 
+        [Fact]
+        public void Call_MinMax_Decimal_ForPredefinedCollection_ShouldReturnMinMax()
+        {
+            // Arrange.
+            IReadOnlyList<decimal> predefinedCollection = new[] { 1.1M, 2.2M, 3.5M };
+            (decimal minValue, decimal maxValue) expectedValue =
+               (predefinedCollection[0], predefinedCollection[^1]);
+
+            // Act.
+            var actualValue = predefinedCollection.MinMax();
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Fact]
+        public void Call_MinMax_NullableDecimal_ForPredefinedCollection_ShouldReturnMinMax()
+        {
+            // Arrange.
+            IReadOnlyList<decimal?> predefinedCollection =
+                new decimal?[] { null, 1.1M, null, 2.2M, null, 3.5M };
+            (decimal? minValue, decimal? maxValue) expectedValue =
+                  (predefinedCollection[1], predefinedCollection[^1]);
+
+            // Act.
+            var actualValue = predefinedCollection.MinMax();
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+        }
+
         [Theory]
         [InlineData(TestHelper.OneCollectionSize)]
         [InlineData(TestHelper.TwoCollectionSize)]
@@ -820,7 +978,8 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
         [InlineData(TestHelper.TenCollectionSize)]
         [InlineData(TestHelper.HundredCollectionSize)]
         [InlineData(TestHelper.TenThousandCollectionSize)]
-        public void Call_MinMax_NullableDecimal_ForCollectionWithSomeItems_ShouldReturnMinMax(int count)
+        public void Call_MinMax_NullableDecimal_ForCollectionWithSomeItems_ShouldReturnMinMax(
+            int count)
         {
             // Arrange.
             IEnumerable<decimal?> collectionWithSomeItems =
@@ -1045,6 +1204,38 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
             Assert.Equal(expectedValue, actualValue);
         }
 
+
+        [Fact]
+        public void Call_MinMax_GenericTypes_ForPredefinedCollection_ShouldReturnMinMax()
+        {
+            // Arrange.
+            IReadOnlyList<string> predefinedCollection = new[] { "aaa", "bbb", "ccc" };
+            (string minValue, string maxValue) expectedValue =
+               (predefinedCollection[0], predefinedCollection[^1]);
+
+            // Act.
+            var actualValue = predefinedCollection.MinMax();
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Fact]
+        public void Call_MinMax_GenericTypes_WithComparer_ForPredefinedCollection_ShouldReturnMinMax()
+        {
+            // Arrange.
+            IReadOnlyList<string?> predefinedCollection =
+                new string?[] { null, "aaa", null, "bbb", null, "ccc" };
+            (string? minValue, string? maxValue) expectedValue =
+                  (predefinedCollection[1], predefinedCollection[^1]);
+
+            // Act.
+            var actualValue = predefinedCollection.MinMax(Comparer<string?>.Default);
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+        }
+
         [Theory]
         [InlineData(TestHelper.OneCollectionSize)]
         [InlineData(TestHelper.TwoCollectionSize)]
@@ -1052,7 +1243,8 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
         [InlineData(TestHelper.TenCollectionSize)]
         [InlineData(TestHelper.HundredCollectionSize)]
         [InlineData(TestHelper.TenThousandCollectionSize)]
-        public void Call_MinMax_GenericTypes_ForCollectionWithSomeItems_ShouldReturnMinMax(int count)
+        public void Call_MinMax_GenericTypes_ForCollectionWithSomeItems_ShouldReturnMinMax(
+            int count)
         {
             // Arrange.
             IEnumerable<string> collectionWithSomeItems =
@@ -1074,7 +1266,8 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
         [InlineData(TestHelper.TenCollectionSize)]
         [InlineData(TestHelper.HundredCollectionSize)]
         [InlineData(TestHelper.TenThousandCollectionSize)]
-        public void Call_MinMax_GenericTypes_WithComparer_ForCollectionWithSomeItems_ShouldReturnMinMax(int count)
+        public void Call_MinMax_GenericTypes_WithComparer_ForCollectionWithSomeItems_ShouldReturnMinMax(
+            int count)
         {
             // Arrange.
             IEnumerable<string> collectionWithSomeItems =

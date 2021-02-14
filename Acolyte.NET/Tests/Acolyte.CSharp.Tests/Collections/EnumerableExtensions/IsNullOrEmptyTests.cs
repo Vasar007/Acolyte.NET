@@ -34,6 +34,16 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
             Assert.True(emptyCollection.IsNullOrEmpty());
         }
 
+        [Fact]
+        public void Call_IsNullOrEmpty_ForPredefinedCollection_ShouldReturnFalse()
+        {
+            // Arrange.
+            IReadOnlyList<int> predefinedCollection = new[] { 1, 2, 3 };
+
+            // Act & Assert.
+            Assert.False(predefinedCollection.IsNullOrEmpty());
+        }
+
         [Theory]
         [InlineData(TestHelper.OneCollectionSize)]
         [InlineData(TestHelper.TwoCollectionSize)]

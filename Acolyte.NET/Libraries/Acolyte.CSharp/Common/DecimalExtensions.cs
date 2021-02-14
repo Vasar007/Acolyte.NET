@@ -11,7 +11,7 @@ namespace Acolyte.Common
 
         public static bool IsEqual(this decimal value, decimal otherValue)
         {
-            return IsEqual(value, otherValue, tolerance: 1e-6m);
+            return IsEqual(value, otherValue, tolerance: 1e-9M);
         }
     }
 }

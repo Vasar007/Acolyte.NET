@@ -417,6 +417,8 @@ namespace Acolyte.Collections
 
         #region To Read-Only Collections
 
+        #region To Read-Only Dictionary
+
         /// <summary>
         /// Creates a <see cref="IReadOnlyDictionary{TKey, TValue}" /> from an
         /// <see cref="IEnumerable{T}" /> according to a specified key selector function.
@@ -592,6 +594,10 @@ namespace Acolyte.Collections
             );
         }
 
+        #endregion
+
+        #region To Read-Only List
+
         /// <summary>
         /// Creates a <see cref="IReadOnlyList{T}" /> from an <see cref="IEnumerable{T}" />.
         /// </summary>
@@ -609,8 +615,14 @@ namespace Acolyte.Collections
             this IEnumerable<TSource> source)
         {
             // Null check for "source" parameter is provided by Enumerable.ToList method.
-            return source.ToList().AsReadOnly();
+            return source
+                .ToList()
+                .AsReadOnly();
         }
+
+        #endregion
+
+        #region To Read-Only Collection
 
         /// <summary>
         /// Creates a <see cref="IReadOnlyCollection{T}" /> from an <see cref="IEnumerable{T}" />.
@@ -632,8 +644,12 @@ namespace Acolyte.Collections
             this IEnumerable<TSource> source)
         {
             // Null check for "source" parameter is provided by Enumerable.ToList method.
-            return source.ToList().AsReadOnly();
+            return source
+                .ToList()
+                .AsReadOnly();
         }
+
+        #endregion
 
         #endregion
 

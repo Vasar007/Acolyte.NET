@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using Acolyte.Assertions;
 using Acolyte.Common;
+using Acolyte.Tests.Functions;
 
 namespace Acolyte.Tests.Creators
 {
     // TODO: move some methods to Acolyte.CSharp assembly because it can be useful.
     public static class TestDataCreator
     {
-        private static Random RandomInstance { get; } = new Random();
+        private static ThreadSafeRandom RandomInstance { get; } = new(Seed: 42);
 
         #region Boundaries
 
@@ -49,79 +50,6 @@ namespace Acolyte.Tests.Creators
             return potentionUpperBound.IsEqual(decimal.MaxValue)
                 ? potentionUpperBound
                 : potentionUpperBound + 1;
-        }
-
-        #endregion
-
-        #region Int32 Helpers
-
-        public static bool IsEven(int value)
-        {
-            return (value & 1) == 0;
-        }
-
-        public static int? ReturnNullIfOdd(int value)
-        {
-            // Convert all odd values to null.
-            return IsEven(value)
-                ? value
-                : (int?) null;
-        }
-
-        #endregion
-
-        #region Int64 Helpers
-
-        public static bool IsEven(long value)
-        {
-            return (value & 1) == 0;
-        }
-
-        public static long? ReturnNullIfOdd(long value)
-        {
-            // Convert all odd values to null.
-            return IsEven(value)
-                ? value
-                : (long?) null;
-        }
-
-        #endregion
-
-        #region Single Helpers
-
-        public static float? ReturnNullIfRandomInt32IsOdd(float value)
-        {
-            // Convert values to null if randomly created Int32 is odd.
-            int mark = CreateRandomInt32();
-            return IsEven(mark)
-                ? value
-                : (float?) null;
-        }
-
-        #endregion
-
-        #region Double Helpers
-
-        public static double? ReturnNullIfRandomInt32IsOdd(double value)
-        {
-            // Convert values to null if randomly created Int32 is odd.
-            int mark = CreateRandomInt32();
-            return IsEven(mark)
-                ? value
-                : (double?) null;
-        }
-
-        #endregion
-
-        #region Decimal Helpers
-
-        public static decimal? ReturnNullIfRandomInt32IsOdd(decimal value)
-        {
-            // Convert values to null if randomly created Int32 is odd.
-            int mark = CreateRandomInt32();
-            return IsEven(mark)
-                ? value
-                : (decimal?) null;
         }
 
         #endregion
@@ -539,7 +467,7 @@ namespace Acolyte.Tests.Creators
         public static IReadOnlyList<int?> CreateRandomNullableInt32List(int count,
             Func<int, int?>? valueTransformer, Random? random = null)
         {
-            valueTransformer ??= i => ReturnNullIfOdd(i);
+            valueTransformer ??= i => NumberParityFunction.ReturnNullIfOdd(i);
 
             return CreateList(
                 count: count,
@@ -553,7 +481,7 @@ namespace Acolyte.Tests.Creators
         {
             return CreateRandomNullableInt32List(
                 count: count,
-                valueTransformer: i => ReturnNullIfOdd(i),
+                valueTransformer: i => NumberParityFunction.ReturnNullIfOdd(i),
                 random: random
             );
         }
@@ -562,7 +490,7 @@ namespace Acolyte.Tests.Creators
             Func<int, int?>? valueTransformer, Random? random = null)
         {
             random ??= RandomInstance;
-            valueTransformer ??= i => ReturnNullIfOdd(i);
+            valueTransformer ??= i => NumberParityFunction.ReturnNullIfOdd(i);
 
             int count = GetRandomCountNumber(random);
             return CreateRandomNullableInt32List(
@@ -579,7 +507,7 @@ namespace Acolyte.Tests.Creators
             int count = GetRandomCountNumber(random);
             return CreateRandomNullableInt32List(
                 count: count,
-                valueTransformer: i => ReturnNullIfOdd(i),
+                valueTransformer: i => NumberParityFunction.ReturnNullIfOdd(i),
                 random: random
             );
         }
@@ -611,7 +539,7 @@ namespace Acolyte.Tests.Creators
         public static IReadOnlyList<long?> CreateRandomNullableInt64List(int count,
             Func<long, long?>? valueTransformer, Random? random = null)
         {
-            valueTransformer ??= l => ReturnNullIfOdd(l);
+            valueTransformer ??= l => NumberParityFunction.ReturnNullIfOdd(l);
 
             return CreateList(
                 count: count,
@@ -625,7 +553,7 @@ namespace Acolyte.Tests.Creators
         {
             return CreateRandomNullableInt64List(
                 count: count,
-                valueTransformer: i => ReturnNullIfOdd(i),
+                valueTransformer: i => NumberParityFunction.ReturnNullIfOdd(i),
                 random: random
             );
         }
@@ -634,7 +562,7 @@ namespace Acolyte.Tests.Creators
             Func<long, long?>? valueTransformer, Random? random = null)
         {
             random ??= RandomInstance;
-            valueTransformer ??= l => ReturnNullIfOdd(l);
+            valueTransformer ??= l => NumberParityFunction.ReturnNullIfOdd(l);
 
             int count = GetRandomCountNumber(random);
             return CreateRandomNullableInt64List(
@@ -651,7 +579,7 @@ namespace Acolyte.Tests.Creators
             int count = GetRandomCountNumber(random);
             return CreateRandomNullableInt64List(
                 count: count,
-                valueTransformer: l => ReturnNullIfOdd(l),
+                valueTransformer: l => NumberParityFunction.ReturnNullIfOdd(l),
                 random: random
             );
         }
@@ -680,7 +608,7 @@ namespace Acolyte.Tests.Creators
         public static IReadOnlyList<float?> CreateRandomNullableSingleList(int count,
            Func<float, float?>? valueTransformer, Random? random = null)
         {
-            valueTransformer ??= f => ReturnNullIfRandomInt32IsOdd(f);
+            valueTransformer ??= f => NumberParityFunction.ReturnNullIfRandomInt32IsOdd(f);
 
             return CreateList(
                 count: count,
@@ -694,7 +622,7 @@ namespace Acolyte.Tests.Creators
         {
             return CreateRandomNullableSingleList(
                 count: count,
-                valueTransformer: f => ReturnNullIfRandomInt32IsOdd(f),
+                valueTransformer: f => NumberParityFunction.ReturnNullIfRandomInt32IsOdd(f),
                 random: random
             );
         }
@@ -703,7 +631,7 @@ namespace Acolyte.Tests.Creators
             Func<float, float?>? valueTransformer, Random? random = null)
         {
             random ??= RandomInstance;
-            valueTransformer ??= f => ReturnNullIfRandomInt32IsOdd(f);
+            valueTransformer ??= f => NumberParityFunction.ReturnNullIfRandomInt32IsOdd(f);
 
             int count = GetRandomCountNumber(random);
             return CreateRandomNullableSingleList(
@@ -720,7 +648,7 @@ namespace Acolyte.Tests.Creators
             int count = GetRandomCountNumber(random);
             return CreateRandomNullableSingleList(
                 count: count,
-                valueTransformer: f => ReturnNullIfRandomInt32IsOdd(f),
+                valueTransformer: f => NumberParityFunction.ReturnNullIfRandomInt32IsOdd(f),
                 random: random
             );
         }
@@ -749,7 +677,7 @@ namespace Acolyte.Tests.Creators
         public static IReadOnlyList<double?> CreateRandomNullableDoubleList(int count,
            Func<double, double?>? valueTransformer, Random? random = null)
         {
-            valueTransformer ??= d => ReturnNullIfRandomInt32IsOdd(d);
+            valueTransformer ??= d => NumberParityFunction.ReturnNullIfRandomInt32IsOdd(d);
 
             return CreateList(
                 count: count,
@@ -763,7 +691,7 @@ namespace Acolyte.Tests.Creators
         {
             return CreateRandomNullableDoubleList(
                 count: count,
-                valueTransformer: d => ReturnNullIfRandomInt32IsOdd(d),
+                valueTransformer: d => NumberParityFunction.ReturnNullIfRandomInt32IsOdd(d),
                 random: random
             );
         }
@@ -772,7 +700,7 @@ namespace Acolyte.Tests.Creators
             Func<double, double?>? valueTransformer, Random? random = null)
         {
             random ??= RandomInstance;
-            valueTransformer ??= d => ReturnNullIfRandomInt32IsOdd(d);
+            valueTransformer ??= d => NumberParityFunction.ReturnNullIfRandomInt32IsOdd(d);
 
             int count = GetRandomCountNumber(random);
             return CreateRandomNullableDoubleList(
@@ -789,7 +717,7 @@ namespace Acolyte.Tests.Creators
             int count = GetRandomCountNumber(random);
             return CreateRandomNullableDoubleList(
                 count: count,
-                valueTransformer: d => ReturnNullIfRandomInt32IsOdd(d),
+                valueTransformer: d => NumberParityFunction.ReturnNullIfRandomInt32IsOdd(d),
                 random: random
             );
         }
@@ -819,7 +747,7 @@ namespace Acolyte.Tests.Creators
         public static IReadOnlyList<decimal?> CreateRandomNullableDecimalList(int count,
            Func<decimal, decimal?>? valueTransformer, Random? random = null)
         {
-            valueTransformer ??= d => ReturnNullIfRandomInt32IsOdd(d);
+            valueTransformer ??= d => NumberParityFunction.ReturnNullIfRandomInt32IsOdd(d);
 
             return CreateList(
                 count: count,
@@ -833,7 +761,7 @@ namespace Acolyte.Tests.Creators
         {
             return CreateRandomNullableDecimalList(
                 count: count,
-                valueTransformer: d => ReturnNullIfRandomInt32IsOdd(d),
+                valueTransformer: d => NumberParityFunction.ReturnNullIfRandomInt32IsOdd(d),
                 random: random
             );
         }
@@ -842,7 +770,7 @@ namespace Acolyte.Tests.Creators
             Func<decimal, decimal?>? valueTransformer, Random? random = null)
         {
             random ??= RandomInstance;
-            valueTransformer ??= d => ReturnNullIfRandomInt32IsOdd(d);
+            valueTransformer ??= d => NumberParityFunction.ReturnNullIfRandomInt32IsOdd(d);
 
             int count = GetRandomCountNumber(random);
             return CreateRandomNullableDecimalList(
@@ -859,7 +787,7 @@ namespace Acolyte.Tests.Creators
             int count = GetRandomCountNumber(random);
             return CreateRandomNullableDecimalList(
                 count: count,
-                valueTransformer: d => ReturnNullIfRandomInt32IsOdd(d),
+                valueTransformer: d => NumberParityFunction.ReturnNullIfRandomInt32IsOdd(d),
                 random: random
             );
         }

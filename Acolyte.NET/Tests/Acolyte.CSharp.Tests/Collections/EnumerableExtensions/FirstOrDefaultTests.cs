@@ -6,6 +6,7 @@ using Acolyte.Common;
 using Acolyte.Tests;
 using Acolyte.Tests.Collections;
 using Acolyte.Tests.Creators;
+using Acolyte.Tests.Functions;
 
 namespace Acolyte.Collections.Tests.EnumerableExtensions
 {
@@ -78,6 +79,36 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
 
             // Act.
             int actualValue = emptyCollection.FirstOrDefault(_ => default, expectedValue);
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Fact]
+        public void Call_FirstOrDefault_ForPredefinedCollection_ShouldReturnFirstItem()
+        {
+            // Arrange.
+            IReadOnlyList<int> predefinedCollection = new[] { 1, 2, 3 };
+            int expectedValue = predefinedCollection[0];
+
+            // Act.
+            int actualValue = predefinedCollection.FirstOrDefault(default);
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Fact]
+        public void Call_FirstOrDefault_WithPredicate_ForPredefinedCollection_ShouldReturnFirstItemAccordingToPredicate()
+        {
+            // Arrange.
+            IReadOnlyList<int> predefinedCollection = new[] { 1, 2, 3 };
+            int expectedValue = predefinedCollection[1];
+
+            // Act.
+            int actualValue = predefinedCollection.FirstOrDefault(
+                i => i.Equals(expectedValue), default
+            );
 
             // Assert.
             Assert.Equal(expectedValue, actualValue);
@@ -174,7 +205,7 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
             IEnumerable<int> collectionWithRandomSize =
                 TestDataCreator.CreateRandomInt32List(count);
             int defaultResult = TestDataCreator.CreateRandomInt32();
-            Func<int, bool> predicate = i => TestDataCreator.IsEven(i);
+            Func<int, bool> predicate = i => NumberParityFunction.IsEven(i);
             int expectedValue = collectionWithRandomSize.Any()
                 ? collectionWithRandomSize.First(predicate)
                 : defaultResult;
@@ -226,11 +257,12 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
         {
             // Arrange.
             // Do not use random because we should find exactly second item.
-            var collection = new[] { 1, 2, 3, 4 };
+            int expectedIndex = Constants.FirstIndex + 1;
+            IReadOnlyList<int> collection = new[] { 1, 2, 3, 4 };
             var explosiveCollection = ExplosiveCollection.Create(
-                collection, explosiveIndex: Constants.FirstIndex + 2
+                collection, explosiveIndex: expectedIndex + 1
             );
-            int expectedValue = explosiveCollection.Skip(1).First();
+            int expectedValue = collection[expectedIndex];
 
             // Act.
             int actualValue = explosiveCollection.FirstOrDefault(
@@ -246,15 +278,15 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
         public void FirstOrDefault_WithPredicate_ShouldLookWholeCollectionToFindItem()
         {
             // Arrange.
-            var collection = new[] { 1, 2, 3, 4 };
+            IReadOnlyList<int> collection = new[] { 1, 2, 3, 4 };
             var explosiveCollection = ExplosiveCollection.CreateNotExplosive(collection);
-            int expectedValue = explosiveCollection.Skip(1).First();
+            int expectedValue = -1;
 
             // Act.
             int actualValue = explosiveCollection.FirstOrDefault(_ => false, expectedValue);
 
             // Assert.
-            Assert.Equal(expected: collection.Length, explosiveCollection.VisitedItemsNumber);
+            Assert.Equal(expected: collection.Count, explosiveCollection.VisitedItemsNumber);
             Assert.Equal(expectedValue, actualValue);
         }
     }

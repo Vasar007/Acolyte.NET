@@ -14,6 +14,8 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
         {
         }
 
+        #region ToReadOnlyDictionary
+
         [Fact]
         public void Call_ToReadOnlyDictionary_WithKeySelector_ForNullValue_ShouldFail()
         {
@@ -79,22 +81,19 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
-            var expectedDictionary = emptyCollection.ToDictionary(KeyFunction<int>.Simple, null);
+            var expectedDictionary = emptyCollection.ToDictionary(
+                KeyFunction<int>.Simple, comparer: null
+            );
 
             // Act.
             var actualDictionary = emptyCollection.ToReadOnlyDictionary(
-                KeyFunction<int>.Simple, null
+                KeyFunction<int>.Simple, comparer: null
             );
 
             // Assert.
             Assert.NotNull(actualDictionary);
             Assert.Empty(actualDictionary);
             Assert.Equal(expectedDictionary, actualDictionary);
-
-            if (actualDictionary is Dictionary<Guid, int> internalDictionary)
-            {
-                Assert.Same(internalDictionary.Comparer, EqualityComparer<Guid>.Default);
-            }
         }
 
         [Fact]
@@ -208,48 +207,18 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
             var expectedDictionary = emptyCollection.ToDictionary(
-                KeyFunction<int>.Simple, IdentityFunction<int>.Instance, null
+                KeyFunction<int>.Simple, IdentityFunction<int>.Instance, comparer: null
             );
 
             // Act.
             var actualDictionary = emptyCollection.ToReadOnlyDictionary(
-                KeyFunction<int>.Simple, IdentityFunction<int>.Instance, null
+                KeyFunction<int>.Simple, IdentityFunction<int>.Instance, comparer: null
             );
 
             // Assert.
             Assert.NotNull(actualDictionary);
             Assert.Empty(actualDictionary);
             Assert.Equal(expectedDictionary, actualDictionary);
-
-
-            if (actualDictionary is Dictionary<Guid, int> internalDictionary)
-            {
-                Assert.Same(internalDictionary.Comparer, EqualityComparer<Guid>.Default);
-            }
-        }
-
-        [Fact]
-        public void Call_ToReadOnlyList_ForNullValue_ShouldFail()
-        {
-            // Arrange.
-            const IEnumerable<int>? nullValue = null;
-
-            // Act & Assert.
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
-            Assert.Throws<ArgumentNullException>("source", () => nullValue.ToReadOnlyList());
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
-        }
-
-        [Fact]
-        public void Call_ToReadOnlyCollection_ForNullValue_ShouldFail()
-        {
-            // Arrange.
-            const IEnumerable<int>? nullValue = null;
-
-            // Act & Assert.
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
-            Assert.Throws<ArgumentNullException>("source", () => nullValue.ToReadOnlyCollection());
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
 
         [Fact]
@@ -257,13 +226,12 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
+            var expectedDictionary = emptyCollection.ToDictionary(KeyFunction<int>.Simple);
 
             // Act.
             var actualDictionary = emptyCollection.ToReadOnlyDictionary(KeyFunction<int>.Simple);
 
             // Assert.
-            var expectedDictionary = emptyCollection.ToDictionary(KeyFunction<int>.Simple);
-
             Assert.NotNull(actualDictionary);
             Assert.Empty(actualDictionary);
             Assert.Equal(expectedDictionary, actualDictionary);
@@ -274,6 +242,9 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
+            var expectedDictionary = emptyCollection.ToDictionary(
+                KeyFunction<int>.Simple, EqualityComparer<Guid>.Default
+            );
 
             // Act.
             var actualDictionary = emptyCollection.ToReadOnlyDictionary(
@@ -281,10 +252,6 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
             );
 
             // Assert.
-            var expectedDictionary = emptyCollection.ToDictionary(
-                KeyFunction<int>.Simple, EqualityComparer<Guid>.Default
-            );
-
             Assert.NotNull(actualDictionary);
             Assert.Empty(actualDictionary);
             Assert.Equal(expectedDictionary, actualDictionary);
@@ -295,6 +262,9 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
+            var expectedDictionary = emptyCollection.ToDictionary(
+                KeyFunction<int>.Simple, IdentityFunction<int>.Instance
+            );
 
             // Act.
             var actualDictionary = emptyCollection.ToReadOnlyDictionary(
@@ -302,10 +272,6 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
             );
 
             // Assert.
-            var expectedDictionary = emptyCollection.ToDictionary(
-                KeyFunction<int>.Simple, IdentityFunction<int>.Instance
-            );
-
             Assert.NotNull(actualDictionary);
             Assert.Empty(actualDictionary);
             Assert.Equal(expectedDictionary, actualDictionary);
@@ -316,6 +282,11 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
+            var expectedDictionary = emptyCollection.ToDictionary(
+                KeyFunction<int>.Simple,
+                IdentityFunction<int>.Instance,
+                EqualityComparer<Guid>.Default
+            );
 
             // Act.
             var actualDictionary = emptyCollection.ToReadOnlyDictionary(
@@ -325,49 +296,99 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
             );
 
             // Assert.
-            var expectedDictionary = emptyCollection.ToDictionary(
-                KeyFunction<int>.Simple,
-                IdentityFunction<int>.Instance,
-                EqualityComparer<Guid>.Default
-            );
-
             Assert.NotNull(actualDictionary);
             Assert.Empty(actualDictionary);
             Assert.Equal(expectedDictionary, actualDictionary);
         }
 
         [Fact]
-        public void Call_ToReadOnlyList_ForEmptyCollection_ShouldReturnEmptyList()
+        public void Call_ToReadOnlyDictionary_WithKeySelector_ForPredefinedCollection_ShouldReturnFilledDictionary()
         {
             // Arrange.
-            IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
+            IReadOnlyList<int> predefinedCollection = new[] { 1, 2, 3 };
+            var keyGenerator = new IncrementalKeyGenerator<int>();
+            var expectedDictionary = predefinedCollection.ToDictionary(keyGenerator.GetKey);
 
             // Act.
-            var actualList = emptyCollection.ToReadOnlyList();
+            keyGenerator.Reset();
+            var actualDictionary = predefinedCollection.ToReadOnlyDictionary(
+                keyGenerator.GetKey
+            );
 
             // Assert.
-            var expectedList = emptyCollection.ToList();
-
-            Assert.NotNull(actualList);
-            Assert.Empty(actualList);
-            Assert.Equal(expectedList, actualList);
+            Assert.NotNull(actualDictionary);
+            Assert.NotEmpty(actualDictionary);
+            Assert.Equal(expectedDictionary, actualDictionary);
         }
 
         [Fact]
-        public void Call_ToReadOnlyCollection_ForEmptyCollection_ShouldReturnEmptyCollection()
+        public void Call_ToReadOnlyDictionary_WithKeySelectorAndComparer_ForPredefinedCollection_ShouldReturnFilledDictionary()
         {
             // Arrange.
-            IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
+            IReadOnlyList<int> predefinedCollection = new[] { 1, 2, 3 };
+            var keyGenerator = new IncrementalKeyGenerator<int>();
+            var expectedDictionary = predefinedCollection.ToDictionary(
+                keyGenerator.GetKey, EqualityComparer<long>.Default
+            );
 
             // Act.
-            var actualCollection = emptyCollection.ToReadOnlyCollection();
+            keyGenerator.Reset();
+            var actualDictionary = predefinedCollection.ToReadOnlyDictionary(
+                keyGenerator.GetKey, EqualityComparer<long>.Default
+            );
 
             // Assert.
-            IReadOnlyCollection<int> expectedCollection = emptyCollection.ToList();
+            Assert.NotNull(actualDictionary);
+            Assert.NotEmpty(actualDictionary);
+            Assert.Equal(expectedDictionary, actualDictionary);
+        }
 
-            Assert.NotNull(actualCollection);
-            Assert.Empty(actualCollection);
-            Assert.Equal(expectedCollection, actualCollection);
+        [Fact]
+        public void Call_ToReadOnlyDictionary_WithKeyElementSelectors_ForPredefinedCollection_ShouldReturnFilledDictionary()
+        {
+            // Arrange.
+            IReadOnlyList<int> predefinedCollection = new[] { 1, 2, 3 };
+            var keyGenerator = new IncrementalKeyGenerator<int>();
+            var expectedDictionary = predefinedCollection.ToDictionary(
+                keyGenerator.GetKey, IdentityFunction<int>.Instance
+            );
+
+            // Act.
+            keyGenerator.Reset();
+            var actualDictionary = predefinedCollection.ToReadOnlyDictionary(
+                keyGenerator.GetKey, IdentityFunction<int>.Instance
+            );
+
+            // Assert.
+            Assert.NotNull(actualDictionary);
+            Assert.NotEmpty(actualDictionary);
+            Assert.Equal(expectedDictionary, actualDictionary);
+        }
+
+        [Fact]
+        public void Call_ToReadOnlyDictionary_WithKeyElementSelectorsAndComparer_ForPredefinedCollection_ShouldReturnFilledDictionary()
+        {
+            // Arrange.
+            IReadOnlyList<int> predefinedCollection = new[] { 1, 2, 3 };
+            var keyGenerator = new IncrementalKeyGenerator<int>();
+            var expectedDictionary = predefinedCollection.ToDictionary(
+                keyGenerator.GetKey,
+                IdentityFunction<int>.Instance,
+                EqualityComparer<long>.Default
+            );
+
+            // Act.
+            keyGenerator.Reset();
+            var actualDictionary = predefinedCollection.ToReadOnlyDictionary(
+                keyGenerator.GetKey,
+                IdentityFunction<int>.Instance,
+                EqualityComparer<long>.Default
+            );
+
+            // Assert.
+            Assert.NotNull(actualDictionary);
+            Assert.NotEmpty(actualDictionary);
+            Assert.Equal(expectedDictionary, actualDictionary);
         }
 
         [Theory]
@@ -377,7 +398,8 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
         [InlineData(TestHelper.TenCollectionSize)]
         [InlineData(TestHelper.HundredCollectionSize)]
         [InlineData(TestHelper.TenThousandCollectionSize)]
-        public void Call_ToReadOnlyDictionary_WithKeySelector_ForCollectionWithSomeItems_ShouldReturnFilledDictionary(int count)
+        public void Call_ToReadOnlyDictionary_WithKeySelector_ForCollectionWithSomeItems_ShouldReturnFilledDictionary(
+            int count)
         {
             // Arrange.
             IEnumerable<int> collectionWithSomeItems = TestDataCreator.CreateRandomInt32List(count);
@@ -432,7 +454,7 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
         [InlineData(TestHelper.TenCollectionSize)]
         [InlineData(TestHelper.HundredCollectionSize)]
         [InlineData(TestHelper.TenThousandCollectionSize)]
-        public void Call_ToReadOnlyDictionary_WithKeyElementSelector_ForCollectionWithSomeItems_ShouldReturnFilledDictionary(
+        public void Call_ToReadOnlyDictionary_WithKeyElementSelectors_ForCollectionWithSomeItems_ShouldReturnFilledDictionary(
             int count)
         {
             // Arrange.
@@ -485,50 +507,6 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
             Assert.NotNull(actualDictionary);
             Assert.NotEmpty(actualDictionary);
             Assert.Equal(expectedDictionary, actualDictionary);
-        }
-
-        [Theory]
-        [InlineData(TestHelper.OneCollectionSize)]
-        [InlineData(TestHelper.TwoCollectionSize)]
-        [InlineData(TestHelper.FiveCollectionSie)]
-        [InlineData(TestHelper.TenCollectionSize)]
-        [InlineData(TestHelper.HundredCollectionSize)]
-        [InlineData(TestHelper.TenThousandCollectionSize)]
-        public void Call_ToReadOnlyList_ForCollectionWithSomeItems_ShouldReturnFilledList(int count)
-        {
-            // Arrange.
-            IEnumerable<int> collectionWithSomeItems = TestDataCreator.CreateRandomInt32List(count);
-            var expectedList = collectionWithSomeItems.ToList();
-
-            // Act.
-            var actualList = collectionWithSomeItems.ToReadOnlyList();
-
-            // Assert.
-            Assert.NotNull(actualList);
-            Assert.NotEmpty(actualList);
-            Assert.Equal(expectedList, actualList);
-        }
-
-        [Theory]
-        [InlineData(TestHelper.OneCollectionSize)]
-        [InlineData(TestHelper.TwoCollectionSize)]
-        [InlineData(TestHelper.FiveCollectionSie)]
-        [InlineData(TestHelper.TenCollectionSize)]
-        [InlineData(TestHelper.HundredCollectionSize)]
-        [InlineData(TestHelper.TenThousandCollectionSize)]
-        public void Call_ToReadOnlyCollection_ForCollectionWithSomeItems_ShouldReturnFilledCollection(int count)
-        {
-            // Arrange.
-            IEnumerable<int> collectionWithSomeItems = TestDataCreator.CreateRandomInt32List(count);
-            IReadOnlyCollection<int> expectedCollection = collectionWithSomeItems.ToList();
-
-            // Act.
-            var actualCollection = collectionWithSomeItems.ToReadOnlyCollection();
-
-            // Assert.
-            Assert.NotNull(actualCollection);
-            Assert.NotEmpty(actualCollection);
-            Assert.Equal(expectedCollection, actualCollection);
         }
 
         [Fact]
@@ -592,7 +570,7 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_ToReadOnlyDictionary_WithKeyElementSelector_ForCollectionWithRandomSize_ShouldReturnProperDictionary()
+        public void Call_ToReadOnlyDictionary_WithKeyElementSelectors_ForCollectionWithRandomSize_ShouldReturnProperDictionary()
         {
             // Arrange.
             int count = TestDataCreator.GetRandomCountNumber();
@@ -658,56 +636,6 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_ToReadOnlyList_ForCollectionWithRandomSize_ShouldReturnProperList()
-        {
-            // Arrange.
-            int count = TestDataCreator.GetRandomCountNumber();
-            IEnumerable<int> collectionWithRandomSize =
-                TestDataCreator.CreateRandomInt32List(count);
-            var expectedList = collectionWithRandomSize.ToList();
-
-            // Act.
-            var actualList = collectionWithRandomSize.ToReadOnlyList();
-
-            // Assert.
-            Assert.NotNull(actualList);
-            if (collectionWithRandomSize.Any())
-            {
-                Assert.NotEmpty(actualList);
-            }
-            else
-            {
-                Assert.Empty(actualList);
-            }
-            Assert.Equal(expectedList, actualList);
-        }
-
-        [Fact]
-        public void Call_ToReadOnlyCollection_ForCollectionWithRandomSize_ShouldReturnProperCollection()
-        {
-            // Arrange.
-            int count = TestDataCreator.GetRandomCountNumber();
-            IEnumerable<int> collectionWithRandomSize =
-                TestDataCreator.CreateRandomInt32List(count);
-            IReadOnlyCollection<int> expectedCollection = collectionWithRandomSize.ToList();
-
-            // Act.
-            var actualCollection = collectionWithRandomSize.ToReadOnlyCollection();
-
-            // Assert.
-            Assert.NotNull(actualCollection);
-            if (collectionWithRandomSize.Any())
-            {
-                Assert.NotEmpty(actualCollection);
-            }
-            else
-            {
-                Assert.Empty(actualCollection);
-            }
-            Assert.Equal(expectedCollection, actualCollection);
-        }
-
-        [Fact]
         public void ToReadOnlyDictionary_WithKeySelector_ShouldReturnImmutableCollection()
         {
             // Arrange.
@@ -741,8 +669,8 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
             {
                 string message =
                     "Method 'ToReadOnlyDictionary' " +
-                    "returns collection with invalid type. Return type should be inherit from " +
-                    $"'{nameof(IDictionary<long, int>)}'.";
+                    $"returns collection with invalid type '{actualDictionary.GetType().Name}'. " +
+                    $"Return type should be inherit from '{nameof(IDictionary<long, int>)}'.";
                 CustomAssert.Fail(message);
             }
         }
@@ -783,14 +711,14 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
             {
                 string message =
                     "Method 'ToReadOnlyDictionary' " +
-                    "returns collection with invalid type. Return type should be inherit from " +
-                    $"'{nameof(IDictionary<long, int>)}'.";
+                    $"returns collection with invalid type '{actualDictionary.GetType().Name}'. " +
+                    $"Return type should be inherit from '{nameof(IDictionary<long, int>)}'.";
                 CustomAssert.Fail(message);
             }
         }
 
         [Fact]
-        public void ToReadOnlyDictionary_WithKeyElementSelector_ShouldReturnImmutableCollection()
+        public void ToReadOnlyDictionary_WithKeyElementSelectors_ShouldReturnImmutableCollection()
         {
             // Arrange.
             const int count = 5;
@@ -825,8 +753,8 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
             {
                 string message =
                     "Method 'ToReadOnlyDictionary' " +
-                    "returns collection with invalid type. Return type should be inherit from " +
-                    $"'{nameof(IDictionary<long, int>)}'.";
+                    $"returns collection with invalid type '{actualDictionary.GetType().Name}'. " +
+                    $"Return type should be inherit from '{nameof(IDictionary<long, int>)}'.";
                 CustomAssert.Fail(message);
             }
         }
@@ -871,10 +799,105 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
             {
                 string message =
                     "Method 'ToReadOnlyDictionary' " +
-                    "returns collection with invalid type. Return type should be inherit from " +
-                    $"'{nameof(IDictionary<long, int>)}'.";
+                    $"returns collection with invalid type '{actualDictionary.GetType().Name}'. " +
+                    $"Return type should be inherit from '{nameof(IDictionary<long, int>)}'.";
                 CustomAssert.Fail(message);
             }
+        }
+
+        #endregion
+
+        #region ToReadOnlyList
+
+        [Fact]
+        public void Call_ToReadOnlyList_ForNullValue_ShouldFail()
+        {
+            // Arrange.
+            const IEnumerable<int>? nullValue = null;
+
+            // Act & Assert.
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+            Assert.Throws<ArgumentNullException>("source", () => nullValue.ToReadOnlyList());
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+        }
+
+        [Fact]
+        public void Call_ToReadOnlyList_ForEmptyCollection_ShouldReturnEmptyList()
+        {
+            // Arrange.
+            IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
+            var expectedList = emptyCollection.ToList();
+
+            // Act.
+            var actualList = emptyCollection.ToReadOnlyList();
+
+            // Assert.
+            Assert.NotNull(actualList);
+            Assert.Empty(actualList);
+            Assert.Equal(expectedList, actualList);
+        }
+
+        [Fact]
+        public void Call_ToReadOnlyList_ForPredefinedCollection_ShouldReturnFilledList()
+        {
+            // Arrange.
+            IReadOnlyList<int> predefinedCollection = new[] { 1, 2, 3 };
+            var expectedList = predefinedCollection.ToList();
+
+            // Act.
+            var actualList = predefinedCollection.ToReadOnlyList();
+
+            // Assert.
+            Assert.NotNull(actualList);
+            Assert.NotEmpty(actualList);
+            Assert.Equal(expectedList, actualList);
+        }
+
+        [Theory]
+        [InlineData(TestHelper.OneCollectionSize)]
+        [InlineData(TestHelper.TwoCollectionSize)]
+        [InlineData(TestHelper.FiveCollectionSie)]
+        [InlineData(TestHelper.TenCollectionSize)]
+        [InlineData(TestHelper.HundredCollectionSize)]
+        [InlineData(TestHelper.TenThousandCollectionSize)]
+        public void Call_ToReadOnlyList_ForCollectionWithSomeItems_ShouldReturnFilledList(int count)
+        {
+            // Arrange.
+            IEnumerable<int> collectionWithSomeItems = TestDataCreator.CreateRandomInt32List(count);
+            var expectedList = collectionWithSomeItems.ToList();
+
+            // Act.
+            var actualList = collectionWithSomeItems.ToReadOnlyList();
+
+            // Assert.
+            Assert.NotNull(actualList);
+            Assert.NotEmpty(actualList);
+            Assert.Equal(expectedList, actualList);
+        }
+
+        [Fact]
+        public void Call_ToReadOnlyList_ForCollectionWithRandomSize_ShouldReturnProperList()
+        {
+            // Arrange.
+            int count = TestDataCreator.GetRandomCountNumber();
+            IEnumerable<int> collectionWithRandomSize =
+                TestDataCreator.CreateRandomInt32List(count);
+            var expectedList = collectionWithRandomSize.ToList();
+
+            // Act.
+            var actualList = collectionWithRandomSize.ToReadOnlyList();
+
+            // Assert.
+            Assert.NotNull(actualList);
+            if (collectionWithRandomSize.Any())
+            {
+                Assert.NotEmpty(actualList);
+            }
+            else
+            {
+                Assert.Empty(actualList);
+            }
+            Assert.Equal(expectedList, actualList);
         }
 
         [Fact]
@@ -905,10 +928,106 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
             {
                 string message =
                     "Method 'ToReadOnlyList' " +
-                    "returns collection with invalid type. Return type should be inherit from " +
-                    $"'{nameof(IList<int>)}'.";
+                    $"returns collection with invalid type '{actualList.GetType().Name}'. " +
+                    $"Return type should be inherit from '{nameof(IList<int>)}'.";
                 CustomAssert.Fail(message);
             }
+        }
+
+        #endregion
+
+        #region ToReadOnlyCollection
+
+        [Fact]
+        public void Call_ToReadOnlyCollection_ForNullValue_ShouldFail()
+        {
+            // Arrange.
+            const IEnumerable<int>? nullValue = null;
+
+            // Act & Assert.
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+            Assert.Throws<ArgumentNullException>("source", () => nullValue.ToReadOnlyCollection());
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+        }
+
+        [Fact]
+        public void Call_ToReadOnlyCollection_ForEmptyCollection_ShouldReturnEmptyCollection()
+        {
+            // Arrange.
+            IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
+            IReadOnlyCollection<int> expectedCollection = emptyCollection.ToList();
+
+            // Act.
+            var actualCollection = emptyCollection.ToReadOnlyCollection();
+
+            // Assert.
+            Assert.NotNull(actualCollection);
+            Assert.Empty(actualCollection);
+            Assert.Equal(expectedCollection, actualCollection);
+        }
+
+        [Fact]
+        public void Call_ToReadOnlyCollection_ForPredefinedCollection_ShouldReturnFilledCollection()
+        {
+            // Arrange.
+            IReadOnlyList<int> predefinedCollection = new[] { 1, 2, 3 };
+            IReadOnlyCollection<int> expectedCollection = predefinedCollection.ToList();
+
+            // Act.
+            var actualCollection = predefinedCollection.ToReadOnlyCollection();
+
+            // Assert.
+            Assert.NotNull(actualCollection);
+            Assert.NotEmpty(actualCollection);
+            Assert.Equal(expectedCollection, actualCollection);
+        }
+
+        [Theory]
+        [InlineData(TestHelper.OneCollectionSize)]
+        [InlineData(TestHelper.TwoCollectionSize)]
+        [InlineData(TestHelper.FiveCollectionSie)]
+        [InlineData(TestHelper.TenCollectionSize)]
+        [InlineData(TestHelper.HundredCollectionSize)]
+        [InlineData(TestHelper.TenThousandCollectionSize)]
+        public void Call_ToReadOnlyCollection_ForCollectionWithSomeItems_ShouldReturnFilledCollection(
+            int count)
+        {
+            // Arrange.
+            IEnumerable<int> collectionWithSomeItems = TestDataCreator.CreateRandomInt32List(count);
+            IReadOnlyCollection<int> expectedCollection = collectionWithSomeItems.ToList();
+
+            // Act.
+            var actualCollection = collectionWithSomeItems.ToReadOnlyCollection();
+
+            // Assert.
+            Assert.NotNull(actualCollection);
+            Assert.NotEmpty(actualCollection);
+            Assert.Equal(expectedCollection, actualCollection);
+        }
+
+        [Fact]
+        public void Call_ToReadOnlyCollection_ForCollectionWithRandomSize_ShouldReturnProperCollection()
+        {
+            // Arrange.
+            int count = TestDataCreator.GetRandomCountNumber();
+            IEnumerable<int> collectionWithRandomSize =
+                TestDataCreator.CreateRandomInt32List(count);
+            IReadOnlyCollection<int> expectedCollection = collectionWithRandomSize.ToList();
+
+            // Act.
+            var actualCollection = collectionWithRandomSize.ToReadOnlyCollection();
+
+            // Assert.
+            Assert.NotNull(actualCollection);
+            if (collectionWithRandomSize.Any())
+            {
+                Assert.NotEmpty(actualCollection);
+            }
+            else
+            {
+                Assert.Empty(actualCollection);
+            }
+            Assert.Equal(expectedCollection, actualCollection);
         }
 
         [Fact]
@@ -936,10 +1055,12 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
             {
                 string message =
                     "Method 'ToReadOnlyCollection' " +
-                    "returns collection with invalid type. Return type should be inherit from " +
-                    $"'{nameof(ICollection<int>)}'.";
+                    $"returns collection with invalid type '{actualCollection.GetType().Name}'. " +
+                    $"Return type should be inherit from '{nameof(ICollection<int>)}'.";
                 CustomAssert.Fail(message);
             }
         }
+
+        #endregion
     }
 }

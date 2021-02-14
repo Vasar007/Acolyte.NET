@@ -1,29 +1,132 @@
 ﻿using System;
+using System.Threading;
 
 namespace Acolyte.Common
 {
-    public static class ThreadSafeRandom
+    /// <summary>
+    /// Represents a pseudo-random number generator, which is a device that produces
+    /// a sequence of numbers that meet certain statistical requirements for randomness.
+    /// This class is thread-safe.
+    /// </summary>
+    public sealed class ThreadSafeRandom : Random
     {
-        private static readonly Random _global = new Random();
+        /// <summary>
+        /// Spin-lock object to make random thread-safe.
+        /// </summary>
+        /// <remarks>
+        /// Don't make it readonly because it can lead to shadow copies!
+        /// <see cref="SpinLock" /> is a <see langword="struct" />!
+        /// </remarks>
+        private SpinLock _spinLock;
 
-        [ThreadStatic]
-        private static Random? _local;
 
-        public static int Next()
+        /// <inheritdoc cref="Random()" />
+        public ThreadSafeRandom()
+            : base()
         {
-            if (_local is null)
+            _spinLock = new SpinLock();
+        }
+
+        /// <inheritdoc cref="Random(int)" />
+        public ThreadSafeRandom(
+            int Seed)
+            : base(Seed)
+        {
+            _spinLock = new SpinLock();
+        }
+
+        #region Random Overridden Methods
+
+        /// <inheritdoc cref="Random.Next()" />
+        public override int Next()
+        {
+            bool lockTaken = false;
+            _spinLock.Enter(ref lockTaken);
+            try
             {
-                lock (_global)
+                return base.Next();
+            }
+            finally
+            {
+                if (lockTaken)
                 {
-                    if (_local is null)
-                    {
-                        int seed = _global.Next();
-                        _local = new Random(seed);
-                    }
+                    _spinLock.Exit();
                 }
             }
-
-            return _local.Next();
         }
+
+        /// <inheritdoc cref="Random.Next(int)" />
+        public override int Next(int maxValue)
+        {
+            bool lockTaken = false;
+            _spinLock.Enter(ref lockTaken);
+            try
+            {
+                return base.Next(maxValue);
+            }
+            finally
+            {
+                if (lockTaken)
+                {
+                    _spinLock.Exit();
+                }
+            }
+        }
+
+        /// <inheritdoc cref="Random.Next(int, int)" />
+        public override int Next(int minValue, int maxValue)
+        {
+            bool lockTaken = false;
+            _spinLock.Enter(ref lockTaken);
+            try
+            {
+                return base.Next(minValue, maxValue);
+            }
+            finally
+            {
+                if (lockTaken)
+                {
+                    _spinLock.Exit();
+                }
+            }
+        }
+
+        /// <inheritdoc cref="Random.NextDouble" />
+        public override double NextDouble()
+        {
+            bool lockTaken = false;
+            _spinLock.Enter(ref lockTaken);
+            try
+            {
+                return base.NextDouble();
+            }
+            finally
+            {
+                if (lockTaken)
+                {
+                    _spinLock.Exit();
+                }
+            }
+        }
+
+        /// <inheritdoc cref="Random.NextBytes(byte[])" />
+        public override void NextBytes(byte[] buffer)
+        {
+            bool lockTaken = false;
+            _spinLock.Enter(ref lockTaken);
+            try
+            {
+                base.NextBytes(buffer);
+            }
+            finally
+            {
+                if (lockTaken)
+                {
+                    _spinLock.Exit();
+                }
+            }
+        }
+
+        #endregion
     }
 }

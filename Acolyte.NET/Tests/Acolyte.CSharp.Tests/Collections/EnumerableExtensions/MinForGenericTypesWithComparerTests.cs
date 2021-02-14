@@ -85,6 +85,20 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
             Assert.Equal(expectedValue, actualValue);
         }
 
+        [Fact]
+        public void Call_Min_WithComparer_ForPredefinedCollection_ShouldReturnMin()
+        {
+            // Arrange.
+            IReadOnlyList<int> predefinedCollection = new[] { 1, 2, 3 };
+            int expectedValue = predefinedCollection[0];
+
+            // Act.
+            int actualValue = predefinedCollection.Min(Comparer<int>.Default);
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+        }
+
         [Theory]
         [InlineData(TestHelper.OneCollectionSize)]
         [InlineData(TestHelper.TwoCollectionSize)]
@@ -112,7 +126,8 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
         [InlineData(TestHelper.TenCollectionSize)]
         [InlineData(TestHelper.HundredCollectionSize)]
         [InlineData(TestHelper.TenThousandCollectionSize)]
-        public void Call_Min_WithComparer_ForCollectionWithTheSameItems_ShouldReturnThatItem(int count)
+        public void Call_Min_WithComparer_ForCollectionWithTheSameItems_ShouldReturnThatItem(
+            int count)
         {
             // Arrange.
             IEnumerable<int> collectionWithTheSameItems = Enumerable

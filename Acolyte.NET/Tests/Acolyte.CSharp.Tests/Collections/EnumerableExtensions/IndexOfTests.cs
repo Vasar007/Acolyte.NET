@@ -124,6 +124,53 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
             Assert.Equal(expectedIndex, actualIndex);
         }
 
+        [Fact]
+        public void Call_IndexOf_ForPredefinedCollection_ShouldReturnIndexOfSecondItem()
+        {
+            // Arrange.
+            IReadOnlyList<int> predefinedCollection = new[] { 1, 2, 3 };
+            int expectedIndex = Constants.FirstIndex + 1;
+            int expectedItem = predefinedCollection[expectedIndex];
+
+            // Act.
+            int actualIndex = predefinedCollection.IndexOf(i => i.Equals(expectedItem));
+
+            // Assert.
+            Assert.Equal(expectedIndex, actualIndex);
+        }
+
+        [Fact]
+        public void Call_IndexOf_Item_ForPredefinedCollection_ShouldReturnIndexOfSecondItem()
+        {
+            // Arrange.
+            IReadOnlyList<int> predefinedCollection = new[] { 1, 2, 3 };
+            int expectedIndex = Constants.FirstIndex + 1;
+            int expectedItem = predefinedCollection[expectedIndex];
+
+            // Act.
+            int actualIndex = predefinedCollection.IndexOf(expectedItem);
+
+            // Assert.
+            Assert.Equal(expectedIndex, actualIndex);
+        }
+
+        [Fact]
+        public void Call_IndexOf_ItemWithComparer_ForPredefinedCollection_ShouldReturnIndexOfSecondItem()
+        {
+            // Arrange.
+            IReadOnlyList<int> predefinedCollection = new[] { 1, 2, 3 };
+            int expectedIndex = Constants.FirstIndex + 1;
+            int expectedItem = predefinedCollection[expectedIndex];
+
+            // Act.
+            int actualIndex = predefinedCollection.IndexOf(
+                expectedItem, EqualityComparer<int>.Default
+            );
+
+            // Assert.
+            Assert.Equal(expectedIndex, actualIndex);
+        }
+
         [Theory]
         [InlineData(TestHelper.OneCollectionSize)]
         [InlineData(TestHelper.TwoCollectionSize)]
@@ -373,7 +420,7 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
         {
             // Arrange.
             // Do not use random because we should find exactly second item (2).
-            var collection = new[] { 1, 2, 2, 2 };
+            IReadOnlyList<int> collection = new[] { 1, 2, 2, 2 };
             var explosiveCollection = ExplosiveCollection.Create(
                 collection, explosiveIndex: Constants.FirstIndex + 2
             );
@@ -392,7 +439,7 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
         public void IndexOf_ShouldLookWholeCollectionToFindItem()
         {
             // Arrange.
-            var collection = new[] { 1, 2, 3, 4 };
+            IReadOnlyList<int> collection = new[] { 1, 2, 3, 4 };
             var explosiveCollection = ExplosiveCollection.CreateNotExplosive(collection);
             int expectedValue = Constants.NotFoundIndex;
 
@@ -400,7 +447,7 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
             int actualIndex = explosiveCollection.IndexOf(_ => false);
 
             // Assert.
-            Assert.Equal(expected: collection.Length, explosiveCollection.VisitedItemsNumber);
+            Assert.Equal(expected: collection.Count, explosiveCollection.VisitedItemsNumber);
             Assert.Equal(expectedValue, actualIndex);
         }
 
@@ -409,7 +456,7 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
         {
             // Arrange.
             // Do not use random because we should find exactly second item (2).
-            var collection = new[] { 1, 2, 2, 2 };
+            IReadOnlyList<int> collection = new[] { 1, 2, 2, 2 };
             var explosiveCollection = ExplosiveCollection.Create(
                 collection, explosiveIndex: Constants.FirstIndex + 2
             );
@@ -428,7 +475,7 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
         public void IndexOf_Item_ShouldLookWholeCollectionToFindItem()
         {
             // Arrange.
-            var collection = new[] { 1, 2, 3, 4 };
+            IReadOnlyList<int> collection = new[] { 1, 2, 3, 4 };
             var explosiveCollection = ExplosiveCollection.CreateNotExplosive(collection);
             int expectedValue = Constants.NotFoundIndex;
 
@@ -436,7 +483,7 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
             int actualIndex = explosiveCollection.IndexOf(value: 0);
 
             // Assert.
-            Assert.Equal(expected: collection.Length, explosiveCollection.VisitedItemsNumber);
+            Assert.Equal(expected: collection.Count, explosiveCollection.VisitedItemsNumber);
             Assert.Equal(expectedValue, actualIndex);
         }
 
@@ -445,7 +492,7 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
         {
             // Arrange.
             // Do not use random because we should find exactly second item (2).
-            var collection = new[] { 1, 2, 2, 2 };
+            IReadOnlyList<int> collection = new[] { 1, 2, 2, 2 };
             var explosiveCollection = ExplosiveCollection.Create(
                 collection, explosiveIndex: Constants.FirstIndex + 2
             );
@@ -466,7 +513,7 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
         public void IndexOf_ItemWithComparer_ShouldLookWholeCollectionToFindItem()
         {
             // Arrange.
-            var collection = new[] { 1, 2, 3, 4 };
+            IReadOnlyList<int> collection = new[] { 1, 2, 3, 4 };
             var explosiveCollection = ExplosiveCollection.CreateNotExplosive(collection);
             int expectedValue = Constants.NotFoundIndex;
 
@@ -474,7 +521,7 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
             int actualIndex = explosiveCollection.IndexOf(value: 0, EqualityComparer<int>.Default);
 
             // Assert.
-            Assert.Equal(expected: collection.Length, explosiveCollection.VisitedItemsNumber);
+            Assert.Equal(expected: collection.Count, explosiveCollection.VisitedItemsNumber);
             Assert.Equal(expectedValue, actualIndex);
         }
     }
