@@ -2,7 +2,8 @@
 
   <PropertyGroup>
     <Platforms>AnyCPU</Platforms>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
+    <OutputType>Library</OutputType>
     <LangVersion>9.0</LangVersion>
     <Nullable>enable</Nullable>
     <WarningsAsErrors>CS8600,CS8602,CS8603,CS8618,CS8625</WarningsAsErrors>
@@ -11,8 +12,30 @@
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <Authors>Vasily Vasilyev</Authors>
+    <Product>Acolyte.NET</Product>
+    <Description>Common test helpers for Acolyte's libraries.</Description>
+    <Summary>Common test helpers for Acolyte's libraries.</Summary>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <RepositoryUrl>https://github.com/Vasar007/Acolyte.NET.git</RepositoryUrl>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <PackageProjectUrl>https://github.com/Vasar007/Acolyte.NET</PackageProjectUrl>
+    <RepositoryType>git</RepositoryType>
+    <Copyright>© 2020 Vasily Vasilyev (vasar007@yandex.ru)</Copyright>
+  </PropertyGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\..\Libraries\Acolyte.CSharp\Acolyte.CSharp.csproj" />
   </ItemGroup>
+
+  <PropertyGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+    <AssemblyTitle>Acolyte.NET Tests .NET Standard 2.0</AssemblyTitle>
+    <DefineConstants>NETSTANDARD2_0</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(TargetFramework)' == 'netstandard2.1'">
+    <AssemblyTitle>Acolyte.NET Tests .NET Standard 2.1</AssemblyTitle>
+    <DefineConstants>NETSTANDARD2_1</DefineConstants>
+  </PropertyGroup>
 
 </Project>

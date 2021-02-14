@@ -2,12 +2,26 @@
 
   <PropertyGroup>
     <Platforms>AnyCPU</Platforms>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFrameworks>netcoreapp3.1;net5.0</TargetFrameworks>
+    <OutputType>Library</OutputType>
     <LangVersion>4.7</LangVersion>
     <GenerateProgramFile>false</GenerateProgramFile>
     <RootNamespace>Acolyte.Tests</RootNamespace>
     <IncludeSymbols>false</IncludeSymbols>
     <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Authors>Vasily Vasilyev</Authors>
+    <Product>Acolyte.FSharp</Product>
+    <Description>Tests for Acolyte.FSharp library.</Description>
+    <Summary>Tests for Acolyte.FSharp library.</Summary>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <RepositoryUrl>https://github.com/Vasar007/Acolyte.NET.git</RepositoryUrl>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <PackageProjectUrl>https://github.com/Vasar007/Acolyte.NET</PackageProjectUrl>
+    <RepositoryType>git</RepositoryType>
+    <Copyright>© 2020 Vasily Vasilyev (vasar007@yandex.ru)</Copyright>
   </PropertyGroup>
 
   <ItemGroup>
@@ -18,6 +32,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Update="FSharp.Core" Version="4.7.1" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.6.1" />
     <PackageReference Include="Unquote" Version="5.0.0" />
     <PackageReference Include="xunit" Version="2.4.1" />
@@ -36,8 +51,16 @@
     <ProjectReference Include="..\Acolyte.Tests.Common\Acolyte.Tests.Common.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Update="FSharp.Core" Version="4.7.1" />
-  </ItemGroup>
+  <PropertyGroup Condition="'$(TargetFramework)'=='netcoreapp3.1'">
+    <AssemblyTitle>Acolyte.FSharp Tests .NET Standard 2.0</AssemblyTitle>
+    <ReferringTargetFrameworkForProjectReferences>.NETStandard,Version=v2.0</ReferringTargetFrameworkForProjectReferences>
+    <DefineConstants>NETSTANDARD2_0</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(TargetFramework)'=='net5.0'">
+    <AssemblyTitle>Acolyte.FSharp Tests .NET Standard 2.1</AssemblyTitle>
+    <ReferringTargetFrameworkForProjectReferences>.NETStandard,Version=v2.1</ReferringTargetFrameworkForProjectReferences>
+    <DefineConstants>NETSTANDARD2_1</DefineConstants>
+  </PropertyGroup>
 
 </Project>

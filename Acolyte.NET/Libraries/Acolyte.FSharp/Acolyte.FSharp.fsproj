@@ -3,6 +3,7 @@
   <PropertyGroup>
     <Platforms>AnyCPU</Platforms>
     <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
+    <OutputType>Library</OutputType>
     <LangVersion>4.7</LangVersion>
     <RootNamespace>Acolyte</RootNamespace>
     <IncludeSymbols>true</IncludeSymbols>

@@ -2,13 +2,27 @@
 
   <PropertyGroup>
     <Platforms>AnyCPU</Platforms>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFrameworks>netcoreapp3.1;net5.0</TargetFrameworks>
+    <OutputType>Library</OutputType>
     <LangVersion>9.0</LangVersion>
     <Nullable>enable</Nullable>
     <WarningsAsErrors>CS8600,CS8602,CS8603,CS8618,CS8625</WarningsAsErrors>
     <RootNamespace>Acolyte.Tests</RootNamespace>
     <IncludeSymbols>false</IncludeSymbols>
     <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Authors>Vasily Vasilyev</Authors>
+    <Product>Acolyte.CSharp</Product>
+    <Description>Tests for Acolyte.CSharp library.</Description>
+    <Summary>Tests for Acolyte.CSharp library.</Summary>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <RepositoryUrl>https://github.com/Vasar007/Acolyte.NET.git</RepositoryUrl>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <PackageProjectUrl>https://github.com/Vasar007/Acolyte.NET</PackageProjectUrl>
+    <RepositoryType>git</RepositoryType>
+    <Copyright>© 2020 Vasily Vasilyev (vasar007@yandex.ru)</Copyright>
   </PropertyGroup>
 
   <ItemGroup>
@@ -28,5 +42,17 @@
     <ProjectReference Include="..\..\Libraries\Acolyte.CSharp\Acolyte.CSharp.csproj" />
     <ProjectReference Include="..\Acolyte.Tests.Common\Acolyte.Tests.Common.csproj" />
   </ItemGroup>
+
+  <PropertyGroup Condition="'$(TargetFramework)'=='netcoreapp3.1'">
+    <AssemblyTitle>Acolyte.CSharp Tests .NET Standard 2.0</AssemblyTitle>
+    <ReferringTargetFrameworkForProjectReferences>.NETStandard,Version=v2.0</ReferringTargetFrameworkForProjectReferences>
+    <DefineConstants>NETSTANDARD2_0</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(TargetFramework)'=='net5.0'">
+    <AssemblyTitle>Acolyte.CSharp Tests .NET Standard 2.1</AssemblyTitle>
+    <ReferringTargetFrameworkForProjectReferences>.NETStandard,Version=v2.1</ReferringTargetFrameworkForProjectReferences>
+    <DefineConstants>NETSTANDARD2_1</DefineConstants>
+  </PropertyGroup>
 
 </Project>

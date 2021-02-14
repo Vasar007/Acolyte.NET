@@ -2,13 +2,26 @@
 
   <PropertyGroup>
     <Platforms>AnyCPU</Platforms>
-    <TargetFramework>net50</TargetFramework>
-    <LangVersion>9.0</LangVersion>
+    <TargetFramework>net5.0</TargetFramework>
     <OutputType>Exe</OutputType>
+    <LangVersion>9.0</LangVersion>
     <Nullable>enable</Nullable>
     <WarningsAsErrors>CS8600,CS8602,CS8603,CS8618,CS8625</WarningsAsErrors>
     <RootNamespace>Acolyte.Examples</RootNamespace>
     <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Authors>Vasily Vasilyev</Authors>
+    <Product>Acolyte.Examples</Product>
+    <Description>Examples for Acolyte.NET library.</Description>
+    <Summary>Examples for Acolyte.NET library.</Summary>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <RepositoryUrl>https://github.com/Vasar007/Acolyte.NET.git</RepositoryUrl>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <PackageProjectUrl>https://github.com/Vasar007/Acolyte.NET</PackageProjectUrl>
+    <RepositoryType>git</RepositoryType>
+    <Copyright>© 2020 Vasily Vasilyev (vasar007@yandex.ru)</Copyright>
   </PropertyGroup>
 
   <ItemGroup>
