@@ -4,7 +4,7 @@
     <Platforms>AnyCPU</Platforms>
     <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
     <OutputType>Library</OutputType>
-    <LangVersion>4.7</LangVersion>
+    <LangVersion>5.0</LangVersion>
     <RootNamespace>Acolyte</RootNamespace>
     <IncludeSymbols>true</IncludeSymbols>
     <IsPackable>true</IsPackable>
@@ -57,7 +57,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Update="FSharp.Core" Version="4.7.1" />
+    <PackageReference Update="FSharp.Core" Version="5.0.1" />
   </ItemGroup>
 
   <PropertyGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">

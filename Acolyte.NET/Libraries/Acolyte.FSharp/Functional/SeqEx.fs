@@ -5,7 +5,7 @@ module Acolyte.Functional.SeqEx
 
 
 let skipSafe (count: int32) (source: seq<'a>) : seq<'a> =
-    Throw.checkIfNull source "source"
+    Throw.checkIfNull source (nameof source)
 
     seq {
         use enumerator = source.GetEnumerator()

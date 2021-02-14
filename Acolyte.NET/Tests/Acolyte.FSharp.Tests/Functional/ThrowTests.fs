@@ -14,7 +14,7 @@ let ``Method "ifNullValue" returns the same value and throws no exception if val
     let expectedValue = obj()
 
     // Act.
-    let actualValue = Throw.ifNullValue expectedValue "expectedValue"
+    let actualValue = Throw.ifNullValue expectedValue (nameof expectedValue)
 
     // Assert.
     Assert.NotNull(actualValue)
@@ -48,7 +48,7 @@ let ``Method "ifNull" returns the same object and throws no exception if object 
     let expectedObj = obj()
 
     // Act.
-    let actualObj = Throw.ifNull expectedObj "expectedObj"
+    let actualObj = Throw.ifNull expectedObj (nameof expectedObj)
 
     // Assert.
     Assert.NotNull(actualObj)
@@ -82,7 +82,7 @@ let ``Method "checkIfNullValue" returns unit and throws no exception if value is
     let valueToCheck = obj()
 
     // Act.
-    let actualResult = Throw.checkIfNullValue valueToCheck "valueToCheck"
+    let actualResult = Throw.checkIfNullValue valueToCheck (nameof valueToCheck)
 
     // Assert.
     let expectedResult = ()
@@ -116,7 +116,7 @@ let ``Method "checkIfNull" returns unit and throws no exception if object is not
     let objToCheck = obj()
 
     // Act.
-    let actualResult = Throw.checkIfNull objToCheck "objToCheck"
+    let actualResult = Throw.checkIfNull objToCheck (nameof objToCheck)
 
     // Assert.
     let expectedResult = ()
