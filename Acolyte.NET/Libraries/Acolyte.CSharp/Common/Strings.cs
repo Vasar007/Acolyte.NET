@@ -13,5 +13,9 @@
 
         public static string NoMatchErrorMessage { get; } =
             "Sequence contains no matching element.";
+
+        public static string DefaultEmptyCollectionMessage { get; } = "None";
+
+        public static string DefaultItemSeparator { get; } = ", ";
     }
 }

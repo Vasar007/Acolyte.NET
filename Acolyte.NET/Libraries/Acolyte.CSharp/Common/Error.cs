@@ -1,4 +1,5 @@
 ﻿using System;
+using Acolyte.Assertions;
 
 namespace Acolyte.Common
 {
@@ -26,11 +27,13 @@ namespace Acolyte.Common
 
         public static Exception ArgumentNull(string paramName)
         {
+            paramName.ThrowIfNullOrWhiteSpace(nameof(paramName));
             return new ArgumentNullException(paramName);
         }
 
         public static Exception ArgumentOutOfRange(string paramName)
         {
+            paramName.ThrowIfNullOrWhiteSpace(nameof(paramName));
             return new ArgumentOutOfRangeException(paramName);
         }
 

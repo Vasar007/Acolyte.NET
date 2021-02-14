@@ -1883,10 +1883,9 @@ namespace Acolyte.Collections
                     throw Error.NoElements();
                 }
 
-                minValue = enumerator.Current;
-                maxValue = enumerator.Current;
+                minValue = maxValue = enumerator.Current;
                 TKey minElementKey = keySelector(minValue);
-                TKey maxElementKey = keySelector(maxValue);
+                TKey maxElementKey = minElementKey;
 
                 while (enumerator.MoveNext())
                 {
@@ -1897,6 +1896,11 @@ namespace Acolyte.Collections
                     {
                         minValue = element;
                         minElementKey = elementKey;
+                    }
+                    if (comparer.Compare(elementKey, maxElementKey) > 0)
+                    {
+                        maxValue = element;
+                        maxElementKey = elementKey;
                     }
                 }
             }
@@ -1946,6 +1950,19 @@ namespace Acolyte.Collections
         #region To Single String
 
         /// <summary>
+        /// Helper class that holds default item selector for some "ToSingleString" overloads.
+        /// </summary>
+        /// <typeparam name="TSource">The type of the elements of source collection.</typeparam>
+        private static class ToStringSelector<TSource>
+        {
+            /// <summary>
+            /// Default selector for collections.
+            /// </summary>
+            public static Func<TSource?, string> Instance { get; } =
+                item => item is null ? string.Empty : $"'{item.ToString()}'";
+        }
+
+        /// <summary>
         /// Transforms sequence to the string.
         /// </summary>
         /// <typeparam name="TSource">
@@ -1959,9 +1976,9 @@ namespace Acolyte.Collections
         public static string ToSingleString<TSource>(this IEnumerable<TSource>? source)
         {
             return source.ToSingleString(
-                separator: ", ",
-                emptyCollectionMessage: "None",
-                selector: item => item is null ? string.Empty : $"'{item.ToString()}'"
+                emptyCollectionMessage: Strings.DefaultEmptyCollectionMessage,
+                separator: Strings.DefaultItemSeparator,
+                selector: item => ToStringSelector<TSource>.Instance(item)
             );
         }
 
@@ -1973,23 +1990,20 @@ namespace Acolyte.Collections
         /// </typeparam>
         /// <param name="source">A sequence of values to convert to string.</param>
         /// <param name="emptyCollectionMessage">
-        /// The string to return if <paramref name="source" /> is <see langword="null" /> or contains no
-        /// elements.
+        /// The string to return if <paramref name="source" /> is <see langword="null" /> or
+        /// contains no elements.
         /// </param>
         /// <returns>
         /// The string which represent converted value of sequence or special message if 
         /// <paramref name="source" /> is <see langword="null" /> or contains no elements.
         /// </returns>
-        /// <exception cref="ArgumentNullException">
-        /// <paramref name="emptyCollectionMessage" /> is <see langword="null" />.
-        /// </exception>
         public static string ToSingleString<TSource>(this IEnumerable<TSource>? source,
-            string emptyCollectionMessage)
+            string? emptyCollectionMessage)
         {
             return source.ToSingleString(
-                separator: ", ",
                 emptyCollectionMessage: emptyCollectionMessage,
-                selector: item => item is null ? string.Empty : $"'{item.ToString()}'"
+                separator: Strings.DefaultItemSeparator,
+                selector: item => ToStringSelector<TSource>.Instance(item)
             );
         }
 
@@ -2001,8 +2015,8 @@ namespace Acolyte.Collections
         /// .</typeparam>
         /// <param name="source">A sequence of values to convert to string.</param>
         /// <param name="emptyCollectionMessage">
-        /// The string to return if <paramref name="source" /> is <see langword="null" /> or contains no
-        /// elements.
+        /// The string to return if <paramref name="source" /> is <see langword="null" /> or
+        /// contains no elements.
         /// </param>
         /// <param name="separator">
         /// The string to use as a separator. <paramref name="separator" /> is included in the
@@ -2012,16 +2026,13 @@ namespace Acolyte.Collections
         /// The string which represent converted value of sequence or special message if
         /// <paramref name="source" /> is <see langword="null" /> or contains no elements.
         /// </returns>
-        /// <exception cref="ArgumentNullException">
-        /// <paramref name="emptyCollectionMessage" /> is <see langword="null" />.
-        /// </exception>
         public static string ToSingleString<TSource>(this IEnumerable<TSource>? source,
-            string emptyCollectionMessage, string? separator)
+            string? emptyCollectionMessage, string? separator)
         {
             return source.ToSingleString(
                 emptyCollectionMessage: emptyCollectionMessage,
                 separator: separator,
-                selector: item => item is null ? string.Empty : $"'{item.ToString()}'"
+                selector: item => ToStringSelector<TSource>.Instance(item)
             );
         }
 
@@ -2045,8 +2056,8 @@ namespace Acolyte.Collections
             Func<TSource, string> selector)
         {
             return source.ToSingleString(
-                emptyCollectionMessage: "None",
-                separator: ", ",
+                emptyCollectionMessage: Strings.DefaultEmptyCollectionMessage,
+                separator: Strings.DefaultItemSeparator,
                 selector: selector
             );
         }
@@ -2060,8 +2071,8 @@ namespace Acolyte.Collections
         /// </typeparam>
         /// <param name="source">A sequence of values to convert to string.</param>
         /// <param name="emptyCollectionMessage">
-        /// The string to return if <paramref name="source" /> is <see langword="null" /> or contains no
-        /// elements.
+        /// The string to return if <paramref name="source" /> is <see langword="null" /> or
+        /// contains no elements.
         /// </param>
         /// <param name="selector">A transform function to apply to each element.</param>
         /// <returns>
@@ -2069,15 +2080,14 @@ namespace Acolyte.Collections
         /// <paramref name="source" /> is <see langword="null" /> or contains no elements.
         /// </returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="emptyCollectionMessage" /> is <see langword="null" />. -or-
         /// <paramref name="selector" /> is <see langword="null" />.
         /// </exception>
         public static string ToSingleString<TSource>(this IEnumerable<TSource>? source,
-            string emptyCollectionMessage, Func<TSource, string> selector)
+            string? emptyCollectionMessage, Func<TSource, string> selector)
         {
             return source.ToSingleString(
                 emptyCollectionMessage: emptyCollectionMessage,
-                separator: ", ",
+                separator: Strings.DefaultItemSeparator,
                 selector: selector
             );
         }
@@ -2092,8 +2102,8 @@ namespace Acolyte.Collections
         /// </typeparam>
         /// <param name="source">A sequence of values to convert to string.</param>
         /// <param name="emptyCollectionMessage">
-        /// The string to return if <paramref name="source" /> is <see langword="null" /> or contains no
-        /// elements.
+        /// The string to return if <paramref name="source" /> is <see langword="null" /> or
+        /// contains no elements.
         /// </param>
         /// <param name="separator">
         /// The string to use as a separator. <paramref name="separator" /> is included in the
@@ -2105,16 +2115,18 @@ namespace Acolyte.Collections
         /// <paramref name="source" /> is <see langword="null" /> or contains no elements.
         /// </returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="emptyCollectionMessage" /> is <see langword="null" />. -or-
         /// <paramref name="selector" /> is <see langword="null" />.
         /// </exception>
         public static string ToSingleString<TSource>(this IEnumerable<TSource>? source,
-            string emptyCollectionMessage, string? separator, Func<TSource, string> selector)
+            string? emptyCollectionMessage, string? separator, Func<TSource, string> selector)
         {
-            // Null check for "selector" parameter is provided by Enumerable.Select method.
-            emptyCollectionMessage.ThrowIfNull(nameof(emptyCollectionMessage));
+            selector.ThrowIfNull(nameof(selector));
 
-            if (source.IsNullOrEmpty()) return emptyCollectionMessage;
+            if (source.IsNullOrEmpty())
+            {
+                emptyCollectionMessage ??= Strings.DefaultEmptyCollectionMessage;
+                return emptyCollectionMessage;
+            }
 
             IEnumerable<string> transformedSource = source.Select(selector);
 
