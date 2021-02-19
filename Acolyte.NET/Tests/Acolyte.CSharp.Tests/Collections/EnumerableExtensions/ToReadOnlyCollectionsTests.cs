@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
-using Acolyte.Tests;
+using Acolyte.Collections;
 using Acolyte.Tests.Creators;
 using Acolyte.Tests.Functions;
 
-namespace Acolyte.Collections.Tests.EnumerableExtensions
+namespace Acolyte.Tests.Collections.EnumerableExtensions
 {
     public sealed class ToReadOnlyCollectionsTests
     {

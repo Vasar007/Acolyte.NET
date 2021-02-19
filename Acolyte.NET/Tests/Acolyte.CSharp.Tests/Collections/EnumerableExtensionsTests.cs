@@ -1,4 +1,4 @@
-﻿namespace Acolyte.Collections.Tests
+﻿namespace Acolyte.Tests.Collections
 {
     public sealed class EnumerableExtensionsTests
     {

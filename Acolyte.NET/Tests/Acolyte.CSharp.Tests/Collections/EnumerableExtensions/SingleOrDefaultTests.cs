@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
+using Acolyte.Collections;
 using Acolyte.Common;
-using Acolyte.Tests;
-using Acolyte.Tests.Collections;
 using Acolyte.Tests.Creators;
 using Acolyte.Tests.Functions;
 
-namespace Acolyte.Collections.Tests.EnumerableExtensions
+namespace Acolyte.Tests.Collections.EnumerableExtensions
 {
     public sealed class SingleOrDefaultTests
     {
@@ -25,7 +24,7 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
             // Act & Assert.
 #pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             Assert.Throws<ArgumentNullException>(
-                "source", () => nullValue.SingleOrDefault(default)
+                "source", () => nullValue.SingleOrDefault(default(int))
             );
 #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
@@ -95,7 +94,7 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
             int expectedValue = collectionWithSingleItem.Single();
 
             // Act.
-            int actualValue = collectionWithSingleItem.SingleOrDefault(default);
+            int actualValue = collectionWithSingleItem.SingleOrDefault(default(int));
 
             // Assert.
             Assert.Equal(expectedValue, actualValue);
@@ -127,7 +126,7 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
             // Act & Assert.
             Assert.Throws(
                 Error.MoreThanOneElement().GetType(),
-                () => predefinedCollection.SingleOrDefault(default)
+                () => predefinedCollection.SingleOrDefault(default(int))
             );
         }
 
@@ -175,7 +174,7 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
             // Act & Assert.
             Assert.Throws(
                 Error.MoreThanOneElement().GetType(),
-                () => collectionWithSomeItems.SingleOrDefault(default)
+                () => collectionWithSomeItems.SingleOrDefault(default(int))
             );
         }
 
@@ -308,7 +307,7 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
             // Act & Assert.
             Assert.Throws(
                 Error.MoreThanOneElement().GetType(),
-                () => explosiveCollection.SingleOrDefault(default)
+                () => explosiveCollection.SingleOrDefault(default(int))
             );
 
             Assert.Equal(expected: 2, explosiveCollection.VisitedItemsNumber);

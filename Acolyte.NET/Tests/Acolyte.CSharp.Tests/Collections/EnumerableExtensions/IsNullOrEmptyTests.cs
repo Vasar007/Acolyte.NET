@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Xunit;
+using Acolyte.Collections;
 using Acolyte.Common;
-using Acolyte.Tests;
-using Acolyte.Tests.Collections;
 using Acolyte.Tests.Creators;
 
-namespace Acolyte.Collections.Tests.EnumerableExtensions
+namespace Acolyte.Tests.Collections.EnumerableExtensions
 {
     public sealed class IsNullOrEmptyTests
     {

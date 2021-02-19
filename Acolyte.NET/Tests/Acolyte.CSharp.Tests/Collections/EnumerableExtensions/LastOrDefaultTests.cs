@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
-using Acolyte.Tests;
-using Acolyte.Tests.Collections;
+using Acolyte.Collections;
 using Acolyte.Tests.Creators;
 using Acolyte.Tests.Functions;
 
-namespace Acolyte.Collections.Tests.EnumerableExtensions
+namespace Acolyte.Tests.Collections.EnumerableExtensions
 {
     public sealed class LastOrDefaultTests
     {
@@ -23,7 +22,9 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
 
             // Act & Assert.
 #pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
-            Assert.Throws<ArgumentNullException>("source", () => nullValue.LastOrDefault(default));
+            Assert.Throws<ArgumentNullException>(
+                "source", () => nullValue.LastOrDefault(default(int))
+            );
 #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
 
@@ -91,7 +92,7 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
             int expectedValue = predefinedCollection[^1];
 
             // Act.
-            int actualValue = predefinedCollection.LastOrDefault(default);
+            int actualValue = predefinedCollection.LastOrDefault(default(int));
 
             // Assert.
             Assert.Equal(expectedValue, actualValue);
@@ -127,7 +128,7 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
             int expectedValue = collectionWithSomeItems.Last();
 
             // Act.
-            int actualValue = collectionWithSomeItems.LastOrDefault(default);
+            int actualValue = collectionWithSomeItems.LastOrDefault(default(int));
 
             // Assert.
             Assert.Equal(expectedValue, actualValue);
@@ -245,7 +246,7 @@ namespace Acolyte.Collections.Tests.EnumerableExtensions
             int expectedValue = collection[^1];
 
             // Act.
-            int actualValue = explosiveCollection.LastOrDefault(default);
+            int actualValue = explosiveCollection.LastOrDefault(default(int));
 
             // Assert.
             Assert.Equal(expected: collection.Count, explosiveCollection.VisitedItemsNumber);
