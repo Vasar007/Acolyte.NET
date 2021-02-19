@@ -64,7 +64,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             // Arrange.
             const IEnumerable<int>? nullValue = null;
             const string expectedValue = "Collection is empty";
-            const string separator = ",";
+            string separator = Strings.DefaultItemSeparator;
 
             // Act.
             string actualValue = nullValue.ToSingleString(expectedValue, separator);
@@ -79,7 +79,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             // Arrange.
             const IEnumerable<int>? nullValue = null;
             string expectedValue = Strings.DefaultEmptyCollectionMessage;
-            const string separator = ",";
+            string separator = Strings.DefaultItemSeparator;
 
             // Act.
             string actualValue = nullValue.ToSingleString(emptyCollectionMessage: null, separator);
@@ -137,7 +137,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         {
             // Arrange.
             const IEnumerable<int>? nullValue = null;
-            string expectedValue = Strings.DefaultEmptyCollectionMessage;
+            const string expectedValue = "Collection is empty";
 
             // Act.
             string actualValue = nullValue.ToSingleString(expectedValue, i => i.ToString());
@@ -182,8 +182,8 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         {
             // Arrange.
             const IEnumerable<int>? nullValue = null;
-            string expectedValue = Strings.DefaultEmptyCollectionMessage;
-            const string separator = ",";
+            const string expectedValue = "Collection is empty"; ;
+            string separator = Strings.DefaultItemSeparator;
 
             // Act.
             string actualValue = nullValue.ToSingleString(
@@ -225,6 +225,94 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
                 )
             );
 #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+        }
+
+        [Fact]
+        public void Call_ToSingleString_ForEmptyCollection_ShouldReturnEmptyCollectionMessage()
+        {
+            // Arrange.
+            IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
+            string expectedValue = Strings.DefaultEmptyCollectionMessage;
+
+            // Act.
+            string actualValue = emptyCollection.ToSingleString();
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Fact]
+        public void Call_ToSingleString_WithEmptyCollectionMessage_ForEmptyCollection_ShouldReturnEmptyCollectionMessage()
+        {
+            // Arrange.
+            IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
+            string expectedValue = Strings.DefaultEmptyCollectionMessage;
+
+            // Act.
+            string actualValue = emptyCollection.ToSingleString(expectedValue);
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Fact]
+        public void Call_ToSingleString_WithEmptyCollectionMessageAndSeparator_ForEmptyCollection_ShouldReturnEmptyCollectionMessage()
+        {
+            // Arrange.
+            IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
+            string expectedValue = Strings.DefaultEmptyCollectionMessage;
+            string separator = Strings.DefaultItemSeparator;
+
+            // Act.
+            string actualValue = emptyCollection.ToSingleString(expectedValue, separator);
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Fact]
+        public void Call_ToSingleString_WithSelector_ForEmptyCollection_ShouldReturnEmptyCollectionMessage()
+        {
+            // Arrange.
+            IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
+            string expectedValue = Strings.DefaultEmptyCollectionMessage;
+
+            // Act.
+            string actualValue = emptyCollection.ToSingleString(i => i.ToString());
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Fact]
+        public void Call_ToSingleString_WithEmptyCollectionMessageAndSelector_ForEmptyCollection_ShouldReturnEmptyCollectionMessage()
+        {
+            // Arrange.
+            IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
+            string expectedValue = Strings.DefaultEmptyCollectionMessage;
+
+            // Act.
+            string actualValue = emptyCollection.ToSingleString(expectedValue, i => i.ToString());
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Fact]
+        public void Call_ToSingleString_WithEmptyCollectionMessageAndSeparatorAndSelector_ForEmptyCollection_ShouldReturnEmptyCollectionMessage()
+        {
+            // Arrange.
+            IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
+            string expectedValue = Strings.DefaultEmptyCollectionMessage;
+            string separator = Strings.DefaultItemSeparator;
+
+            // Act.
+            string actualValue = emptyCollection.ToSingleString(
+                expectedValue, separator, i => i.ToString()
+            );
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
         }
     }
 }
