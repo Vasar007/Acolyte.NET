@@ -16,7 +16,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_MaxBy_WithoutComparer_ForNullValue_ShouldFail()
+        public void MaxBy_WithoutComparer_ForNullValue_ShouldFail()
         {
             // Arrange.
             const IEnumerable<int>? nullValue = null;
@@ -30,7 +30,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_MaxBy_WithoutComparer_ForNullSelector_ShouldFail()
+        public void MaxBy_WithoutComparer_ForNullSelector_ShouldFail()
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
@@ -45,7 +45,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_MaxBy_WithComparer_ForNullValue_ShouldFail()
+        public void MaxBy_WithComparer_ForNullValue_ShouldFail()
         {
             // Arrange.
             const IEnumerable<int>? nullValue = null;
@@ -59,7 +59,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_MaxBy_WithComparer_ForNullSelector_ShouldFail()
+        public void MaxBy_WithComparer_ForNullSelector_ShouldFail()
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
@@ -74,7 +74,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_MaxBy_WithComparer_ForNullComparer_ShouldUseDefaultComparer()
+        public void MaxBy_WithComparer_ForNullComparer_ShouldUseDefaultComparer()
         {
             // Arrange.
             int count = TestDataCreator.GetRandomPositiveCountNumber();
@@ -92,7 +92,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
 
 
         [Fact]
-        public void Call_MaxBy_WithoutComparer_ForEmptyCollection_ShouldFailForValueTypes()
+        public void MaxBy_WithoutComparer_ForEmptyCollection_ShouldFailForValueTypes()
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
@@ -105,7 +105,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_MaxBy_WithoutComparer_ForEmptyCollection_ShouldReturnNullForNullableValueTypes()
+        public void MaxBy_WithoutComparer_ForEmptyCollection_ShouldReturnNullForNullableValueTypes()
         {
             // Arrange.
             IEnumerable<int?> emptyCollection = Enumerable.Empty<int?>();
@@ -119,7 +119,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_MaxBy_WithoutComparer_ForEmptyCollection_ShouldReturnNullForReferenceTypes()
+        public void MaxBy_WithoutComparer_ForEmptyCollection_ShouldReturnNullForReferenceTypes()
         {
             // Arrange.
             IEnumerable<string> emptyCollection = Enumerable.Empty<string>();
@@ -133,7 +133,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_MaxBy_WithComparer_ForEmptyCollection_ShouldFailForValueTypes()
+        public void MaxBy_WithComparer_ForEmptyCollection_ShouldFailForValueTypes()
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
@@ -146,7 +146,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_MaxBy_WithComparer_ForEmptyCollection_ShouldReturnNullForNullableValueTypes()
+        public void MaxBy_WithComparer_ForEmptyCollection_ShouldReturnNullForNullableValueTypes()
         {
             // Arrange.
             IEnumerable<int?> emptyCollection = Enumerable.Empty<int?>();
@@ -162,7 +162,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_MaxBy_WithComparer_ForEmptyCollection_ShouldReturnNullForReferenceTypes()
+        public void MaxBy_WithComparer_ForEmptyCollection_ShouldReturnNullForReferenceTypes()
         {
             // Arrange.
             IEnumerable<string> emptyCollection = Enumerable.Empty<string>();
@@ -179,7 +179,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
 
 
         [Fact]
-        public void Call_MaxBy_WithComparer_ForPredefinedCollection_ShouldReturnProperMax()
+        public void MaxBy_WithComparer_ForPredefinedCollection_ShouldReturnProperMax()
         {
             // Arrange.
             IReadOnlyList<int> predefinedCollection = new[] { 1, 2, 3 };
@@ -198,7 +198,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
 
         [Fact]
 
-        public void Call_MaxBy_WithoutComparer_ForPredefinedCollection_ShouldReturnProperMax()
+        public void MaxBy_WithoutComparer_ForPredefinedCollection_ShouldReturnProperMax()
         {
             // Arrange.
             IReadOnlyList<int> predefinedCollection = new[] { 1, 2, 3 };
@@ -220,7 +220,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         [InlineData(TestHelper.TenCollectionSize)]
         [InlineData(TestHelper.HundredCollectionSize)]
         [InlineData(TestHelper.TenThousandCollectionSize)]
-        public void Call_MaxBy_WithoutComparer_ForCollectionWithSomeItems_ShouldReturnProperMax(
+        public void MaxBy_WithoutComparer_ForCollectionWithSomeItems_ShouldReturnProperMax(
     int count)
         {
             // Arrange.
@@ -243,7 +243,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         [InlineData(TestHelper.TenCollectionSize)]
         [InlineData(TestHelper.HundredCollectionSize)]
         [InlineData(TestHelper.TenThousandCollectionSize)]
-        public void Call_MaxBy_WithComparer_ForCollectionWithSomeItems_ShouldReturnProperMax(
+        public void MaxBy_WithComparer_ForCollectionWithSomeItems_ShouldReturnProperMax(
             int count)
         {
             // Arrange.
@@ -268,7 +268,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         [InlineData(TestHelper.TenCollectionSize)]
         [InlineData(TestHelper.HundredCollectionSize)]
         [InlineData(TestHelper.TenThousandCollectionSize)]
-        public void Call_MaxBy_WithoutComparer_ForCollectionWithTheSameItems_ShouldReturnThatItem(
+        public void MaxBy_WithoutComparer_ForCollectionWithTheSameItems_ShouldReturnThatItem(
             int count)
         {
             // Arrange.
@@ -291,7 +291,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         [InlineData(TestHelper.TenCollectionSize)]
         [InlineData(TestHelper.HundredCollectionSize)]
         [InlineData(TestHelper.TenThousandCollectionSize)]
-        public void Call_MaxBy_WithComparer_ForCollectionWithTheSameItems_ShouldReturnThatItem(
+        public void MaxBy_WithComparer_ForCollectionWithTheSameItems_ShouldReturnThatItem(
             int count)
         {
             // Arrange.
@@ -310,7 +310,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_MaxBy_WithoutComparer_ForCollectionWithRandomSize_ShouldReturnMax()
+        public void MaxBy_WithoutComparer_ForCollectionWithRandomSize_ShouldReturnMax()
         {
             // Arrange.
             int count = TestDataCreator.GetRandomPositiveCountNumber();
@@ -328,7 +328,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_MaxBy_WithComparer_ForCollectionWithRandomSize_ShouldReturnMax()
+        public void MaxBy_WithComparer_ForCollectionWithRandomSize_ShouldReturnMax()
         {
             // Arrange.
             int count = TestDataCreator.GetRandomPositiveCountNumber();

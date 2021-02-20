@@ -16,7 +16,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_FirstOrDefault_ForNullValue_ShouldFail()
+        public void FirstOrDefault_ForNullValue_ShouldFail()
         {
             // Arrange.
             const IEnumerable<int>? nullValue = null;
@@ -30,7 +30,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_FirstOrDefault_WithPredicate_ForNullValue_ShouldFail()
+        public void FirstOrDefault_WithPredicate_ForNullValue_ShouldFail()
         {
             // Arrange.
             const IEnumerable<int>? nullValue = null;
@@ -44,7 +44,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_FirstOrDefault_WithPredicate_ForNullPredicate_ShouldFail()
+        public void FirstOrDefault_WithPredicate_ForNullPredicate_ShouldFail()
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
@@ -58,7 +58,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_FirstOrDefault_ForEmptyCollection_ShouldReturnDefaultItem()
+        public void FirstOrDefault_ForEmptyCollection_ShouldReturnDefaultItem()
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
@@ -72,7 +72,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_FirstOrDefault_WithPredicate_ForEmptyCollection_ShouldReturnDefaultItem()
+        public void FirstOrDefault_WithPredicate_ForEmptyCollection_ShouldReturnDefaultItem()
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
@@ -86,7 +86,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_FirstOrDefault_ForPredefinedCollection_ShouldReturnFirstItem()
+        public void FirstOrDefault_ForPredefinedCollection_ShouldReturnFirstItem()
         {
             // Arrange.
             IReadOnlyList<int> predefinedCollection = new[] { 1, 2, 3 };
@@ -100,7 +100,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_FirstOrDefault_WithPredicate_ForPredefinedCollection_ShouldReturnFirstItemAccordingToPredicate()
+        public void FirstOrDefault_WithPredicate_ForPredefinedCollection_ShouldReturnFirstItemAccordingToPredicate()
         {
             // Arrange.
             IReadOnlyList<int> predefinedCollection = new[] { 1, 2, 3 };
@@ -122,7 +122,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         [InlineData(TestHelper.TenCollectionSize)]
         [InlineData(TestHelper.HundredCollectionSize)]
         [InlineData(TestHelper.TenThousandCollectionSize)]
-        public void Call_FirstOrDefault_ForCollectionWithSomeItems_ShouldReturnFirstItem(int count)
+        public void FirstOrDefault_ForCollectionWithSomeItems_ShouldReturnFirstItem(int count)
         {
             // Arrange.
             IEnumerable<int> collectionWithSomeItems = TestDataCreator.CreateRandomInt32List(count);
@@ -142,7 +142,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         [InlineData(TestHelper.TenCollectionSize)]
         [InlineData(TestHelper.HundredCollectionSize)]
         [InlineData(TestHelper.TenThousandCollectionSize)]
-        public void Call_FirstOrDefault_WithPredicate_ForCollectionWithSomeItems_ShouldReturnFirstItem(
+        public void FirstOrDefault_WithPredicate_ForCollectionWithSomeItems_ShouldReturnFirstItem(
             int count)
         {
             // Arrange.
@@ -165,7 +165,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         [InlineData(TestHelper.TenCollectionSize)]
         [InlineData(TestHelper.HundredCollectionSize)]
         [InlineData(TestHelper.TenThousandCollectionSize)]
-        public void Call_FirstOrDefault_WithPredicate_ForCollectionWithSomeItems_ShouldReturnDefaultItem(
+        public void FirstOrDefault_WithPredicate_ForCollectionWithSomeItems_ShouldReturnDefaultItem(
             int count)
         {
             // Arrange.
@@ -180,7 +180,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_FirstOrDefault_ForCollectionWithRandomSize_ShouldReturnFirstOrDefaultItem()
+        public void FirstOrDefault_ForCollectionWithRandomSize_ShouldReturnFirstOrDefaultItem()
         {
             // Arrange.
             int count = TestDataCreator.GetRandomCountNumber();
@@ -199,7 +199,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_FirstOrDefault_WithPredicate_ForCollectionWithRandomSize_ShouldReturnFirstOrDefaultItem()
+        public void FirstOrDefault_WithPredicate_ForCollectionWithRandomSize_ShouldReturnFirstOrDefaultItem()
         {
             // Arrange.
             int count = TestDataCreator.GetRandomCountNumber();
@@ -219,7 +219,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_FirstOrDefault_WithPredicate_ForCollectionWithRandomSize_ShouldReturnDefaultItem()
+        public void FirstOrDefault_WithPredicate_ForCollectionWithRandomSize_ShouldReturnDefaultItem()
         {
             // Arrange.
             int count = TestDataCreator.GetRandomCountNumber();

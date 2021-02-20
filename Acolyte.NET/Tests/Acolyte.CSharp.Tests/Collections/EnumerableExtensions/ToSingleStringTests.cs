@@ -17,7 +17,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_ToSingleString_ForNullValue_ShouldReturnEmptyCollectionMessage()
+        public void ToSingleString_ForNullValue_ShouldReturnEmptyCollectionMessage()
         {
             // Arrange.
             const IEnumerable<int>? nullValue = null;
@@ -31,7 +31,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_ToSingleString_WithEmptyCollectionMessage_ForNullValue_ShouldReturnEmptyCollectionMessage()
+        public void ToSingleString_WithEmptyCollectionMessage_ForNullValue_ShouldReturnEmptyCollectionMessage()
         {
             // Arrange.
             const IEnumerable<int>? nullValue = null;
@@ -45,7 +45,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_ToSingleString_WithEmptyCollectionMessage_ForNullValueAndMessage_ShouldReturnDefaultEmptyCollectionMessage()
+        public void ToSingleString_WithEmptyCollectionMessage_ForNullValueAndMessage_ShouldReturnDefaultEmptyCollectionMessage()
         {
             // Arrange.
             const IEnumerable<int>? nullValue = null;
@@ -59,7 +59,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_ToSingleString_WithEmptyCollectionMessageAndSeparator_ForNullValue_ShouldReturnEmptyCollectionMessage()
+        public void ToSingleString_WithEmptyCollectionMessageAndSeparator_ForNullValue_ShouldReturnEmptyCollectionMessage()
         {
             // Arrange.
             const IEnumerable<int>? nullValue = null;
@@ -74,7 +74,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_ToSingleString_WithEmptyCollectionMessageAndSeparator_ForNullValueAndMessage_ShouldReturnDefaultEmptyCollectionMessage()
+        public void ToSingleString_WithEmptyCollectionMessageAndSeparator_ForNullValueAndMessage_ShouldReturnDefaultEmptyCollectionMessage()
         {
             // Arrange.
             const IEnumerable<int>? nullValue = null;
@@ -89,7 +89,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_ToSingleString_WithEmptyCollectionMessageAndSeparator_ForNullValueAndMessageAndSeparator_ShouldReturnEmptyCollectionMessage()
+        public void ToSingleString_WithEmptyCollectionMessageAndSeparator_ForNullValueAndMessageAndSeparator_ShouldReturnEmptyCollectionMessage()
         {
             // Arrange.
             const IEnumerable<int>? nullValue = null;
@@ -105,7 +105,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_ToSingleString_WithSelector_ForNullValue_ShouldReturnEmptyCollectionMessage()
+        public void ToSingleString_WithSelector_ForNullValue_ShouldReturnEmptyCollectionMessage()
         {
             // Arrange.
             const IEnumerable<int>? nullValue = null;
@@ -119,7 +119,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_ToSingleString_WithSelector_ForNullValues_ShouldFailDueToNullSelector()
+        public void ToSingleString_WithSelector_ForNullValues_ShouldFailDueToNullSelector()
         {
             // Arrange.
             const IEnumerable<int>? nullValue = null;
@@ -133,7 +133,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_ToSingleString_WithEmptyCollectionMessageAndSelector_ForNullValue_ShouldReturnEmptyCollectionMessage()
+        public void ToSingleString_WithEmptyCollectionMessageAndSelector_ForNullValue_ShouldReturnEmptyCollectionMessage()
         {
             // Arrange.
             const IEnumerable<int>? nullValue = null;
@@ -147,7 +147,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_ToSingleString_WithEmptyCollectionMessageAndSelector_ForNullValueAndMessage_ShouldReturnDefaultEmptyCollectionMessage()
+        public void ToSingleString_WithEmptyCollectionMessageAndSelector_ForNullValueAndMessage_ShouldReturnDefaultEmptyCollectionMessage()
         {
             // Arrange.
             const IEnumerable<int>? nullValue = null;
@@ -163,7 +163,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_ToSingleString_WithEmptyCollectionMessageAndSelector_ForNullValues_ShouldFailDueToNullSelector()
+        public void ToSingleString_WithEmptyCollectionMessageAndSelector_ForNullValues_ShouldFailDueToNullSelector()
         {
             // Arrange.
             const IEnumerable<int>? nullValue = null;
@@ -178,7 +178,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_ToSingleString_WithEmptyCollectionMessageAndSeparatorAndSelector_ForNullValue_ShouldReturnEmptyCollectionMessage()
+        public void ToSingleString_WithEmptyCollectionMessageAndSeparatorAndSelector_ForNullValue_ShouldReturnEmptyCollectionMessage()
         {
             // Arrange.
             const IEnumerable<int>? nullValue = null;
@@ -195,7 +195,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_ToSingleString_WithEmptyCollectionMessageAndSeparatorAndSelector_ForNullValueAndMessageAndSeparator_ShouldReturnDefaultEmptyCollectionMessage()
+        public void ToSingleString_WithEmptyCollectionMessageAndSeparatorAndSelector_ForNullValueAndMessageAndSeparator_ShouldReturnDefaultEmptyCollectionMessage()
         {
             // Arrange.
             const IEnumerable<int>? nullValue = null;
@@ -211,7 +211,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_ToSingleString_WithEmptyCollectionMessageAndSeparatorAndSelector_ForNullValues_ShouldFailDueToNullSelector()
+        public void ToSingleString_WithEmptyCollectionMessageAndSeparatorAndSelector_ForNullValues_ShouldFailDueToNullSelector()
         {
             // Arrange.
             const IEnumerable<int>? nullValue = null;
@@ -228,7 +228,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_ToSingleString_ForEmptyCollection_ShouldReturnEmptyCollectionMessage()
+        public void ToSingleString_ForEmptyCollection_ShouldReturnEmptyCollectionMessage()
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
@@ -242,7 +242,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_ToSingleString_WithEmptyCollectionMessage_ForEmptyCollection_ShouldReturnEmptyCollectionMessage()
+        public void ToSingleString_WithEmptyCollectionMessage_ForEmptyCollection_ShouldReturnEmptyCollectionMessage()
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
@@ -256,7 +256,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_ToSingleString_WithEmptyCollectionMessageAndSeparator_ForEmptyCollection_ShouldReturnEmptyCollectionMessage()
+        public void ToSingleString_WithEmptyCollectionMessageAndSeparator_ForEmptyCollection_ShouldReturnEmptyCollectionMessage()
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
@@ -271,7 +271,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_ToSingleString_WithSelector_ForEmptyCollection_ShouldReturnEmptyCollectionMessage()
+        public void ToSingleString_WithSelector_ForEmptyCollection_ShouldReturnEmptyCollectionMessage()
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
@@ -285,7 +285,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_ToSingleString_WithEmptyCollectionMessageAndSelector_ForEmptyCollection_ShouldReturnEmptyCollectionMessage()
+        public void ToSingleString_WithEmptyCollectionMessageAndSelector_ForEmptyCollection_ShouldReturnEmptyCollectionMessage()
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
@@ -299,7 +299,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_ToSingleString_WithEmptyCollectionMessageAndSeparatorAndSelector_ForEmptyCollection_ShouldReturnEmptyCollectionMessage()
+        public void ToSingleString_WithEmptyCollectionMessageAndSeparatorAndSelector_ForEmptyCollection_ShouldReturnEmptyCollectionMessage()
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();

@@ -15,7 +15,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_IndexOf_ForNullValue_ShouldFail()
+        public void IndexOf_ForNullValue_ShouldFail()
         {
             // Arrange.
             const IEnumerable<int>? nullValue = null;
@@ -27,7 +27,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_IndexOf_ForNullPredicate_ShouldFail()
+        public void IndexOf_ForNullPredicate_ShouldFail()
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
@@ -39,7 +39,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_IndexOf_Item_ForNullValue_ShouldFail()
+        public void IndexOf_Item_ForNullValue_ShouldFail()
         {
             // Arrange.
             const IEnumerable<int>? nullValue = null;
@@ -51,7 +51,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_IndexOf_ItemWithComparer_ForNullValue_ShouldFail()
+        public void IndexOf_ItemWithComparer_ForNullValue_ShouldFail()
         {
             // Arrange.
             const IEnumerable<int>? nullValue = null;
@@ -65,7 +65,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_IndexOf_ItemWithComparer_ForNullComparer_ShouldUseDefaultComparer()
+        public void IndexOf_ItemWithComparer_ForNullComparer_ShouldUseDefaultComparer()
         {
             // Arrange.
             int count = TestDataCreator.GetRandomPositiveCountNumber();
@@ -82,7 +82,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_IndexOf_ForEmptyCollection_ShouldReturnNotFoundIndex()
+        public void IndexOf_ForEmptyCollection_ShouldReturnNotFoundIndex()
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
@@ -96,7 +96,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_IndexOf_Item_ForEmptyCollection_ShouldReturnNotFoundIndex()
+        public void IndexOf_Item_ForEmptyCollection_ShouldReturnNotFoundIndex()
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
@@ -110,7 +110,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_IndexOf_ItemWithComparer_ForEmptyCollection_ShouldReturnNotFoundIndex()
+        public void IndexOf_ItemWithComparer_ForEmptyCollection_ShouldReturnNotFoundIndex()
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
@@ -124,7 +124,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_IndexOf_ForPredefinedCollection_ShouldReturnIndexOfSecondItem()
+        public void IndexOf_ForPredefinedCollection_ShouldReturnIndexOfSecondItem()
         {
             // Arrange.
             IReadOnlyList<int> predefinedCollection = new[] { 1, 2, 3 };
@@ -139,7 +139,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_IndexOf_Item_ForPredefinedCollection_ShouldReturnIndexOfSecondItem()
+        public void IndexOf_Item_ForPredefinedCollection_ShouldReturnIndexOfSecondItem()
         {
             // Arrange.
             IReadOnlyList<int> predefinedCollection = new[] { 1, 2, 3 };
@@ -154,7 +154,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_IndexOf_ItemWithComparer_ForPredefinedCollection_ShouldReturnIndexOfSecondItem()
+        public void IndexOf_ItemWithComparer_ForPredefinedCollection_ShouldReturnIndexOfSecondItem()
         {
             // Arrange.
             IReadOnlyList<int> predefinedCollection = new[] { 1, 2, 3 };
@@ -177,7 +177,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         [InlineData(TestHelper.TenCollectionSize)]
         [InlineData(TestHelper.HundredCollectionSize)]
         [InlineData(TestHelper.TenThousandCollectionSize)]
-        public void Call_IndexOf_ForCollectionWithSomeItems_ShouldReturnIndexOfRandomlySelectedItem(
+        public void IndexOf_ForCollectionWithSomeItems_ShouldReturnIndexOfRandomlySelectedItem(
             int count)
         {
             // Arrange.
@@ -200,7 +200,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         [InlineData(TestHelper.TenCollectionSize)]
         [InlineData(TestHelper.HundredCollectionSize)]
         [InlineData(TestHelper.TenThousandCollectionSize)]
-        public void Call_IndexOf_Item_ForCollectionWithSomeItems_ShouldReturnIndexOfRandomlySelectedItem(
+        public void IndexOf_Item_ForCollectionWithSomeItems_ShouldReturnIndexOfRandomlySelectedItem(
             int count)
         {
             // Arrange.
@@ -223,7 +223,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         [InlineData(TestHelper.TenCollectionSize)]
         [InlineData(TestHelper.HundredCollectionSize)]
         [InlineData(TestHelper.TenThousandCollectionSize)]
-        public void Call_IndexOf_ItemWithComparer_ForCollectionWithSomeItems_ShouldReturnIndexOfRandomlySelectedItem(
+        public void IndexOf_ItemWithComparer_ForCollectionWithSomeItems_ShouldReturnIndexOfRandomlySelectedItem(
             int count)
         {
             // Arrange.
@@ -248,7 +248,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         [InlineData(TestHelper.TenCollectionSize)]
         [InlineData(TestHelper.HundredCollectionSize)]
         [InlineData(TestHelper.TenThousandCollectionSize)]
-        public void Call_IndexOf_ForCollectionWithSomeItems_ShouldReturnNotFoundIndex(int count)
+        public void IndexOf_ForCollectionWithSomeItems_ShouldReturnNotFoundIndex(int count)
         {
             // Arrange.
             IEnumerable<int> collectionWithSomeItems = TestDataCreator.CreateRandomInt32List(count);
@@ -268,7 +268,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         [InlineData(TestHelper.TenCollectionSize)]
         [InlineData(TestHelper.HundredCollectionSize)]
         [InlineData(TestHelper.TenThousandCollectionSize)]
-        public void Call_IndexOf_Item_ForCollectionWithSomeItems_ShouldReturnNotFoundIndex(
+        public void IndexOf_Item_ForCollectionWithSomeItems_ShouldReturnNotFoundIndex(
             int count)
         {
             // Arrange.
@@ -291,7 +291,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         [InlineData(TestHelper.TenCollectionSize)]
         [InlineData(TestHelper.HundredCollectionSize)]
         [InlineData(TestHelper.TenThousandCollectionSize)]
-        public void Call_IndexOf_ItemWithComparer_ForCollectionWithSomeItems_ShouldReturnNotFoundIndex(
+        public void IndexOf_ItemWithComparer_ForCollectionWithSomeItems_ShouldReturnNotFoundIndex(
             int count)
         {
             // Arrange.
@@ -310,7 +310,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_IndexOf_ForCollectionWithRandomSize_ShouldReturnIndexOfRandomlySelectedItem()
+        public void IndexOf_ForCollectionWithRandomSize_ShouldReturnIndexOfRandomlySelectedItem()
         {
             // Arrange.
             int count = TestDataCreator.GetRandomPositiveCountNumber();
@@ -327,7 +327,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_IndexOf_Item_ForCollectionWithRandomSize_ShouldReturnIndexOfRandomlySelectedItem()
+        public void IndexOf_Item_ForCollectionWithRandomSize_ShouldReturnIndexOfRandomlySelectedItem()
         {
             // Arrange.
             int count = TestDataCreator.GetRandomPositiveCountNumber();
@@ -344,7 +344,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_IndexOf_ItemWithComparer_ForCollectionWithRandomSize_ShouldReturnIndexOfRandomlySelectedItem()
+        public void IndexOf_ItemWithComparer_ForCollectionWithRandomSize_ShouldReturnIndexOfRandomlySelectedItem()
         {
             // Arrange.
             int count = TestDataCreator.GetRandomPositiveCountNumber();
@@ -363,7 +363,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_IndexOf_ForCollectionWithRandomSize_ShouldReturnNotFoundIndex()
+        public void IndexOf_ForCollectionWithRandomSize_ShouldReturnNotFoundIndex()
         {
             // Arrange.
             int count = TestDataCreator.GetRandomCountNumber();
@@ -379,7 +379,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_IndexOf_Item_ForCollectionWithRandomSize_ShouldReturnNotFoundIndex()
+        public void IndexOf_Item_ForCollectionWithRandomSize_ShouldReturnNotFoundIndex()
         {
             // Arrange.
             int count = TestDataCreator.GetRandomCountNumber();
@@ -396,7 +396,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_IndexOf_ItemWithComparer_ForCollectionWithRandomSize_ShouldReturnNotFoundIndex()
+        public void IndexOf_ItemWithComparer_ForCollectionWithRandomSize_ShouldReturnNotFoundIndex()
         {
             // Arrange.
             int count = TestDataCreator.GetRandomCountNumber();

@@ -18,7 +18,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         #region MinMax For Int32
 
         [Fact]
-        public void Call_MinMax_Int32_ForNullValue_ShouldFail()
+        public void MinMax_Int32_ForNullValue_ShouldFail()
         {
             // Arrange.
             const IEnumerable<int>? nullValue = null;
@@ -32,7 +32,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_MinMax_NullableInt32_ForNullValue_ShouldFail()
+        public void MinMax_NullableInt32_ForNullValue_ShouldFail()
         {
             // Arrange.
             const IEnumerable<int?>? nullValue = null;
@@ -46,7 +46,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_MinMax_Int32_ForEmptyCollection_ShouldFail()
+        public void MinMax_Int32_ForEmptyCollection_ShouldFail()
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
@@ -58,7 +58,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_MinMax_NullableInt32_ForEmptyCollection_ShouldReturnNull()
+        public void MinMax_NullableInt32_ForEmptyCollection_ShouldReturnNull()
         {
             // Arrange.
             IEnumerable<int?> emptyCollection = Enumerable.Empty<int?>();
@@ -72,7 +72,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_MinMax_Int32_ForPredefinedCollection_ShouldReturnMinMax()
+        public void MinMax_Int32_ForPredefinedCollection_ShouldReturnMinMax()
         {
             // Arrange.
             IReadOnlyList<int> predefinedCollection = new[] { 1, 2, 3 };
@@ -87,7 +87,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_MinMax_NullableInt32_ForPredefinedCollection_ShouldReturnMinMax()
+        public void MinMax_NullableInt32_ForPredefinedCollection_ShouldReturnMinMax()
         {
             // Arrange.
             IReadOnlyList<int?> predefinedCollection = new int?[] { null, 1, null, 2, null, 3 };
@@ -108,7 +108,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         [InlineData(TestHelper.TenCollectionSize)]
         [InlineData(TestHelper.HundredCollectionSize)]
         [InlineData(TestHelper.TenThousandCollectionSize)]
-        public void Call_MinMax_Int32_ForCollectionWithSomeItems_ShouldReturnMinMax(int count)
+        public void MinMax_Int32_ForCollectionWithSomeItems_ShouldReturnMinMax(int count)
         {
             // Arrange.
             IEnumerable<int> collectionWithSomeItems = TestDataCreator.CreateRandomInt32List(count);
@@ -129,7 +129,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         [InlineData(TestHelper.TenCollectionSize)]
         [InlineData(TestHelper.HundredCollectionSize)]
         [InlineData(TestHelper.TenThousandCollectionSize)]
-        public void Call_MinMax_NullableInt32_ForCollectionWithSomeItems_ShouldReturnMinMax(
+        public void MinMax_NullableInt32_ForCollectionWithSomeItems_ShouldReturnMinMax(
             int count)
         {
             // Arrange.
@@ -146,7 +146,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_MinMax_Int32_ForCollectionWithRandomSize_ShouldReturnMinMaxOrFailIfNoItems()
+        public void MinMax_Int32_ForCollectionWithRandomSize_ShouldReturnMinMaxOrFailIfNoItems()
         {
             // Arrange.
             int count = TestDataCreator.GetRandomSmallCountNumber();
@@ -172,7 +172,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_MinMax_NullableInt32_ForCollectionWithRandomSize_ShouldReturnMinMaxOrNullIfNoItems()
+        public void MinMax_NullableInt32_ForCollectionWithRandomSize_ShouldReturnMinMaxOrNullIfNoItems()
         {
             // Arrange.
             int count = TestDataCreator.GetRandomSmallCountNumber();
@@ -228,7 +228,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         #region MinMax For Int64
 
         [Fact]
-        public void Call_MinMax_Int64_ForNullValue_ShouldFail()
+        public void MinMax_Int64_ForNullValue_ShouldFail()
         {
             // Arrange.
             const IEnumerable<long>? nullValue = null;
@@ -242,7 +242,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_MinMax_NullableInt64_ForNullValue_ShouldFail()
+        public void MinMax_NullableInt64_ForNullValue_ShouldFail()
         {
             // Arrange.
             const IEnumerable<long?>? nullValue = null;
@@ -256,7 +256,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_MinMax_Int64_ForEmptyCollection_ShouldFail()
+        public void MinMax_Int64_ForEmptyCollection_ShouldFail()
         {
             // Arrange.
             IEnumerable<long> emptyCollection = Enumerable.Empty<long>();
@@ -268,7 +268,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_MinMax_NullableInt64_ForEmptyCollection_ShouldReturnNull()
+        public void MinMax_NullableInt64_ForEmptyCollection_ShouldReturnNull()
         {
             // Arrange.
             IEnumerable<long?> emptyCollection = Enumerable.Empty<long?>();
@@ -282,7 +282,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_MinMax_Int64_ForPredefinedCollection_ShouldReturnMinMax()
+        public void MinMax_Int64_ForPredefinedCollection_ShouldReturnMinMax()
         {
             // Arrange.
             IReadOnlyList<long> predefinedCollection = new[] { 1L, 2L, 3L };
@@ -297,7 +297,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_MinMax_NullableInt64_ForPredefinedCollection_ShouldReturnMinMax()
+        public void MinMax_NullableInt64_ForPredefinedCollection_ShouldReturnMinMax()
         {
             // Arrange.
             IReadOnlyList <long?> predefinedCollection =
@@ -319,7 +319,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         [InlineData(TestHelper.TenCollectionSize)]
         [InlineData(TestHelper.HundredCollectionSize)]
         [InlineData(TestHelper.TenThousandCollectionSize)]
-        public void Call_MinMax_Int64_ForCollectionWithSomeItems_ShouldReturnMinMax(int count)
+        public void MinMax_Int64_ForCollectionWithSomeItems_ShouldReturnMinMax(int count)
         {
             // Arrange.
             IEnumerable<long> collectionWithSomeItems =
@@ -341,7 +341,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         [InlineData(TestHelper.TenCollectionSize)]
         [InlineData(TestHelper.HundredCollectionSize)]
         [InlineData(TestHelper.TenThousandCollectionSize)]
-        public void Call_MinMax_NullableInt64_ForCollectionWithSomeItems_ShouldReturnMinMax(
+        public void MinMax_NullableInt64_ForCollectionWithSomeItems_ShouldReturnMinMax(
             int count)
         {
             // Arrange.
@@ -358,7 +358,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_MinMax_Int64_ForCollectionWithRandomSize_ShouldReturnMinMaxOrFailIfNoItems()
+        public void MinMax_Int64_ForCollectionWithRandomSize_ShouldReturnMinMaxOrFailIfNoItems()
         {
             // Arrange.
             int count = TestDataCreator.GetRandomSmallCountNumber();
@@ -384,7 +384,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_MinMax_NullableInt64_ForCollectionWithRandomSize_ShouldReturnMinMaxOrNullIfNoItems()
+        public void MinMax_NullableInt64_ForCollectionWithRandomSize_ShouldReturnMinMaxOrNullIfNoItems()
         {
             // Arrange.
             int count = TestDataCreator.GetRandomSmallCountNumber();
@@ -440,7 +440,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         #region MinMax For Single
 
         [Fact]
-        public void Call_MinMax_Single_ForNullValue_ShouldFail()
+        public void MinMax_Single_ForNullValue_ShouldFail()
         {
             // Arrange.
             const IEnumerable<float>? nullValue = null;
@@ -454,7 +454,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_MinMax_NullableSingle_ForNullValue_ShouldFail()
+        public void MinMax_NullableSingle_ForNullValue_ShouldFail()
         {
             // Arrange.
             const IEnumerable<float?>? nullValue = null;
@@ -468,7 +468,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_MinMax_Single_ForEmptyCollection_ShouldFail()
+        public void MinMax_Single_ForEmptyCollection_ShouldFail()
         {
             // Arrange.
             IEnumerable<float> emptyCollection = Enumerable.Empty<float>();
@@ -480,7 +480,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_MinMax_NullableSingle_ForEmptyCollection_ShouldReturnNull()
+        public void MinMax_NullableSingle_ForEmptyCollection_ShouldReturnNull()
         {
             // Arrange.
             IEnumerable<float?> emptyCollection = Enumerable.Empty<float?>();
@@ -494,7 +494,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_MinMax_Single_ForPredefinedCollection_ShouldReturnMinMax()
+        public void MinMax_Single_ForPredefinedCollection_ShouldReturnMinMax()
         {
             // Arrange.
             IReadOnlyList<float> predefinedCollection = new[] { 1.1F, 2.2F, 3.5F };
@@ -509,7 +509,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_MinMax_NullableSingle_ForPredefinedCollection_ShouldReturnMinMax()
+        public void MinMax_NullableSingle_ForPredefinedCollection_ShouldReturnMinMax()
         {
             // Arrange.
             IReadOnlyList<float?> predefinedCollection =
@@ -531,7 +531,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         [InlineData(TestHelper.TenCollectionSize)]
         [InlineData(TestHelper.HundredCollectionSize)]
         [InlineData(TestHelper.TenThousandCollectionSize)]
-        public void Call_MinMax_Single_ForCollectionWithSomeItems_ShouldReturnMinMax(int count)
+        public void MinMax_Single_ForCollectionWithSomeItems_ShouldReturnMinMax(int count)
         {
             // Arrange.
             IEnumerable<float> collectionWithSomeItems =
@@ -553,7 +553,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         [InlineData(TestHelper.TenCollectionSize)]
         [InlineData(TestHelper.HundredCollectionSize)]
         [InlineData(TestHelper.TenThousandCollectionSize)]
-        public void Call_MinMax_NullableSingle_ForCollectionWithSomeItems_ShouldReturnMinMax(
+        public void MinMax_NullableSingle_ForCollectionWithSomeItems_ShouldReturnMinMax(
             int count)
         {
             // Arrange.
@@ -570,7 +570,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_MinMax_Single_ForCollectionWithRandomSize_ShouldReturnMinMaxOrFailIfNoItems()
+        public void MinMax_Single_ForCollectionWithRandomSize_ShouldReturnMinMaxOrFailIfNoItems()
         {
             // Arrange.
             int count = TestDataCreator.GetRandomSmallCountNumber();
@@ -596,7 +596,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_MinMax_NullableSingle_ForCollectionWithRandomSize_ShouldReturnMinMaxOrNullIfNoItems()
+        public void MinMax_NullableSingle_ForCollectionWithRandomSize_ShouldReturnMinMaxOrNullIfNoItems()
         {
             // Arrange.
             int count = TestDataCreator.GetRandomSmallCountNumber();
@@ -652,7 +652,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         #region MinMax For Double
 
         [Fact]
-        public void Call_MinMax_Double_ForNullValue_ShouldFail()
+        public void MinMax_Double_ForNullValue_ShouldFail()
         {
             // Arrange.
             const IEnumerable<double>? nullValue = null;
@@ -666,7 +666,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_MinMax_NullableDouble_ForNullValue_ShouldFail()
+        public void MinMax_NullableDouble_ForNullValue_ShouldFail()
         {
             // Arrange.
             const IEnumerable<double?>? nullValue = null;
@@ -680,7 +680,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_MinMax_Double_ForEmptyCollection_ShouldFail()
+        public void MinMax_Double_ForEmptyCollection_ShouldFail()
         {
             // Arrange.
             IEnumerable<double> emptyCollection = Enumerable.Empty<double>();
@@ -692,7 +692,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_MinMax_NullableDouble_ForEmptyCollection_ShouldReturnNull()
+        public void MinMax_NullableDouble_ForEmptyCollection_ShouldReturnNull()
         {
             // Arrange.
             IEnumerable<double?> emptyCollection = Enumerable.Empty<double?>();
@@ -706,7 +706,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_MinMax_Double_ForPredefinedCollection_ShouldReturnMinMax()
+        public void MinMax_Double_ForPredefinedCollection_ShouldReturnMinMax()
         {
             // Arrange.
             IReadOnlyList<double> predefinedCollection = new[] { 1.1D, 2.2D, 3.5D };
@@ -721,7 +721,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_MinMax_NullableDouble_ForPredefinedCollection_ShouldReturnMinMax()
+        public void MinMax_NullableDouble_ForPredefinedCollection_ShouldReturnMinMax()
         {
             // Arrange.
             IReadOnlyList<double?> predefinedCollection =
@@ -743,7 +743,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         [InlineData(TestHelper.TenCollectionSize)]
         [InlineData(TestHelper.HundredCollectionSize)]
         [InlineData(TestHelper.TenThousandCollectionSize)]
-        public void Call_MinMax_Double_ForCollectionWithSomeItems_ShouldReturnMinMax(int count)
+        public void MinMax_Double_ForCollectionWithSomeItems_ShouldReturnMinMax(int count)
         {
             // Arrange.
             IEnumerable<double> collectionWithSomeItems =
@@ -765,7 +765,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         [InlineData(TestHelper.TenCollectionSize)]
         [InlineData(TestHelper.HundredCollectionSize)]
         [InlineData(TestHelper.TenThousandCollectionSize)]
-        public void Call_MinMax_NullableDouble_ForCollectionWithSomeItems_ShouldReturnMinMax(
+        public void MinMax_NullableDouble_ForCollectionWithSomeItems_ShouldReturnMinMax(
             int count)
         {
             // Arrange.
@@ -782,7 +782,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_MinMax_Double_ForCollectionWithRandomSize_ShouldReturnMinMaxOrFailIfNoItems()
+        public void MinMax_Double_ForCollectionWithRandomSize_ShouldReturnMinMaxOrFailIfNoItems()
         {
             // Arrange.
             int count = TestDataCreator.GetRandomSmallCountNumber();
@@ -808,7 +808,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_MinMax_NullableDouble_ForCollectionWithRandomSize_ShouldReturnMinMaxOrNullIfNoItems()
+        public void MinMax_NullableDouble_ForCollectionWithRandomSize_ShouldReturnMinMaxOrNullIfNoItems()
         {
             // Arrange.
             int count = TestDataCreator.GetRandomSmallCountNumber();
@@ -864,7 +864,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         #region MinMax For Decimal
 
         [Fact]
-        public void Call_MinMax_Decimal_ForNullValue_ShouldFail()
+        public void MinMax_Decimal_ForNullValue_ShouldFail()
         {
             // Arrange.
             const IEnumerable<decimal>? nullValue = null;
@@ -878,7 +878,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_MinMax_NullableDecimal_ForNullValue_ShouldFail()
+        public void MinMax_NullableDecimal_ForNullValue_ShouldFail()
         {
             // Arrange.
             const IEnumerable<decimal?>? nullValue = null;
@@ -892,7 +892,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_MinMax_Decimal_ForEmptyCollection_ShouldFail()
+        public void MinMax_Decimal_ForEmptyCollection_ShouldFail()
         {
             // Arrange.
             IEnumerable<decimal> emptyCollection = Enumerable.Empty<decimal>();
@@ -904,7 +904,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_MinMax_NullableDecimal_ForEmptyCollection_ShouldReturnNull()
+        public void MinMax_NullableDecimal_ForEmptyCollection_ShouldReturnNull()
         {
             // Arrange.
             IEnumerable<decimal?> emptyCollection = Enumerable.Empty<decimal?>();
@@ -918,7 +918,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_MinMax_Decimal_ForPredefinedCollection_ShouldReturnMinMax()
+        public void MinMax_Decimal_ForPredefinedCollection_ShouldReturnMinMax()
         {
             // Arrange.
             IReadOnlyList<decimal> predefinedCollection = new[] { 1.1M, 2.2M, 3.5M };
@@ -933,7 +933,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_MinMax_NullableDecimal_ForPredefinedCollection_ShouldReturnMinMax()
+        public void MinMax_NullableDecimal_ForPredefinedCollection_ShouldReturnMinMax()
         {
             // Arrange.
             IReadOnlyList<decimal?> predefinedCollection =
@@ -955,7 +955,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         [InlineData(TestHelper.TenCollectionSize)]
         [InlineData(TestHelper.HundredCollectionSize)]
         [InlineData(TestHelper.TenThousandCollectionSize)]
-        public void Call_MinMax_Decimal_ForCollectionWithSomeItems_ShouldReturnMinMax(int count)
+        public void MinMax_Decimal_ForCollectionWithSomeItems_ShouldReturnMinMax(int count)
         {
             // Arrange.
             IEnumerable<decimal> collectionWithSomeItems =
@@ -977,7 +977,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         [InlineData(TestHelper.TenCollectionSize)]
         [InlineData(TestHelper.HundredCollectionSize)]
         [InlineData(TestHelper.TenThousandCollectionSize)]
-        public void Call_MinMax_NullableDecimal_ForCollectionWithSomeItems_ShouldReturnMinMax(
+        public void MinMax_NullableDecimal_ForCollectionWithSomeItems_ShouldReturnMinMax(
             int count)
         {
             // Arrange.
@@ -994,7 +994,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_MinMax_Decimal_ForCollectionWithRandomSize_ShouldReturnMinMaxOrFailIfNoItems()
+        public void MinMax_Decimal_ForCollectionWithRandomSize_ShouldReturnMinMaxOrFailIfNoItems()
         {
             // Arrange.
             int count = TestDataCreator.GetRandomSmallCountNumber();
@@ -1020,7 +1020,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_MinMax_NullableDecimal_ForCollectionWithRandomSize_ShouldReturnMinMaxOrNullIfNoItems()
+        public void MinMax_NullableDecimal_ForCollectionWithRandomSize_ShouldReturnMinMaxOrNullIfNoItems()
         {
             // Arrange.
             int count = TestDataCreator.GetRandomSmallCountNumber();
@@ -1078,7 +1078,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         // Using user-defined struct and class to test generic overload.
 
         [Fact]
-        public void Call_MinMax_GenericTypes_ForNullValue_ShouldFail()
+        public void MinMax_GenericTypes_ForNullValue_ShouldFail()
         {
             // Arrange.
             const IEnumerable<DummyClass>? nullValue = null;
@@ -1092,7 +1092,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_MinMax_GenericTypes_WithComparer_ForNullValue_ShouldFail()
+        public void MinMax_GenericTypes_WithComparer_ForNullValue_ShouldFail()
         {
             // Arrange.
             const IEnumerable<DummyClass>? nullValue = null;
@@ -1106,7 +1106,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_MinMax_GenericTypes_WithComparer_ForNullComparer_ShouldUseDefaultComparer()
+        public void MinMax_GenericTypes_WithComparer_ForNullComparer_ShouldUseDefaultComparer()
         {
             // Arrange.
             int count = TestDataCreator.GetRandomSmallCountNumber();
@@ -1123,7 +1123,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_MinMax_GenericTypes_ForEmptyCollection_ShouldFailForValueTypes()
+        public void MinMax_GenericTypes_ForEmptyCollection_ShouldFailForValueTypes()
         {
             // Arrange.
             IEnumerable<DummyStruct> emptyCollection = Enumerable.Empty<DummyStruct>();
@@ -1135,7 +1135,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_MinMax_GenericTypes_ForEmptyCollection_ShouldReturnNullForNullableValueTypes()
+        public void MinMax_GenericTypes_ForEmptyCollection_ShouldReturnNullForNullableValueTypes()
         {
             // Arrange.
             IEnumerable<DummyStruct?> emptyCollection = Enumerable.Empty<DummyStruct?>();
@@ -1149,7 +1149,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_MinMax_GenericTypes_ForEmptyCollection_ShouldReturnNullForReferenceTypes()
+        public void MinMax_GenericTypes_ForEmptyCollection_ShouldReturnNullForReferenceTypes()
         {
             // Arrange.
             IEnumerable<DummyClass> emptyCollection = Enumerable.Empty<DummyClass>();
@@ -1163,7 +1163,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_MinMax_GenericTypes_WithComparer_ForEmptyCollection_ShouldFailForValueTypes()
+        public void MinMax_GenericTypes_WithComparer_ForEmptyCollection_ShouldFailForValueTypes()
         {
             // Arrange.
             IEnumerable<DummyStruct> emptyCollection = Enumerable.Empty<DummyStruct>();
@@ -1176,7 +1176,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_MinMax_GenericTypes_WithComparer_ForEmptyCollection_ShouldReturnNullForNullableValueTypes()
+        public void MinMax_GenericTypes_WithComparer_ForEmptyCollection_ShouldReturnNullForNullableValueTypes()
         {
             // Arrange.
             IEnumerable<DummyStruct?> emptyCollection = Enumerable.Empty<DummyStruct?>();
@@ -1190,7 +1190,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_MinMax_GenericTypes_WithComparer_ForEmptyCollection_ShouldReturnNullForReferenceTypes()
+        public void MinMax_GenericTypes_WithComparer_ForEmptyCollection_ShouldReturnNullForReferenceTypes()
         {
             // Arrange.
             IEnumerable<DummyClass> emptyCollection = Enumerable.Empty<DummyClass>();
@@ -1205,7 +1205,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
 
 
         [Fact]
-        public void Call_MinMax_GenericTypes_ForPredefinedCollection_ShouldReturnMinMax()
+        public void MinMax_GenericTypes_ForPredefinedCollection_ShouldReturnMinMax()
         {
             // Arrange.
             IReadOnlyList<string> predefinedCollection = new[] { "aaa", "bbb", "ccc" };
@@ -1220,7 +1220,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_MinMax_GenericTypes_WithComparer_ForPredefinedCollection_ShouldReturnMinMax()
+        public void MinMax_GenericTypes_WithComparer_ForPredefinedCollection_ShouldReturnMinMax()
         {
             // Arrange.
             IReadOnlyList<string?> predefinedCollection =
@@ -1242,7 +1242,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         [InlineData(TestHelper.TenCollectionSize)]
         [InlineData(TestHelper.HundredCollectionSize)]
         [InlineData(TestHelper.TenThousandCollectionSize)]
-        public void Call_MinMax_GenericTypes_ForCollectionWithSomeItems_ShouldReturnMinMax(
+        public void MinMax_GenericTypes_ForCollectionWithSomeItems_ShouldReturnMinMax(
             int count)
         {
             // Arrange.
@@ -1265,7 +1265,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         [InlineData(TestHelper.TenCollectionSize)]
         [InlineData(TestHelper.HundredCollectionSize)]
         [InlineData(TestHelper.TenThousandCollectionSize)]
-        public void Call_MinMax_GenericTypes_WithComparer_ForCollectionWithSomeItems_ShouldReturnMinMax(
+        public void MinMax_GenericTypes_WithComparer_ForCollectionWithSomeItems_ShouldReturnMinMax(
             int count)
         {
             // Arrange.
@@ -1282,7 +1282,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_MinMax_GenericTypes_ForCollectionWithRandomSize_ShouldReturnMinMaxOrNullIfNoItems()
+        public void MinMax_GenericTypes_ForCollectionWithRandomSize_ShouldReturnMinMaxOrNullIfNoItems()
         {
             // Arrange.
             int count = TestDataCreator.GetRandomSmallCountNumber();
@@ -1299,7 +1299,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_MinMax_GenericTypes_WithComparer_ForCollectionWithRandomSize_ShouldReturnMinMaxOrNullIfNoItems()
+        public void MinMax_GenericTypes_WithComparer_ForCollectionWithRandomSize_ShouldReturnMinMaxOrNullIfNoItems()
         {
             // Arrange.
             int count = TestDataCreator.GetRandomSmallCountNumber();

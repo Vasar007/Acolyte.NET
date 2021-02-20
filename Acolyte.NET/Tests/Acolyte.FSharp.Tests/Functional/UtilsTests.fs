@@ -7,7 +7,7 @@ open Acolyte.Functional
 /// region: Tests for "castAs" method.
 
 [<Fact>]
-let ``Method "castAs" converts non-null object to the specified type`` () =
+let ``"castAs" converts non-null object to the specified type`` () =
     // Arrange.
     let arrayAsEnumerable = Array.empty<string> :> seq<string>
 
@@ -22,7 +22,7 @@ let ``Method "castAs" converts non-null object to the specified type`` () =
     Assert.Same(arrayAsEnumerable, actualObj)
 
 [<Fact>]
-let ``If method "castAs" cannot convert object to the specified type, it returns the null reference`` () =
+let ``If "castAs" cannot convert object to the specified type, it returns the null reference`` () =
     // Arrange.
     let arrayAsEnumerable = Array.empty<string> :> seq<string>
 
@@ -36,7 +36,7 @@ let ``If method "castAs" cannot convert object to the specified type, it returns
     Assert.Same(expectedObj, actualObj)
 
 [<Fact>]
-let ``Method "castAs" can process null reference`` () =
+let ``"castAs" can process null reference`` () =
     // Arrange.
     let (nullEnumerable: seq<string>) = null
 
@@ -54,7 +54,7 @@ let ``Method "castAs" can process null reference`` () =
 /// region: Tests for "castAsOption" method.
 
 [<Fact>]
-let ``Method "castAsOption" converts object to the specified type`` () =
+let ``"castAsOption" converts object to the specified type`` () =
     // Arrange.
     let arrayAsEnumerable = Array.empty<string> :> seq<string>
 
@@ -71,7 +71,7 @@ let ``Method "castAsOption" converts object to the specified type`` () =
     Assert.Same(arrayAsEnumerable, actualObj.Value)
 
 [<Fact>]
-let ``If method "castAsOption" cannot convert object to the specified type, it returns the None value`` () =
+let ``If "castAsOption" cannot convert object to the specified type, it returns the None value`` () =
     // Arrange.
     let arrayAsEnumerable = Array.empty<string> :> seq<string>
 
@@ -84,7 +84,7 @@ let ``If method "castAsOption" cannot convert object to the specified type, it r
     Assert.Same(expectedObj, actualObj)
 
 [<Fact>]
-let ``Method "castAsOption" can process null reference`` () =
+let ``"castAsOption" can process null reference`` () =
     // Arrange.
     let (nullEnumerable: seq<string>) = null
 

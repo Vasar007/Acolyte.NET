@@ -17,7 +17,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         #region ToReadOnlyDictionary
 
         [Fact]
-        public void Call_ToReadOnlyDictionary_WithKeySelector_ForNullValue_ShouldFail()
+        public void ToReadOnlyDictionary_WithKeySelector_ForNullValue_ShouldFail()
         {
             // Arrange.
             const IEnumerable<int>? nullValue = null;
@@ -32,7 +32,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_ToReadOnlyDictionary_WithKeySelector_ForNullKeySelector_ShouldFail()
+        public void ToReadOnlyDictionary_WithKeySelector_ForNullKeySelector_ShouldFail()
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
@@ -47,7 +47,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_ToReadOnlyDictionary_WithKeySelectorAndComparer_ForNullValue_ShouldFail()
+        public void ToReadOnlyDictionary_WithKeySelectorAndComparer_ForNullValue_ShouldFail()
         {
             // Arrange.
             const IEnumerable<int>? nullValue = null;
@@ -62,7 +62,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_ToReadOnlyDictionary_WithKeySelectorAndComparer_ForNullKeySelector_ShouldFail()
+        public void ToReadOnlyDictionary_WithKeySelectorAndComparer_ForNullKeySelector_ShouldFail()
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
@@ -77,7 +77,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_ToReadOnlyDictionary_WithKeySelectorAndComparer_ForNullComparer_ShouldUseDefaultComparer()
+        public void ToReadOnlyDictionary_WithKeySelectorAndComparer_ForNullComparer_ShouldUseDefaultComparer()
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
@@ -97,7 +97,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_ToReadOnlyDictionary_WithKeyElementSelectors_ForNullValue_ShouldFail()
+        public void ToReadOnlyDictionary_WithKeyElementSelectors_ForNullValue_ShouldFail()
         {
             // Arrange.
             const IEnumerable<int>? nullValue = null;
@@ -113,7 +113,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_ToReadOnlyDictionary_WithKeyElementSelectors_ForNullKeySelector_ShouldFail()
+        public void ToReadOnlyDictionary_WithKeyElementSelectors_ForNullKeySelector_ShouldFail()
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
@@ -130,7 +130,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_ToReadOnlyDictionary_WithKeyElementSelectors_ForNullElementSelector_ShouldFail()
+        public void ToReadOnlyDictionary_WithKeyElementSelectors_ForNullElementSelector_ShouldFail()
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
@@ -148,7 +148,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_ToReadOnlyDictionary_WithKeyElementSelectorsAndComparer_ForNullValue_ShouldFail()
+        public void ToReadOnlyDictionary_WithKeyElementSelectorsAndComparer_ForNullValue_ShouldFail()
         {
             // Arrange.
             const IEnumerable<int>? nullValue = null;
@@ -165,7 +165,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_ToReadOnlyDictionary_WithKeyElementSelectorsAndComparer_ForNullKeySelector_ShouldFail()
+        public void ToReadOnlyDictionary_WithKeyElementSelectorsAndComparer_ForNullKeySelector_ShouldFail()
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
@@ -184,7 +184,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_ToReadOnlyDictionary_WithKeyElementSelectorsAndComparer_ForNullElementSelector_ShouldFail()
+        public void ToReadOnlyDictionary_WithKeyElementSelectorsAndComparer_ForNullElementSelector_ShouldFail()
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
@@ -202,7 +202,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_ToReadOnlyDictionary_WithKeyElementSelectorsAndComparer_ForNullComparer_ShouldUseDefaultComparer()
+        public void ToReadOnlyDictionary_WithKeyElementSelectorsAndComparer_ForNullComparer_ShouldUseDefaultComparer()
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
@@ -222,7 +222,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_ToReadOnlyDictionary_WithKeySelector_ForEmptyCollection_ShouldReturnEmptyDictionary()
+        public void ToReadOnlyDictionary_WithKeySelector_ForEmptyCollection_ShouldReturnEmptyDictionary()
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
@@ -238,7 +238,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_ToReadOnlyDictionary_WithKeySelectorAndComparer_ForEmptyCollection_ShouldReturnEmptyDictionary()
+        public void ToReadOnlyDictionary_WithKeySelectorAndComparer_ForEmptyCollection_ShouldReturnEmptyDictionary()
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
@@ -258,7 +258,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_ToReadOnlyDictionary_WithKeyElementSelector_ForEmptyCollection_ShouldReturnEmptyDictionary()
+        public void ToReadOnlyDictionary_WithKeyElementSelector_ForEmptyCollection_ShouldReturnEmptyDictionary()
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
@@ -278,7 +278,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_ToReadOnlyDictionary_WithKeyElementSelectorsAndComparer_ForEmptyCollection_ShouldReturnEmptyDictionary()
+        public void ToReadOnlyDictionary_WithKeyElementSelectorsAndComparer_ForEmptyCollection_ShouldReturnEmptyDictionary()
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
@@ -302,7 +302,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_ToReadOnlyDictionary_WithKeySelector_ForPredefinedCollection_ShouldReturnFilledDictionary()
+        public void ToReadOnlyDictionary_WithKeySelector_ForPredefinedCollection_ShouldReturnFilledDictionary()
         {
             // Arrange.
             IReadOnlyList<int> predefinedCollection = new[] { 1, 2, 3 };
@@ -322,7 +322,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_ToReadOnlyDictionary_WithKeySelectorAndComparer_ForPredefinedCollection_ShouldReturnFilledDictionary()
+        public void ToReadOnlyDictionary_WithKeySelectorAndComparer_ForPredefinedCollection_ShouldReturnFilledDictionary()
         {
             // Arrange.
             IReadOnlyList<int> predefinedCollection = new[] { 1, 2, 3 };
@@ -344,7 +344,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_ToReadOnlyDictionary_WithKeyElementSelectors_ForPredefinedCollection_ShouldReturnFilledDictionary()
+        public void ToReadOnlyDictionary_WithKeyElementSelectors_ForPredefinedCollection_ShouldReturnFilledDictionary()
         {
             // Arrange.
             IReadOnlyList<int> predefinedCollection = new[] { 1, 2, 3 };
@@ -366,7 +366,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_ToReadOnlyDictionary_WithKeyElementSelectorsAndComparer_ForPredefinedCollection_ShouldReturnFilledDictionary()
+        public void ToReadOnlyDictionary_WithKeyElementSelectorsAndComparer_ForPredefinedCollection_ShouldReturnFilledDictionary()
         {
             // Arrange.
             IReadOnlyList<int> predefinedCollection = new[] { 1, 2, 3 };
@@ -398,7 +398,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         [InlineData(TestHelper.TenCollectionSize)]
         [InlineData(TestHelper.HundredCollectionSize)]
         [InlineData(TestHelper.TenThousandCollectionSize)]
-        public void Call_ToReadOnlyDictionary_WithKeySelector_ForCollectionWithSomeItems_ShouldReturnFilledDictionary(
+        public void ToReadOnlyDictionary_WithKeySelector_ForCollectionWithSomeItems_ShouldReturnFilledDictionary(
             int count)
         {
             // Arrange.
@@ -425,7 +425,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         [InlineData(TestHelper.TenCollectionSize)]
         [InlineData(TestHelper.HundredCollectionSize)]
         [InlineData(TestHelper.TenThousandCollectionSize)]
-        public void Call_ToReadOnlyDictionary_WithKeySelectorAndComparer_ForCollectionWithSomeItems_ShouldReturnFilledDictionary(
+        public void ToReadOnlyDictionary_WithKeySelectorAndComparer_ForCollectionWithSomeItems_ShouldReturnFilledDictionary(
             int count)
         {
             // Arrange.
@@ -454,7 +454,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         [InlineData(TestHelper.TenCollectionSize)]
         [InlineData(TestHelper.HundredCollectionSize)]
         [InlineData(TestHelper.TenThousandCollectionSize)]
-        public void Call_ToReadOnlyDictionary_WithKeyElementSelectors_ForCollectionWithSomeItems_ShouldReturnFilledDictionary(
+        public void ToReadOnlyDictionary_WithKeyElementSelectors_ForCollectionWithSomeItems_ShouldReturnFilledDictionary(
             int count)
         {
             // Arrange.
@@ -483,7 +483,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         [InlineData(TestHelper.TenCollectionSize)]
         [InlineData(TestHelper.HundredCollectionSize)]
         [InlineData(TestHelper.TenThousandCollectionSize)]
-        public void Call_ToReadOnlyDictionary_WithKeyElementSelectorsAndComparer_ForCollectionWithSomeItems_ShouldReturnFilledDictionary(
+        public void ToReadOnlyDictionary_WithKeyElementSelectorsAndComparer_ForCollectionWithSomeItems_ShouldReturnFilledDictionary(
             int count)
         {
             // Arrange.
@@ -510,7 +510,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_ToReadOnlyDictionary_WithKeySelector_ForCollectionWithRandomSize_ShouldReturnProperDictionary()
+        public void ToReadOnlyDictionary_WithKeySelector_ForCollectionWithRandomSize_ShouldReturnProperDictionary()
         {
             // Arrange.
             int count = TestDataCreator.GetRandomCountNumber();
@@ -539,7 +539,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_ToReadOnlyDictionary_WithKeySelectorAndComparer_ForCollectionWithRandomSize_ShouldReturnProperDictionary()
+        public void ToReadOnlyDictionary_WithKeySelectorAndComparer_ForCollectionWithRandomSize_ShouldReturnProperDictionary()
         {
             // Arrange.
             int count = TestDataCreator.GetRandomCountNumber();
@@ -570,7 +570,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_ToReadOnlyDictionary_WithKeyElementSelectors_ForCollectionWithRandomSize_ShouldReturnProperDictionary()
+        public void ToReadOnlyDictionary_WithKeyElementSelectors_ForCollectionWithRandomSize_ShouldReturnProperDictionary()
         {
             // Arrange.
             int count = TestDataCreator.GetRandomCountNumber();
@@ -601,7 +601,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_ToReadOnlyDictionary_WithKeyElementSelectorsAndComparer_ForCollectionWithRandomSize_ShouldReturnProperDictionary()
+        public void ToReadOnlyDictionary_WithKeyElementSelectorsAndComparer_ForCollectionWithRandomSize_ShouldReturnProperDictionary()
         {
             // Arrange.
             int count = TestDataCreator.GetRandomCountNumber();
@@ -810,7 +810,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         #region ToReadOnlyList
 
         [Fact]
-        public void Call_ToReadOnlyList_ForNullValue_ShouldFail()
+        public void ToReadOnlyList_ForNullValue_ShouldFail()
         {
             // Arrange.
             const IEnumerable<int>? nullValue = null;
@@ -822,7 +822,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_ToReadOnlyList_ForEmptyCollection_ShouldReturnEmptyList()
+        public void ToReadOnlyList_ForEmptyCollection_ShouldReturnEmptyList()
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
@@ -838,7 +838,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_ToReadOnlyList_ForPredefinedCollection_ShouldReturnFilledList()
+        public void ToReadOnlyList_ForPredefinedCollection_ShouldReturnFilledList()
         {
             // Arrange.
             IReadOnlyList<int> predefinedCollection = new[] { 1, 2, 3 };
@@ -860,7 +860,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         [InlineData(TestHelper.TenCollectionSize)]
         [InlineData(TestHelper.HundredCollectionSize)]
         [InlineData(TestHelper.TenThousandCollectionSize)]
-        public void Call_ToReadOnlyList_ForCollectionWithSomeItems_ShouldReturnFilledList(int count)
+        public void ToReadOnlyList_ForCollectionWithSomeItems_ShouldReturnFilledList(int count)
         {
             // Arrange.
             IEnumerable<int> collectionWithSomeItems = TestDataCreator.CreateRandomInt32List(count);
@@ -876,7 +876,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_ToReadOnlyList_ForCollectionWithRandomSize_ShouldReturnProperList()
+        public void ToReadOnlyList_ForCollectionWithRandomSize_ShouldReturnProperList()
         {
             // Arrange.
             int count = TestDataCreator.GetRandomCountNumber();
@@ -939,7 +939,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         #region ToReadOnlyCollection
 
         [Fact]
-        public void Call_ToReadOnlyCollection_ForNullValue_ShouldFail()
+        public void ToReadOnlyCollection_ForNullValue_ShouldFail()
         {
             // Arrange.
             const IEnumerable<int>? nullValue = null;
@@ -951,7 +951,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_ToReadOnlyCollection_ForEmptyCollection_ShouldReturnEmptyCollection()
+        public void ToReadOnlyCollection_ForEmptyCollection_ShouldReturnEmptyCollection()
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
@@ -967,7 +967,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_ToReadOnlyCollection_ForPredefinedCollection_ShouldReturnFilledCollection()
+        public void ToReadOnlyCollection_ForPredefinedCollection_ShouldReturnFilledCollection()
         {
             // Arrange.
             IReadOnlyList<int> predefinedCollection = new[] { 1, 2, 3 };
@@ -989,7 +989,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         [InlineData(TestHelper.TenCollectionSize)]
         [InlineData(TestHelper.HundredCollectionSize)]
         [InlineData(TestHelper.TenThousandCollectionSize)]
-        public void Call_ToReadOnlyCollection_ForCollectionWithSomeItems_ShouldReturnFilledCollection(
+        public void ToReadOnlyCollection_ForCollectionWithSomeItems_ShouldReturnFilledCollection(
             int count)
         {
             // Arrange.
@@ -1006,7 +1006,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_ToReadOnlyCollection_ForCollectionWithRandomSize_ShouldReturnProperCollection()
+        public void ToReadOnlyCollection_ForCollectionWithRandomSize_ShouldReturnProperCollection()
         {
             // Arrange.
             int count = TestDataCreator.GetRandomCountNumber();

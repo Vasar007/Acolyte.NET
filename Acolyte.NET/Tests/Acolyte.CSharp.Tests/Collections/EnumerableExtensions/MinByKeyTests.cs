@@ -16,7 +16,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_MinBy_WithoutComparer_ForNullValue_ShouldFail()
+        public void MinBy_WithoutComparer_ForNullValue_ShouldFail()
         {
             // Arrange.
             const IEnumerable<int>? nullValue = null;
@@ -30,7 +30,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_MinBy_WithoutComparer_ForNullSelector_ShouldFail()
+        public void MinBy_WithoutComparer_ForNullSelector_ShouldFail()
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
@@ -45,7 +45,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_MinBy_WithComparer_ForNullValue_ShouldFail()
+        public void MinBy_WithComparer_ForNullValue_ShouldFail()
         {
             // Arrange.
             const IEnumerable<int>? nullValue = null;
@@ -59,7 +59,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_MinBy_WithComparer_ForNullSelector_ShouldFail()
+        public void MinBy_WithComparer_ForNullSelector_ShouldFail()
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
@@ -74,7 +74,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_MinBy_WithComparer_ForNullComparer_ShouldUseDefaultComparer()
+        public void MinBy_WithComparer_ForNullComparer_ShouldUseDefaultComparer()
         {
             // Arrange.
             int count = TestDataCreator.GetRandomPositiveCountNumber();
@@ -92,7 +92,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
 
 
         [Fact]
-        public void Call_MinBy_WithoutComparer_ForEmptyCollection_ShouldFailForValueTypes()
+        public void MinBy_WithoutComparer_ForEmptyCollection_ShouldFailForValueTypes()
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
@@ -105,7 +105,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_MinBy_WithoutComparer_ForEmptyCollection_ShouldReturnNullForNullableValueTypes()
+        public void MinBy_WithoutComparer_ForEmptyCollection_ShouldReturnNullForNullableValueTypes()
         {
             // Arrange.
             IEnumerable<int?> emptyCollection = Enumerable.Empty<int?>();
@@ -119,7 +119,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_MinBy_WithoutComparer_ForEmptyCollection_ShouldReturnNullForReferenceTypes()
+        public void MinBy_WithoutComparer_ForEmptyCollection_ShouldReturnNullForReferenceTypes()
         {
             // Arrange.
             IEnumerable<string> emptyCollection = Enumerable.Empty<string>();
@@ -133,7 +133,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_MinBy_WithComparer_ForEmptyCollection_ShouldFailForValueTypes()
+        public void MinBy_WithComparer_ForEmptyCollection_ShouldFailForValueTypes()
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
@@ -146,7 +146,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_MinBy_WithComparer_ForEmptyCollection_ShouldReturnNullForNullableValueTypes()
+        public void MinBy_WithComparer_ForEmptyCollection_ShouldReturnNullForNullableValueTypes()
         {
             // Arrange.
             IEnumerable<int?> emptyCollection = Enumerable.Empty<int?>();
@@ -162,7 +162,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_MinBy_WithComparer_ForEmptyCollection_ShouldReturnNullForReferenceTypes()
+        public void MinBy_WithComparer_ForEmptyCollection_ShouldReturnNullForReferenceTypes()
         {
             // Arrange.
             IEnumerable<string> emptyCollection = Enumerable.Empty<string>();
@@ -178,7 +178,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_MinBy_WithComparer_ForPredefinedCollection_ShouldReturnProperMin()
+        public void MinBy_WithComparer_ForPredefinedCollection_ShouldReturnProperMin()
         {
             // Arrange.
             IReadOnlyList<int> predefinedCollection = new[] { 1, 2, 3 };
@@ -197,7 +197,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
 
         [Fact]
 
-        public void Call_MinBy_WithoutComparer_ForPredefinedCollection_ShouldReturnProperMin()
+        public void MinBy_WithoutComparer_ForPredefinedCollection_ShouldReturnProperMin()
         {
             // Arrange.
             IReadOnlyList<int> predefinedCollection = new[] { 1, 2, 3 };
@@ -219,7 +219,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         [InlineData(TestHelper.TenCollectionSize)]
         [InlineData(TestHelper.HundredCollectionSize)]
         [InlineData(TestHelper.TenThousandCollectionSize)]
-        public void Call_MinBy_WithoutComparer_ForCollectionWithSomeItems_ShouldReturnProperMin(
+        public void MinBy_WithoutComparer_ForCollectionWithSomeItems_ShouldReturnProperMin(
             int count)
         {
             // Arrange.
@@ -242,7 +242,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         [InlineData(TestHelper.TenCollectionSize)]
         [InlineData(TestHelper.HundredCollectionSize)]
         [InlineData(TestHelper.TenThousandCollectionSize)]
-        public void Call_MinBy_WithComparer_ForCollectionWithSomeItems_ShouldReturnProperMin(
+        public void MinBy_WithComparer_ForCollectionWithSomeItems_ShouldReturnProperMin(
             int count)
         {
             // Arrange.
@@ -267,7 +267,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         [InlineData(TestHelper.TenCollectionSize)]
         [InlineData(TestHelper.HundredCollectionSize)]
         [InlineData(TestHelper.TenThousandCollectionSize)]
-        public void Call_MinBy_WithoutComparer_ForCollectionWithTheSameItems_ShouldReturnThatItem(
+        public void MinBy_WithoutComparer_ForCollectionWithTheSameItems_ShouldReturnThatItem(
             int count)
         {
             // Arrange.
@@ -290,7 +290,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         [InlineData(TestHelper.TenCollectionSize)]
         [InlineData(TestHelper.HundredCollectionSize)]
         [InlineData(TestHelper.TenThousandCollectionSize)]
-        public void Call_MinBy_WithComparer_ForCollectionWithTheSameItems_ShouldReturnThatItem(
+        public void MinBy_WithComparer_ForCollectionWithTheSameItems_ShouldReturnThatItem(
             int count)
         {
             // Arrange.
@@ -309,7 +309,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_MinBy_WithoutComparer_ForCollectionWithRandomSize_ShouldReturnMin()
+        public void MinBy_WithoutComparer_ForCollectionWithRandomSize_ShouldReturnMin()
         {
             // Arrange.
             int count = TestDataCreator.GetRandomPositiveCountNumber();
@@ -327,7 +327,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_MinBy_WithComparer_ForCollectionWithRandomSize_ShouldReturnMin()
+        public void MinBy_WithComparer_ForCollectionWithRandomSize_ShouldReturnMin()
         {
             // Arrange.
             int count = TestDataCreator.GetRandomPositiveCountNumber();

@@ -15,7 +15,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_LastOrDefault_ForNullValue_ShouldFail()
+        public void LastOrDefault_ForNullValue_ShouldFail()
         {
             // Arrange.
             const IEnumerable<int>? nullValue = null;
@@ -29,7 +29,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_LastOrDefault_WithPredicate_ForNullValue_ShouldFail()
+        public void LastOrDefault_WithPredicate_ForNullValue_ShouldFail()
         {
             // Arrange.
             const IEnumerable<int>? nullValue = null;
@@ -43,7 +43,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_LastOrDefault_WithPredicate_ForNullPredicate_ShouldFail()
+        public void LastOrDefault_WithPredicate_ForNullPredicate_ShouldFail()
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
@@ -57,7 +57,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_LastOrDefault_ForEmptyCollection_ShouldReturnDefaultItem()
+        public void LastOrDefault_ForEmptyCollection_ShouldReturnDefaultItem()
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
@@ -71,7 +71,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_LastOrDefault_WithPredicate_ForEmptyCollection_ShouldReturnDefaultItem()
+        public void LastOrDefault_WithPredicate_ForEmptyCollection_ShouldReturnDefaultItem()
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
@@ -85,7 +85,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_LastOrDefault_ForPredefinedCollection_ShouldReturnLastItem()
+        public void LastOrDefault_ForPredefinedCollection_ShouldReturnLastItem()
         {
             // Arrange.
             IReadOnlyList<int> predefinedCollection = new[] { 1, 2, 3 };
@@ -99,7 +99,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_LastOrDefault_WithPredicate_ForPredefinedCollection_ShouldReturnLastItemAccordingToPredicate()
+        public void LastOrDefault_WithPredicate_ForPredefinedCollection_ShouldReturnLastItemAccordingToPredicate()
         {
             // Arrange.
             IReadOnlyList<int> predefinedCollection = new[] { 1, 2, 3 };
@@ -121,7 +121,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         [InlineData(TestHelper.TenCollectionSize)]
         [InlineData(TestHelper.HundredCollectionSize)]
         [InlineData(TestHelper.TenThousandCollectionSize)]
-        public void Call_LastOrDefault_ForCollectionWithSomeItems_ShouldReturnLastItem(int count)
+        public void LastOrDefault_ForCollectionWithSomeItems_ShouldReturnLastItem(int count)
         {
             // Arrange.
             IEnumerable<int> collectionWithSomeItems = TestDataCreator.CreateRandomInt32List(count);
@@ -141,7 +141,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         [InlineData(TestHelper.TenCollectionSize)]
         [InlineData(TestHelper.HundredCollectionSize)]
         [InlineData(TestHelper.TenThousandCollectionSize)]
-        public void Call_LastOrDefault_WithPredicate_ForCollectionWithSomeItems_ShouldReturnLastItem(
+        public void LastOrDefault_WithPredicate_ForCollectionWithSomeItems_ShouldReturnLastItem(
             int count)
         {
             // Arrange.
@@ -164,7 +164,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         [InlineData(TestHelper.TenCollectionSize)]
         [InlineData(TestHelper.HundredCollectionSize)]
         [InlineData(TestHelper.TenThousandCollectionSize)]
-        public void Call_LastOrDefault_WithPredicate_ForCollectionWithSomeItems_ShouldReturnDefaultItem(
+        public void LastOrDefault_WithPredicate_ForCollectionWithSomeItems_ShouldReturnDefaultItem(
             int count)
         {
             // Arrange.
@@ -179,7 +179,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_LastOrDefault_ForCollectionWithRandomSize_ShouldReturnLastOrDefaultItem()
+        public void LastOrDefault_ForCollectionWithRandomSize_ShouldReturnLastOrDefaultItem()
         {
             // Arrange.
             int count = TestDataCreator.GetRandomCountNumber();
@@ -199,7 +199,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_LastOrDefault_WithPredicate_ForCollectionWithRandomSize_ShouldReturnLastOrDefaultItem()
+        public void LastOrDefault_WithPredicate_ForCollectionWithRandomSize_ShouldReturnLastOrDefaultItem()
         {
             // Arrange.
             int count = TestDataCreator.GetRandomCountNumber();
@@ -220,7 +220,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void Call_LastOrDefault_WithPredicate_ForCollectionWithRandomSize_ShouldReturnDefaultItem()
+        public void LastOrDefault_WithPredicate_ForCollectionWithRandomSize_ShouldReturnDefaultItem()
         {
             // Arrange.
             int count = TestDataCreator.GetRandomCountNumber();
