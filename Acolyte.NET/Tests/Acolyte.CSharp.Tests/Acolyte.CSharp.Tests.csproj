@@ -26,6 +26,18 @@
     <Copyright>© 2020 Vasily Vasilyev (vasar007@yandex.ru)</Copyright>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(TargetFramework)'=='netcoreapp3.1'">
+    <AssemblyTitle>Acolyte.CSharp Tests .NET Standard 2.0</AssemblyTitle>
+    <ReferringTargetFrameworkForProjectReferences>.NETStandard,Version=v2.0</ReferringTargetFrameworkForProjectReferences>
+    <DefineConstants>NETSTANDARD2_0</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(TargetFramework)'=='net5.0'">
+    <AssemblyTitle>Acolyte.CSharp Tests .NET Standard 2.1</AssemblyTitle>
+    <ReferringTargetFrameworkForProjectReferences>.NETStandard,Version=v2.1</ReferringTargetFrameworkForProjectReferences>
+    <DefineConstants>NETSTANDARD2_1</DefineConstants>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.8.3" />
     <PackageReference Include="xunit" Version="2.4.1" />
@@ -43,17 +55,5 @@
     <ProjectReference Include="..\..\Libraries\Acolyte.CSharp\Acolyte.CSharp.csproj" />
     <ProjectReference Include="..\Acolyte.Tests.Common\Acolyte.Tests.Common.csproj" />
   </ItemGroup>
-
-  <PropertyGroup Condition="'$(TargetFramework)'=='netcoreapp3.1'">
-    <AssemblyTitle>Acolyte.CSharp Tests .NET Standard 2.0</AssemblyTitle>
-    <ReferringTargetFrameworkForProjectReferences>.NETStandard,Version=v2.0</ReferringTargetFrameworkForProjectReferences>
-    <DefineConstants>NETSTANDARD2_0</DefineConstants>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(TargetFramework)'=='net5.0'">
-    <AssemblyTitle>Acolyte.CSharp Tests .NET Standard 2.1</AssemblyTitle>
-    <ReferringTargetFrameworkForProjectReferences>.NETStandard,Version=v2.1</ReferringTargetFrameworkForProjectReferences>
-    <DefineConstants>NETSTANDARD2_1</DefineConstants>
-  </PropertyGroup>
 
 </Project>

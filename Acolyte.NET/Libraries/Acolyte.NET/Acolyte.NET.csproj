@@ -42,6 +42,16 @@
     <NoWarn>1701;1702;CS1591</NoWarn>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+    <AssemblyTitle>Acolyte.NET .NET Standard 2.0</AssemblyTitle>
+    <DefineConstants>NETSTANDARD2_0</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(TargetFramework)' == 'netstandard2.1'">
+    <AssemblyTitle>Acolyte.NET .NET Standard 2.1</AssemblyTitle>
+    <DefineConstants>NETSTANDARD2_1</DefineConstants>
+  </PropertyGroup>
+
   <ItemGroup>
     <None Include="..\..\..\Media\AcolyteIcon.png">
       <Pack>True</Pack>
@@ -57,14 +67,5 @@
     <ProjectReference Include="..\Acolyte.CSharp\Acolyte.CSharp.csproj" />
     <ProjectReference Include="..\Acolyte.FSharp\Acolyte.FSharp.fsproj" />
   </ItemGroup>
-
-  <PropertyGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
-    <AssemblyTitle>Acolyte.NET .NET Standard 2.0</AssemblyTitle>
-    <DefineConstants>NETSTANDARD2_0</DefineConstants>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(TargetFramework)' == 'netstandard2.1'">
-    <AssemblyTitle>Acolyte.NET .NET Standard 2.1</AssemblyTitle>
-    <DefineConstants>NETSTANDARD2_1</DefineConstants>
-  </PropertyGroup>
 
 </Project>
