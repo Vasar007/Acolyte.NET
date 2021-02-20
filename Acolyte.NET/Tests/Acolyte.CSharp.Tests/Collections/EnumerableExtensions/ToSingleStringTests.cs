@@ -4,8 +4,6 @@ using System.Linq;
 using Xunit;
 using Acolyte.Collections;
 using Acolyte.Common;
-using Acolyte.Tests.Collections;
-using Acolyte.Tests.Creators;
 using Acolyte.Tests.Functions;
 
 namespace Acolyte.Tests.Collections.EnumerableExtensions
@@ -112,7 +110,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             string expectedValue = Strings.DefaultEmptyCollectionMessage;
 
             // Act.
-            string actualValue = nullValue.ToSingleString(i => i.ToString());
+            string actualValue = nullValue.ToSingleString(ToStingFunction<int>.Simple);
 
             // Assert.
             Assert.Equal(expectedValue, actualValue);
@@ -140,7 +138,9 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             const string expectedValue = "Collection is empty";
 
             // Act.
-            string actualValue = nullValue.ToSingleString(expectedValue, i => i.ToString());
+            string actualValue = nullValue.ToSingleString(
+                expectedValue, ToStingFunction<int>.Simple
+            );
 
             // Assert.
             Assert.Equal(expectedValue, actualValue);
@@ -155,7 +155,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
 
             // Act.
             string actualValue = nullValue.ToSingleString(
-                emptyCollectionMessage: null, i => i.ToString()
+                emptyCollectionMessage: null, ToStingFunction<int>.Simple
             );
 
             // Assert.
@@ -187,7 +187,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
 
             // Act.
             string actualValue = nullValue.ToSingleString(
-                expectedValue, separator, i => i.ToString()
+                expectedValue, separator, ToStingFunction<int>.Simple
             );
 
             // Assert.
@@ -203,7 +203,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
 
             // Act.
             string actualValue = nullValue.ToSingleString(
-                emptyCollectionMessage: null, separator: null, i => i.ToString()
+                emptyCollectionMessage: null, separator: null, ToStingFunction<int>.Simple
             );
 
             // Assert.
@@ -278,7 +278,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             string expectedValue = Strings.DefaultEmptyCollectionMessage;
 
             // Act.
-            string actualValue = emptyCollection.ToSingleString(i => i.ToString());
+            string actualValue = emptyCollection.ToSingleString(ToStingFunction<int>.Simple);
 
             // Assert.
             Assert.Equal(expectedValue, actualValue);
@@ -292,7 +292,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             string expectedValue = Strings.DefaultEmptyCollectionMessage;
 
             // Act.
-            string actualValue = emptyCollection.ToSingleString(expectedValue, i => i.ToString());
+            string actualValue = emptyCollection.ToSingleString(expectedValue, ToStingFunction<int>.Simple);
 
             // Assert.
             Assert.Equal(expectedValue, actualValue);
@@ -308,7 +308,113 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
 
             // Act.
             string actualValue = emptyCollection.ToSingleString(
-                expectedValue, separator, i => i.ToString()
+                expectedValue, separator, ToStingFunction<int>.Simple
+            );
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Fact]
+        public void ToSingleString_ForPredefinedCollection_ShouldReturnEmptyCollectionMessage()
+        {
+            // Arrange.
+            IReadOnlyList<int> predefinedCollection = new[] { 1, 2, 3 };
+            Func<int, string> selector = ToStingFunction<int>.WithQuotes;
+            string separator = Strings.DefaultItemSeparator;
+            string expectedValue = string.Join(separator, predefinedCollection.Select(selector));
+
+            // Act.
+            string actualValue = predefinedCollection.ToSingleString();
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Fact]
+        public void ToSingleString_WithEmptyCollectionMessage_ForPredefinedCollection_ShouldReturnEmptyCollectionMessage()
+        {
+            // Arrange.
+            IReadOnlyList<int> predefinedCollection = new[] { 1, 2, 3 };
+            Func<int, string> selector = ToStingFunction<int>.WithQuotes;
+            string separator = Strings.DefaultItemSeparator;
+            string expectedValue = string.Join(separator, predefinedCollection.Select(selector));
+            string emptyCollectionMessage = Strings.DefaultEmptyCollectionMessage;
+
+            // Act.
+            string actualValue = predefinedCollection.ToSingleString(emptyCollectionMessage);
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Fact]
+        public void ToSingleString_WithEmptyCollectionMessageAndSeparator_ForPredefinedCollection_ShouldReturnEmptyCollectionMessage()
+        {
+            // Arrange.
+            IReadOnlyList<int> predefinedCollection = new[] { 1, 2, 3 };
+            Func<int, string> selector = ToStingFunction<int>.WithQuotes;
+            const string separator = " ";
+            string expectedValue = string.Join(separator, predefinedCollection.Select(selector));
+            string emptyCollectionMessage = Strings.DefaultEmptyCollectionMessage;
+
+            // Act.
+            string actualValue = predefinedCollection.ToSingleString(
+                emptyCollectionMessage, separator
+            );
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Fact]
+        public void ToSingleString_WithSelector_ForPredefinedCollection_ShouldReturnEmptyCollectionMessage()
+        {
+            // Arrange.
+            IReadOnlyList<int> predefinedCollection = new[] { 1, 2, 3 };
+            Func<int, string> selector = ToStingFunction<int>.Simple;
+            string separator = Strings.DefaultItemSeparator;
+            string expectedValue = string.Join(separator, predefinedCollection.Select(selector));
+
+            // Act.
+            string actualValue = predefinedCollection.ToSingleString(selector);
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Fact]
+        public void ToSingleString_WithEmptyCollectionMessageAndSelector_ForPredefinedCollection_ShouldReturnEmptyCollectionMessage()
+        {
+            // Arrange.
+            IReadOnlyList<int> predefinedCollection = new[] { 1, 2, 3 };
+            string separator = Strings.DefaultItemSeparator;
+            Func<int, string> selector = ToStingFunction<int>.Simple;
+            string expectedValue = string.Join(separator, predefinedCollection.Select(selector));
+            string emptyCollectionMessage = Strings.DefaultEmptyCollectionMessage;
+
+            // Act.
+            string actualValue = predefinedCollection.ToSingleString(
+                emptyCollectionMessage, selector
+            );
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Fact]
+        public void ToSingleString_WithEmptyCollectionMessageAndSeparatorAndSelector_ForPredefinedCollection_ShouldReturnEmptyCollectionMessage()
+        {
+            // Arrange.
+            IReadOnlyList<int> predefinedCollection = new[] { 1, 2, 3 };
+            string separator = Strings.DefaultItemSeparator;
+            Func<int, string> selector = ToStingFunction<int>.Simple;
+            string expectedValue = string.Join(separator, predefinedCollection.Select(selector));
+            string emptyCollectionMessage = Strings.DefaultEmptyCollectionMessage;
+
+            // Act.
+            string actualValue = predefinedCollection.ToSingleString(
+                emptyCollectionMessage, separator, selector
             );
 
             // Assert.
