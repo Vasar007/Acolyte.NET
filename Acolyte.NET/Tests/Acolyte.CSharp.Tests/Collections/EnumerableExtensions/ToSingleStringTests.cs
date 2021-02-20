@@ -408,7 +408,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         {
             // Arrange.
             IReadOnlyList<int> predefinedCollection = new[] { 1, 2, 3 };
-            string separator = Strings.DefaultItemSeparator;
+            const string separator = " ";
             Func<int, string> selector = ToStingFunction<int>.Simple;
             string expectedValue = string.Join(separator, predefinedCollection.Select(selector));
             string emptyCollectionMessage = Strings.DefaultEmptyCollectionMessage;
@@ -550,7 +550,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         {
             // Arrange.
             IEnumerable<int> collectionWithSomeItems = TestDataCreator.CreateRandomInt32List(count);
-            string separator = Strings.DefaultItemSeparator;
+            const string separator = " ";
             Func<int, string> selector = ToStingFunction<int>.Simple;
             string expectedValue = string.Join(separator, collectionWithSomeItems.Select(selector));
             string emptyCollectionMessage = Strings.DefaultEmptyCollectionMessage;
@@ -678,7 +678,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             int count = TestDataCreator.GetRandomCountNumber();
             IEnumerable<int> collectionWithRandomSize =
                 TestDataCreator.CreateRandomInt32List(count);
-            string separator = Strings.DefaultItemSeparator;
+            const string separator = " ";
             Func<int, string> selector = ToStingFunction<int>.Simple;
             string expectedValue = string.Join(
                 separator, collectionWithRandomSize.Select(selector)
@@ -691,6 +691,124 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             );
 
             // Assert.
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Fact]
+        public void ToSingleString_ShouldLookWholeCollectionToConstrtuctMessage()
+        {
+            // Arrange.
+            IReadOnlyList<int> collection = new[] { 1, 2, 3, 4 };
+            var explosiveCollection = ExplosiveCollection.CreateNotExplosive(collection);
+            Func<int, string> selector = ToStingFunction<int>.WithQuotes;
+            string separator = Strings.DefaultItemSeparator;
+            string expectedValue = string.Join(separator, collection.Select(selector));
+
+            // Act.
+            string actualValue = explosiveCollection.ToSingleString();
+
+            // Assert.
+            Assert.Equal(expected: collection.Count, explosiveCollection.VisitedItemsNumber);
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Fact]
+        public void ToSingleString_WithEmptyCollectionMessage_ShouldLookWholeCollectionToConstrtuctMessage()
+        {
+            // Arrange.
+            IReadOnlyList<int> collection = new[] { 1, 2, 3, 4 };
+            var explosiveCollection = ExplosiveCollection.CreateNotExplosive(collection);
+            Func<int, string> selector = ToStingFunction<int>.WithQuotes;
+            string separator = Strings.DefaultItemSeparator;
+            string expectedValue = string.Join(separator, collection.Select(selector));
+            string emptyCollectionMessage = Strings.DefaultEmptyCollectionMessage;
+
+            // Act.
+            string actualValue = explosiveCollection.ToSingleString(emptyCollectionMessage);
+
+            // Assert.
+            Assert.Equal(expected: collection.Count, explosiveCollection.VisitedItemsNumber);
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Fact]
+        public void ToSingleString_WithEmptyCollectionMessageAndSeparator_ShouldLookWholeCollectionToConstrtuctMessage()
+        {
+            // Arrange.
+            IReadOnlyList<int> collection = new[] { 1, 2, 3, 4 };
+            var explosiveCollection = ExplosiveCollection.CreateNotExplosive(collection);
+            Func<int, string> selector = ToStingFunction<int>.WithQuotes;
+            const string separator = " ";
+            string expectedValue = string.Join(separator, collection.Select(selector));
+            string emptyCollectionMessage = Strings.DefaultEmptyCollectionMessage;
+
+            // Act.
+            string actualValue = explosiveCollection.ToSingleString(
+                emptyCollectionMessage, separator
+            );
+
+            // Assert.
+            Assert.Equal(expected: collection.Count, explosiveCollection.VisitedItemsNumber);
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Fact]
+        public void ToSingleString_WithSelector_ShouldLookWholeCollectionToConstrtuctMessage()
+        {
+            // Arrange.
+            IReadOnlyList<int> collection = new[] { 1, 2, 3, 4 };
+            var explosiveCollection = ExplosiveCollection.CreateNotExplosive(collection);
+            Func<int, string> selector = ToStingFunction<int>.Simple;
+            string separator = Strings.DefaultItemSeparator;
+            string expectedValue = string.Join(separator, collection.Select(selector));
+
+            // Act.
+            string actualValue = explosiveCollection.ToSingleString(selector);
+
+            // Assert.
+            Assert.Equal(expected: collection.Count, explosiveCollection.VisitedItemsNumber);
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Fact]
+        public void ToSingleString_WithEmptyCollectionMessageAndSelector_ShouldLookWholeCollectionToConstrtuctMessage()
+        {
+            // Arrange.
+            IReadOnlyList<int> collection = new[] { 1, 2, 3, 4 };
+            var explosiveCollection = ExplosiveCollection.CreateNotExplosive(collection);
+            string separator = Strings.DefaultItemSeparator;
+            Func<int, string> selector = ToStingFunction<int>.Simple;
+            string expectedValue = string.Join(separator, collection.Select(selector));
+            string emptyCollectionMessage = Strings.DefaultEmptyCollectionMessage;
+
+            // Act.
+            string actualValue = explosiveCollection.ToSingleString(
+                emptyCollectionMessage, selector
+            );
+
+            // Assert.
+            Assert.Equal(expected: collection.Count, explosiveCollection.VisitedItemsNumber);
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Fact]
+        public void ToSingleString_WithEmptyCollectionMessageAndSeparatorAndSelector_ShouldLookWholeCollectionToConstrtuctMessage()
+        {
+            // Arrange.
+            IReadOnlyList<int> collection = new[] { 1, 2, 3, 4 };
+            var explosiveCollection = ExplosiveCollection.CreateNotExplosive(collection);
+            const string separator = " ";
+            Func<int, string> selector = ToStingFunction<int>.Simple;
+            string expectedValue = string.Join(separator, collection.Select(selector));
+            string emptyCollectionMessage = Strings.DefaultEmptyCollectionMessage;
+
+            // Act.
+            string actualValue = explosiveCollection.ToSingleString(
+                emptyCollectionMessage, separator, selector
+            );
+
+            // Assert.
+            Assert.Equal(expected: collection.Count, explosiveCollection.VisitedItemsNumber);
             Assert.Equal(expectedValue, actualValue);
         }
     }

@@ -8,12 +8,6 @@
 
         // TODO: write mock equality comprarer to test overloads with it.
 
-        #region Tests for "To Single String" section
-
-        // TODO: write tests.
-
-        #endregion
-
         #region Tests for "For Each" section
 
         // TODO: write tests.
