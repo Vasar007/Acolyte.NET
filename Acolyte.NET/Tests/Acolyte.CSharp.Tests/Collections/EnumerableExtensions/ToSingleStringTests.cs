@@ -5,6 +5,7 @@ using Xunit;
 using Acolyte.Collections;
 using Acolyte.Common;
 using Acolyte.Tests.Functions;
+using Acolyte.Tests.Creators;
 
 namespace Acolyte.Tests.Collections.EnumerableExtensions
 {
@@ -316,7 +317,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void ToSingleString_ForPredefinedCollection_ShouldReturnEmptyCollectionMessage()
+        public void ToSingleString_ForPredefinedCollection_ShouldReturnPropperMessageWithItems()
         {
             // Arrange.
             IReadOnlyList<int> predefinedCollection = new[] { 1, 2, 3 };
@@ -332,7 +333,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void ToSingleString_WithEmptyCollectionMessage_ForPredefinedCollection_ShouldReturnEmptyCollectionMessage()
+        public void ToSingleString_WithEmptyCollectionMessage_ForPredefinedCollection_ShouldReturnPropperMessageWithItems()
         {
             // Arrange.
             IReadOnlyList<int> predefinedCollection = new[] { 1, 2, 3 };
@@ -349,7 +350,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void ToSingleString_WithEmptyCollectionMessageAndSeparator_ForPredefinedCollection_ShouldReturnEmptyCollectionMessage()
+        public void ToSingleString_WithEmptyCollectionMessageAndSeparator_ForPredefinedCollection_ShouldReturnPropperMessageWithItems()
         {
             // Arrange.
             IReadOnlyList<int> predefinedCollection = new[] { 1, 2, 3 };
@@ -368,7 +369,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void ToSingleString_WithSelector_ForPredefinedCollection_ShouldReturnEmptyCollectionMessage()
+        public void ToSingleString_WithSelector_ForPredefinedCollection_ShouldReturnPropperMessageWithItems()
         {
             // Arrange.
             IReadOnlyList<int> predefinedCollection = new[] { 1, 2, 3 };
@@ -384,7 +385,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void ToSingleString_WithEmptyCollectionMessageAndSelector_ForPredefinedCollection_ShouldReturnEmptyCollectionMessage()
+        public void ToSingleString_WithEmptyCollectionMessageAndSelector_ForPredefinedCollection_ShouldReturnPropperMessageWithItems()
         {
             // Arrange.
             IReadOnlyList<int> predefinedCollection = new[] { 1, 2, 3 };
@@ -403,7 +404,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void ToSingleString_WithEmptyCollectionMessageAndSeparatorAndSelector_ForPredefinedCollection_ShouldReturnEmptyCollectionMessage()
+        public void ToSingleString_WithEmptyCollectionMessageAndSeparatorAndSelector_ForPredefinedCollection_ShouldReturnPropperMessageWithItems()
         {
             // Arrange.
             IReadOnlyList<int> predefinedCollection = new[] { 1, 2, 3 };
@@ -414,6 +415,278 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
 
             // Act.
             string actualValue = predefinedCollection.ToSingleString(
+                emptyCollectionMessage, separator, selector
+            );
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Theory]
+        [InlineData(TestHelper.OneCollectionSize)]
+        [InlineData(TestHelper.TwoCollectionSize)]
+        [InlineData(TestHelper.FiveCollectionSie)]
+        [InlineData(TestHelper.TenCollectionSize)]
+        [InlineData(TestHelper.HundredCollectionSize)]
+        [InlineData(TestHelper.TenThousandCollectionSize)]
+        public void ToSingleString_ForCollectionWithSomeItems_ShouldReturnPropperMessageWithItems(int count)
+        {
+            // Arrange.
+            IEnumerable<int> collectionWithSomeItems = TestDataCreator.CreateRandomInt32List(count);
+            Func<int, string> selector = ToStingFunction<int>.WithQuotes;
+            string separator = Strings.DefaultItemSeparator;
+            string expectedValue = string.Join(separator, collectionWithSomeItems.Select(selector));
+
+            // Act.
+            string actualValue = collectionWithSomeItems.ToSingleString();
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Theory]
+        [InlineData(TestHelper.OneCollectionSize)]
+        [InlineData(TestHelper.TwoCollectionSize)]
+        [InlineData(TestHelper.FiveCollectionSie)]
+        [InlineData(TestHelper.TenCollectionSize)]
+        [InlineData(TestHelper.HundredCollectionSize)]
+        [InlineData(TestHelper.TenThousandCollectionSize)]
+        public void ToSingleString_WithEmptyCollectionMessage_ForCollectionWithSomeItems_ShouldReturnPropperMessageWithItems(int count)
+        {
+            // Arrange.
+            IEnumerable<int> collectionWithSomeItems = TestDataCreator.CreateRandomInt32List(count);
+            Func<int, string> selector = ToStingFunction<int>.WithQuotes;
+            string separator = Strings.DefaultItemSeparator;
+            string expectedValue = string.Join(separator, collectionWithSomeItems.Select(selector));
+            string emptyCollectionMessage = Strings.DefaultEmptyCollectionMessage;
+
+            // Act.
+            string actualValue = collectionWithSomeItems.ToSingleString(emptyCollectionMessage);
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Theory]
+        [InlineData(TestHelper.OneCollectionSize)]
+        [InlineData(TestHelper.TwoCollectionSize)]
+        [InlineData(TestHelper.FiveCollectionSie)]
+        [InlineData(TestHelper.TenCollectionSize)]
+        [InlineData(TestHelper.HundredCollectionSize)]
+        [InlineData(TestHelper.TenThousandCollectionSize)]
+        public void ToSingleString_WithEmptyCollectionMessageAndSeparator_ForCollectionWithSomeItems_ShouldReturnPropperMessageWithItems(int count)
+        {
+            // Arrange.
+            IEnumerable<int> collectionWithSomeItems = TestDataCreator.CreateRandomInt32List(count);
+            Func<int, string> selector = ToStingFunction<int>.WithQuotes;
+            const string separator = " ";
+            string expectedValue = string.Join(separator, collectionWithSomeItems.Select(selector));
+            string emptyCollectionMessage = Strings.DefaultEmptyCollectionMessage;
+
+            // Act.
+            string actualValue = collectionWithSomeItems.ToSingleString(
+                emptyCollectionMessage, separator
+            );
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Theory]
+        [InlineData(TestHelper.OneCollectionSize)]
+        [InlineData(TestHelper.TwoCollectionSize)]
+        [InlineData(TestHelper.FiveCollectionSie)]
+        [InlineData(TestHelper.TenCollectionSize)]
+        [InlineData(TestHelper.HundredCollectionSize)]
+        [InlineData(TestHelper.TenThousandCollectionSize)]
+        public void ToSingleString_WithSelector_ForCollectionWithSomeItems_ShouldReturnPropperMessageWithItems(int count)
+        {
+            // Arrange.
+            IEnumerable<int> collectionWithSomeItems = TestDataCreator.CreateRandomInt32List(count);
+            Func<int, string> selector = ToStingFunction<int>.Simple;
+            string separator = Strings.DefaultItemSeparator;
+            string expectedValue = string.Join(separator, collectionWithSomeItems.Select(selector));
+
+            // Act.
+            string actualValue = collectionWithSomeItems.ToSingleString(selector);
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Theory]
+        [InlineData(TestHelper.OneCollectionSize)]
+        [InlineData(TestHelper.TwoCollectionSize)]
+        [InlineData(TestHelper.FiveCollectionSie)]
+        [InlineData(TestHelper.TenCollectionSize)]
+        [InlineData(TestHelper.HundredCollectionSize)]
+        [InlineData(TestHelper.TenThousandCollectionSize)]
+        public void ToSingleString_WithEmptyCollectionMessageAndSelector_ForCollectionWithSomeItems_ShouldReturnPropperMessageWithItems(int count)
+        {
+            // Arrange.
+            IEnumerable<int> collectionWithSomeItems = TestDataCreator.CreateRandomInt32List(count);
+            string separator = Strings.DefaultItemSeparator;
+            Func<int, string> selector = ToStingFunction<int>.Simple;
+            string expectedValue = string.Join(separator, collectionWithSomeItems.Select(selector));
+            string emptyCollectionMessage = Strings.DefaultEmptyCollectionMessage;
+
+            // Act.
+            string actualValue = collectionWithSomeItems.ToSingleString(
+                emptyCollectionMessage, selector
+            );
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Theory]
+        [InlineData(TestHelper.OneCollectionSize)]
+        [InlineData(TestHelper.TwoCollectionSize)]
+        [InlineData(TestHelper.FiveCollectionSie)]
+        [InlineData(TestHelper.TenCollectionSize)]
+        [InlineData(TestHelper.HundredCollectionSize)]
+        [InlineData(TestHelper.TenThousandCollectionSize)]
+        public void ToSingleString_WithEmptyCollectionMessageAndSeparatorAndSelector_ForCollectionWithSomeItems_ShouldReturnPropperMessageWithItems(int count)
+        {
+            // Arrange.
+            IEnumerable<int> collectionWithSomeItems = TestDataCreator.CreateRandomInt32List(count);
+            string separator = Strings.DefaultItemSeparator;
+            Func<int, string> selector = ToStingFunction<int>.Simple;
+            string expectedValue = string.Join(separator, collectionWithSomeItems.Select(selector));
+            string emptyCollectionMessage = Strings.DefaultEmptyCollectionMessage;
+
+            // Act.
+            string actualValue = collectionWithSomeItems.ToSingleString(
+                emptyCollectionMessage, separator, selector
+            );
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Fact]
+        public void ToSingleString_ForCollectionWithRandomSize_ShouldReturnEmptyMessageOrPropperMessageWithItemsDependOnCollection()
+        {
+            // Arrange.
+            int count = TestDataCreator.GetRandomCountNumber();
+            IEnumerable<int> collectionWithRandomSize =
+                TestDataCreator.CreateRandomInt32List(count);
+            Func<int, string> selector = ToStingFunction<int>.WithQuotes;
+            string separator = Strings.DefaultItemSeparator;
+            string expectedValue = string.Join(
+                separator, collectionWithRandomSize.Select(selector)
+            );
+
+            // Act.
+            string actualValue = collectionWithRandomSize.ToSingleString();
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Fact]
+        public void ToSingleString_WithEmptyCollectionMessage_ForCollectionWithRandomSize_ShouldReturnEmptyMessageOrPropperMessageWithItemsDependOnCollection()
+        {
+            // Arrange.
+            int count = TestDataCreator.GetRandomCountNumber();
+            IEnumerable<int> collectionWithRandomSize =
+                TestDataCreator.CreateRandomInt32List(count);
+            Func<int, string> selector = ToStingFunction<int>.WithQuotes;
+            string separator = Strings.DefaultItemSeparator;
+            string expectedValue = string.Join(
+                separator, collectionWithRandomSize.Select(selector)
+            );
+            string emptyCollectionMessage = Strings.DefaultEmptyCollectionMessage;
+
+            // Act.
+            string actualValue = collectionWithRandomSize.ToSingleString(emptyCollectionMessage);
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Fact]
+        public void ToSingleString_WithEmptyCollectionMessageAndSeparator_ForCollectionWithRandomSize_ShouldReturnEmptyMessageOrPropperMessageWithItemsDependOnCollection()
+        {
+            // Arrange.
+            int count = TestDataCreator.GetRandomCountNumber();
+            IEnumerable<int> collectionWithRandomSize =
+                TestDataCreator.CreateRandomInt32List(count);
+            Func<int, string> selector = ToStingFunction<int>.WithQuotes;
+            const string separator = " ";
+            string expectedValue = string.Join(
+                separator, collectionWithRandomSize.Select(selector)
+            );
+            string emptyCollectionMessage = Strings.DefaultEmptyCollectionMessage;
+
+            // Act.
+            string actualValue = collectionWithRandomSize.ToSingleString(
+                emptyCollectionMessage, separator
+            );
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Fact]
+        public void ToSingleString_WithSelector_ForCollectionWithRandomSize_ShouldReturnEmptyMessageOrPropperMessageWithItemsDependOnCollection()
+        {
+            // Arrange.
+            int count = TestDataCreator.GetRandomCountNumber();
+            IEnumerable<int> collectionWithRandomSize =
+                TestDataCreator.CreateRandomInt32List(count);
+            Func<int, string> selector = ToStingFunction<int>.Simple;
+            string separator = Strings.DefaultItemSeparator;
+            string expectedValue = string.Join(
+                separator, collectionWithRandomSize.Select(selector)
+            );
+
+            // Act.
+            string actualValue = collectionWithRandomSize.ToSingleString(selector);
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Fact]
+        public void ToSingleString_WithEmptyCollectionMessageAndSelector_ForCollectionWithRandomSize_ShouldReturnEmptyMessageOrPropperMessageWithItemsDependOnCollection()
+        {
+            // Arrange.
+            int count = TestDataCreator.GetRandomCountNumber();
+            IEnumerable<int> collectionWithRandomSize =
+                TestDataCreator.CreateRandomInt32List(count);
+            string separator = Strings.DefaultItemSeparator;
+            Func<int, string> selector = ToStingFunction<int>.Simple;
+            string expectedValue = string.Join(
+                separator, collectionWithRandomSize.Select(selector)
+            );
+            string emptyCollectionMessage = Strings.DefaultEmptyCollectionMessage;
+
+            // Act.
+            string actualValue = collectionWithRandomSize.ToSingleString(
+                emptyCollectionMessage, selector
+            );
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Fact]
+        public void ToSingleString_WithEmptyCollectionMessageAndSeparatorAndSelector_ForCollectionWithRandomSize_ShouldReturnEmptyMessageOrPropperMessageWithItemsDependOnCollection()
+        {
+            // Arrange.
+            int count = TestDataCreator.GetRandomCountNumber();
+            IEnumerable<int> collectionWithRandomSize =
+                TestDataCreator.CreateRandomInt32List(count);
+            string separator = Strings.DefaultItemSeparator;
+            Func<int, string> selector = ToStingFunction<int>.Simple;
+            string expectedValue = string.Join(
+                separator, collectionWithRandomSize.Select(selector)
+            );
+            string emptyCollectionMessage = Strings.DefaultEmptyCollectionMessage;
+
+            // Act.
+            string actualValue = collectionWithRandomSize.ToSingleString(
                 emptyCollectionMessage, separator, selector
             );
 

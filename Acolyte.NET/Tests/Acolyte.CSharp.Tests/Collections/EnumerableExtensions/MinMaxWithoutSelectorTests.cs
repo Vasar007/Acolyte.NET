@@ -1002,7 +1002,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
                 .CreateRandomDecimalList(count);
 
             // Act & Assert.
-            if (collectionWithRandomSize.Count > 1)
+            if (collectionWithRandomSize.Count > 0)
             {
                 (decimal minValue, decimal maxValue) expectedValue =
                     (collectionWithRandomSize.Min(), collectionWithRandomSize.Max());
