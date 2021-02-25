@@ -151,7 +151,7 @@ namespace Acolyte.Common
         }
 
         /// <summary>
-        /// Retrieves the exception value of the current <see cref="ResultOrException{T}" /> object,
+        /// Retrieves the exception value of the current <see cref="Result{TOk, TError}" /> object,
         /// or the specified default exception value.
         /// </summary>
         /// <param name="defaultException">

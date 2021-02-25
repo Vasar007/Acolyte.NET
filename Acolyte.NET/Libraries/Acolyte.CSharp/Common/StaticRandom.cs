@@ -126,7 +126,7 @@ namespace Acolyte.Common
             }
         }
 
-        /// <inheritdoc cref="RandomExtensionMethods.NextSingle(Random, double, double)" />
+        /// <inheritdoc cref="RandomExtensionMethods.NextDouble(Random, double, double)" />
         public static double NextDouble(double minValue, double maxValue)
         {
             lock (_lock)
@@ -135,7 +135,7 @@ namespace Acolyte.Common
             }
         }
 
-        /// <inheritdoc cref="RandomExtensionMethods.NextSingle(Random, double)" />
+        /// <inheritdoc cref="RandomExtensionMethods.NextDouble(Random, double)" />
         public static double NextDouble(double maxValue)
         {
             lock (_lock)
