@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Acolyte.Assertions;
 using Acolyte.Common;
+using Acolyte.Threading;
 
 namespace Acolyte.Collections
 {
@@ -2158,6 +2159,7 @@ namespace Acolyte.Collections
             Action<TSource> action)
         {
             source.ThrowIfNull(nameof(source));
+            action.ThrowIfNull(nameof(action));
 
             foreach (TSource item in source)
             {
@@ -2165,27 +2167,215 @@ namespace Acolyte.Collections
             }
         }
 
-        public static async Task ForEachAsync<TSource>(
-            this IEnumerable<TSource> source,
-            Func<TSource, Task> action,
+        private static async Task ExecuteActionWithCancellation<TSource>(TSource item,
+            Func<TSource, Task> action, CancellationToken cancellationToken)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            await action(item).ConfigureAwait(continueOnCapturedContext: false);
+        }
+
+        private static async Task<TResult> ExecuteFuncWithCancellation<TSource, TResult>(
+            TSource item, Func<TSource, Task<TResult>> func, CancellationToken cancellationToken)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            return await func(item).ConfigureAwait(continueOnCapturedContext: false);
+        }
+
+        public static Task ForEachAsync<TSource>(this IEnumerable<TSource> source,
+            Func<TSource, Task> action, CancellationToken cancellationToken)
+        {
+            source.ThrowIfNull(nameof(source));
+            action.ThrowIfNull(nameof(action));
+
+            var results = source.Select(
+                item => Task.Run(
+                    () => ExecuteActionWithCancellation(item, action, cancellationToken)
+                )
+            );
+
+            return Task.WhenAll(results);
+        }
+
+        public static Task ForEachAsync<TSource>(this IEnumerable<TSource> source,
+            Func<TSource, Task> action)
+        {
+            return source.ForEachAsync(action, cancellationToken: CancellationToken.None);
+        }
+
+        public static Task<TResult[]> ForEachAsync<TSource, TResult>(
+            this IEnumerable<TSource> source, Func<TSource, Task<TResult>> func,
+            CancellationToken cancellationToken)
+        {
+            source.ThrowIfNull(nameof(source));
+            func.ThrowIfNull(nameof(func));
+
+            var results = source.Select(
+                item => Task.Run(
+                    () => ExecuteFuncWithCancellation(item, func, cancellationToken)
+                )
+            );
+
+            return Task.WhenAll(results);
+        }
+
+        public static Task<TResult[]> ForEachAsync<TSource, TResult>(
+            this IEnumerable<TSource> source, Func<TSource, Task<TResult>> func)
+        {
+            return source.ForEachAsync(func, cancellationToken: CancellationToken.None);
+        }
+
+        public static Task<Result<NoneResult, Exception>[]> ForEacSafeAsync<TSource>(
+            this IEnumerable<TSource> source, Func<TSource, Task> action,
             CancellationToken cancellationToken)
         {
             source.ThrowIfNull(nameof(source));
             action.ThrowIfNull(nameof(action));
 
-            foreach (TSource item in source)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await action(item);
-            }
+            var results = source.Select(
+                item => Task.Run(
+                    () => ExecuteActionWithCancellation(item, action, cancellationToken)
+                )
+            );
+
+            return TaskHelper.WhenAllResultsOrExceptions(results);
         }
 
-        public static Task ForEachAsync<TSource>(
-            this IEnumerable<TSource> source,
+        public static Task<Result<NoneResult, Exception>[]> ForEachSafeAsync<TSource>(
+            this IEnumerable<TSource> source, Func<TSource, Task> action)
+        {
+            return source.ForEacSafeAsync(action, cancellationToken: CancellationToken.None);
+        }
+
+        public static Task<Result<TResult, Exception>[]> ForEacSafeAsync<TSource, TResult>(
+            this IEnumerable<TSource> source, Func<TSource, Task<TResult>> func,
+            CancellationToken cancellationToken)
+        {
+            source.ThrowIfNull(nameof(source));
+            func.ThrowIfNull(nameof(func));
+
+            var results = source.Select(
+                item => Task.Run(
+                    () => ExecuteFuncWithCancellation(item, func, cancellationToken)
+                )
+            );
+
+            return TaskHelper.WhenAllResultsOrExceptions(results);
+        }
+
+        public static Task<Result<TResult, Exception>[]> ForEachSafeAsync<TSource, TResult>(
+            this IEnumerable<TSource> source, Func<TSource, Task<TResult>> func)
+        {
+            return source.ForEacSafeAsync(func, cancellationToken: CancellationToken.None);
+        }
+
+#if NETSTANDARD2_1
+
+        public static async Task ForEachAsync<TSource>(this IAsyncEnumerable<TSource> source,
+            Func<TSource, Task> action, CancellationToken cancellationToken)
+        {
+            source.ThrowIfNull(nameof(source));
+            action.ThrowIfNull(nameof(action));
+
+            var results = new List<Task>();
+            await foreach (TSource item in source.WithCancellation(cancellationToken)
+                .ConfigureAwait(continueOnCapturedContext: false))
+            {
+                var task = Task.Run(
+                    () => ExecuteActionWithCancellation(item, action, cancellationToken)
+                );
+                results.Add(task);
+            }
+
+            await Task.WhenAll(results).ConfigureAwait(continueOnCapturedContext: false);
+        }
+
+        public static Task ForEachAsync<TSource>(this IAsyncEnumerable<TSource> source,
             Func<TSource, Task> action)
         {
             return source.ForEachAsync(action, cancellationToken: CancellationToken.None);
         }
+
+        public static async Task<TResult[]> ForEachAsync<TSource, TResult>(
+            this IAsyncEnumerable<TSource> source, Func<TSource, Task<TResult>> func,
+            CancellationToken cancellationToken)
+        {
+            source.ThrowIfNull(nameof(source));
+            func.ThrowIfNull(nameof(func));
+
+            var results = new List<Task<TResult>>();
+            await foreach (TSource item in source.WithCancellation(cancellationToken)
+                .ConfigureAwait(continueOnCapturedContext: false))
+            {
+                var task = Task.Run(
+                    () => ExecuteFuncWithCancellation(item, func, cancellationToken)
+                );
+                results.Add(task);
+            }
+
+            return await Task.WhenAll(results).ConfigureAwait(continueOnCapturedContext: false);
+        }
+
+        public static Task<TResult[]> ForEachAsync<TSource, TResult>(
+            this IAsyncEnumerable<TSource> source, Func<TSource, Task<TResult>> func)
+        {
+            return source.ForEachAsync(func, cancellationToken: CancellationToken.None);
+        }
+
+        public static async Task<Result<NoneResult, Exception>[]> ForEacSafeAsync<TSource>(
+            this IAsyncEnumerable<TSource> source, Func<TSource, Task> action,
+            CancellationToken cancellationToken)
+        {
+            source.ThrowIfNull(nameof(source));
+            action.ThrowIfNull(nameof(action));
+
+            var results = new List<Task>();
+            await foreach (TSource item in source.WithCancellation(cancellationToken)
+                .ConfigureAwait(continueOnCapturedContext: false))
+            {
+                var task = Task.Run(
+                    () => ExecuteActionWithCancellation(item, action, cancellationToken)
+                );
+                results.Add(task);
+            }
+
+            return await TaskHelper.WhenAllResultsOrExceptions(results)
+                .ConfigureAwait(continueOnCapturedContext: false);
+        }
+
+        public static Task<Result<NoneResult, Exception>[]> ForEachSafeAsync<TSource>(
+            this IAsyncEnumerable<TSource> source, Func<TSource, Task> action)
+        {
+            return source.ForEacSafeAsync(action, cancellationToken: CancellationToken.None);
+        }
+
+        public static async Task<Result<TResult, Exception>[]> ForEacSafeAsync<TSource, TResult>(
+            this IAsyncEnumerable<TSource> source, Func<TSource, Task<TResult>> func,
+            CancellationToken cancellationToken)
+        {
+            source.ThrowIfNull(nameof(source));
+            func.ThrowIfNull(nameof(func));
+
+            var results = new List<Task<TResult>>();
+            await foreach (TSource item in source.WithCancellation(cancellationToken)
+                .ConfigureAwait(continueOnCapturedContext: false))
+            {
+                var task = Task.Run(
+                    () => ExecuteFuncWithCancellation(item, func, cancellationToken)
+                );
+                results.Add(task);
+            }
+
+            return await TaskHelper.WhenAllResultsOrExceptions(results)
+                .ConfigureAwait(continueOnCapturedContext: false);
+        }
+
+        public static Task<Result<TResult, Exception>[]> ForEachSafeAsync<TSource, TResult>(
+            this IAsyncEnumerable<TSource> source, Func<TSource, Task<TResult>> func)
+        {
+            return source.ForEacSafeAsync(func, cancellationToken: CancellationToken.None);
+        }
+
+#endif
 
         #endregion
 
