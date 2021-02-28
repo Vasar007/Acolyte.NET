@@ -347,7 +347,7 @@ namespace Acolyte.Collections
         public static int IndexOf<TSource>(this IEnumerable<TSource> source,
             Func<TSource, bool> predicate)
         {
-            // Null check for "source" parameter is provided by Enumerable.Select method.
+            // Null check for "source" parameter is provided by "Enumerable.Select" method.
             predicate.ThrowIfNull(nameof(predicate));
 
             int foundIndex = source
@@ -360,7 +360,7 @@ namespace Acolyte.Collections
         }
 
         /// <summary>
-        /// Searches for an element that equals to the specifed element and returns the zero-based
+        /// Searches for an element that equals to the specified element and returns the zero-based
         /// index of the first occurrence within the entire sequence. The values are compared by
         /// using a specified <paramref name="comparer" />.
         /// </summary>
@@ -391,7 +391,7 @@ namespace Acolyte.Collections
         }
 
         /// <summary>
-        /// Searches for an element that equals to the specifed element and returns the zero-based
+        /// Searches for an element that equals to the specified element and returns the zero-based
         /// index of the first occurrence within the entire sequence. The values are compared by
         /// using a default equality comparer.
         /// </summary>
@@ -658,7 +658,7 @@ namespace Acolyte.Collections
         #region Min/Max For Generic Types With Comparer
 
         /// <summary>
-        /// Returns the minimum value in a generic sequence with proivided comparer.
+        /// Returns the minimum value in a generic sequence with provided comparer.
         /// </summary>
         /// <typeparam name="TSource">
         /// The type of the elements of <paramref name="source" />.
@@ -719,7 +719,7 @@ namespace Acolyte.Collections
         }
 
         /// <summary>
-        /// Returns the maximum value in a generic sequence with proivided comparer.
+        /// Returns the maximum value in a generic sequence with provided comparer.
         /// </summary>
         /// <typeparam name="TSource">
         /// The type of the elements of <paramref name="source" />.
@@ -1166,7 +1166,7 @@ namespace Acolyte.Collections
         #region MinMax For Generic Types
 
         /// <summary>
-        /// Returns the minimum and maximum values in a generic sequence with proivided comparer.
+        /// Returns the minimum and maximum values in a generic sequence with provided comparer.
         /// </summary>
         /// <typeparam name="TSource">
         /// The type of the elements of <paramref name="source" />.

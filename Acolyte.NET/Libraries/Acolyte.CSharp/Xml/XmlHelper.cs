@@ -28,7 +28,7 @@ namespace Acolyte.Xml
             string stringXml;
 
             using (var sww = new StringWriter())
-            using (XmlWriter writer = XmlWriter.Create(sww))
+            using (var writer = XmlWriter.Create(sww))
             {
                 xmlSerializer.Serialize(writer, value);
                 stringXml = sww.ToString();
@@ -59,7 +59,7 @@ namespace Acolyte.Xml
             object result;
 
             using (var sww = new StringReader(xmlData))
-            using (XmlReader reader = XmlReader.Create(sww))
+            using (var reader = XmlReader.Create(sww))
             {
                 result = xmlSerializer.Deserialize(reader);
             }

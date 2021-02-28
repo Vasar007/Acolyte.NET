@@ -89,7 +89,7 @@ namespace Acolyte.Collections.Concurrent
 
         #endregion
 
-        #region Excplicit Properties
+        #region Explicit Properties
 
         bool ICollection<KeyValuePair<TKey, TValue>>.IsReadOnly =>
             ((ICollection<KeyValuePair<TKey, TValue>>) _dictionary).IsReadOnly;
@@ -287,7 +287,7 @@ namespace Acolyte.Collections.Concurrent
 
         #endregion
 
-        #region IDictionary Impelementation
+        #region IDictionary Implementation
 
         void IDictionary.Add([DisallowNull] object key, object value)
         {
@@ -325,7 +325,7 @@ namespace Acolyte.Collections.Concurrent
 
         #endregion
 
-        #region IEnumerable Impelementation
+        #region IEnumerable Implementation
 
         IEnumerator IEnumerable.GetEnumerator()
         {

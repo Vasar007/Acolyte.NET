@@ -154,7 +154,7 @@ namespace Acolyte.Common
             }
             else
             {
-                FormatString reason = new FormatString(reasonFormat, args);
+                var reason = new FormatString(reasonFormat, args);
                 return new Reasonable<T>(value, reason);
             }
         }

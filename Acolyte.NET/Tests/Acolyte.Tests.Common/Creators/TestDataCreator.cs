@@ -54,7 +54,7 @@ namespace Acolyte.Tests.Creators
 
         #endregion
 
-        #region Choise Item
+        #region Choice Item
 
         public static (TSource item, int index) ChoiceWithIndex<TSource>(
             IReadOnlyList<TSource> source, Random? random = null)
@@ -178,7 +178,7 @@ namespace Acolyte.Tests.Creators
             if (length <= 0)
             {
                 throw new ArgumentOutOfRangeException(
-                    nameof(length), length, "Length must pe positive."
+                    nameof(length), length, "Length must be positive."
                 );
             }
 

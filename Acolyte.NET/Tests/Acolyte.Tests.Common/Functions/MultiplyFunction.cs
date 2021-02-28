@@ -29,7 +29,7 @@ namespace Acolyte.Tests.Functions
             {
                 // As decimal is not primitive type and has overloads for operators,
                 // unchecked does not work.
-                // So, I catch exeption and return original value if something goes wrong.
+                // So, I catch exception and return original value if something goes wrong.
                 try
                 {
                     return x * 2.0M;

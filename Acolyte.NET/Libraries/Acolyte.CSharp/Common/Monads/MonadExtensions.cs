@@ -8,10 +8,10 @@ namespace Acolyte.Common.Monads
     /// </summary>
     public static class MonadExtensions
     {
-        // We cannot merge methods for class? and Nullable<stuct> because
+        // We cannot merge methods for class? and Nullable<struct> because
         // this lead to changing signature of delegates that passes in methods.
-        // I.g. user call some method and specify source Nullable<stuct> delegate for struct value,
-        // not for Nullable<stuct> and expect that delegate will be called only when
+        // I.g. user call some method and specify source Nullable<struct> delegate for value type
+        // value, not for Nullable<struct> and expect that delegate will be called only when
         // source has value.
 
         #region With

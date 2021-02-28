@@ -5,13 +5,13 @@ namespace Acolyte.Common
     /// <summary>
     /// Thread-safe equivalent of System.Random, using just static methods.
     /// If all you want is a source of random numbers, this is an easy class to
-    /// use. If you need to specify your own seeds (eg for reproducible sequences
+    /// use. If you need to specify your own seeds (e.g. for reproducible sequences
     /// of numbers), use <see cref="Random" />.
     /// </summary>
     public static class StaticRandom
     {
         /// <summary>
-        /// Defalt initialized random class instance.
+        /// Default initialized random class instance.
         /// </summary>
         private static readonly Random _random = new Random();
 

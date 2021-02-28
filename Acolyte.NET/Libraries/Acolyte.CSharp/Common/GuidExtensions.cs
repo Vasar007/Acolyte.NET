@@ -3,16 +3,16 @@
 namespace Acolyte.Common
 {
     /// <summary>
-    /// Defines extension methods for <see cref="Guid" /> struct.
+    /// Defines extension methods for <see cref="Guid" /> type.
     /// </summary>
     public static class GuidExtensions
     {
         /// <summary>
-        /// Compare guid with the empty guid without throwing exception.
+        /// Compare value with the <see cref="Guid.Empty" /> without throwing exception.
         /// </summary>
-        /// <param name="guid">Guid to compare.</param>
+        /// <param name="guid">Value to compare.</param>
         /// <returns>
-        /// <see langword="true" /> if <paramref name="guid" /> equals to empty guid,
+        /// <see langword="true" /> if <paramref name="guid" /> equals to <see cref="Guid.Empty" />,
         /// <see langword="false" /> otherwise.
         /// </returns>
         public static bool IsEmpty(this Guid guid)

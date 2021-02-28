@@ -1,6 +1,4 @@
-﻿// Copyright (c) Veeam Software Group GmbH
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using Acolyte.Common.Monads;

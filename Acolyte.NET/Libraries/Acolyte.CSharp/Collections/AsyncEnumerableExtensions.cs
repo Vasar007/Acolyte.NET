@@ -7,12 +7,12 @@ namespace Acolyte.Collections
 {
 #if NETSTANDARD2_1
     /// <summary>
-    /// Contains useful methods to work with async enumerable items.
+    /// Contains useful methods to work with asynchronous enumerable items.
     /// </summary>
     public static class AsyncEnumerableExtensions
     {
         /// <summary>
-        /// Transorms a <see cref="IAsyncEnumerable{T}" /> to <see cref="IEnumerable{T}" />. This
+        /// Transforms a <see cref="IAsyncEnumerable{T}" /> to <see cref="IEnumerable{T}" />. This
         /// method used to work with API that cannot process <see cref="IAsyncEnumerable{T}" />
         /// sequences.
         /// </summary>
@@ -23,7 +23,8 @@ namespace Acolyte.Collections
         /// The <see cref="IAsyncEnumerable{T}" /> to convert to <see cref="IEnumerable{T}" />.
         /// </param>
         /// <returns>
-        /// A <see cref="IEnumerable{T}" /> that contains elements from the input async sequence.
+        /// A <see cref="IEnumerable{T}" /> that contains elements from the input asynchronous
+        /// sequence.
         /// </returns>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="source" /> is <see langword="null" />.

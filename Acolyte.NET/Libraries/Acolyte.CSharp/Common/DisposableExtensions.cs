@@ -6,7 +6,7 @@ namespace Acolyte.Common
 {
     public static class DisposableExtensions
     {
-        private const string ErrorFormat = "Failed to dispose \"{0}\"{1}Full callstack:{1}{2}";
+        private const string ErrorFormat = "Failed to dispose \"{0}\"{1}Full call stack:{1}{2}";
 
         public static void DisposeSafe(this IDisposable? self)
         {

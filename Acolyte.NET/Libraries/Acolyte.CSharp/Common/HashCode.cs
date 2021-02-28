@@ -393,13 +393,13 @@ namespace Acolyte.Common
         /// Throws <see cref="NotSupportedException" />.
         /// </summary>
         /// <returns>Does not return.</returns>
-        /// <exception cref="NotSupportedException">Implicitly convert this struct to an
+        /// <exception cref="NotSupportedException">Implicitly convert this value type to an
         /// <see cref="int" /> to get the hash code.</exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode()
         {
             throw new NotSupportedException(
-                "Implicitly convert this struct to an int to get the hash code."
+                "Implicitly convert this value type to an int to get the hash code."
             );
         }
 
@@ -442,7 +442,7 @@ namespace Acolyte.Common
         /// <param name="startHashCode">An initial value for combining hash code.</param>
         /// <returns>
         /// Combined result of all items in collection. If collection is empty, default prime value
-        /// woul be combined with specified <paramref name="startHashCode" />.
+        /// would be combined with specified <paramref name="startHashCode" />.
         /// </returns>
         private static int GetHashCode<T>(IEnumerable<T> items, int startHashCode)
         {

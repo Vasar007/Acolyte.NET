@@ -41,10 +41,11 @@ namespace Acolyte.Common
                 );
             }
 
-            // Working with ulong so that modulo works correctly with values > long.MaxValue.
+            // Working with unsigned long.
+            // So, that modulo works correctly with values > long.MaxValue.
             ulong uRange = (ulong) (maxValue - minValue);
 
-            // Prevent a modolo bias; see https://stackoverflow.com/a/10984975/238419
+            // Prevent a modulo bias; see https://stackoverflow.com/a/10984975/238419
             // for more information.
             // In the worst case, the expected number of calls is 2 (though usually it's
             // much closer to 1) so this loop doesn't really hurt performance at all.

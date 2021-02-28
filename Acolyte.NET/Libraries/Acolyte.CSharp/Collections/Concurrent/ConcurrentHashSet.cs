@@ -40,7 +40,7 @@ namespace Acolyte.Collections.Concurrent
 
         #endregion
 
-        #region Excplicit Properties
+        #region Explicit Properties
 
         bool ICollection<T>.IsReadOnly => ((ICollection<T>) _set).IsReadOnly;
 
@@ -300,8 +300,8 @@ namespace Acolyte.Collections.Concurrent
         {
             lock (_lock)
             {
-                // Copy collection content to avoid possible issues during multithreading.
-                List<T> copied = _set.ToList();
+                // Copy collection content to avoid possible issues during multi-threading.
+                var copied = _set.ToList();
                 return copied.GetEnumerator();
             }
         }

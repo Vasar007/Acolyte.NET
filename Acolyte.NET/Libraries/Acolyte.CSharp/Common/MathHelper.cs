@@ -45,7 +45,7 @@ namespace Acolyte.Common
 
         public static bool IsNumeric(string str)
         {
-            // Null check is provided by Enumerable.All method.
+            // Null check for "str" parameter is provided by "Enumerable.All" method.
             return str.All(ch => char.IsNumber(ch));
         }
 
@@ -60,7 +60,7 @@ namespace Acolyte.Common
             if (value < 0)
             {
                 throw new NotImplementedException(
-                    "Cannot calculate number of digints for negative value '{value.ToString()}'."
+                    "Cannot calculate number of digits for negative value '{value.ToString()}'."
                 );
             }
 

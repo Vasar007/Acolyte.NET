@@ -6,7 +6,7 @@
         {
         }
 
-        // TODO: write mock equality comprarer to test overloads with it.
+        // TODO: write mock equality comparer to test overloads with it.
 
         #region Tests for "For Each" section
 

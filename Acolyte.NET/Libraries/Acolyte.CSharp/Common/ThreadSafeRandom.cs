@@ -14,7 +14,7 @@ namespace Acolyte.Common
         /// Spin-lock object to make random thread-safe.
         /// </summary>
         /// <remarks>
-        /// Don't make it readonly because it can lead to shadow copies!
+        /// Don't make it read-only because it can lead to shadow copies!
         /// <see cref="SpinLock" /> is a <see langword="struct" />!
         /// </remarks>
         private SpinLock _spinLock;
