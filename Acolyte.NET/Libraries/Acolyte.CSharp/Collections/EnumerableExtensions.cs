@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -452,7 +453,7 @@ namespace Acolyte.Collections
                 Func<TSource, TKey> keySelector)
             where TKey: notnull
         {
-            // Null checks for parameters are provided by Enumerable.ToDictionary method.
+            // Null checks for parameters are provided by "Enumerable.ToDictionary" method.
             return new ReadOnlyDictionary<TKey, TSource>(source.ToDictionary(keySelector));
         }
 
@@ -491,7 +492,7 @@ namespace Acolyte.Collections
                 IEqualityComparer<TKey>? comparer)
             where TKey : notnull
         {
-            // Null checks for parameters are provided by Enumerable.ToDictionary method.
+            // Null checks for parameters are provided by "Enumerable.ToDictionary" method.
             return new ReadOnlyDictionary<TKey, TSource>(
                 source.ToDictionary(keySelector, comparer)
             );
@@ -539,7 +540,7 @@ namespace Acolyte.Collections
                 Func<TSource, TElement> elementSelector)
             where TKey : notnull
         {
-            // Null checks for parameters are provided by Enumerable.ToDictionary method.
+            // Null checks for parameters are provided by "Enumerable.ToDictionary" method.
             return new ReadOnlyDictionary<TKey, TElement>(
                 source.ToDictionary(keySelector, elementSelector)
             );
@@ -589,7 +590,7 @@ namespace Acolyte.Collections
                 IEqualityComparer<TKey>? comparer)
             where TKey : notnull
         {
-            // Null checks for parameters are provided by Enumerable.ToDictionary method.
+            // Null checks for parameters are provided by "Enumerable.ToDictionary" method.
             return new ReadOnlyDictionary<TKey, TElement>(
                 source.ToDictionary(keySelector, elementSelector, comparer)
             );
@@ -615,7 +616,7 @@ namespace Acolyte.Collections
         public static IReadOnlyList<TSource> ToReadOnlyList<TSource>(
             this IEnumerable<TSource> source)
         {
-            // Null check for "source" parameter is provided by Enumerable.ToList method.
+            // Null check for "source" parameter is provided by "Enumerable.ToList" method.
             return source
                 .ToList()
                 .AsReadOnly();
@@ -644,7 +645,7 @@ namespace Acolyte.Collections
         public static IReadOnlyCollection<TSource> ToReadOnlyCollection<TSource>(
             this IEnumerable<TSource> source)
         {
-            // Null check for "source" parameter is provided by Enumerable.ToList method.
+            // Null check for "source" parameter is provided by "Enumerable.ToList" method.
             return source
                 .ToList()
                 .AsReadOnly();
@@ -1969,12 +1970,17 @@ namespace Acolyte.Collections
         /// <summary>
         /// Helper class that holds default item selector for some "ToSingleString" overloads.
         /// </summary>
-        /// <typeparam name="TSource">The type of the elements of source collection.</typeparam>
+        /// <typeparam name="TSource">
+        /// The type of the elements of <paramref name="source" />.
+        /// </typeparam>
         private static class ToStringSelector<TSource>
         {
             /// <summary>
             /// Default selector for collections.
             /// </summary>
+            /// <returns>
+            /// Function to convert value of type <typeparamref name="TSource" /> to string.
+            /// </returns>
             public static Func<TSource?, string> Instance { get; } =
                 item => item is null ? string.Empty : $"'{item.ToString()}'";
         }
@@ -2154,6 +2160,21 @@ namespace Acolyte.Collections
 
         #region For Each
 
+        /// <summary>
+        /// Performs the specified action on each element of the <paramref name="source" />.
+        /// </summary>
+        /// <typeparam name="TSource">
+        /// The type of the elements of <paramref name="source" />.
+        /// </typeparam>
+        /// <param name="source">A sequence of values to perform action.</param>
+        /// <param name="action">
+        /// The <see cref="Action{T}" /> delegate to perform on each element of the
+        /// <paramref name="source" />.
+        /// </param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="source" /> is <see langword="null" />. -or-
+        /// <paramref name="action" /> is <see langword="null" />.
+        /// </exception>
         public static void ForEach<TSource>(
             this IEnumerable<TSource> source,
             Action<TSource> action)
@@ -2167,101 +2188,368 @@ namespace Acolyte.Collections
             }
         }
 
-        private static async Task ExecuteActionWithCancellation<TSource>(TSource item,
+        /// <summary>
+        /// Helper method to perform action with cancellation check.
+        /// </summary>
+        /// <typeparam name="TSource">
+        /// The type of <paramref name="item" /> to perform function on.
+        /// </typeparam>
+        /// <param name="item">An item to perform action on.</param>
+        /// <param name="action">
+        /// The <see cref="Func{T, TResult}" /> delegate to perform on the <paramref name="item" />.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// A cancellation token that can be used to cancel the work if it has not yet started.
+        /// <see cref="PerformActionWithCancellation{TSource}(TSource, Func{TSource, Task}, CancellationToken)" />
+        /// does not pass <paramref name="cancellationToken" /> to <paramref name="action" />.
+        /// </param>
+        /// <returns>
+        /// A task that represents the work on an <paramref name="item" /> queued to execute in the
+        /// thread pool.
+        /// </returns>
+        /// <exception cref="TaskCanceledException">The task has been canceled.</exception>
+        /// <exception cref="ObjectDisposedException">
+        /// The <see cref="CancellationTokenSource" /> associated with
+        /// <paramref name="cancellationToken" /> was disposed.
+        /// </exception>
+        private static Task PerformActionWithCancellation<TSource>(TSource item,
             Func<TSource, Task> action, CancellationToken cancellationToken)
         {
-            cancellationToken.ThrowIfCancellationRequested();
-            await action(item).ConfigureAwait(continueOnCapturedContext: false);
+            Debug.Assert(action is not null, "Caller must check \"action\" parameter on null!");
+
+            return Task.Run(() => action!(item), cancellationToken);
         }
 
-        private static async Task<TResult> ExecuteFuncWithCancellation<TSource, TResult>(
+        /// <summary>
+        /// Helper method to perform function with cancellation check.
+        /// </summary>
+        /// <typeparam name="TSource">
+        /// The type of <paramref name="item" /> to perform function on.
+        /// </typeparam>
+        /// <typeparam name="TResult">
+        /// The type of element that <paramref name="func" /> returns.
+        /// </typeparam>
+        /// <param name="item">An item to perform function on.</param>
+        /// <param name="func">
+        /// The <see cref="Func{T, TResult}" /> delegate to perform on the <paramref name="item" />.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// A cancellation token that can be used to cancel the work if it has not yet started.
+        /// <see cref="PerformFuncWithCancellation{TSource, TResult}(TSource, Func{TSource, Task{TResult}}, CancellationToken)" />
+        /// does not pass <paramref name="cancellationToken" /> to <paramref name="func" />.
+        /// </param>
+        /// <returns>
+        /// A task that represents the work on an <paramref name="item" /> queued to execute in the
+        /// thread pool.
+        /// </returns>
+        /// <exception cref="TaskCanceledException">The task has been canceled.</exception>
+        /// <exception cref="ObjectDisposedException">
+        /// The <see cref="CancellationTokenSource" /> associated with
+        /// <paramref name="cancellationToken" /> was disposed.
+        /// </exception>
+        private static Task<TResult> PerformFuncWithCancellation<TSource, TResult>(
             TSource item, Func<TSource, Task<TResult>> func, CancellationToken cancellationToken)
         {
-            cancellationToken.ThrowIfCancellationRequested();
-            return await func(item).ConfigureAwait(continueOnCapturedContext: false);
+            Debug.Assert(func is not null, "Caller must check \"func\" parameter on null!");
+
+            return Task.Run(() => func!(item), cancellationToken);
         }
 
+        /// <summary>
+        /// Performs the specified action on each element of the <paramref name="source" />.
+        /// A cancellation token allows the work to be canceled if it has not yet started.
+        /// </summary>
+        /// <typeparam name="TSource">
+        /// The type of the elements of <paramref name="source" />.
+        /// </typeparam>
+        /// <param name="source">A sequence of values to perform action.</param>
+        /// <param name="action">
+        /// The <see cref="Func{T, TResult}" /> delegate to perform on the
+        /// <paramref name="source" />.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// A cancellation token that can be used to cancel the work if it has not yet started.
+        /// <see cref="ForEachAsync{TSource}(IEnumerable{TSource}, Func{TSource, Task}, CancellationToken)" />
+        /// does not pass <paramref name="cancellationToken" /> to <paramref name="action" />.
+        /// </param>
+        /// <returns>
+        /// A task that represents the completion of work on each item of <paramref name="source" />
+        /// queued to execute in the thread pool.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="source" /> is <see langword="null" />. -or-
+        /// <paramref name="action" /> is <see langword="null" />.
+        /// </exception>
+        /// <exception cref="TaskCanceledException">The task has been canceled.</exception>
+        /// <exception cref="ObjectDisposedException">
+        /// The <see cref="CancellationTokenSource" /> associated with
+        /// <paramref name="cancellationToken" /> was disposed.
+        /// </exception>
         public static Task ForEachAsync<TSource>(this IEnumerable<TSource> source,
             Func<TSource, Task> action, CancellationToken cancellationToken)
         {
-            source.ThrowIfNull(nameof(source));
+            // Null check for "source" parameter is provided by "Enumerable.Select" method.
             action.ThrowIfNull(nameof(action));
 
-            var results = source.Select(
-                item => Task.Run(
-                    () => ExecuteActionWithCancellation(item, action, cancellationToken)
-                )
-            );
+            var results = source
+                .Select(item => PerformActionWithCancellation(item, action, cancellationToken));
 
             return Task.WhenAll(results);
         }
 
+        /// <summary>
+        /// Performs the specified action on each element of the <paramref name="source" />.
+        /// </summary>
+        /// <typeparam name="TSource">
+        /// The type of the elements of <paramref name="source" />.
+        /// </typeparam>
+        /// <param name="source">A sequence of values to perform action.</param>
+        /// <param name="action">
+        /// The <see cref="Func{T, TResult}" /> delegate to perform on the
+        /// <paramref name="source" />.
+        /// </param>
+        /// <returns>
+        /// A task that represents the completion of work on each item of <paramref name="source" />
+        /// queued to execute in the thread pool.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="source" /> is <see langword="null" />. -or-
+        /// <paramref name="action" /> is <see langword="null" />.
+        /// </exception>
         public static Task ForEachAsync<TSource>(this IEnumerable<TSource> source,
             Func<TSource, Task> action)
         {
             return source.ForEachAsync(action, cancellationToken: CancellationToken.None);
         }
 
+        /// <summary>
+        /// Performs the specified function on each element of the <paramref name="source" />.
+        /// A cancellation token allows the work to be canceled if it has not yet started.
+        /// </summary>
+        /// <typeparam name="TSource">
+        /// The type of the elements of <paramref name="source" />.
+        /// </typeparam>
+        /// <typeparam name="TResult">
+        /// The type of element that <paramref name="func" /> returns.
+        /// </typeparam>
+        /// <param name="source">A sequence of values to perform function.</param>
+        /// <param name="func">
+        /// The <see cref="Func{T, TResult}" /> delegate to perform on the
+        /// <paramref name="source" />.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// A cancellation token that can be used to cancel the work if it has not yet started.
+        /// <see cref="ForEachAsync{TSource, TResult}(IEnumerable{TSource}, Func{TSource, Task{TResult}}, CancellationToken)" />
+        /// does not pass <paramref name="cancellationToken" /> to <paramref name="function" />.
+        /// </param>
+        /// <returns>
+        /// A task that represents the completion of work on each item of <paramref name="source" />
+        /// queued to execute in the thread pool. Task contains results from function invocation on
+        /// each item of <paramref name="source" />.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="source" /> is <see langword="null" />. -or-
+        /// <paramref name="function" /> is <see langword="null" />.
+        /// </exception>
+        /// <exception cref="TaskCanceledException">The task has been canceled.</exception>
+        /// <exception cref="ObjectDisposedException">
+        /// The <see cref="CancellationTokenSource" /> associated with
+        /// <paramref name="cancellationToken" /> was disposed.
+        /// </exception>
         public static Task<TResult[]> ForEachAsync<TSource, TResult>(
             this IEnumerable<TSource> source, Func<TSource, Task<TResult>> func,
             CancellationToken cancellationToken)
         {
-            source.ThrowIfNull(nameof(source));
+            // Null check for "source" parameter is provided by "Enumerable.Select" method.
             func.ThrowIfNull(nameof(func));
 
-            var results = source.Select(
-                item => Task.Run(
-                    () => ExecuteFuncWithCancellation(item, func, cancellationToken)
-                )
-            );
+            var results = source
+                .Select(item => PerformFuncWithCancellation(item, func, cancellationToken));
 
             return Task.WhenAll(results);
         }
 
+        /// <summary>
+        /// Performs the specified function on each element of the <paramref name="source" />.
+        /// </summary>
+        /// <typeparam name="TSource">
+        /// The type of the elements of <paramref name="source" />.
+        /// </typeparam>
+        /// <typeparam name="TResult">
+        /// The type of element that <paramref name="func" /> returns.
+        /// </typeparam>
+        /// <param name="source">A sequence of values to perform function.</param>
+        /// <param name="func">
+        /// The <see cref="Func{T, TResult}" /> delegate to perform on the
+        /// <paramref name="source" />.
+        /// </param>
+        /// <returns>
+        /// A task that represents the completion of work on each item of <paramref name="source" />
+        /// queued to execute in the thread pool. Task contains results from function invocation on
+        /// each item of <paramref name="source" />.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="source" /> is <see langword="null" />. -or-
+        /// <paramref name="function" /> is <see langword="null" />.
+        /// </exception>
         public static Task<TResult[]> ForEachAsync<TSource, TResult>(
             this IEnumerable<TSource> source, Func<TSource, Task<TResult>> func)
         {
             return source.ForEachAsync(func, cancellationToken: CancellationToken.None);
         }
 
+        /// <summary>
+        /// Performs the specified action on each element of the <paramref name="source" /> and
+        /// wraps execution in
+        /// <see cref="TaskHelper.WhenAllResultsOrExceptions(IEnumerable{Task})" /> to make task for
+        /// every item in <paramref name="source" /> safe. You can unwrap results and process it.
+        /// A cancellation token allows the work to be canceled if it has not yet started.
+        /// </summary>
+        /// <typeparam name="TSource">
+        /// The type of the elements of <paramref name="source" />.
+        /// </typeparam>
+        /// <param name="source">A sequence of values to perform action.</param>
+        /// <param name="action">
+        /// The <see cref="Func{T, TResult}" /> delegate to perform on the
+        /// <paramref name="source" />.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// A cancellation token that can be used to cancel the work if it has not yet started.
+        /// <see cref="ForEacSafeAsync{TSource}(IEnumerable{TSource}, Func{TSource, Task}, CancellationToken)" />
+        /// does not pass <paramref name="cancellationToken" /> to <paramref name="action" />.
+        /// </param>
+        /// <returns>
+        /// A task that represents the completion of work on each item of <paramref name="source" />
+        /// queued to execute in the thread pool. Task contains results from action invocation on
+        /// each item of <paramref name="source" />.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="source" /> is <see langword="null" />. -or-
+        /// <paramref name="action" /> is <see langword="null" />.
+        /// </exception>
+        /// <exception cref="TaskCanceledException">The task has been canceled.</exception>
+        /// <exception cref="ObjectDisposedException">
+        /// The <see cref="CancellationTokenSource" /> associated with
+        /// <paramref name="cancellationToken" /> was disposed.
+        /// </exception>
         public static Task<Result<NoneResult, Exception>[]> ForEacSafeAsync<TSource>(
             this IEnumerable<TSource> source, Func<TSource, Task> action,
             CancellationToken cancellationToken)
         {
-            source.ThrowIfNull(nameof(source));
+            // Null check for "source" parameter is provided by "Enumerable.Select" method.
             action.ThrowIfNull(nameof(action));
 
-            var results = source.Select(
-                item => Task.Run(
-                    () => ExecuteActionWithCancellation(item, action, cancellationToken)
-                )
-            );
+            var results = source
+                .Select(item => PerformActionWithCancellation(item, action, cancellationToken));
 
             return TaskHelper.WhenAllResultsOrExceptions(results);
         }
 
+        /// <summary>
+        /// Performs the specified action on each element of the <paramref name="source" /> and
+        /// wraps execution in
+        /// <see cref="TaskHelper.WhenAllResultsOrExceptions(IEnumerable{Task})" /> to make task for
+        /// every item in <paramref name="source" /> safe. You can unwrap results and process it.
+        /// </summary>
+        /// <typeparam name="TSource">
+        /// The type of the elements of <paramref name="source" />.
+        /// </typeparam>
+        /// <param name="source">A sequence of values to perform action.</param>
+        /// <param name="action">
+        /// The <see cref="Func{T, TResult}" /> delegate to perform on the
+        /// <paramref name="source" />.
+        /// </param>
+        /// <returns>
+        /// A task that represents the completion of work on each item of <paramref name="source" />
+        /// queued to execute in the thread pool. Task contains results from action invocation on
+        /// each item of <paramref name="source" />.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="source" /> is <see langword="null" />. -or-
+        /// <paramref name="action" /> is <see langword="null" />.
+        /// </exception>
         public static Task<Result<NoneResult, Exception>[]> ForEachSafeAsync<TSource>(
             this IEnumerable<TSource> source, Func<TSource, Task> action)
         {
             return source.ForEacSafeAsync(action, cancellationToken: CancellationToken.None);
         }
 
+        /// <summary>
+        /// Performs the specified function on each element of the <paramref name="source" /> and
+        /// wraps execution in
+        /// <see cref="TaskHelper.WhenAllResultsOrExceptions(IEnumerable{Task})" /> to make task for
+        /// every item in <paramref name="source" /> safe. You can unwrap results and process it.
+        /// A cancellation token allows the work to be canceled if it has not yet started.
+        /// </summary>
+        /// <typeparam name="TSource">
+        /// The type of the elements of <paramref name="source" />.
+        /// </typeparam>
+        /// <typeparam name="TResult">
+        /// The type of element that <paramref name="func" /> returns.
+        /// </typeparam>
+        /// <param name="source">A sequence of values to perform function.</param>
+        /// <param name="func">
+        /// The <see cref="Func{T, TResult}" /> delegate to perform on the
+        /// <paramref name="source" />.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// A cancellation token that can be used to cancel the work if it has not yet started.
+        /// <see cref="ForEacSafeAsync{TSource, TResult}(IEnumerable{TSource}, Func{TSource, Task{TResult}}, CancellationToken)" />
+        /// does not pass <paramref name="cancellationToken" /> to <paramref name="function" />.
+        /// </param>
+        /// <returns>
+        /// A task that represents the completion of work on each item of <paramref name="source" />
+        /// queued to execute in the thread pool. Task contains results from function invocation on
+        /// each item of <paramref name="source" />.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="source" /> is <see langword="null" />. -or-
+        /// <paramref name="function" /> is <see langword="null" />.
+        /// </exception>
+        /// <exception cref="TaskCanceledException">The task has been canceled.</exception>
+        /// <exception cref="ObjectDisposedException">
+        /// The <see cref="CancellationTokenSource" /> associated with
+        /// <paramref name="cancellationToken" /> was disposed.
+        /// </exception>
         public static Task<Result<TResult, Exception>[]> ForEacSafeAsync<TSource, TResult>(
             this IEnumerable<TSource> source, Func<TSource, Task<TResult>> func,
             CancellationToken cancellationToken)
         {
-            source.ThrowIfNull(nameof(source));
+            // Null check for "source" parameter is provided by "Enumerable.Select" method.
             func.ThrowIfNull(nameof(func));
 
-            var results = source.Select(
-                item => Task.Run(
-                    () => ExecuteFuncWithCancellation(item, func, cancellationToken)
-                )
-            );
+            var results = source
+                .Select(item => PerformFuncWithCancellation(item, func, cancellationToken));
 
             return TaskHelper.WhenAllResultsOrExceptions(results);
         }
 
+        /// <summary>
+        /// Performs the specified function on each element of the <paramref name="source" /> and
+        /// wraps execution in
+        /// <see cref="TaskHelper.WhenAllResultsOrExceptions(IEnumerable{Task})" /> to make task for
+        /// every item in <paramref name="source" /> safe. You can unwrap results and process it.
+        /// </summary>
+        /// <typeparam name="TSource">
+        /// The type of the elements of <paramref name="source" />.
+        /// </typeparam>
+        /// <typeparam name="TResult">
+        /// The type of element that <paramref name="func" /> returns.
+        /// </typeparam>
+        /// <param name="source">A sequence of values to perform function.</param>
+        /// <param name="func">
+        /// The <see cref="Func{T, TResult}" /> delegate to perform on the
+        /// <paramref name="source" />.
+        /// </param>
+        /// <returns>
+        /// A task that represents the completion of work on each item of <paramref name="source" />
+        /// queued to execute in the thread pool. Task contains results from function invocation on
+        /// each item of <paramref name="source" />.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="source" /> is <see langword="null" />. -or-
+        /// <paramref name="function" /> is <see langword="null" />.
+        /// </exception>
         public static Task<Result<TResult, Exception>[]> ForEachSafeAsync<TSource, TResult>(
             this IEnumerable<TSource> source, Func<TSource, Task<TResult>> func)
         {
@@ -2270,6 +2558,36 @@ namespace Acolyte.Collections
 
 #if NETSTANDARD2_1
 
+        /// <summary>
+        /// Performs the specified action on each element of the <paramref name="source" />.
+        /// A cancellation token allows the work to be canceled if it has not yet started.
+        /// </summary>
+        /// <typeparam name="TSource">
+        /// The type of the elements of <paramref name="source" />.
+        /// </typeparam>
+        /// <param name="source">An asynchronous sequence of values to perform action.</param>
+        /// <param name="action">
+        /// The <see cref="Func{T, TResult}" /> delegate to perform on the
+        /// <paramref name="source" />.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// A cancellation token that can be used to cancel the work if it has not yet started.
+        /// <see cref="ForEachAsync{TSource}(IAsyncEnumerable{TSource}, Func{TSource, Task}, CancellationToken)" />
+        /// does not pass <paramref name="cancellationToken" /> to <paramref name="action" />.
+        /// </param>
+        /// <returns>
+        /// A task that represents the completion of work on each item of <paramref name="source" />
+        /// queued to execute in the thread pool.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="source" /> is <see langword="null" />. -or-
+        /// <paramref name="action" /> is <see langword="null" />.
+        /// </exception>
+        /// <exception cref="TaskCanceledException">The task has been canceled.</exception>
+        /// <exception cref="ObjectDisposedException">
+        /// The <see cref="CancellationTokenSource" /> associated with
+        /// <paramref name="cancellationToken" /> was disposed.
+        /// </exception>
         public static async Task ForEachAsync<TSource>(this IAsyncEnumerable<TSource> source,
             Func<TSource, Task> action, CancellationToken cancellationToken)
         {
@@ -2280,21 +2598,72 @@ namespace Acolyte.Collections
             await foreach (TSource item in source.WithCancellation(cancellationToken)
                 .ConfigureAwait(continueOnCapturedContext: false))
             {
-                var task = Task.Run(
-                    () => ExecuteActionWithCancellation(item, action, cancellationToken)
-                );
+                var task = PerformActionWithCancellation(item, action, cancellationToken);
                 results.Add(task);
             }
 
             await Task.WhenAll(results).ConfigureAwait(continueOnCapturedContext: false);
         }
 
+        /// <summary>
+        /// Performs the specified action on each element of the <paramref name="source" />.
+        /// </summary>
+        /// <typeparam name="TSource">
+        /// The type of the elements of <paramref name="source" />.
+        /// </typeparam>
+        /// <param name="source">An asynchronous sequence of values to perform action.</param>
+        /// <param name="action">
+        /// The <see cref="Func{T, TResult}" /> delegate to perform on the
+        /// <paramref name="source" />.
+        /// </param>
+        /// <returns>
+        /// A task that represents the completion of work on each item of <paramref name="source" />
+        /// queued to execute in the thread pool.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="source" /> is <see langword="null" />. -or-
+        /// <paramref name="action" /> is <see langword="null" />.
+        /// </exception>
         public static Task ForEachAsync<TSource>(this IAsyncEnumerable<TSource> source,
             Func<TSource, Task> action)
         {
             return source.ForEachAsync(action, cancellationToken: CancellationToken.None);
         }
 
+        /// <summary>
+        /// Performs the specified function on each element of the <paramref name="source" />.
+        /// A cancellation token allows the work to be canceled if it has not yet started.
+        /// </summary>
+        /// <typeparam name="TSource">
+        /// The type of the elements of <paramref name="source" />.
+        /// </typeparam>
+        /// <typeparam name="TResult">
+        /// The type of element that <paramref name="func" /> returns.
+        /// </typeparam>
+        /// <param name="source">An asynchronous sequence of values to perform function.</param>
+        /// <param name="func">
+        /// The <see cref="Func{T, TResult}" /> delegate to perform on the
+        /// <paramref name="source" />.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// A cancellation token that can be used to cancel the work if it has not yet started.
+        /// <see cref="ForEachAsync{TSource, TResult}(IAsyncEnumerable{TSource}, Func{TSource, Task{TResult}}, CancellationToken)" />
+        /// does not pass <paramref name="cancellationToken" /> to <paramref name="function" />.
+        /// </param>
+        /// <returns>
+        /// A task that represents the completion of work on each item of <paramref name="source" />
+        /// queued to execute in the thread pool. Task contains results from function invocation on
+        /// each item of <paramref name="source" />.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="source" /> is <see langword="null" />. -or-
+        /// <paramref name="function" /> is <see langword="null" />.
+        /// </exception>
+        /// <exception cref="TaskCanceledException">The task has been canceled.</exception>
+        /// <exception cref="ObjectDisposedException">
+        /// The <see cref="CancellationTokenSource" /> associated with
+        /// <paramref name="cancellationToken" /> was disposed.
+        /// </exception>
         public static async Task<TResult[]> ForEachAsync<TSource, TResult>(
             this IAsyncEnumerable<TSource> source, Func<TSource, Task<TResult>> func,
             CancellationToken cancellationToken)
@@ -2306,21 +2675,76 @@ namespace Acolyte.Collections
             await foreach (TSource item in source.WithCancellation(cancellationToken)
                 .ConfigureAwait(continueOnCapturedContext: false))
             {
-                var task = Task.Run(
-                    () => ExecuteFuncWithCancellation(item, func, cancellationToken)
-                );
+                var task = PerformFuncWithCancellation(item, func, cancellationToken);
                 results.Add(task);
             }
 
             return await Task.WhenAll(results).ConfigureAwait(continueOnCapturedContext: false);
         }
 
+        /// <summary>
+        /// Performs the specified function on each element of the <paramref name="source" />.
+        /// </summary>
+        /// <typeparam name="TSource">
+        /// The type of the elements of <paramref name="source" />.
+        /// </typeparam>
+        /// <typeparam name="TResult">
+        /// The type of element that <paramref name="func" /> returns.
+        /// </typeparam>
+        /// <param name="source">An asynchronous sequence of values to perform function.</param>
+        /// <param name="func">
+        /// The <see cref="Func{T, TResult}" /> delegate to perform on the
+        /// <paramref name="source" />.
+        /// </param>
+        /// <returns>
+        /// A task that represents the completion of work on each item of <paramref name="source" />
+        /// queued to execute in the thread pool. Task contains results from function invocation on
+        /// each item of <paramref name="source" />.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="source" /> is <see langword="null" />. -or-
+        /// <paramref name="function" /> is <see langword="null" />.
+        /// </exception>
         public static Task<TResult[]> ForEachAsync<TSource, TResult>(
             this IAsyncEnumerable<TSource> source, Func<TSource, Task<TResult>> func)
         {
             return source.ForEachAsync(func, cancellationToken: CancellationToken.None);
         }
 
+        /// <summary>
+        /// Performs the specified action on each element of the <paramref name="source" /> and
+        /// wraps execution in
+        /// <see cref="TaskHelper.WhenAllResultsOrExceptions(IEnumerable{Task})" /> to make task for
+        /// every item in <paramref name="source" /> safe. You can unwrap results and process it.
+        /// A cancellation token allows the work to be canceled if it has not yet started.
+        /// </summary>
+        /// <typeparam name="TSource">
+        /// The type of the elements of <paramref name="source" />.
+        /// </typeparam>
+        /// <param name="source">An asynchronous sequence of values to perform action.</param>
+        /// <param name="action">
+        /// The <see cref="Func{T, TResult}" /> delegate to perform on the
+        /// <paramref name="source" />.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// A cancellation token that can be used to cancel the work if it has not yet started.
+        /// <see cref="ForEacSafeAsync{TSource}(IAsyncEnumerable{TSource}, Func{TSource, Task}, CancellationToken)" />
+        /// does not pass <paramref name="cancellationToken" /> to <paramref name="action" />.
+        /// </param>
+        /// <returns>
+        /// A task that represents the completion of work on each item of <paramref name="source" />
+        /// queued to execute in the thread pool. Task contains results from action invocation on
+        /// each item of <paramref name="source" />.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="source" /> is <see langword="null" />. -or-
+        /// <paramref name="action" /> is <see langword="null" />.
+        /// </exception>
+        /// <exception cref="TaskCanceledException">The task has been canceled.</exception>
+        /// <exception cref="ObjectDisposedException">
+        /// The <see cref="CancellationTokenSource" /> associated with
+        /// <paramref name="cancellationToken" /> was disposed.
+        /// </exception>
         public static async Task<Result<NoneResult, Exception>[]> ForEacSafeAsync<TSource>(
             this IAsyncEnumerable<TSource> source, Func<TSource, Task> action,
             CancellationToken cancellationToken)
@@ -2332,9 +2756,7 @@ namespace Acolyte.Collections
             await foreach (TSource item in source.WithCancellation(cancellationToken)
                 .ConfigureAwait(continueOnCapturedContext: false))
             {
-                var task = Task.Run(
-                    () => ExecuteActionWithCancellation(item, action, cancellationToken)
-                );
+                var task = PerformActionWithCancellation(item, action, cancellationToken);
                 results.Add(task);
             }
 
@@ -2342,12 +2764,72 @@ namespace Acolyte.Collections
                 .ConfigureAwait(continueOnCapturedContext: false);
         }
 
+        /// <summary>
+        /// Performs the specified action on each element of the <paramref name="source" /> and
+        /// wraps execution in
+        /// <see cref="TaskHelper.WhenAllResultsOrExceptions(IEnumerable{Task})" /> to make task for
+        /// every item in <paramref name="source" /> safe. You can unwrap results and process it.
+        /// </summary>
+        /// <typeparam name="TSource">
+        /// The type of the elements of <paramref name="source" />.
+        /// </typeparam>
+        /// <param name="source">An asynchronous sequence of values to perform action.</param>
+        /// <param name="action">
+        /// The <see cref="Func{T, TResult}" /> delegate to perform on the
+        /// <paramref name="source" />.
+        /// </param>
+        /// <returns>
+        /// A task that represents the completion of work on each item of <paramref name="source" />
+        /// queued to execute in the thread pool. Task contains results from action invocation on
+        /// each item of <paramref name="source" />.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="source" /> is <see langword="null" />. -or-
+        /// <paramref name="action" /> is <see langword="null" />.
+        /// </exception>
         public static Task<Result<NoneResult, Exception>[]> ForEachSafeAsync<TSource>(
             this IAsyncEnumerable<TSource> source, Func<TSource, Task> action)
         {
             return source.ForEacSafeAsync(action, cancellationToken: CancellationToken.None);
         }
 
+        /// <summary>
+        /// Performs the specified function on each element of the <paramref name="source" /> and
+        /// wraps execution in
+        /// <see cref="TaskHelper.WhenAllResultsOrExceptions(IEnumerable{Task})" /> to make task for
+        /// every item in <paramref name="source" /> safe. You can unwrap results and process it.
+        /// A cancellation token allows the work to be canceled if it has not yet started.
+        /// </summary>
+        /// <typeparam name="TSource">
+        /// The type of the elements of <paramref name="source" />.
+        /// </typeparam>
+        /// <typeparam name="TResult">
+        /// The type of element that <paramref name="func" /> returns.
+        /// </typeparam>
+        /// <param name="source">An asynchronous sequence of values to perform function.</param>
+        /// <param name="func">
+        /// The <see cref="Func{T, TResult}" /> delegate to perform on the
+        /// <paramref name="source" />.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// A cancellation token that can be used to cancel the work if it has not yet started.
+        /// <see cref="ForEacSafeAsync{TSource, TResult}(IAsyncEnumerable{TSource}, Func{TSource, Task{TResult}}, CancellationToken)" />
+        /// does not pass <paramref name="cancellationToken" /> to <paramref name="function" />.
+        /// </param>
+        /// <returns>
+        /// A task that represents the completion of work on each item of <paramref name="source" />
+        /// queued to execute in the thread pool. Task contains results from function invocation on
+        /// each item of <paramref name="source" />.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="source" /> is <see langword="null" />. -or-
+        /// <paramref name="function" /> is <see langword="null" />.
+        /// </exception>
+        /// <exception cref="TaskCanceledException">The task has been canceled.</exception>
+        /// <exception cref="ObjectDisposedException">
+        /// The <see cref="CancellationTokenSource" /> associated with
+        /// <paramref name="cancellationToken" /> was disposed.
+        /// </exception>
         public static async Task<Result<TResult, Exception>[]> ForEacSafeAsync<TSource, TResult>(
             this IAsyncEnumerable<TSource> source, Func<TSource, Task<TResult>> func,
             CancellationToken cancellationToken)
@@ -2359,9 +2841,7 @@ namespace Acolyte.Collections
             await foreach (TSource item in source.WithCancellation(cancellationToken)
                 .ConfigureAwait(continueOnCapturedContext: false))
             {
-                var task = Task.Run(
-                    () => ExecuteFuncWithCancellation(item, func, cancellationToken)
-                );
+                var task = PerformFuncWithCancellation(item, func, cancellationToken);
                 results.Add(task);
             }
 
@@ -2369,6 +2849,32 @@ namespace Acolyte.Collections
                 .ConfigureAwait(continueOnCapturedContext: false);
         }
 
+        /// <summary>
+        /// Performs the specified function on each element of the <paramref name="source" /> and
+        /// wraps execution in
+        /// <see cref="TaskHelper.WhenAllResultsOrExceptions(IEnumerable{Task})" /> to make task for
+        /// every item in <paramref name="source" /> safe. You can unwrap results and process it.
+        /// </summary>
+        /// <typeparam name="TSource">
+        /// The type of the elements of <paramref name="source" />.
+        /// </typeparam>
+        /// <typeparam name="TResult">
+        /// The type of element that <paramref name="func" /> returns.
+        /// </typeparam>
+        /// <param name="source">An asynchronous sequence of values to perform function.</param>
+        /// <param name="func">
+        /// The <see cref="Func{T, TResult}" /> delegate to perform on the
+        /// <paramref name="source" />.
+        /// </param>
+        /// <returns>
+        /// A task that represents the completion of work on each item of <paramref name="source" />
+        /// queued to execute in the thread pool. Task contains results from function invocation on
+        /// each item of <paramref name="source" />.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="source" /> is <see langword="null" />. -or-
+        /// <paramref name="function" /> is <see langword="null" />.
+        /// </exception>
         public static Task<Result<TResult, Exception>[]> ForEachSafeAsync<TSource, TResult>(
             this IAsyncEnumerable<TSource> source, Func<TSource, Task<TResult>> func)
         {
