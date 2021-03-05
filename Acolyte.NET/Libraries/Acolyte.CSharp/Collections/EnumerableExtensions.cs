@@ -1971,7 +1971,7 @@ namespace Acolyte.Collections
         /// Helper class that holds default item selector for some "ToSingleString" overloads.
         /// </summary>
         /// <typeparam name="TSource">
-        /// The type of the elements of <paramref name="source" />.
+        /// The type of the elements of enumerable collection to convert to string.
         /// </typeparam>
         private static class ToStringSelector<TSource>
         {
@@ -2227,16 +2227,16 @@ namespace Acolyte.Collections
         /// The type of <paramref name="item" /> to perform function on.
         /// </typeparam>
         /// <typeparam name="TResult">
-        /// The type of element that <paramref name="func" /> returns.
+        /// The type of element that <paramref name="function" /> returns.
         /// </typeparam>
         /// <param name="item">An item to perform function on.</param>
-        /// <param name="func">
+        /// <param name="function">
         /// The <see cref="Func{T, TResult}" /> delegate to perform on the <paramref name="item" />.
         /// </param>
         /// <param name="cancellationToken">
         /// A cancellation token that can be used to cancel the work if it has not yet started.
         /// <see cref="PerformFuncWithCancellation{TSource, TResult}(TSource, Func{TSource, Task{TResult}}, CancellationToken)" />
-        /// does not pass <paramref name="cancellationToken" /> to <paramref name="func" />.
+        /// does not pass <paramref name="cancellationToken" /> to <paramref name="function" />.
         /// </param>
         /// <returns>
         /// A task that represents the work on an <paramref name="item" /> queued to execute in the
@@ -2248,11 +2248,11 @@ namespace Acolyte.Collections
         /// <paramref name="cancellationToken" /> was disposed.
         /// </exception>
         private static Task<TResult> PerformFuncWithCancellation<TSource, TResult>(
-            TSource item, Func<TSource, Task<TResult>> func, CancellationToken cancellationToken)
+            TSource item, Func<TSource, Task<TResult>> function, CancellationToken cancellationToken)
         {
-            Debug.Assert(func is not null, "Caller must check \"func\" parameter on null!");
+            Debug.Assert(function is not null, "Caller must check \"function\" parameter on null!");
 
-            return Task.Run(() => func!(item), cancellationToken);
+            return Task.Run(() => function!(item), cancellationToken);
         }
 
         /// <summary>
@@ -2330,10 +2330,10 @@ namespace Acolyte.Collections
         /// The type of the elements of <paramref name="source" />.
         /// </typeparam>
         /// <typeparam name="TResult">
-        /// The type of element that <paramref name="func" /> returns.
+        /// The type of element that <paramref name="function" /> returns.
         /// </typeparam>
         /// <param name="source">A sequence of values to perform function.</param>
-        /// <param name="func">
+        /// <param name="function">
         /// The <see cref="Func{T, TResult}" /> delegate to perform on the
         /// <paramref name="source" />.
         /// </param>
@@ -2357,14 +2357,14 @@ namespace Acolyte.Collections
         /// <paramref name="cancellationToken" /> was disposed.
         /// </exception>
         public static Task<TResult[]> ForEachAsync<TSource, TResult>(
-            this IEnumerable<TSource> source, Func<TSource, Task<TResult>> func,
+            this IEnumerable<TSource> source, Func<TSource, Task<TResult>> function,
             CancellationToken cancellationToken)
         {
             // Null check for "source" parameter is provided by "Enumerable.Select" method.
-            func.ThrowIfNull(nameof(func));
+            function.ThrowIfNull(nameof(function));
 
             var results = source
-                .Select(item => PerformFuncWithCancellation(item, func, cancellationToken));
+                .Select(item => PerformFuncWithCancellation(item, function, cancellationToken));
 
             return Task.WhenAll(results);
         }
@@ -2376,10 +2376,10 @@ namespace Acolyte.Collections
         /// The type of the elements of <paramref name="source" />.
         /// </typeparam>
         /// <typeparam name="TResult">
-        /// The type of element that <paramref name="func" /> returns.
+        /// The type of element that <paramref name="function" /> returns.
         /// </typeparam>
         /// <param name="source">A sequence of values to perform function.</param>
-        /// <param name="func">
+        /// <param name="function">
         /// The <see cref="Func{T, TResult}" /> delegate to perform on the
         /// <paramref name="source" />.
         /// </param>
@@ -2393,9 +2393,9 @@ namespace Acolyte.Collections
         /// <paramref name="function" /> is <see langword="null" />.
         /// </exception>
         public static Task<TResult[]> ForEachAsync<TSource, TResult>(
-            this IEnumerable<TSource> source, Func<TSource, Task<TResult>> func)
+            this IEnumerable<TSource> source, Func<TSource, Task<TResult>> function)
         {
-            return source.ForEachAsync(func, cancellationToken: CancellationToken.None);
+            return source.ForEachAsync(function, cancellationToken: CancellationToken.None);
         }
 
         /// <summary>
@@ -2485,10 +2485,10 @@ namespace Acolyte.Collections
         /// The type of the elements of <paramref name="source" />.
         /// </typeparam>
         /// <typeparam name="TResult">
-        /// The type of element that <paramref name="func" /> returns.
+        /// The type of element that <paramref name="function" /> returns.
         /// </typeparam>
         /// <param name="source">A sequence of values to perform function.</param>
-        /// <param name="func">
+        /// <param name="function">
         /// The <see cref="Func{T, TResult}" /> delegate to perform on the
         /// <paramref name="source" />.
         /// </param>
@@ -2512,14 +2512,14 @@ namespace Acolyte.Collections
         /// <paramref name="cancellationToken" /> was disposed.
         /// </exception>
         public static Task<Result<TResult, Exception>[]> ForEacSafeAsync<TSource, TResult>(
-            this IEnumerable<TSource> source, Func<TSource, Task<TResult>> func,
+            this IEnumerable<TSource> source, Func<TSource, Task<TResult>> function,
             CancellationToken cancellationToken)
         {
             // Null check for "source" parameter is provided by "Enumerable.Select" method.
-            func.ThrowIfNull(nameof(func));
+            function.ThrowIfNull(nameof(function));
 
             var results = source
-                .Select(item => PerformFuncWithCancellation(item, func, cancellationToken));
+                .Select(item => PerformFuncWithCancellation(item, function, cancellationToken));
 
             return TaskHelper.WhenAllResultsOrExceptions(results);
         }
@@ -2534,10 +2534,10 @@ namespace Acolyte.Collections
         /// The type of the elements of <paramref name="source" />.
         /// </typeparam>
         /// <typeparam name="TResult">
-        /// The type of element that <paramref name="func" /> returns.
+        /// The type of element that <paramref name="function" /> returns.
         /// </typeparam>
         /// <param name="source">A sequence of values to perform function.</param>
-        /// <param name="func">
+        /// <param name="function">
         /// The <see cref="Func{T, TResult}" /> delegate to perform on the
         /// <paramref name="source" />.
         /// </param>
@@ -2551,9 +2551,9 @@ namespace Acolyte.Collections
         /// <paramref name="function" /> is <see langword="null" />.
         /// </exception>
         public static Task<Result<TResult, Exception>[]> ForEachSafeAsync<TSource, TResult>(
-            this IEnumerable<TSource> source, Func<TSource, Task<TResult>> func)
+            this IEnumerable<TSource> source, Func<TSource, Task<TResult>> function)
         {
-            return source.ForEacSafeAsync(func, cancellationToken: CancellationToken.None);
+            return source.ForEacSafeAsync(function, cancellationToken: CancellationToken.None);
         }
 
 #if NETSTANDARD2_1
@@ -2638,10 +2638,10 @@ namespace Acolyte.Collections
         /// The type of the elements of <paramref name="source" />.
         /// </typeparam>
         /// <typeparam name="TResult">
-        /// The type of element that <paramref name="func" /> returns.
+        /// The type of element that <paramref name="function" /> returns.
         /// </typeparam>
         /// <param name="source">An asynchronous sequence of values to perform function.</param>
-        /// <param name="func">
+        /// <param name="function">
         /// The <see cref="Func{T, TResult}" /> delegate to perform on the
         /// <paramref name="source" />.
         /// </param>
@@ -2665,17 +2665,17 @@ namespace Acolyte.Collections
         /// <paramref name="cancellationToken" /> was disposed.
         /// </exception>
         public static async Task<TResult[]> ForEachAsync<TSource, TResult>(
-            this IAsyncEnumerable<TSource> source, Func<TSource, Task<TResult>> func,
+            this IAsyncEnumerable<TSource> source, Func<TSource, Task<TResult>> function,
             CancellationToken cancellationToken)
         {
             source.ThrowIfNull(nameof(source));
-            func.ThrowIfNull(nameof(func));
+            function.ThrowIfNull(nameof(function));
 
             var results = new List<Task<TResult>>();
             await foreach (TSource item in source.WithCancellation(cancellationToken)
                 .ConfigureAwait(continueOnCapturedContext: false))
             {
-                var task = PerformFuncWithCancellation(item, func, cancellationToken);
+                var task = PerformFuncWithCancellation(item, function, cancellationToken);
                 results.Add(task);
             }
 
@@ -2689,10 +2689,10 @@ namespace Acolyte.Collections
         /// The type of the elements of <paramref name="source" />.
         /// </typeparam>
         /// <typeparam name="TResult">
-        /// The type of element that <paramref name="func" /> returns.
+        /// The type of element that <paramref name="function" /> returns.
         /// </typeparam>
         /// <param name="source">An asynchronous sequence of values to perform function.</param>
-        /// <param name="func">
+        /// <param name="function">
         /// The <see cref="Func{T, TResult}" /> delegate to perform on the
         /// <paramref name="source" />.
         /// </param>
@@ -2706,9 +2706,9 @@ namespace Acolyte.Collections
         /// <paramref name="function" /> is <see langword="null" />.
         /// </exception>
         public static Task<TResult[]> ForEachAsync<TSource, TResult>(
-            this IAsyncEnumerable<TSource> source, Func<TSource, Task<TResult>> func)
+            this IAsyncEnumerable<TSource> source, Func<TSource, Task<TResult>> function)
         {
-            return source.ForEachAsync(func, cancellationToken: CancellationToken.None);
+            return source.ForEachAsync(function, cancellationToken: CancellationToken.None);
         }
 
         /// <summary>
@@ -2804,10 +2804,10 @@ namespace Acolyte.Collections
         /// The type of the elements of <paramref name="source" />.
         /// </typeparam>
         /// <typeparam name="TResult">
-        /// The type of element that <paramref name="func" /> returns.
+        /// The type of element that <paramref name="function" /> returns.
         /// </typeparam>
         /// <param name="source">An asynchronous sequence of values to perform function.</param>
-        /// <param name="func">
+        /// <param name="function">
         /// The <see cref="Func{T, TResult}" /> delegate to perform on the
         /// <paramref name="source" />.
         /// </param>
@@ -2831,17 +2831,17 @@ namespace Acolyte.Collections
         /// <paramref name="cancellationToken" /> was disposed.
         /// </exception>
         public static async Task<Result<TResult, Exception>[]> ForEacSafeAsync<TSource, TResult>(
-            this IAsyncEnumerable<TSource> source, Func<TSource, Task<TResult>> func,
+            this IAsyncEnumerable<TSource> source, Func<TSource, Task<TResult>> function,
             CancellationToken cancellationToken)
         {
             source.ThrowIfNull(nameof(source));
-            func.ThrowIfNull(nameof(func));
+            function.ThrowIfNull(nameof(function));
 
             var results = new List<Task<TResult>>();
             await foreach (TSource item in source.WithCancellation(cancellationToken)
                 .ConfigureAwait(continueOnCapturedContext: false))
             {
-                var task = PerformFuncWithCancellation(item, func, cancellationToken);
+                var task = PerformFuncWithCancellation(item, function, cancellationToken);
                 results.Add(task);
             }
 
@@ -2859,10 +2859,10 @@ namespace Acolyte.Collections
         /// The type of the elements of <paramref name="source" />.
         /// </typeparam>
         /// <typeparam name="TResult">
-        /// The type of element that <paramref name="func" /> returns.
+        /// The type of element that <paramref name="function" /> returns.
         /// </typeparam>
         /// <param name="source">An asynchronous sequence of values to perform function.</param>
-        /// <param name="func">
+        /// <param name="function">
         /// The <see cref="Func{T, TResult}" /> delegate to perform on the
         /// <paramref name="source" />.
         /// </param>
@@ -2876,9 +2876,9 @@ namespace Acolyte.Collections
         /// <paramref name="function" /> is <see langword="null" />.
         /// </exception>
         public static Task<Result<TResult, Exception>[]> ForEachSafeAsync<TSource, TResult>(
-            this IAsyncEnumerable<TSource> source, Func<TSource, Task<TResult>> func)
+            this IAsyncEnumerable<TSource> source, Func<TSource, Task<TResult>> function)
         {
-            return source.ForEacSafeAsync(func, cancellationToken: CancellationToken.None);
+            return source.ForEacSafeAsync(function, cancellationToken: CancellationToken.None);
         }
 
 #endif

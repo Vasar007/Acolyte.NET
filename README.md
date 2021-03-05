@@ -178,7 +178,7 @@ namespace Acolyte.Examples
 
 ## Dependencies
 
-Target .NET Standard is 2.1 for libraries. Version of C# is 8.0, version of F# is 4.7.
+Target .NET Standard versions are 2.0 and 2.1 for libraries. Version of C# is 9.0, version of F# is 5.0.
 
 ## License information
 

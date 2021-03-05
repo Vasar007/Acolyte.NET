@@ -245,8 +245,8 @@ namespace Acolyte.Common
         /// <returns>
         /// A random floating-point number with (theoretical) uniform and discrete distribution.
         /// </returns>
-        /// <exception cref="ArgumentOutOfRangeException">
-        /// <paramref name="maxValue" /> is less or equal to <paramref name="minValue" />.
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="random" /> is <see langword="null" />.
         /// </exception>
         public static decimal NextDecimal(this Random random)
         {
