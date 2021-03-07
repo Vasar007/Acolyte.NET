@@ -37,7 +37,7 @@ build:
 
 after_build:
   - ps: >-
-      if (($env:configuration -eq "Release") -and ($env:branch -eq "master"))
+      if (($env:configuration -eq "Release") -and ($env:APPVEYOR_REPO_BRANCH -eq "master"))
       {
         dotnet pack --configuration Release --no-build "../Acolyte.NET"
       }
