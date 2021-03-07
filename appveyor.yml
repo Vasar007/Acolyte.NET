@@ -60,7 +60,7 @@ after_test:
 
   # Upload all NuGet packages to release assets.
 artifacts:
-  - path: '/.*\.snupkg\.nupkg/'
+  - path: '**\*.nupkg'
 
 # Deploy from master branch only.
 deploy:
