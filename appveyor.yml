@@ -44,12 +44,12 @@ after_test:
         dotnet test "Tests/Acolyte.FSharp.Tests/Acolyte.FSharp.Tests.fsproj" --configuration Release --no-build
       }
 
-before_package:
-  - dotnet pack --configuration Release --no-build "../Acolyte.NET"
-
 # Upload all NuGet packages to release assets.
 artifacts:
   - path: '**\*.nupkg'
+
+before_deploy:
+  - dotnet pack --configuration Release --no-build "../Acolyte.NET"
 
 # Deploy from master branch only.
 deploy:
