@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Acolyte.Assertions;
 using Acolyte.Common;
 using Acolyte.Tests.Exceptions;
+using Acolyte.Threading;
 
 namespace Acolyte.Tests.Collections
 {
