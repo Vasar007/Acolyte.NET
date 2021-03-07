@@ -1,7 +1,10 @@
-version: '2.0.0.{build}'
+environment:
+  packageVersion: 2.0.0
+
+version: '$(packageVersion).{build}'
 image: Visual Studio 2019
 
-# Do not build on tags (GitHub, Bitbucket, GitLab, Gitea)
+# Do not build on tags (GitHub, Bitbucket, GitLab, Gitea).
 skip_tags: true
 
 shallow_clone: true
@@ -11,7 +14,7 @@ dotnet_csproj:
   file: '**\*.csproj;**\*.fsproj'
   assembly_version: '{version}'
   file_version: '{version}'
-  version: '2.0.0'
+  version: '$(packageVersion)'
 
 branches:
   only:
@@ -67,8 +70,8 @@ deploy:
   - provider: GitHub
     auth_token:
       secure: ex3ZUcCal1DZuXKOFoKSmiAF/NWXttFMYOQEETqrGvIanWZdyP1sesEoOmy3Rvw6
-    tag: 'v2.0.0'
-    release: 'Acolyte.NET v2.0.0'
+    tag: 'v$(packageVersion)'
+    release: 'Acolyte.NET v$(packageVersion)'
     description: 'TODO: write a description.'
     draft: false
     prerelease: false
