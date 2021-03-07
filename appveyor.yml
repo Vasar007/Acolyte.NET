@@ -41,7 +41,7 @@ after_build:
       if (($env:configuration -eq "Release") -and ($env:APPVEYOR_REPO_BRANCH -eq "master"))
       {
         dotnet pack --configuration Release --no-build "../Acolyte.NET"
-        7z a -tzip $env:acolytePackageWithVersion.zip $env:APPVEYOR_BUILD_FOLDER/Acolyte.NET/Libraries/Acolyte.CSharp/bin/Release/*.nupkg $env:APPVEYOR_BUILD_FOLDER/Acolyte.NET/Libraries/Acolyte.FSharp/bin/Release/*.nupkg $env:APPVEYOR_BUILD_FOLDER/Acolyte.NET/Libraries/Acolyte.NET/bin/Release/*.nupkg
+        7z a -tzip "$env:APPVEYOR_BUILD_FOLDER/$env:acolytePackageWithVersion.zip" "$env:APPVEYOR_BUILD_FOLDER/Acolyte.NET/Libraries/Acolyte.CSharp/bin/Release/*.nupkg" "$env:APPVEYOR_BUILD_FOLDER/Acolyte.NET/Libraries/Acolyte.FSharp/bin/Release/*.nupkg" "$env:APPVEYOR_BUILD_FOLDER/Acolyte.NET/Libraries/Acolyte.NET/bin/Release/*.nupkg"
       }
 
 test:
