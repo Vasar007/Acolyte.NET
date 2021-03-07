@@ -1,5 +1,6 @@
 environment:
   packageVersion: 2.0.0
+  acolytePackageWithVersion: 'Acolyte.NET v$(packageVersion)'
 
 version: '$(packageVersion).{build}'
 image: Visual Studio 2019
@@ -40,6 +41,7 @@ after_build:
       if (($env:configuration -eq "Release") -and ($env:APPVEYOR_REPO_BRANCH -eq "master"))
       {
         dotnet pack --configuration Release --no-build "../Acolyte.NET"
+        7z a -tzip $(acolytePackageWithVersion).zip ($env:APPVEYOR_BUILD_FOLDER)/Acolyte.NET/Libraries/Acolyte.CSharp/bin/Release/*.nupkg ($env:APPVEYOR_BUILD_FOLDER)/Acolyte.NET/Libraries/Acolyte.FSharp/bin/Release/*.nupkg ($env:APPVEYOR_BUILD_FOLDER)/Acolyte.NET/Libraries/Acolyte.NET/bin/Release/*.nupkg
       }
 
 test:
@@ -53,6 +55,11 @@ after_test:
   # Upload all NuGet packages to release assets.
 artifacts:
   - path: '**\*.nupkg'
+    name: AcolyteNuget
+
+  - path: '$(acolytePackageWithVersion).zip'
+    name: AcolyteZip
+    type: zip
 
 # Deploy from master branch only.
 deploy:
@@ -61,6 +68,7 @@ deploy:
     api_key:
       secure: hnKm9eh2iZree0QLhfMG6dkeBzGsJ3UNZpHbddhSB99FuaZxlh8Z+FxHX3c/l3Re
     skip_symbols: false
+    artifact: AcolyteNuget
     on:
       branch: master
       configuration: Release
@@ -70,10 +78,11 @@ deploy:
     auth_token:
       secure: ex3ZUcCal1DZuXKOFoKSmiAF/NWXttFMYOQEETqrGvIanWZdyP1sesEoOmy3Rvw6
     tag: 'v$(packageVersion)'
-    release: 'Acolyte.NET v$(packageVersion)'
+    release: '$(acolytePackageWithVersion)'
     description: 'TODO: write a description.'
     draft: false
     prerelease: false
+    artifact: AcolyteZip
     on:
       branch: master
       configuration: Release
