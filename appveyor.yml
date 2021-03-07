@@ -5,7 +5,7 @@ shallow_clone: true
 
 dotnet_csproj:
   patch: true
-  file: '**/*.csproj;**/*.fsproj'
+  file: '**\*.csproj;**\*.fsproj'
   assembly_version: '{version}'
   file_version: '{version}'
 
@@ -49,7 +49,7 @@ after_test:
 
 # Upload all NuGet packages to release assets.
 artifacts:
-  - path: '**/*.nupkg'
+  - path: '**\*.nupkg'
 
 # Deploy from master branch only.
 deploy:
