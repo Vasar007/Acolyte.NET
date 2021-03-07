@@ -22,9 +22,9 @@
     <NeutralLanguage>en-US</NeutralLanguage>
     <RepositoryUrl>https://github.com/Vasar007/Acolyte.NET.git</RepositoryUrl>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
-    <AssemblyVersion>1.0.3.0</AssemblyVersion>
-    <FileVersion>1.0.3.0</FileVersion>
-    <Version>1.0.3</Version>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
+    <FileVersion>2.0.0.0</FileVersion>
+    <Version>2.0.0</Version>
     <PackageId>Acolyte.NET</PackageId>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageProjectUrl>https://github.com/Vasar007/Acolyte.NET</PackageProjectUrl>
