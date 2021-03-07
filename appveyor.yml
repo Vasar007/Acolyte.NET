@@ -1,6 +1,5 @@
 environment:
   packageVersion: 2.0.0
-  acolytePackageWithVersion: 'Acolyte.NET v$(packageVersion)'
 
 version: '$(packageVersion).{build}'
 image: Visual Studio 2019
@@ -41,7 +40,7 @@ after_build:
       if (($env:configuration -eq "Release") -and ($env:APPVEYOR_REPO_BRANCH -eq "master"))
       {
         dotnet pack --configuration Release --no-build "../Acolyte.NET"
-        7z a -tzip "$env:APPVEYOR_BUILD_FOLDER/$env:acolytePackageWithVersion.zip" "$env:APPVEYOR_BUILD_FOLDER/Acolyte.NET/Libraries/Acolyte.CSharp/bin/Release/*.nupkg" "$env:APPVEYOR_BUILD_FOLDER/Acolyte.NET/Libraries/Acolyte.FSharp/bin/Release/*.nupkg" "$env:APPVEYOR_BUILD_FOLDER/Acolyte.NET/Libraries/Acolyte.NET/bin/Release/*.nupkg"
+        7z a -tzip "$env:APPVEYOR_BUILD_FOLDER/Acolyte.NET.$env:packageVersion.zip" "$env:APPVEYOR_BUILD_FOLDER/Acolyte.NET/Libraries/Acolyte.CSharp/bin/Release/*.nupkg" "$env:APPVEYOR_BUILD_FOLDER/Acolyte.NET/Libraries/Acolyte.FSharp/bin/Release/*.nupkg" "$env:APPVEYOR_BUILD_FOLDER/Acolyte.NET/Libraries/Acolyte.NET/bin/Release/*.nupkg"
       }
 
 test:
@@ -78,7 +77,7 @@ deploy:
     auth_token:
       secure: ex3ZUcCal1DZuXKOFoKSmiAF/NWXttFMYOQEETqrGvIanWZdyP1sesEoOmy3Rvw6
     tag: 'v$(packageVersion)'
-    release: '$(acolytePackageWithVersion)'
+    release: 'Acolyte.NET v$(packageVersion)'
     description: 'TODO: write a description.'
     draft: false
     prerelease: false
