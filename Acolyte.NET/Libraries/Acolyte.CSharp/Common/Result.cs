@@ -169,6 +169,25 @@ namespace Acolyte.Common
                 ? _error
                 : defaultException;
         }
+
+        public TOut Match<TOut>(Func<TOk?, TOut> ok, Func<TError?, TOut> error)
+        {
+            return IsSuccess
+                ? ok(_ok)
+                : error(_error);
+        }
+
+        public void Match(Action<TOk?> ok, Action<TError?> error)
+        {
+            if (IsSuccess)
+            {
+                ok(_ok);
+            }
+            else
+            {
+                error(_error);
+            }
+        }
     }
 
     public readonly struct NoneResult
