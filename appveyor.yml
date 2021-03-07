@@ -1,5 +1,6 @@
 environment:
   packageVersion: 2.0.0
+  acolytePackageZip: 'Acolyte.NET.$(packageVersion).zip'
 
 version: '$(packageVersion).{build}'
 image: Visual Studio 2019
@@ -40,7 +41,7 @@ after_build:
       if (($env:configuration -eq "Release") -and ($env:APPVEYOR_REPO_BRANCH -eq "master"))
       {
         dotnet pack --configuration Release --no-build "../Acolyte.NET"
-        7z a -tzip "$env:APPVEYOR_BUILD_FOLDER/Acolyte.NET.$env:packageVersion.zip" "$env:APPVEYOR_BUILD_FOLDER/Acolyte.NET/Libraries/Acolyte.CSharp/bin/Release/*.nupkg" "$env:APPVEYOR_BUILD_FOLDER/Acolyte.NET/Libraries/Acolyte.FSharp/bin/Release/*.nupkg" "$env:APPVEYOR_BUILD_FOLDER/Acolyte.NET/Libraries/Acolyte.NET/bin/Release/*.nupkg"
+        7z a -tzip "$env:APPVEYOR_BUILD_FOLDER/$env:acolytePackageZip" "$env:APPVEYOR_BUILD_FOLDER/Acolyte.NET/Libraries/Acolyte.CSharp/bin/Release/*.nupkg" "$env:APPVEYOR_BUILD_FOLDER/Acolyte.NET/Libraries/Acolyte.FSharp/bin/Release/*.nupkg" "$env:APPVEYOR_BUILD_FOLDER/Acolyte.NET/Libraries/Acolyte.NET/bin/Release/*.nupkg"
       }
 
 test:
@@ -56,7 +57,7 @@ artifacts:
   - path: '**\*.nupkg'
     name: AcolyteNuget
 
-  - path: '$(acolytePackageWithVersion).zip'
+  - path: '$(acolytePackageZip)'
     name: AcolyteZip
     type: zip
 
