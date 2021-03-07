@@ -14,8 +14,9 @@ namespace Acolyte.Common
         /// <param name="potentialDescendant">Potential descendant type to check.</param>
         /// <param name="potentialBase">Potential base type to compare.</param>
         /// <returns>
-        /// <c>true</c> if <paramref name="potentialDescendant" /> is same type as
-        /// <paramref name="potentialDescendant" /> or is the it subclass, <c>false</c> otherwise.
+        /// <see langword="true" /> if <paramref name="potentialDescendant" /> is same type as
+        /// <paramref name="potentialDescendant" /> or is the it subclass,
+        /// <see langword="false" /> otherwise.
         /// </returns>
         public static bool IsSameOrSubclass(this Type potentialDescendant, Type potentialBase)
         {
@@ -28,9 +29,10 @@ namespace Acolyte.Common
         /// </summary>
         /// <param name="type">Type value to check.</param>
         /// <returns>
-        /// <c>true</c> if type is kind of <see cref="Nullable{T}" />, <c>false</c> otherwise.
+        /// <see langword="true" /> if type is kind of <see cref="Nullable{T}" />,
+        /// <see langword="false" /> otherwise.
         /// </returns>
-        public static bool IsNullableType(Type type)
+        public static bool IsNullableType(this Type type)
         {
             return type != null &&
                    type.IsGenericType &&
@@ -45,7 +47,7 @@ namespace Acolyte.Common
         /// Internal type if the type is kind of <see cref="Nullable{T}" />,
         /// original <paramref name="type" /> parameter value otherwise.
         /// </returns>
-        public static Type GetNonNullableType(Type type)
+        public static Type GetNonNullableType(this Type type)
         {
             if (IsNullableType(type))
             {

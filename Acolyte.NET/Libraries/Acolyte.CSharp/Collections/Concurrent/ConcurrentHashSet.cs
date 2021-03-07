@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Acolyte.Assertions;
 
-namespace Acolyte.Collections
+namespace Acolyte.Collections.Concurrent
 {
     /// <summary>
     /// Represents a thread-safe set of values.
@@ -41,7 +40,7 @@ namespace Acolyte.Collections
 
         #endregion
 
-        #region Excplicit Properties
+        #region Explicit Properties
 
         bool ICollection<T>.IsReadOnly => ((ICollection<T>) _set).IsReadOnly;
 
@@ -69,17 +68,19 @@ namespace Acolyte.Collections
             _set = new HashSet<T>(comparer);
         }
 
-        public ConcurrentHashSet(int capacity)
-        {
-            _set = new HashSet<T>(capacity);
-        }
-
         public ConcurrentHashSet(IEnumerable<T> collection, IEqualityComparer<T> comparer)
         {
             collection.ThrowIfNull(nameof(collection));
             comparer.ThrowIfNull(nameof(comparer));
 
             _set = new HashSet<T>(collection, comparer);
+        }
+
+#if NETSTANDARD2_1
+
+        public ConcurrentHashSet(int capacity)
+        {
+            _set = new HashSet<T>(capacity);
         }
 
         public ConcurrentHashSet(int capacity, IEqualityComparer<T> comparer)
@@ -89,6 +90,8 @@ namespace Acolyte.Collections
 
             _set = new HashSet<T>(capacity, comparer);
         }
+
+#endif
 
         #endregion
 
@@ -130,11 +133,14 @@ namespace Acolyte.Collections
 
         #region ISet<T> Implementation
 
-        public bool Add([AllowNull] T item)
+        public bool Add(T? item)
         {
             lock (_lock)
             {
+                // HashSet allows to pass null values.
+#pragma warning disable CS8604 // Possible null reference argument.
                 return _set.Add(item);
+#pragma warning restore CS8604 // Possible null reference argument.
             }
         }
 
@@ -228,11 +234,14 @@ namespace Acolyte.Collections
             }
         }
 
-        public bool Remove([AllowNull] T item)
+        public bool Remove(T? item)
         {
             lock (_lock)
             {
+                // HashSet allows to pass null values.
+#pragma warning disable CS8604 // Possible null reference argument.
                 return _set.Remove(item);
+#pragma warning restore CS8604 // Possible null reference argument.
             }
         }
 
@@ -244,11 +253,14 @@ namespace Acolyte.Collections
             }
         }
 
-        public bool Contains([AllowNull] T item)
+        public bool Contains(T? item)
         {
             lock (_lock)
             {
+                // HashSet allows to pass null values.
+#pragma warning disable CS8604 // Possible null reference argument.
                 return _set.Contains(item);
+#pragma warning restore CS8604 // Possible null reference argument.
             }
         }
 
@@ -269,11 +281,14 @@ namespace Acolyte.Collections
             }
         }
 
-        void ICollection<T>.Add([AllowNull] T item)
+        void ICollection<T>.Add(T? item)
         {
             lock (_lock)
             {
+                // HashSet allows to pass null values.
+#pragma warning disable CS8604 // Possible null reference argument.
                 _set.Add(item);
+#pragma warning restore CS8604 // Possible null reference argument.
             }
         }
 
@@ -285,7 +300,9 @@ namespace Acolyte.Collections
         {
             lock (_lock)
             {
-                return _set.GetEnumerator();
+                // Copy collection content to avoid possible issues during multi-threading.
+                var copied = _set.ToList();
+                return copied.GetEnumerator();
             }
         }
 

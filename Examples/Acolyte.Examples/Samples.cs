@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Acolyte.Assertions;
 using Acolyte.Collections;
+using Acolyte.Common;
 using Acolyte.Threading;
 
 namespace Acolyte.Examples
@@ -18,7 +19,8 @@ namespace Acolyte.Examples
                 nameof(count), includedLowerBound: 1, includedUpperBound: 1000
             );
 
-            return Enumerable.Range(0, count)
+            return Enumerable
+                .Range(0, count)
                 .Select(_ => generator());
         }
 
@@ -28,15 +30,14 @@ namespace Acolyte.Examples
             source.ThrowIfNull(nameof(source));
             pattern.ThrowIfNullOrEmpty(nameof(pattern));
 
-            return source
-                .Where(item => Regex.IsMatch(item, pattern));
+            return source.Where(item => Regex.IsMatch(item, pattern));
         }
 
         internal static void OutputCollection<T>(IEnumerable<T> collection)
         {
             collection.ThrowIfNull(nameof(collection));
 
-            Console.WriteLine($"Collection: [{collection.EnumerableToOneString()}].");
+            Console.WriteLine($"Collection: [{collection.ToSingleString()}].");
         }
 
         internal static int DistanceBetweenMinAndMax(IEnumerable<int> source)
@@ -49,15 +50,15 @@ namespace Acolyte.Examples
 
         internal static async Task ExecuteAllTasksSafe(params Task[] tasks)
         {
-            IReadOnlyList<ResultOrException<NoneResult>> resultObjects =
+            IReadOnlyList<Result<NoneResult, Exception>> resultObjects =
                 await TaskHelper.WhenAllResultsOrExceptions(tasks);
 
             IReadOnlyList<Exception> exceptions = resultObjects.UnwrapResultsOrExceptions();
 
             string separator = Environment.NewLine;
             const string emptyCollectionMessage = "No exceptions occurred.";
-            string exceptionsToLog = exceptions.EnumerableToOneString(
-                separator, emptyCollectionMessage, selector: ex => ex.ToString()
+            string exceptionsToLog = exceptions.ToSingleString(
+                emptyCollectionMessage, separator, selector: ex => ex.ToString()
             );
 
             Console.WriteLine($"{separator}{exceptionsToLog}{separator}");

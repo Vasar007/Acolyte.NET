@@ -1,14 +1,20 @@
 # Acolyte.NET
 
-[![nuget](https://img.shields.io/nuget/v/Acolyte.NET.svg)](https://www.nuget.org/packages/Acolyte.NET)
-[![License](https://img.shields.io/hexpm/l/plug.svg)](https://github.com/Vasar007/Acolyte.NET/blob/master/LICENSE)
-[![AppVeyor branch](https://img.shields.io/appveyor/ci/Vasar007/acolyte-net/master.svg)](https://ci.appveyor.com/project/Vasar007/acolyte.net)
-[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FVasar007%2FAcolyte.NET.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2FVasar007%2FAcolyte.NET?ref=badge_shield)
-
 ![Acolyte.NET icon](Media/AcolyteIcon.png "Acolyte.NET icon")
 
 Acolyte.NET is a helper library with a lot of useful classes and extension methods that you need in your everyday work.
 So, do not reinvent the wheel, use this library instead!
+
+[![nuget](https://img.shields.io/nuget/v/Acolyte.NET.svg)](https://www.nuget.org/packages/Acolyte.NET)
+[![License](https://img.shields.io/hexpm/l/plug.svg)](https://github.com/Vasar007/Acolyte.NET/blob/master/LICENSE)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FVasar007%2FAcolyte.NET.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2FVasar007%2FAcolyte.NET?ref=badge_shield)
+
+## Build and Release Status
+
+|                    | Stable (master)                                                                                  | Pre-release (develop)                                                                  |
+| -----------------: | :----------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------: |
+| **Build**          | ![AppVeyor branch](https://img.shields.io/appveyor/build/Vasar007/acolyte-net/master)            | ![AppVeyor branch](https://img.shields.io/appveyor/build/Vasar007/acolyte-net/develop) |
+| **GitHub Release** | ![GitHub release (latest by date)](https://img.shields.io/github/v/release/Vasar007/Acolyte.NET) | —                                                                                      |
 
 ## Installation
 
@@ -28,7 +34,7 @@ Library contains classes, helper static classes and many extension methods. Each
 
 ### Collections (C#)
 
-- [AsyncEnumerableExtensions](Acolyte.NET/Libraries/Acolyte.CSharp/Collections/AsyncEnumerableExtensions) — contains useful methods to work with `async` enumerable items (`IAsyncEnumerable` was introduced in C# 8.0);
+- [AsyncEnumerableExtensions](Acolyte.NET/Libraries/Acolyte.CSharp/Collections/AsyncEnumerableExtensions.cs) — contains useful methods to work with `async` enumerable items (`IAsyncEnumerable` was introduced in C# 8.0);
 - [ConcurrentHashSet](Acolyte.NET/Libraries/Acolyte.CSharp/Collections/ConcurrentHashSet.cs) — represents a thread-safe set of values;
 - [DictionaryExtensions](Acolyte.NET/Libraries/Acolyte.CSharp/Collections/DictionaryExtensions.cs) — contains extension methods to simplify work with associative collections;
 - [EnumerableExtensions](Acolyte.NET/Libraries/Acolyte.CSharp/Collections/EnumerableExtensions.cs) – extends `LINQ` methods to work with enumerable items;
@@ -84,8 +90,8 @@ Library contains classes, helper static classes and many extension methods. Each
 
 ### XML (C#)
 
-- [XDocumentParser](Acolyte.NET/Libraries/Acolyte.CSharp/XML/XDocumentParser.cs) — represents a XML document parser;
-- [XmlHelper](Acolyte.NET/Libraries/Acolyte.CSharp/XML/XmlHelper.cs) — provides serialization and deserialization methods to work with XML.
+- [XDocumentParser](Acolyte.NET/Libraries/Acolyte.CSharp/Xml/XDocumentParser.cs) — represents a XML document parser;
+- [XmlHelper](Acolyte.NET/Libraries/Acolyte.CSharp/Xml/XmlHelper.cs) — provides serialization and deserialization methods to work with XML.
 
 ### Functional (F#)
 
@@ -172,11 +178,10 @@ namespace Acolyte.Examples
 
 ## Dependencies
 
-Target .NET Standard is 2.1 for libraries. Version of C# is 8.0, version of F# is 4.7.
+Target .NET Standard versions are 2.0 and 2.1 for libraries. Version of C# is 9.0, version of F# is 5.0.
 
 ## License information
 
 This project is licensed under the terms of the [Apache License 2.0](LICENSE).
-
 
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FVasar007%2FAcolyte.NET.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FVasar007%2FAcolyte.NET?ref=badge_large)

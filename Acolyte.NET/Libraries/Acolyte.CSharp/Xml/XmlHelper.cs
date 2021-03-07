@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
@@ -22,14 +21,14 @@ namespace Acolyte.Xml
         /// An error occurred during serialization. The original exception is available using the
         /// <see cref="Exception.InnerException" /> property.
         /// </exception>
-        public static string SerializeToStringXml<T>([AllowNull] T value)
+        public static string SerializeToStringXml<T>(T? value)
         {
             var xmlSerializer = new XmlSerializer(typeof(T));
 
             string stringXml;
 
             using (var sww = new StringWriter())
-            using (XmlWriter writer = XmlWriter.Create(sww))
+            using (var writer = XmlWriter.Create(sww))
             {
                 xmlSerializer.Serialize(writer, value);
                 stringXml = sww.ToString();
@@ -45,7 +44,7 @@ namespace Acolyte.Xml
         /// <param name="xmlData">XML data to deserialize.</param>
         /// <returns>Deserialized type of specified class.</returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="xmlData" /> is <c>null</c>.
+        /// <paramref name="xmlData" /> is <see langword="null" />.
         /// </exception>
         /// <exception cref="InvalidOperationException">
         /// An error occurred during deserialization. The original exception is available using the
@@ -60,7 +59,7 @@ namespace Acolyte.Xml
             object result;
 
             using (var sww = new StringReader(xmlData))
-            using (XmlReader reader = XmlReader.Create(sww))
+            using (var reader = XmlReader.Create(sww))
             {
                 result = xmlSerializer.Deserialize(reader);
             }

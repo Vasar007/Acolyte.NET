@@ -4,8 +4,9 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Acolyte.Assertions;
+using Acolyte.Common;
 
-namespace Acolyte.Collections
+namespace Acolyte.Collections.Concurrent
 {
     /// <summary>
     /// Extends the standard <see cref="ConcurrentDictionary{TKey, TValue}" /> class with time-based
@@ -20,7 +21,8 @@ namespace Acolyte.Collections
         IDictionary<TKey, TValue>,
         IReadOnlyCollection<KeyValuePair<TKey, TValue>>,
         IReadOnlyDictionary<TKey, TValue>,
-        ICollection, IDictionary
+        ICollection,
+        IDictionary
         where TKey : notnull
         where TValue : IHaveCreationTime
     {
@@ -87,9 +89,10 @@ namespace Acolyte.Collections
 
         #endregion
 
-        #region Excplicit Properties
+        #region Explicit Properties
 
-        bool ICollection<KeyValuePair<TKey, TValue>>.IsReadOnly => ((ICollection<KeyValuePair<TKey, TValue>>) _dictionary).IsReadOnly;
+        bool ICollection<KeyValuePair<TKey, TValue>>.IsReadOnly =>
+            ((ICollection<KeyValuePair<TKey, TValue>>) _dictionary).IsReadOnly;
 
         bool IDictionary.IsReadOnly => ((IDictionary) _dictionary).IsReadOnly;
 
@@ -232,7 +235,8 @@ namespace Acolyte.Collections
             return ((ICollection<KeyValuePair<TKey, TValue>>) _dictionary).Contains(item);
         }
 
-        void ICollection<KeyValuePair<TKey, TValue>>.CopyTo(KeyValuePair<TKey, TValue>[] array, int arrayIndex)
+        void ICollection<KeyValuePair<TKey, TValue>>.CopyTo(KeyValuePair<TKey, TValue>[] array,
+            int arrayIndex)
         {
             CleanupExpiredObjects();
             ((ICollection<KeyValuePair<TKey, TValue>>) _dictionary).CopyTo(array, arrayIndex);
@@ -262,7 +266,11 @@ namespace Acolyte.Collections
             return _dictionary.ContainsKey(key);
         }
 
+        // Suppress warning because ConcurrentDictionary from .NET does not have
+        // nullable attributes.
+#pragma warning disable CS8767 // Nullability of reference types in type of parameter doesn't match implicitly implemented member (possibly because of nullability attributes).
         public bool TryGetValue([DisallowNull] TKey key, [MaybeNullWhen(false)] out TValue value)
+#pragma warning restore CS8767 // Nullability of reference types in type of parameter doesn't match implicitly implemented member (possibly because of nullability attributes).
         {
             return _dictionary.TryGetValue(key, out value);
         }
@@ -279,7 +287,7 @@ namespace Acolyte.Collections
 
         #endregion
 
-        #region IDictionary Impelementation
+        #region IDictionary Implementation
 
         void IDictionary.Add([DisallowNull] object key, object value)
         {
@@ -317,7 +325,7 @@ namespace Acolyte.Collections
 
         #endregion
 
-        #region IEnumerable Impelementation
+        #region IEnumerable Implementation
 
         IEnumerator IEnumerable.GetEnumerator()
         {

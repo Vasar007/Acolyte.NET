@@ -44,7 +44,7 @@ namespace Acolyte.Exceptions
         /// <param name="message">The exception description.</param>
         /// <param name="paramNames">The names of parameters that cause exception.</param>
         /// <exception cref="ArgumentNullException">
-        /// The <paramref name="paramNames" /> parameter is <c>null</c>.
+        /// The <paramref name="paramNames" /> parameter is <see langword="null" />.
         /// </exception>
         public MultipleArgumentException(string message, params string[] paramNames)
             : base(FormatMessage(message, paramNames))
@@ -57,7 +57,7 @@ namespace Acolyte.Exceptions
         /// <param name="message">The exception description.</param>
         /// <param name="paramNames">The names of parameters that cause exception.</param>
         /// <exception cref="ArgumentNullException">
-        /// The <paramref name="paramNames" /> parameter is <c>null</c>.
+        /// The <paramref name="paramNames" /> parameter is <see langword="null" />.
         /// </exception>
         public MultipleArgumentException(string message, IEnumerable<string> paramNames)
             : base(FormatMessage(message, paramNames))
@@ -71,7 +71,7 @@ namespace Acolyte.Exceptions
         /// <param name="innerException">The exception inner cause.</param>
         /// <param name="paramNames">The names of parameters that cause exception.</param>
         /// <exception cref="ArgumentNullException">
-        /// The <paramref name="paramNames" /> parameter is <c>null</c>.
+        /// The <paramref name="paramNames" /> parameter is <see langword="null" />.
         /// </exception>
         public MultipleArgumentException(string message, Exception innerException,
             params string[] paramNames)
@@ -91,7 +91,7 @@ namespace Acolyte.Exceptions
         /// source or destination.
         /// </param>
         /// <exception cref="ArgumentNullException">
-        /// The <paramref name="info" /> parameter is <c>null</c>.
+        /// The <paramref name="info" /> parameter is <see langword="null" />.
         /// </exception>
         /// <exception cref="SerializationException">
         /// The class name is null or <see cref="Exception.HResult" /> is zero (0).
@@ -108,7 +108,7 @@ namespace Acolyte.Exceptions
         /// <param name="innerException">The exception inner cause.</param>
         /// <param name="paramNames">The names of parameters that cause exception.</param>
         /// <exception cref="ArgumentNullException">
-        /// The <paramref name="paramNames" /> parameter is <c>null</c>.
+        /// The <paramref name="paramNames" /> parameter is <see langword="null" />.
         /// </exception>
         public MultipleArgumentException(string message, Exception innerException,
             IEnumerable<string> paramNames)
@@ -123,7 +123,7 @@ namespace Acolyte.Exceptions
         /// <param name="paramNames">The names of parameters that cause exception.</param>
         /// <returns>Formatted message with parameters names.</returns>
         /// <exception cref="ArgumentNullException">
-        /// The <paramref name="paramNames" /> parameter is <c>null</c>.
+        /// The <paramref name="paramNames" /> parameter is <see langword="null" />.
         /// </exception>
         private static string FormatMessage(string message, IEnumerable<string> paramNames)
         {

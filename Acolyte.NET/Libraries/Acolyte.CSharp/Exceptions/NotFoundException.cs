@@ -47,7 +47,7 @@ namespace Acolyte.Exceptions
         /// source or destination.
         /// </param>
         /// <exception cref="ArgumentNullException">
-        /// The <paramref name="info" /> parameter is <c>null</c>.
+        /// The <paramref name="info" /> parameter is <see langword="null" />.
         /// </exception>
         /// <exception cref="SerializationException">
         /// The class name is null or <see cref="Exception.HResult" /> is zero (0).

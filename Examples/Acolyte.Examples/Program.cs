@@ -56,7 +56,7 @@ namespace Acolyte.Examples
             catch (Exception ex)
             {
                 string exceptionMessage = $"Exception occurred in {nameof(Main)} method. " +
-                                          $"{Environment.NewLine}{ex.ToString()}";
+                                          $"{Environment.NewLine}{ex}";
                 Console.WriteLine(exceptionMessage);
 
                 return -1;

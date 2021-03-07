@@ -1,6 +1,10 @@
 version: '{build}'
 image: Visual Studio 2019
 
+shallow_clone: true
+
+clone_folder: C:/projects/acolyte-net
+
 branches:
   only:
     - master
@@ -20,19 +24,31 @@ before_build:
 build:
   verbosity: minimal
 
+after_build:
+  - dotnet pack "Libraries/Acolyte.CSharp" -c Release
+  - dotnet pack "Libraries/Acolyte.FSharp" -c Release
+  - dotnet pack "Libraries/Acolyte.NET" -c Release
+
 test:
   assemblies:
-    - '**\*.Tests.dll'
+    - '**/*.Tests.dll'
 
-after_build:
-  - dotnet pack "Libraries\Acolyte.CSharp" -c Release
-  - dotnet pack "Libraries\Acolyte.FSharp" -c Release
-  - dotnet pack "Libraries\Acolyte.NET" -c Release
+# F# tests does not execute at all.
+after_test:
+  - ps: >-
+      if ($env:configuration -eq "Debug")
+      {
+        dotnet test "C:/projects/acolyte-net/Acolyte.NET/Tests/Acolyte.FSharp.Tests/Acolyte.FSharp.Tests.fsproj" --configuration Debug --no-build
+      }
+      else
+      {
+        dotnet test "C:/projects/acolyte-net/Acolyte.NET/Tests/Acolyte.FSharp.Tests/Acolyte.FSharp.Tests.fsproj" --configuration Release --no-build
+      }
 
 artifacts:
-  - path: Acolyte.NET\Libraries\Acolyte.CSharp\bin\Release\*.nupkg
-  - path: Acolyte.NET\Libraries\Acolyte.FSharp\bin\Release\*.nupkg
-  - path: Acolyte.NET\Libraries\Acolyte.NET\bin\Release\*.nupkg
+  - path: Acolyte.NET/Libraries/Acolyte.CSharp/bin/Release/*.nupkg
+  - path: Acolyte.NET/Libraries/Acolyte.FSharp/bin/Release/*.nupkg
+  - path: Acolyte.NET/Libraries/Acolyte.NET/bin/Release/*.nupkg
 
 deploy:
   - provider: Environment

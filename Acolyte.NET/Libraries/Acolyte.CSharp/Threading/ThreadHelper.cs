@@ -10,12 +10,12 @@ namespace Acolyte.Threading
     public static class ThreadHelper
     {
         /// <summary>
-        /// Creates message with information about currrent thread with specified data.
+        /// Creates message with information about current thread with specified data.
         /// </summary>
         /// <param name="outputObjects">Additional objects to append to message.</param>
         /// <returns>Message about current thread with specified data in message.</returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="outputObjects"/> is <c>null</c>.
+        /// <paramref name="outputObjects"/> is <see langword="null" />.
         /// </exception>
         public static string GetThreadInfoWithParams(params object[] outputObjects)
         {

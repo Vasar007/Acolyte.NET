@@ -150,6 +150,7 @@ namespace Acolyte.Common
         {
             return Enum.IsDefined(typeof(TEnum), enumValue);
         }
+
         #endregion
     }
 }

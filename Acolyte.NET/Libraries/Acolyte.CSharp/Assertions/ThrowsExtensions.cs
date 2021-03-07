@@ -16,21 +16,21 @@ namespace Acolyte.Assertions
         #region Null Checks For Generic Types
 
         /// <summary>
-        /// Provides <c>null</c> check for every reference type value.
+        /// Provides <see langword="null" /> check for every reference type value.
         /// </summary>
-        /// <typeparam name="T">Type which extenstion method will apply to.</typeparam>
+        /// <typeparam name="T">Type which extension method will apply to.</typeparam>
         /// <param name="obj">Instance to check.</param>
         /// <param name="paramName">
-        /// Name of the parameter for error message. Use operator <c>nameof</c> to get proper
-        /// parameter name.
+        /// Name of the parameter for error message. Use operator <see langword="nameof" /> to get
+        /// proper parameter name.
         /// </param>
         /// <returns>Returns passed value.</returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="obj" /> is <c>null</c>. -or-
-        /// <paramref name="paramName" /> is <c>null</c>.
+        /// <paramref name="obj" /> is <see langword="null" />. -or-
+        /// <paramref name="paramName" /> is <see langword="null" />.
         /// </exception>
         [return: NotNull]
-        public static T ThrowIfNull<T>([AllowNull] this T obj, string paramName)
+        public static T ThrowIfNull<T>(this T? obj, string paramName)
             where T : class?
         {
             if (paramName is null)
@@ -47,42 +47,40 @@ namespace Acolyte.Assertions
         }
 
         /// <summary>
-        /// Provides <c>null</c> check for every object value.
+        /// Provides <see langword="null" /> check for every object value.
         /// </summary>
-        /// <typeparam name="T">Type which extenstion method will apply to.</typeparam>
+        /// <typeparam name="T">Type which extension method will apply to.</typeparam>
         /// <param name="obj">Instance to check.</param>
         /// <param name="paramName">
-        /// Name of the parameter for error message. Use operator <c>nameof</c> to get proper
-        /// parameter name.
+        /// Name of the parameter for error message. Use operator <see langword="nameof" /> to get
+        /// proper parameter name.
         /// </param>
         /// <param name="assertOnPureValueTypes">
-        /// Allows to throw exception if <paramref name="obj" /> value is pure value type value
-        /// ("pure" means that it is non-nullable type). It can be usefull when you do not want to
+        /// Allows to throw exception if <paramref name="obj" /> value is pure value type
+        /// ("pure" means that it is non-nullable type). It can be useful when you do not want to
         /// check "pure" value types. So, using this parameter you can catch assertion during debug
         /// and eliminate redundant checks (because non-nullable value types do not have null 
         /// value at all).
         /// </param>
         /// <returns>Returns passed value.</returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="obj" /> is <c>null</c>. -or-
-        /// <paramref name="paramName" /> is <c>null</c>.
+        /// <paramref name="obj" /> is <see langword="null" />. -or-
+        /// <paramref name="paramName" /> is <see langword="null" />.
         /// </exception>
         /// <remarks>
         /// This method does not have any generic type constraints because sometimes it can be used
         /// for nullable value types, or for generic types (including F# code, for example).
-        /// In such cases, this restriction removes opportunity to use <c>null</c> check.
+        /// In such cases, this restriction removes opportunity to use <see langword="null" /> check.
         /// </remarks>
         [return: NotNull]
-        public static T ThrowIfNullValue<T>([AllowNull] this T obj, string paramName,
+        public static T ThrowIfNullValue<T>(this T? obj, string paramName,
             bool assertOnPureValueTypes)
         {
             paramName.ThrowIfNull(nameof(paramName));
 
             if (assertOnPureValueTypes)
             {
-#pragma warning disable CS8653 // A default expression introduces a null value for a type parameter.
-                if (!(default(T) is null))
-#pragma warning restore CS8653 // A default expression introduces a null value for a type parameter.
+                if (default(T) is not null)
                 {
                     throw new ArgumentException(
                         "The passed parameter is a pure value type parameter.", paramName
@@ -104,17 +102,17 @@ namespace Acolyte.Assertions
         #region Checks For Strings
 
         /// <summary>
-        /// Checks if the string is <c>null</c> or empty.
+        /// Checks if the string is <see langword="null" /> or empty.
         /// </summary>
         /// <param name="str">String to check.</param>
         /// <param name="paramName">
-        /// Name of the parameter for error message. Use operator <c>nameof</c> to get proper
-        /// parameter name.
+        /// Name of the parameter for error message. Use operator <see langword="nameof" /> to get
+        /// proper parameter name.
         /// </param>
         /// <returns>The original string.</returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="str" /> is <c>null</c>. -or-
-        /// <paramref name="paramName" /> is <c>null</c>.
+        /// <paramref name="str" /> is <see langword="null" />. -or-
+        /// <paramref name="paramName" /> is <see langword="null" />.
         /// </exception>
         /// <exception cref="ArgumentException">
         /// <paramref name="str" /> presents empty string.
@@ -137,17 +135,17 @@ namespace Acolyte.Assertions
         }
 
         /// <summary>
-        /// Checks if the string is <c>null</c>, empty or contains only whitespaces.
+        /// Checks if the string is <see langword="null" />, empty or contains only whitespaces.
         /// </summary>
         /// <param name="str">String to check.</param>
         /// <param name="paramName">
-        /// Name of the parameter for error message. Use operator <c>nameof</c> to get proper
-        /// parameter name.
+        /// Name of the parameter for error message. Use operator <see langword="nameof" /> to get
+        /// proper parameter name.
         /// </param>
         /// <returns>The original string.</returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="str" /> is <c>null</c>. -or-
-        /// <paramref name="paramName" /> is <c>null</c>.
+        /// <paramref name="str" /> is <see langword="null" />. -or-
+        /// <paramref name="paramName" /> is <see langword="null" />.
         /// </exception>
         /// <exception cref="ArgumentException">
         /// <paramref name="str" /> presents empty string or contains only whitespaces.
@@ -178,21 +176,21 @@ namespace Acolyte.Assertions
         #region Checks For Collections
 
         /// <summary>
-        /// Checks if enumerable is <c>null</c> or empty.
+        /// Checks if enumerable is <see langword="null" /> or empty.
         /// </summary>
         /// <typeparam name="T">Internal type of <see cref="IEnumerable{T}" />.</typeparam>
         /// <param name="collection">Enumerable to check.</param>
         /// <param name="paramName">
-        /// Name of the parameter for error message. Use operator <c>nameof</c> to get proper
-        /// parameter name.
+        /// Name of the parameter for error message. Use operator <see langword="nameof" /> to get
+        /// proper parameter name.
         /// </param>
         /// <returns>
-        /// Returns <c>true</c> in case the enumerable is <c>null</c> or empty, <c>false</c> 
-        /// otherwise.
+        /// Returns <see langword="true" /> in case the enumerable is <see langword="null" /> or
+        /// empty, <see langword="false" /> otherwise.
         /// </returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="collection" /> is <c>null</c>. -or-
-        /// <paramref name="paramName" /> is <c>null</c>.
+        /// <paramref name="collection" /> is <see langword="null" />. -or-
+        /// <paramref name="paramName" /> is <see langword="null" />.
         /// </exception>
         /// <exception cref="ArgumentException">
         /// <paramref name="collection" /> contains no elements.
@@ -220,16 +218,16 @@ namespace Acolyte.Assertions
         #region Checks For Guids
 
         /// <summary>
-        /// Checks if the guid is empty.
+        /// Checks if the <see cref="Guid" /> is empty.
         /// </summary>
-        /// <param name="guid">Guid to check.</param>
+        /// <param name="guid"><see cref="Guid" /> to check.</param>
         /// <param name="paramName">
-        /// Name of the parameter for error message. Use operator <c>nameof</c> to get proper
-        /// parameter name.
+        /// Name of the parameter for error message. Use operator <see langword="nameof" /> to get
+        /// proper parameter name.
         /// </param>
         /// <returns>The original guid.</returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="paramName" /> is <c>null</c>.
+        /// <paramref name="paramName" /> is <see langword="null" />.
         /// </exception>
         /// <exception cref="ArgumentException">
         /// <paramref name="guid" /> presents empty guid.
@@ -257,7 +255,7 @@ namespace Acolyte.Assertions
         /// <param name="task">Task to check.</param>
         /// <returns>The original task.</returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="task" /> is <c>null</c>.
+        /// <paramref name="task" /> is <see langword="null" />.
         /// </exception>
         /// <exception cref="ArgumentException">
         /// <paramref name="task" /> is not completed yet (that is, the task is in one of the three
@@ -296,12 +294,12 @@ namespace Acolyte.Assertions
         /// <typeparam name="TEnum">An enumeration type which provides values for check.</typeparam>
         /// <param name="enumValue">An enumeration value to check.</param>
         /// <param name="paramName">
-        /// Name of the parameter for error message. Use operator <c>nameof</c> to get proper
-        /// parameter name.
+        /// Name of the parameter for error message. Use operator <see langword="nameof" /> to get
+        /// proper parameter name.
         /// </param>
         /// <returns>The original enumeration value.</returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="paramName" /> is <c>null</c>.
+        /// <paramref name="paramName" /> is <see langword="null" />.
         /// </exception>
         /// <exception cref="ArgumentOutOfRangeException">
         /// <paramref name="enumValue" /> is not defined for the <typeparamref name="TEnum" /> type.
@@ -336,19 +334,19 @@ namespace Acolyte.Assertions
         /// <typeparam name="T">An type of value and bounds.</typeparam>
         /// <param name="value">An value to check.</param>
         /// <param name="paramName">
-        /// Name of the parameter for error message. Use operator <c>nameof</c> to get proper
-        /// parameter name.
+        /// Name of the parameter for error message. Use operator <see langword="nameof" /> to get
+        /// proper parameter name.
         /// </param>
         /// <param name="includedLowerBound">An included lower bound of the range.</param>
         /// <param name="includedUpperBound">An included upper bound of the range.</param>
         /// <param name="comparer">A value comparer.</param>
         /// <returns>The original value.</returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="value" /> is <c>null</c>. -or-
-        /// <paramref name="paramName" /> is <c>null</c>. -or-
-        /// <paramref name="includedLowerBound" /> is <c>null</c>. -or-
-        /// <paramref name="includedUpperBound" /> is <c>null</c>. -or-
-        /// <paramref name="comparer" /> is <c>null</c>.
+        /// <paramref name="value" /> is <see langword="null" />. -or-
+        /// <paramref name="paramName" /> is <see langword="null" />. -or-
+        /// <paramref name="includedLowerBound" /> is <see langword="null" />. -or-
+        /// <paramref name="includedUpperBound" /> is <see langword="null" />. -or-
+        /// <paramref name="comparer" /> is <see langword="null" />.
         /// </exception>
         /// <exception cref="ArgumentOutOfRangeException">
         /// <paramref name="value" /> is not out of the specified range
@@ -370,7 +368,7 @@ namespace Acolyte.Assertions
             includedUpperBound.ThrowIfNullValue(nameof(includedUpperBound), assertOnPureValueTypes: false);
             comparer.ThrowIfNull(nameof(comparer));
 
-            // Be carefull to compare nullable values because nullble comparer behaves 
+            // Be careful to compare nullable values because nullable comparer behaves 
             // inconsistently with operators (<, >, <=, >=):
             // https://stackoverflow.com/a/4731337/8581036
             bool isValueLessThanLowerBound = comparer.Compare(value, includedLowerBound) < 0;
@@ -396,17 +394,17 @@ namespace Acolyte.Assertions
         /// <typeparam name="T">An type of value and bounds.</typeparam>
         /// <param name="value">An value to check.</param>
         /// <param name="paramName">
-        /// Name of the parameter for error message. Use operator <c>nameof</c> to get proper
-        /// parameter name.
+        /// Name of the parameter for error message. Use operator <see langword="nameof" /> to get
+        /// proper parameter name.
         /// </param>
         /// <param name="includedLowerBound">An included lower bound of the range.</param>
         /// <param name="includedUpperBound">An included upper bound of the range.</param>
         /// <returns>The original value.</returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="value" /> is <c>null</c>. -or-
-        /// <paramref name="paramName" /> is <c>null</c>. -or-
-        /// <paramref name="includedLowerBound" /> is <c>null</c>. -or-
-        /// <paramref name="includedUpperBound" /> is <c>null</c>..
+        /// <paramref name="value" /> is <see langword="null" />. -or-
+        /// <paramref name="paramName" /> is <see langword="null" />. -or-
+        /// <paramref name="includedLowerBound" /> is <see langword="null" />. -or-
+        /// <paramref name="includedUpperBound" /> is <see langword="null" />..
         /// </exception>
         /// <exception cref="ArgumentOutOfRangeException">
         /// <paramref name="value" /> is out of the specified range

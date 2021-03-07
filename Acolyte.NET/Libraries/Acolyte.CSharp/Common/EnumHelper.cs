@@ -92,6 +92,123 @@ namespace Acolyte.Common
             return GetValues<TEnum>().Max();
         }
 
+        public static TEnum GetMinValue<TEnum>()
+            where TEnum : struct, Enum
+        {
+            return GetValues<TEnum>().Min();
+        }
+
+        #endregion
+
+        #region Enum Conversions
+
+        #region Parse Defined
+
+        public static TEnum ParseDefined<TEnum>(String enumValue)
+            where TEnum : struct, Enum
+        {
+            return ParseDefined<TEnum>(enumValue, ignoreCase: false);
+        }
+
+        public static TEnum ParseDefined<TEnum>(String enumValue, bool ignoreCase)
+            where TEnum : struct, Enum
+        {
+            if (Enum.TryParse(enumValue, ignoreCase, out TEnum result) && result.IsDefined())
+            {
+                return result;
+            }
+
+            throw new ArgumentOutOfRangeException(
+                nameof(enumValue),
+                enumValue,
+                $"Cannot parse value '{enumValue}' to enum type '{typeof(TEnum).Name}'."
+            );
+        }
+
+        #endregion
+
+        #region Try Parse Defined
+
+        public static bool TryParseDefined<TEnum>(String enumValue, out TEnum result)
+          where TEnum : struct, Enum
+        {
+            return TryParseDefined(enumValue, ignoreCase: false, out result);
+        }
+
+        public static bool TryParseDefined<TEnum>(String enumValue, bool ignoreCase, out TEnum result)
+            where TEnum : struct, Enum
+        {
+            if (Enum.TryParse(enumValue, ignoreCase, out result) && result.IsDefined())
+            {
+                return true;
+            }
+
+            // "result" is equal to default here (because of Enum.TryParse).
+            return false;
+        }
+
+        #endregion
+
+        #region Parse Defined Or Default
+
+        public static TEnum ParseDefinedOrDefault<TEnum>(String enumValue, TEnum defaultValue)
+            where TEnum : struct, Enum
+        {
+            return ParseDefinedOrDefault(enumValue, ignoreCase: false, defaultValue);
+        }
+
+        public static TEnum ParseDefinedOrDefault<TEnum>(String enumValue, bool ignoreCase)
+            where TEnum : struct, Enum
+        {
+            return ParseDefinedOrDefault(enumValue, ignoreCase, defaultValue: default(TEnum));
+        }
+
+        public static TEnum ParseDefinedOrDefault<TEnum>(String enumValue, bool ignoreCase,
+            TEnum defaultValue)
+            where TEnum : struct, Enum
+        {
+            if (Enum.TryParse(enumValue, ignoreCase, out TEnum result) &&
+                result.IsDefined())
+            {
+                return result;
+            }
+
+            return defaultValue;
+        }
+
+        #endregion
+
+        #region Try Parse Defined Or Default
+
+        public static bool TryParseDefinedOrDefault<TEnum>(String enumValue, TEnum defaultValue,
+            out TEnum result)
+            where TEnum : struct, Enum
+        {
+            return TryParseDefinedOrDefault(enumValue, ignoreCase: false, defaultValue, out result);
+        }
+
+        public static bool TryParseDefinedOrDefault<TEnum>(String enumValue, bool ignoreCase,
+           out TEnum result)
+            where TEnum : struct, Enum
+        {
+            return TryParseDefinedOrDefault(enumValue, ignoreCase, defaultValue: default, out result);
+        }
+
+        public static bool TryParseDefinedOrDefault<TEnum>(String enumValue, bool ignoreCase,
+            TEnum defaultValue, out TEnum result)
+            where TEnum : struct, Enum
+        {
+            if (Enum.TryParse(enumValue, ignoreCase, out result) && result.IsDefined())
+            {
+                return true;
+            }
+
+            result = defaultValue;
+            return false;
+        }
+
+        #endregion
+
         #endregion
     }
 }
