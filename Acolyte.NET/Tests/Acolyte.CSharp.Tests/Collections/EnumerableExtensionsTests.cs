@@ -32,7 +32,7 @@
 
         #endregion
 
-        #region Tests for "Zip And Unzip" section
+        #region Tests for "Zip" section
 
         // TODO: write tests.
 
