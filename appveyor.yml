@@ -46,10 +46,9 @@ after_test:
 
 # Upload all NuGet packages to release assets.
 artifacts:
-  - path: Libraries/Acolyte.CSharp/bin/Release/*.nupkg
-  - path: Libraries/Acolyte.FSharp/bin/Release/*.nupkg
-  - path: Libraries/Acolyte.NET/bin/Release/*.nupkg
-
+  - path: Acolyte.NET/Libraries/Acolyte.CSharp/bin/Release/*.nupkg
+  - path: Acolyte.NET/Libraries/Acolyte.FSharp/bin/Release/*.nupkg
+  - path: Acolyte.NET/Libraries/Acolyte.NET/bin/Release/*.nupkg
 
 before_deploy:
   - dotnet pack --configuration Release --no-build "../Acolyte.NET"
