@@ -1,6 +1,6 @@
-﻿using Acolyte.Tests.Creators;
+﻿using Acolyte.Data.Randomness;
 
-namespace Acolyte.Tests.Functions
+namespace Acolyte.Functions
 {
     public static class NumberParityFunction
     {
@@ -43,7 +43,7 @@ namespace Acolyte.Tests.Functions
         public static float? ReturnNullIfRandomInt32IsOdd(float value)
         {
             // Convert values to null if randomly created Int32 is odd.
-            int mark = TestDataCreator.CreateRandomInt32();
+            int mark = StaticRandom.Next();
             return IsEven(mark)
                 ? value
                 : (float?) null;
@@ -56,7 +56,7 @@ namespace Acolyte.Tests.Functions
         public static double? ReturnNullIfRandomInt32IsOdd(double value)
         {
             // Convert values to null if randomly created Int32 is odd.
-            int mark = TestDataCreator.CreateRandomInt32();
+            int mark = StaticRandom.Next();
             return IsEven(mark)
                 ? value
                 : (double?) null;
@@ -69,7 +69,7 @@ namespace Acolyte.Tests.Functions
         public static decimal? ReturnNullIfRandomInt32IsOdd(decimal value)
         {
             // Convert values to null if randomly created Int32 is odd.
-            int mark = TestDataCreator.CreateRandomInt32();
+            int mark = StaticRandom.Next();
             return IsEven(mark)
                 ? value
                 : (decimal?) null;

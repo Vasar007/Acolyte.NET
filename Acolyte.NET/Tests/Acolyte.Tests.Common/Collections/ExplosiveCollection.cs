@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Acolyte.Assertions;
 using Acolyte.Common;
-using Acolyte.Tests.Common;
 
 namespace Acolyte.Tests.Collections
 {

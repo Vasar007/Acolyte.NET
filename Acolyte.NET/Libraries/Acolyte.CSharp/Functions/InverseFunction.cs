@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Acolyte.Tests.Functions
+namespace Acolyte.Functions
 {
     public static class InverseFunction
     {

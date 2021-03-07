@@ -1,6 +1,6 @@
-﻿using Acolyte.Tests.Common;
+﻿using Acolyte.Common;
 
-namespace Acolyte.Tests.Functions
+namespace Acolyte.Functions
 {
     public sealed class IncrementalKeyGenerator<TElement>
     {

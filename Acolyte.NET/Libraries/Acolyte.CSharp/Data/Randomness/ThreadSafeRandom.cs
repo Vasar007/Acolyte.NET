@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 
-namespace Acolyte.Common
+namespace Acolyte.Data.Randomness
 {
     /// <summary>
     /// Represents a pseudo-random number generator, which is a device that produces

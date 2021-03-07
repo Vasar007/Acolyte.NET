@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Acolyte.Assertions;
 using Acolyte.Common;
+using Acolyte.Functions;
 using Acolyte.Threading;
 
 namespace Acolyte.Collections
@@ -372,7 +373,10 @@ namespace Acolyte.Collections
         /// </param>
         /// <param name="value">Value to find index of.</param>
         /// <param name="comparer">
-        /// An <see cref="IEqualityComparer{TSource}" /> to compare values with.
+        /// The <see cref="IEqualityComparer{TSource}" /> implementation to use when
+        /// comparing values, or <see langword="null" /> to use the default
+        /// <see cref="EqualityComparer{TSource}" /> implementation for the
+        /// <typeparamref name="TSource" /> type.
         /// </param>
         /// <returns>
         /// The zero-based index of the first occurrence of an element that equals to the 
@@ -473,7 +477,12 @@ namespace Acolyte.Collections
         /// <see cref="IReadOnlyDictionary{TKey, TValue}" /> from.
         /// </param>
         /// <param name="keySelector">A function to extract a key from each element.</param>
-        /// <param name="comparer">An <see cref="IEqualityComparer{T}" /> to compare keys.</param>
+        /// <param name="comparer">
+        /// The <see cref="IEqualityComparer{TKey}" /> implementation to use when
+        /// comparing keys, or <see langword="null" /> to use the default
+        /// <see cref="EqualityComparer{TKey}" /> implementation for the
+        /// <typeparamref name="TKey" /> type.
+        /// </param>
         /// <returns>
         /// A <see cref="IReadOnlyDictionary{TKey, TValue}" /> that contains keys and values.
         /// </returns>
@@ -568,7 +577,12 @@ namespace Acolyte.Collections
         /// <param name="elementSelector">
         /// A transform function to produce a result element value from each element.
         /// </param>
-        /// <param name="comparer">An <see cref="IEqualityComparer{T}" /> to compare keys.</param>
+        /// <param name="comparer">
+        /// The <see cref="IEqualityComparer{TKey}" /> implementation to use when
+        /// comparing keys, or <see langword="null" /> to use the default
+        /// <see cref="EqualityComparer{TKey}" /> implementation for the
+        /// <typeparamref name="TKey" /> type.
+        /// </param>
         /// <returns>
         /// A <see cref="IReadOnlyDictionary{TKey, TValue}" /> that contains values of type
         /// <typeparamref name="TElement" /> selected from the input sequence.
@@ -666,7 +680,12 @@ namespace Acolyte.Collections
         /// <param name="source">
         /// A sequence of values to determine the minimum value of.
         /// </param>
-        /// <param name="comparer">An element comparer.</param>
+        /// <param name="comparer">
+        /// The <see cref="IComparer{TSource}" /> implementation to use when
+        /// comparing values, or <see langword="null" /> to use the default
+        /// <see cref="Comparer{TSource}" /> implementation for the
+        /// <typeparamref name="TSource" /> type.
+        /// </param>
         /// <returns>
         /// The minimum value in the sequence.
         /// If <paramref name="source" /> contains no elements and <typeparamref name="TSource" />
@@ -727,7 +746,12 @@ namespace Acolyte.Collections
         /// <param name="source">
         /// A sequence of values to determine the maximum value of.
         /// </param>
-        /// <param name="comparer">An element comparer.</param>
+        /// <param name="comparer">
+        /// The <see cref="IComparer{TSource}" /> implementation to use when
+        /// comparing values, or <see langword="null" /> to use the default
+        /// <see cref="Comparer{TSource}" /> implementation for the
+        /// <typeparamref name="TSource" /> type.
+        /// </param>
         /// <returns>
         /// The maximum value in the sequence.
         /// If <paramref name="source" /> contains no elements and <typeparamref name="TSource" />
@@ -1174,7 +1198,12 @@ namespace Acolyte.Collections
         /// <param name="source">
         /// A sequence of values to determine the minimum and maximum values of.
         /// </param>
-        /// <param name="comparer">An element comparer.</param>
+        /// <param name="comparer">
+        /// The <see cref="IComparer{TSource}" /> implementation to use when
+        /// comparing values, or <see langword="null" /> to use the default
+        /// <see cref="Comparer{TSource}" /> implementation for the
+        /// <typeparamref name="TSource" /> type.
+        /// </param>
         /// <returns>
         /// The minimum and maximum values in the sequence.
         /// If <paramref name="source" /> contains no elements and <typeparamref name="TSource" />
@@ -1605,7 +1634,12 @@ namespace Acolyte.Collections
         /// A sequence of values to determine the minimum and maximum values of.
         /// </param>
         /// <param name="selector">A transform function to apply to each element.</param>
-        /// <param name="comparer">An element comparer.</param>
+        /// <param name="comparer">
+        /// The <see cref="IComparer{TResult}" /> implementation to use when
+        /// comparing values, or <see langword="null" /> to use the default
+        /// <see cref="Comparer{TResult}" /> implementation for the
+        /// <typeparamref name="TResult" /> type.
+        /// </param>
         /// <returns>
         /// The minimum and maximum values in the sequence.
         /// If <paramref name="source" /> contains no elements and <typeparamref name="TSource" />
@@ -1687,7 +1721,12 @@ namespace Acolyte.Collections
         /// A sequence of values to determine the minimum by key element of.
         /// </param>
         /// <param name="keySelector">Selector that transform source item to key item.</param>
-        /// <param name="comparer">Key item comparer.</param>
+        /// <param name="comparer">
+        /// The <see cref="IComparer{TKey}" /> implementation to use when
+        /// comparing keys, or <see langword="null" /> to use the default
+        /// <see cref="Comparer{TKey}" /> implementation for the
+        /// <typeparamref name="TKey" /> type.
+        /// </param>
         /// <returns>
         /// The minimum by key element in the sequence.
         /// If <paramref name="source" /> contains no elements and <typeparamref name="TSource" />
@@ -1791,7 +1830,12 @@ namespace Acolyte.Collections
         /// A sequence of values to determine the maximum by key element of.
         /// </param>
         /// <param name="keySelector">Selector that transform source item to key item.</param>
-        /// <param name="comparer">Key item comparer.</param>
+        /// <param name="comparer">
+        /// The <see cref="IComparer{TKey}" /> implementation to use when
+        /// comparing keys, or <see langword="null" /> to use the default
+        /// <see cref="Comparer{TKey}" /> implementation for the
+        /// <typeparamref name="TKey" /> type.
+        /// </param>
         /// <returns>
         /// The maximum by key element value in the sequence.
         /// If <paramref name="source" /> contains no elements and <typeparamref name="TSource" />
@@ -1866,7 +1910,12 @@ namespace Acolyte.Collections
         /// A sequence of values to determine the minimum and maximum by key elements of.
         /// </param>
         /// <param name="keySelector">Selector that transform source item to key item.</param>
-        /// <param name="comparer">Key item comparer.</param>
+        /// <param name="comparer">
+        /// The <see cref="IComparer{TKey}" /> implementation to use when
+        /// comparing keys, or <see langword="null" /> to use the default
+        /// <see cref="Comparer{TKey}" /> implementation for the
+        /// <typeparamref name="TKey" /> type.
+        /// </param>
         /// <returns>
         /// The minimum and maximum by key element in sequence in the sequence.
         /// If <paramref name="source" /> contains no elements and <typeparamref name="TSource" />
@@ -1968,24 +2017,6 @@ namespace Acolyte.Collections
         #region To Single String
 
         /// <summary>
-        /// Helper class that holds default item selector for some "ToSingleString" overloads.
-        /// </summary>
-        /// <typeparam name="TSource">
-        /// The type of the elements of enumerable collection to convert to string.
-        /// </typeparam>
-        private static class ToStringSelector<TSource>
-        {
-            /// <summary>
-            /// Default selector for collections.
-            /// </summary>
-            /// <returns>
-            /// Function to convert value of type <typeparamref name="TSource" /> to string.
-            /// </returns>
-            public static Func<TSource?, string> Instance { get; } =
-                item => item is null ? string.Empty : $"'{item.ToString()}'";
-        }
-
-        /// <summary>
         /// Transforms sequence to the string.
         /// </summary>
         /// <typeparam name="TSource">
@@ -2001,7 +2032,7 @@ namespace Acolyte.Collections
             return source.ToSingleString(
                 emptyCollectionMessage: Strings.DefaultEmptyCollectionMessage,
                 separator: Strings.DefaultItemSeparator,
-                selector: item => ToStringSelector<TSource>.Instance(item)
+                selector: item => ToStingFunction<TSource>.WithSingleQuotes(item)
             );
         }
 
@@ -2026,7 +2057,7 @@ namespace Acolyte.Collections
             return source.ToSingleString(
                 emptyCollectionMessage: emptyCollectionMessage,
                 separator: Strings.DefaultItemSeparator,
-                selector: item => ToStringSelector<TSource>.Instance(item)
+                selector: item => ToStingFunction<TSource>.WithSingleQuotes(item)
             );
         }
 
@@ -2055,7 +2086,7 @@ namespace Acolyte.Collections
             return source.ToSingleString(
                 emptyCollectionMessage: emptyCollectionMessage,
                 separator: separator,
-                selector: item => ToStringSelector<TSource>.Instance(item)
+                selector: item => ToStingFunction<TSource>.WithSingleQuotes(item)
             );
         }
 
@@ -2887,24 +2918,95 @@ namespace Acolyte.Collections
 
         #region Distinct By
 
+        /// <summary>
+        /// Returns distinct by key elements from a sequence by using a specified
+        /// <see cref="IEqualityComparer{TKey}" /> to compare keys.
+        /// </summary>
+        /// <typeparam name="TSource">
+        /// The type of the elements of <paramref name="source" />.
+        /// </typeparam>
+        /// <typeparam name="TKey">
+        /// The type of the key returned by <paramref name="keySelector" />.
+        /// </typeparam>
+        /// <param name="source">The sequence to remove duplicate elements from.</param>
+        /// <param name="keySelector">A function to extract a key from each element.</param>
+        /// <param name="keyComparer">
+        /// The <see cref="IEqualityComparer{TKey}" /> implementation to use when
+        /// comparing keys, or <see langword="null" /> to use the default
+        /// <see cref="EqualityComparer{T}" /> implementation for the <typeparamref name="TKey" />
+        /// type.
+        /// </param>
+        /// <returns>
+        /// An <see cref="IEnumerable{T}" /> that contains distinct by key elements from
+        /// the <paramref name="source" /> sequence.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="source" /> is <see langword="null" />. -or-
+        /// <paramref name="keySelector" /> is <see langword="null" />.
+        /// </exception>
         public static IEnumerable<TSource> DistinctBy<TSource, TKey>(
             this IEnumerable<TSource> source,
-            Func<TSource, TKey> selector)
+            Func<TSource, TKey> keySelector,
+             IEqualityComparer<TKey>? keyComparer)
         {
             source.ThrowIfNull(nameof(source));
-            selector.ThrowIfNull(nameof(selector));
+            keySelector.ThrowIfNull(nameof(keySelector));
 
-            var seenKeys = new HashSet<TKey>();
+            var seenKeys = new HashSet<TKey>(keyComparer);
             foreach (TSource element in source)
             {
-                if (seenKeys.Add(selector(element))) yield return element;
+                if (seenKeys.Add(keySelector(element))) yield return element;
             }
+        }
+
+        /// <summary>
+        /// Returns distinct by key elements from a sequence by using the default equality comparer
+        /// to compare values.
+        /// </summary>
+        /// <typeparam name="TSource">
+        /// The type of the elements of <paramref name="source" />.
+        /// </typeparam>
+        /// <typeparam name="TKey">
+        /// The type of the key returned by <paramref name="keySelector" />.
+        /// </typeparam>
+        /// <param name="source">The sequence to remove duplicate elements from.</param>
+        /// <param name="keySelector">A function to extract a key from each element.</param>
+        /// <returns>
+        /// An <see cref="IEnumerable{T}" /> that contains distinct by key elements from
+        /// the <paramref name="source" /> sequence.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="source" /> is <see langword="null" />. -or-
+        /// <paramref name="keySelector" /> is <see langword="null" />.
+        /// </exception>
+        public static IEnumerable<TSource> DistinctBy<TSource, TKey>(
+            this IEnumerable<TSource> source,
+            Func<TSource, TKey> keySelector)
+        {
+            return source.DistinctBy(keySelector, EqualityComparer<TKey>.Default);
         }
 
         #endregion
 
         #region Slicing
 
+        /// <summary>
+        /// Extracts specified range from a sequence.
+        /// </summary>
+        /// <typeparam name="TSource">
+        /// The type of the elements of <paramref name="source" />.
+        /// </typeparam>
+        /// <param name="source">The sequence to extract elements from.</param>
+        /// <param name="startIndex">A start index to extract element.</param>
+        /// <param name="count">Number of elements to extract.</param>
+        /// <returns>
+        /// Extracted range from <paramref name="source" />. If <paramref name="startIndex" /> or
+        /// <paramref name="count"/> parameters for range is unspecified, range will be extracted
+        /// based on specified parameter. If both parameters are unspecified, the original
+        /// <paramref name="source" /> sequence will be return.</returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="source" /> is <see langword="null" />.
+        /// </exception>
         public static IEnumerable<TSource> SliceIfRequired<TSource>(
             this IEnumerable<TSource> source,
             int? startIndex,
@@ -2914,6 +3016,7 @@ namespace Acolyte.Collections
 
             if (!startIndex.HasValue && !count.HasValue) return source;
 
+            // TODO: write tests and ensure that this part of code is redundant.
             if (startIndex.HasValue && count.HasValue)
             {
                 return source
@@ -2936,15 +3039,18 @@ namespace Acolyte.Collections
 
         #region Order By Sequence
 
+        #region Order By Sequence Overloads Without Comparer
+
         public static IEnumerable<TSource> OrderBySequence<TSource>(
             this IEnumerable<TSource> source,
             IEnumerable<TSource> order)
         {
             return source.OrderBySequence(
                 order,
-                sourceItem => sourceItem,
-                orderItem => orderItem,
-                (sourceItem, orderItem) => sourceItem
+                IdentityFunction<TSource>.Instance,
+                IdentityFunction<TSource>.Instance,
+                (sourceItem, orderItem) => sourceItem,
+                EqualityComparer<TSource>.Default
             );
         }
 
@@ -2956,8 +3062,9 @@ namespace Acolyte.Collections
             return source.OrderBySequence(
                 order,
                 sourceKeySelector,
-                orderItem => orderItem,
-                (sourceItem, orderItem) => sourceItem
+                IdentityFunction<TOrder>.Instance,
+                (sourceItem, orderItem) => sourceItem,
+                EqualityComparer<TOrder>.Default
             );
         }
 
@@ -2971,7 +3078,8 @@ namespace Acolyte.Collections
                 order,
                 sourceKeySelector,
                 orderKeySelector,
-                (sourceItem, orderItem) => sourceItem
+                (sourceItem, orderItem) => sourceItem,
+                EqualityComparer<TKey>.Default
             );
         }
 
@@ -2982,67 +3090,209 @@ namespace Acolyte.Collections
             Func<TOrder, TKey> orderKeySelector,
             Func<TSource, TOrder, TResult> resultSelector)
         {
-            // Join method keeps order of the first collection, e.g. "order" in our case.
-            return order.Join(
-                source,
-                orderKeySelector,
+            return source.OrderBySequence(
+                order,
                 sourceKeySelector,
-                (orderItem, sourceItem) => resultSelector(sourceItem, orderItem)
+                orderKeySelector,
+                resultSelector,
+                EqualityComparer<TKey>.Default
             );
         }
 
         #endregion
 
-        #region Zip And Unzip
+        #region Order By Sequence Overloads With Comparer
 
-        public static (IReadOnlyList<T>, IReadOnlyList<U>) Unzip<T, U, K>(
-            this IEnumerable<K> source,
-            Func<K, (T, U)> selector)
+        /// <summary>
+        /// Sorts the elements of a sequence in order according to a specified ordinal sequence.
+        /// </summary>
+        /// <remarks>
+        /// Implementation uses
+        /// <see cref="Enumerable.Join{TOuter, TInner, TKey, TResult}(IEnumerable{TOuter}, IEnumerable{TInner}, Func{TOuter, TKey}, Func{TInner, TKey}, Func{TOuter, TInner, TResult}, IEqualityComparer{TKey})" />
+        /// method that performs inner join of two sequences.
+        /// </remarks>
+        /// <typeparam name="TSource">
+        /// The type of the elements of <paramref name="source" />.
+        /// </typeparam>
+        /// <typeparam name="TOrder"></typeparam>
+        /// <typeparam name="TKey">
+        /// The type of the keys returned by the key selector functions.
+        /// </typeparam>
+        /// <typeparam name="TResult">The type of the result elements.</typeparam>
+        /// <param name="source">A sequence of values to order.</param>
+        /// <param name="order">A sequence of ordinal values.</param>
+        /// <param name="sourceKeySelector">
+        /// A function to extract a key from each element of <paramref name="source" />.
+        /// </param>
+        /// <param name="orderKeySelector">
+        /// A function to extract a key from each element of <paramref name="order" />.
+        /// </param>
+        /// <param name="resultSelector">
+        /// A function to create a result element from two matching elements.
+        /// </param>
+        /// <param name="comparer">
+        /// The <see cref="IEqualityComparer{TKey}" /> implementation to use when
+        /// comparing keys, or <see langword="null" /> to use the default
+        /// <see cref="EqualityComparer{T}" /> implementation for the <typeparamref name="TKey" />
+        /// type.
+        /// </param>
+        /// <returns>An <see cref="IEnumerable{TResult}" /> that has elements of type
+        /// <typeparamref name="TResult" /> that are obtained by performing an inner join on two
+        /// sequences.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="source" /> is <see langword="null" />. -or-
+        /// <paramref name="order" /> is <see langword="null" />. -or-
+        /// <paramref name="sourceKeySelector" /> is <see langword="null" />. -or-
+        /// <paramref name="orderKeySelector" /> is <see langword="null" />. -or-
+        /// <paramref name="resultSelector" /> is <see langword="null" />.
+        /// </exception>
+        public static IEnumerable<TResult> OrderBySequence<TSource, TOrder, TKey, TResult>(
+            this IEnumerable<TSource> source,
+            IEnumerable<TOrder> order,
+            Func<TSource, TKey> sourceKeySelector,
+            Func<TOrder, TKey> orderKeySelector,
+            Func<TSource, TOrder, TResult> resultSelector,
+            IEqualityComparer<TKey>? comparer)
         {
-            source.ThrowIfNull(nameof(source));
-            selector.ThrowIfNull(nameof(selector));
+            // Null checks for "source", "order", "sourceKeySelector", "orderKeySelector",
+            // parameters is provided by "Enumerable.Join" method.
+            resultSelector.ThrowIfNull(nameof(resultSelector));
 
-            var firstList = new List<T>();
-            var secondList = new List<U>();
-
-            foreach (K item in source)
-            {
-                var (first, second) = selector(item);
-                firstList.Add(first);
-                secondList.Add(second);
-            }
-
-            return (firstList, secondList);
+            // Join method keeps order of the first collection, e.g. "order" in our case.
+            return order.Join(
+                source,
+                orderKeySelector,
+                sourceKeySelector,
+                (orderItem, sourceItem) => resultSelector(sourceItem, orderItem),
+                comparer
+            );
         }
 
+        #endregion
+
+        #endregion
+
+        #region Zip
+
+        /// <summary>
+        /// Applies a specified function to the corresponding elements of two sequences,
+        /// producing a sequence of the results coupled into value tuple.
+        /// </summary>
+        /// <typeparam name="TFirst">
+        /// The type of the elements of the <paramref name="first" /> input sequence.
+        /// </typeparam>
+        /// <typeparam name="TSecond">
+        /// The type of the elements of the <paramref name="second" /> input sequence.
+        /// </typeparam>
+        /// <param name="first">The first sequence to merge.</param>
+        /// <param name="second">The second sequence to merge.</param>
+        /// <returns>
+        /// An <see cref="IEnumerable{T}" /> that contains merged elements of two input sequences.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="first" /> is <see langword="null" />. -or-
+        /// <paramref name="second" /> is <see langword="null" />.
+        /// </exception>
+        public static IEnumerable<(TFirst, TSecond)> ZipTwo<TFirst, TSecond>(
+         this IEnumerable<TFirst> first,
+         IEnumerable<TSecond> second)
+        {
+            // Null checks for "first", "second" parameters is provided by "Enumerable.Zip" method.
+
+            Func<TFirst, TSecond, (TFirst, TSecond)> resultSelector =
+                (sourceItem, secondItem) => (sourceItem, secondItem);
+
+            return first.Zip(
+                second: second,
+                resultSelector: resultSelector
+            );
+        }
+
+        /// <summary>
+        /// Applies a specified function to the corresponding elements of three sequences,
+        /// producing a sequence of the results.
+        /// </summary>
+        /// <typeparam name="TFirst">
+        /// The type of the elements of the <paramref name="first" /> input sequence.
+        /// </typeparam>
+        /// <typeparam name="TSecond">
+        /// The type of the elements of the <paramref name="second" /> input sequence.
+        /// </typeparam>
+        /// <typeparam name="TThird">
+        /// The type of the elements of the <paramref name="third" /> input sequence.
+        /// </typeparam>
+        /// <typeparam name="TResult">The type of the elements of the result sequence.</typeparam>
+        /// <param name="first">The first sequence to merge.</param>
+        /// <param name="second">The second sequence to merge.</param>
+        /// <param name="third">The third sequence to merge.</param>
+        /// <param name="resultSelector">
+        /// A function that specifies how to merge the elements from the three sequences.
+        /// </param>
+        /// <returns>
+        /// An <see cref="IEnumerable{T}" /> that contains merged elements of three input sequences.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="first" /> is <see langword="null" />. -or-
+        /// <paramref name="second" /> is <see langword="null" />. -or-
+        /// <paramref name="third" /> is <see langword="null" />. -or-
+        /// <paramref name="resultSelector" /> is <see langword="null" />.
+        /// </exception>
         public static IEnumerable<TResult> ZipThree<TFirst, TSecond, TThird, TResult>(
-            this IEnumerable<TFirst> source,
+            this IEnumerable<TFirst> first,
             IEnumerable<TSecond> second,
             IEnumerable<TThird> third,
-            Func<TFirst, TSecond, TThird, TResult> func)
+            Func<TFirst, TSecond, TThird, TResult> resultSelector)
         {
-            source.ThrowIfNull(nameof(source));
+            first.ThrowIfNull(nameof(first));
             second.ThrowIfNull(nameof(second));
             third.ThrowIfNull(nameof(third));
-            func.ThrowIfNull(nameof(func));
+            resultSelector.ThrowIfNull(nameof(resultSelector));
 
-            using var e1 = source.GetEnumerator();
+            using var e1 = first.GetEnumerator();
             using var e2 = second.GetEnumerator();
             using var e3 = third.GetEnumerator();
 
             while (e1.MoveNext() && e2.MoveNext() && e3.MoveNext())
-                yield return func(e1.Current, e2.Current, e3.Current);
+                yield return resultSelector(e1.Current, e2.Current, e3.Current);
         }
 
+        /// <summary>
+        /// Applies a specified function to the corresponding elements of three sequences,
+        /// producing a sequence of the results coupled into value tuple.
+        /// </summary>
+        /// <typeparam name="TFirst">
+        /// The type of the elements of the <paramref name="first" /> input sequence.
+        /// </typeparam>
+        /// <typeparam name="TSecond">
+        /// The type of the elements of the <paramref name="second" /> input sequence.
+        /// </typeparam>
+        /// <typeparam name="TThird">
+        /// The type of the elements of the <paramref name="third" /> input sequence.
+        /// </typeparam>
+        /// <param name="first">The first sequence to merge.</param>
+        /// <param name="second">The second sequence to merge.</param>
+        /// <param name="third">The third sequence to merge.</param>
+        /// <returns>
+        /// An <see cref="IEnumerable{T}" /> that contains merged elements of three input sequences.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="first" /> is <see langword="null" />. -or-
+        /// <paramref name="second" /> is <see langword="null" />. -or-
+        /// <paramref name="third" /> is <see langword="null" />.
+        /// </exception>
         public static IEnumerable<(TFirst, TSecond, TThird)> ZipThree<TFirst, TSecond, TThird>(
-            this IEnumerable<TFirst> source,
+            this IEnumerable<TFirst> first,
             IEnumerable<TSecond> second,
             IEnumerable<TThird> third)
         {
-            return source.ZipThree(
+            Func<TFirst, TSecond, TThird, (TFirst, TSecond, TThird)> resultSelector =
+                (sourceItem, secondItem, thirdItem) => (sourceItem, secondItem, thirdItem);
+
+            return first.ZipThree(
                 second: second,
                 third: third,
-                func: (sourceItem, secondItem, thirdItem) => (sourceItem, secondItem, thirdItem)
+                resultSelector: resultSelector
             );
         }
 

@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Acolyte.Assertions;
 using Acolyte.Common;
-using Acolyte.Tests.Functions;
+using Acolyte.Data.Randomness;
+using Acolyte.Functions;
 
 namespace Acolyte.Tests.Creators
 {

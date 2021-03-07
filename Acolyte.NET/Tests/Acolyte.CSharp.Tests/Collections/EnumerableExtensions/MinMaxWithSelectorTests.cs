@@ -4,8 +4,8 @@ using System.Linq;
 using Xunit;
 using Acolyte.Collections;
 using Acolyte.Common;
+using Acolyte.Functions;
 using Acolyte.Tests.Creators;
-using Acolyte.Tests.Functions;
 using Acolyte.Tests.Objects;
 
 namespace Acolyte.Tests.Collections.EnumerableExtensions

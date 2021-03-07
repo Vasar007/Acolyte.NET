@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 using Acolyte.Collections;
+using Acolyte.Functions;
 using Acolyte.Tests.Creators;
-using Acolyte.Tests.Functions;
 
 namespace Acolyte.Tests.Collections.EnumerableExtensions
 {

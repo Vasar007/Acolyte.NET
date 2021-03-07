@@ -4,7 +4,7 @@ using System.Linq;
 using Xunit;
 using Acolyte.Collections;
 using Acolyte.Common;
-using Acolyte.Tests.Functions;
+using Acolyte.Functions;
 using Acolyte.Tests.Creators;
 
 namespace Acolyte.Tests.Collections.EnumerableExtensions
@@ -321,7 +321,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         {
             // Arrange.
             IReadOnlyList<int> predefinedCollection = new[] { 1, 2, 3 };
-            Func<int, string> selector = ToStingFunction<int>.WithQuotes;
+            Func<int, string> selector = ToStingFunction<int>.WithSingleQuotes;
             string separator = Strings.DefaultItemSeparator;
             string expectedValue = string.Join(separator, predefinedCollection.Select(selector));
 
@@ -337,7 +337,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         {
             // Arrange.
             IReadOnlyList<int> predefinedCollection = new[] { 1, 2, 3 };
-            Func<int, string> selector = ToStingFunction<int>.WithQuotes;
+            Func<int, string> selector = ToStingFunction<int>.WithSingleQuotes;
             string separator = Strings.DefaultItemSeparator;
             string expectedValue = string.Join(separator, predefinedCollection.Select(selector));
             string emptyCollectionMessage = Strings.DefaultEmptyCollectionMessage;
@@ -354,7 +354,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         {
             // Arrange.
             IReadOnlyList<int> predefinedCollection = new[] { 1, 2, 3 };
-            Func<int, string> selector = ToStingFunction<int>.WithQuotes;
+            Func<int, string> selector = ToStingFunction<int>.WithSingleQuotes;
             const string separator = " ";
             string expectedValue = string.Join(separator, predefinedCollection.Select(selector));
             string emptyCollectionMessage = Strings.DefaultEmptyCollectionMessage;
@@ -433,7 +433,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         {
             // Arrange.
             IEnumerable<int> collectionWithSomeItems = TestDataCreator.CreateRandomInt32List(count);
-            Func<int, string> selector = ToStingFunction<int>.WithQuotes;
+            Func<int, string> selector = ToStingFunction<int>.WithSingleQuotes;
             string separator = Strings.DefaultItemSeparator;
             string expectedValue = string.Join(separator, collectionWithSomeItems.Select(selector));
 
@@ -455,7 +455,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         {
             // Arrange.
             IEnumerable<int> collectionWithSomeItems = TestDataCreator.CreateRandomInt32List(count);
-            Func<int, string> selector = ToStingFunction<int>.WithQuotes;
+            Func<int, string> selector = ToStingFunction<int>.WithSingleQuotes;
             string separator = Strings.DefaultItemSeparator;
             string expectedValue = string.Join(separator, collectionWithSomeItems.Select(selector));
             string emptyCollectionMessage = Strings.DefaultEmptyCollectionMessage;
@@ -478,7 +478,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         {
             // Arrange.
             IEnumerable<int> collectionWithSomeItems = TestDataCreator.CreateRandomInt32List(count);
-            Func<int, string> selector = ToStingFunction<int>.WithQuotes;
+            Func<int, string> selector = ToStingFunction<int>.WithSingleQuotes;
             const string separator = " ";
             string expectedValue = string.Join(separator, collectionWithSomeItems.Select(selector));
             string emptyCollectionMessage = Strings.DefaultEmptyCollectionMessage;
@@ -571,7 +571,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             int count = TestDataCreator.GetRandomCountNumber();
             IEnumerable<int> collectionWithRandomSize =
                 TestDataCreator.CreateRandomInt32List(count);
-            Func<int, string> selector = ToStingFunction<int>.WithQuotes;
+            Func<int, string> selector = ToStingFunction<int>.WithSingleQuotes;
             string separator = Strings.DefaultItemSeparator;
             string expectedValue = string.Join(
                 separator, collectionWithRandomSize.Select(selector)
@@ -591,7 +591,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             int count = TestDataCreator.GetRandomCountNumber();
             IEnumerable<int> collectionWithRandomSize =
                 TestDataCreator.CreateRandomInt32List(count);
-            Func<int, string> selector = ToStingFunction<int>.WithQuotes;
+            Func<int, string> selector = ToStingFunction<int>.WithSingleQuotes;
             string separator = Strings.DefaultItemSeparator;
             string expectedValue = string.Join(
                 separator, collectionWithRandomSize.Select(selector)
@@ -612,7 +612,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             int count = TestDataCreator.GetRandomCountNumber();
             IEnumerable<int> collectionWithRandomSize =
                 TestDataCreator.CreateRandomInt32List(count);
-            Func<int, string> selector = ToStingFunction<int>.WithQuotes;
+            Func<int, string> selector = ToStingFunction<int>.WithSingleQuotes;
             const string separator = " ";
             string expectedValue = string.Join(
                 separator, collectionWithRandomSize.Select(selector)
@@ -700,7 +700,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             // Arrange.
             IReadOnlyList<int> collection = new[] { 1, 2, 3, 4 };
             var explosiveCollection = ExplosiveCollection.CreateNotExplosive(collection);
-            Func<int, string> selector = ToStingFunction<int>.WithQuotes;
+            Func<int, string> selector = ToStingFunction<int>.WithSingleQuotes;
             string separator = Strings.DefaultItemSeparator;
             string expectedValue = string.Join(separator, collection.Select(selector));
 
@@ -718,7 +718,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             // Arrange.
             IReadOnlyList<int> collection = new[] { 1, 2, 3, 4 };
             var explosiveCollection = ExplosiveCollection.CreateNotExplosive(collection);
-            Func<int, string> selector = ToStingFunction<int>.WithQuotes;
+            Func<int, string> selector = ToStingFunction<int>.WithSingleQuotes;
             string separator = Strings.DefaultItemSeparator;
             string expectedValue = string.Join(separator, collection.Select(selector));
             string emptyCollectionMessage = Strings.DefaultEmptyCollectionMessage;
@@ -737,7 +737,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             // Arrange.
             IReadOnlyList<int> collection = new[] { 1, 2, 3, 4 };
             var explosiveCollection = ExplosiveCollection.CreateNotExplosive(collection);
-            Func<int, string> selector = ToStingFunction<int>.WithQuotes;
+            Func<int, string> selector = ToStingFunction<int>.WithSingleQuotes;
             const string separator = " ";
             string expectedValue = string.Join(separator, collection.Select(selector));
             string emptyCollectionMessage = Strings.DefaultEmptyCollectionMessage;

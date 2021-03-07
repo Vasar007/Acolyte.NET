@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Acolyte.Common
+namespace Acolyte.Data.Randomness
 {
     /// <summary>
     /// Thread-safe equivalent of System.Random, using just static methods.
