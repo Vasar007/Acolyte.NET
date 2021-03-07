@@ -60,12 +60,13 @@ after_test:
 
   # Upload all NuGet packages to release assets.
 artifacts:
-  - path: '**\*.nupkg'
+  - path: '/.*\.snupkg\.nupkg/'
 
 # Deploy from master branch only.
 deploy:
   # Deploy to NuGet repository.
   - provider: NuGet
+    server: https://api.nuget.org/v3/index.json
     api_key:
       secure: hnKm9eh2iZree0QLhfMG6dkeBzGsJ3UNZpHbddhSB99FuaZxlh8Z+FxHX3c/l3Re
     skip_symbols: false
