@@ -54,10 +54,6 @@ after_test:
 artifacts:
   - path: '**\*.nupkg'
 
-# Update NuGet client to version 3.
-before_deploy:
-  - nuget sources update -Name nuget.org -Source https://api.nuget.org/v3/index.json
-
 # Deploy from master branch only.
 deploy:
   # Deploy to NuGet repository.
