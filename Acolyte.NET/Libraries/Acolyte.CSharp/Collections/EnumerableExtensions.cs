@@ -3041,6 +3041,27 @@ namespace Acolyte.Collections
 
         #region Order By Sequence Overloads Without Comparer
 
+        /// <summary>
+        /// Sorts the elements of a sequence in order according to a specified ordinal sequence.
+        /// </summary>
+        /// <remarks>
+        /// Implementation uses
+        /// <see cref="Enumerable.Join{TOuter, TInner, TKey, TResult}(IEnumerable{TOuter}, IEnumerable{TInner}, Func{TOuter, TKey}, Func{TInner, TKey}, Func{TOuter, TInner, TResult}, IEqualityComparer{TKey})" />
+        /// method that performs inner join of two sequences.
+        /// </remarks>
+        /// <typeparam name="TSource">
+        /// The type of the elements of <paramref name="source" />.
+        /// </typeparam>
+        /// <param name="source">A sequence of values to order.</param>
+        /// <param name="order">A sequence of ordinal values.</param>
+        /// <returns>An <see cref="IEnumerable{TSource}" /> that has elements of type
+        /// <typeparamref name="TSource" /> that are obtained by performing an inner join on two
+        /// sequences.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="source" /> is <see langword="null" />. -or-
+        /// <paramref name="order" /> is <see langword="null" />.
+        /// </exception>
         public static IEnumerable<TSource> OrderBySequence<TSource>(
             this IEnumerable<TSource> source,
             IEnumerable<TSource> order)
@@ -3054,6 +3075,34 @@ namespace Acolyte.Collections
             );
         }
 
+        /// <summary>
+        /// Sorts the elements of a sequence in order according to a specified ordinal sequence.
+        /// </summary>
+        /// <remarks>
+        /// Implementation uses
+        /// <see cref="Enumerable.Join{TOuter, TInner, TKey, TResult}(IEnumerable{TOuter}, IEnumerable{TInner}, Func{TOuter, TKey}, Func{TInner, TKey}, Func{TOuter, TInner, TResult}, IEqualityComparer{TKey})" />
+        /// method that performs inner join of two sequences.
+        /// </remarks>
+        /// <typeparam name="TSource">
+        /// The type of the elements of <paramref name="source" />.
+        /// </typeparam>
+        /// <typeparam name="TOrder">
+        /// The type of the elements of <paramref name="order" />.
+        /// </typeparam>
+        /// <param name="source">A sequence of values to order.</param>
+        /// <param name="order">A sequence of ordinal values.</param>
+        /// <param name="sourceKeySelector">
+        /// A function to extract a key from each element of <paramref name="source" />.
+        /// </param>
+        /// <returns>An <see cref="IEnumerable{TSource}" /> that has elements of type
+        /// <typeparamref name="TSource" /> that are obtained by performing an inner join on two
+        /// sequences.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="source" /> is <see langword="null" />. -or-
+        /// <paramref name="order" /> is <see langword="null" />. -or-
+        /// <paramref name="sourceKeySelector" /> is <see langword="null" />.
+        /// </exception>
         public static IEnumerable<TSource> OrderBySequence<TSource, TOrder>(
             this IEnumerable<TSource> source,
             IEnumerable<TOrder> order,
@@ -3068,6 +3117,41 @@ namespace Acolyte.Collections
             );
         }
 
+        /// <summary>
+        /// Sorts the elements of a sequence in order according to a specified ordinal sequence.
+        /// </summary>
+        /// <remarks>
+        /// Implementation uses
+        /// <see cref="Enumerable.Join{TOuter, TInner, TKey, TResult}(IEnumerable{TOuter}, IEnumerable{TInner}, Func{TOuter, TKey}, Func{TInner, TKey}, Func{TOuter, TInner, TResult}, IEqualityComparer{TKey})" />
+        /// method that performs inner join of two sequences.
+        /// </remarks>
+        /// <typeparam name="TSource">
+        /// The type of the elements of <paramref name="source" />.
+        /// </typeparam>
+        /// <typeparam name="TOrder">
+        /// The type of the elements of <paramref name="order" />.
+        /// </typeparam>
+        /// <typeparam name="TKey">
+        /// The type of the keys returned by the key selector functions.
+        /// </typeparam>
+        /// <param name="source">A sequence of values to order.</param>
+        /// <param name="order">A sequence of ordinal values.</param>
+        /// <param name="sourceKeySelector">
+        /// A function to extract a key from each element of <paramref name="source" />.
+        /// </param>
+        /// <param name="orderKeySelector">
+        /// A function to extract a key from each element of <paramref name="order" />.
+        /// </param>
+        /// <returns>An <see cref="IEnumerable{TSource}" /> that has elements of type
+        /// <typeparamref name="TSource" /> that are obtained by performing an inner join on two
+        /// sequences.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="source" /> is <see langword="null" />. -or-
+        /// <paramref name="order" /> is <see langword="null" />. -or-
+        /// <paramref name="sourceKeySelector" /> is <see langword="null" />. -or-
+        /// <paramref name="orderKeySelector" /> is <see langword="null" />.
+        /// </exception>
         public static IEnumerable<TSource> OrderBySequence<TSource, TOrder, TKey>(
             this IEnumerable<TSource> source,
             IEnumerable<TOrder> order,
@@ -3083,6 +3167,46 @@ namespace Acolyte.Collections
             );
         }
 
+        /// <summary>
+        /// Sorts the elements of a sequence in order according to a specified ordinal sequence.
+        /// </summary>
+        /// <remarks>
+        /// Implementation uses
+        /// <see cref="Enumerable.Join{TOuter, TInner, TKey, TResult}(IEnumerable{TOuter}, IEnumerable{TInner}, Func{TOuter, TKey}, Func{TInner, TKey}, Func{TOuter, TInner, TResult}, IEqualityComparer{TKey})" />
+        /// method that performs inner join of two sequences.
+        /// </remarks>
+        /// <typeparam name="TSource">
+        /// The type of the elements of <paramref name="source" />.
+        /// </typeparam>
+        /// <typeparam name="TOrder">
+        /// The type of the elements of <paramref name="order" />.
+        /// </typeparam>
+        /// <typeparam name="TKey">
+        /// The type of the keys returned by the key selector functions.
+        /// </typeparam>
+        /// <typeparam name="TResult">The type of the result elements.</typeparam>
+        /// <param name="source">A sequence of values to order.</param>
+        /// <param name="order">A sequence of ordinal values.</param>
+        /// <param name="sourceKeySelector">
+        /// A function to extract a key from each element of <paramref name="source" />.
+        /// </param>
+        /// <param name="orderKeySelector">
+        /// A function to extract a key from each element of <paramref name="order" />.
+        /// </param>
+        /// <param name="resultSelector">
+        /// A function to create a result element from two matching elements.
+        /// </param>
+        /// <returns>An <see cref="IEnumerable{TResult}" /> that has elements of type
+        /// <typeparamref name="TResult" /> that are obtained by performing an inner join on two
+        /// sequences.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="source" /> is <see langword="null" />. -or-
+        /// <paramref name="order" /> is <see langword="null" />. -or-
+        /// <paramref name="sourceKeySelector" /> is <see langword="null" />. -or-
+        /// <paramref name="orderKeySelector" /> is <see langword="null" />. -or-
+        /// <paramref name="resultSelector" /> is <see langword="null" />.
+        /// </exception>
         public static IEnumerable<TResult> OrderBySequence<TSource, TOrder, TKey, TResult>(
             this IEnumerable<TSource> source,
             IEnumerable<TOrder> order,
@@ -3114,7 +3238,9 @@ namespace Acolyte.Collections
         /// <typeparam name="TSource">
         /// The type of the elements of <paramref name="source" />.
         /// </typeparam>
-        /// <typeparam name="TOrder"></typeparam>
+        /// <typeparam name="TOrder">
+        /// The type of the elements of <paramref name="order" />.
+        /// </typeparam>
         /// <typeparam name="TKey">
         /// The type of the keys returned by the key selector functions.
         /// </typeparam>
