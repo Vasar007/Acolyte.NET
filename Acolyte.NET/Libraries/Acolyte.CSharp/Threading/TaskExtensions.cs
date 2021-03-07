@@ -23,7 +23,7 @@ namespace Acolyte.Threading
 
             try
             {
-                TResult taskResult = await task;
+                TResult taskResult = await task.ConfigureAwait(continueOnCapturedContext: false);
                 return Result.Ok(taskResult);
             }
             catch (Exception ex)
@@ -39,7 +39,7 @@ namespace Acolyte.Threading
 
             try
             {
-                await task;
+                await task.ConfigureAwait(continueOnCapturedContext: false);
                 return Result.Ok(new NoneResult());
             }
             catch (Exception ex)

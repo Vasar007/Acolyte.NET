@@ -35,7 +35,7 @@ namespace Acolyte.Collections
             source.ThrowIfNull(nameof(source));
 
             var result = new List<T>();
-            await foreach (T entity in source)
+            await foreach (T entity in source.ConfigureAwait(continueOnCapturedContext: false))
             {
                 result.Add(entity);
             }
