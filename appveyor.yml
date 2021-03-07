@@ -48,25 +48,20 @@ test:
 
 # F# tests does not execute at all.
 after_test:
-  - ps: >-
-      if ($env:configuration -eq "Debug")
-      {
-        dotnet test "Tests/Acolyte.FSharp.Tests/Acolyte.FSharp.Tests.fsproj" --configuration Debug --no-build
-      }
-      else
-      {
-        dotnet test "Tests/Acolyte.FSharp.Tests/Acolyte.FSharp.Tests.fsproj" --configuration Release --no-build
-      }
+  - ps: dotnet test "Tests/Acolyte.FSharp.Tests/Acolyte.FSharp.Tests.fsproj" --configuration $env:configuration --no-build
 
   # Upload all NuGet packages to release assets.
 artifacts:
   - path: '**\*.nupkg'
 
+# Update NuGet client to version 3.
+before_deploy:
+  - nuget sources update -Name nuget.org -Source https://api.nuget.org/v3/index.json
+
 # Deploy from master branch only.
 deploy:
   # Deploy to NuGet repository.
   - provider: NuGet
-    server: https://api.nuget.org/v3/index.json
     api_key:
       secure: hnKm9eh2iZree0QLhfMG6dkeBzGsJ3UNZpHbddhSB99FuaZxlh8Z+FxHX3c/l3Re
     skip_symbols: false
