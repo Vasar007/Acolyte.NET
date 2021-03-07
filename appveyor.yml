@@ -53,17 +53,12 @@ before_deploy:
 
 # Deploy from master branch only.
 deploy:
-  # Upload all NuGet packages to release assets.
-  artifacts:
-    - path: Acolyte.NET/Libraries/Acolyte.CSharp/bin/Release/*.nupkg
-    - path: Acolyte.NET/Libraries/Acolyte.FSharp/bin/Release/*.nupkg
-    - path: Acolyte.NET/Libraries/Acolyte.NET/bin/Release/*.nupkg
-
   # Deploy to NuGet repository.
   - provider: NuGet
     api_key:
       secure: hnKm9eh2iZree0QLhfMG6dkeBzGsJ3UNZpHbddhSB99FuaZxlh8Z+FxHX3c/l3Re
     skip_symbols: false
+    artifact: '/.*\.symbols\.nupkg/'
     on:
       branch: master
       configuration: Release
@@ -77,6 +72,7 @@ deploy:
     description: 'TODO: write a description.'
     draft: false
     prerelease: false
+    artifact: '/.*\.symbols\.nupkg/'
     on:
       branch: master
       configuration: Release
