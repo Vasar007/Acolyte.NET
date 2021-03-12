@@ -98,11 +98,7 @@ namespace Acolyte.Common
         {
             return !HasValue
                ? 0
-#if NETSTANDARD2_1
                : System.HashCode.Combine(_value);
-#else
-               : Acolyte.Common.HashCode.Combine(_value);
-#endif
         }
 
         #endregion

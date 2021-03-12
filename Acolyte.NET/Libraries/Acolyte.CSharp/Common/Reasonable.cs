@@ -59,11 +59,7 @@ namespace Acolyte.Common
         /// <inheritdoc />
         public override int GetHashCode()
         {
-#if NETSTANDARD2_1
             return System.HashCode.Combine(Value, Reason);
-#else
-            return Acolyte.Common.HashCode.Combine(Value, Reason);
-#endif
         }
 
         /// <inheritdoc />

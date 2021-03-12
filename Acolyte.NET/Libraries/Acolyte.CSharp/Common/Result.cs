@@ -57,14 +57,10 @@ namespace Acolyte.Common
         public override int GetHashCode()
         {
             return IsSuccess
-#if NETSTANDARD2_1
                 ? System.HashCode.Combine(_ok)
                 : System.HashCode.Combine(_error);
-#else
-                ? Acolyte.Common.HashCode.Combine(_ok)
-                : Acolyte.Common.HashCode.Combine(_error);
-#endif
         }
+
         #endregion
 
         #region IEquatable<Result<TOk, TError>> Implementation

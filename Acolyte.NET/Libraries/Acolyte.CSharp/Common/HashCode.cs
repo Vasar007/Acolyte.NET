@@ -14,6 +14,8 @@ namespace Acolyte.Common
     /// <see href="https://stackoverflow.com/questions/263400/what-is-the-best-algorithm-for-an-overridden-system-object-gethashcode" />
     /// <see href="https://rehansaeed.com/gethashcode-made-easy/" />
     /// </remarks>
+    [Obsolete("Use System.HashCode from package Microsoft.Bcl.HashCode.", error: false)]
+    // TODO: replace this class with static helper for System.HashCode.
     public readonly struct HashCode : IEquatable<HashCode>
     {
         /// <summary>
