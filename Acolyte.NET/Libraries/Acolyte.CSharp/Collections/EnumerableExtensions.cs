@@ -705,7 +705,7 @@ namespace Acolyte.Collections
             source.ThrowIfNull(nameof(source));
             comparer ??= Comparer<TSource>.Default;
 
-            TSource minValue = default;
+            TSource? minValue = default;
             if (minValue is null)
             {
                 foreach (TSource x in source)
