@@ -116,12 +116,12 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Theory]
-        [InlineData(TestHelper.OneCollectionSize)]
-        [InlineData(TestHelper.TwoCollectionSize)]
-        [InlineData(TestHelper.FiveCollectionSie)]
-        [InlineData(TestHelper.TenCollectionSize)]
-        [InlineData(TestHelper.HundredCollectionSize)]
-        [InlineData(TestHelper.TenThousandCollectionSize)]
+        [InlineData(TestHelper.One)]
+        [InlineData(TestHelper.Two)]
+        [InlineData(TestHelper.Five)]
+        [InlineData(TestHelper.Ten)]
+        [InlineData(TestHelper.Hundred)]
+        [InlineData(TestHelper.TenThousand)]
         public void FirstOrDefault_ForCollectionWithSomeItems_ShouldReturnFirstItem(int count)
         {
             // Arrange.
@@ -136,12 +136,12 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Theory]
-        [InlineData(TestHelper.OneCollectionSize)]
-        [InlineData(TestHelper.TwoCollectionSize)]
-        [InlineData(TestHelper.FiveCollectionSie)]
-        [InlineData(TestHelper.TenCollectionSize)]
-        [InlineData(TestHelper.HundredCollectionSize)]
-        [InlineData(TestHelper.TenThousandCollectionSize)]
+        [InlineData(TestHelper.One)]
+        [InlineData(TestHelper.Two)]
+        [InlineData(TestHelper.Five)]
+        [InlineData(TestHelper.Ten)]
+        [InlineData(TestHelper.Hundred)]
+        [InlineData(TestHelper.TenThousand)]
         public void FirstOrDefault_WithPredicate_ForCollectionWithSomeItems_ShouldReturnFirstItem(
             int count)
         {
@@ -159,12 +159,12 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Theory]
-        [InlineData(TestHelper.OneCollectionSize)]
-        [InlineData(TestHelper.TwoCollectionSize)]
-        [InlineData(TestHelper.FiveCollectionSie)]
-        [InlineData(TestHelper.TenCollectionSize)]
-        [InlineData(TestHelper.HundredCollectionSize)]
-        [InlineData(TestHelper.TenThousandCollectionSize)]
+        [InlineData(TestHelper.One)]
+        [InlineData(TestHelper.Two)]
+        [InlineData(TestHelper.Five)]
+        [InlineData(TestHelper.Ten)]
+        [InlineData(TestHelper.Hundred)]
+        [InlineData(TestHelper.TenThousand)]
         public void FirstOrDefault_WithPredicate_ForCollectionWithSomeItems_ShouldReturnDefaultItem(
             int count)
         {

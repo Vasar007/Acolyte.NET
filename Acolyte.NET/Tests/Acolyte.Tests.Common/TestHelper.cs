@@ -5,31 +5,31 @@
         // Max collection size in C# is equal to 2_146_435_071 but we do not need such large values.
         public const int NegativeMaxCollectionSize = -MaxCollectionSize;
 
-        public const int NegativeTenThousandCollectionSize = -TenThousandCollectionSize;
+        public const int NegativeTenThousand = -TenThousand;
 
-        public const int NegativeHundredCollectionSize = -HundredCollectionSize;
+        public const int NegativeHundred = -Hundred;
 
-        public const int NegativeTenCollectionSize = -TenCollectionSize;
+        public const int NegativeTen = -Ten;
 
-        public const int NegativeFiveCollectionSie = -FiveCollectionSie;
+        public const int NegativeFive = -Five;
 
-        public const int NegativeTwoCollectionSize = -TwoCollectionSize;
+        public const int NegativeTwo = -Two;
 
-        public const int NegativeOneCollectionSize = -OneCollectionSize;
+        public const int NegativeOne = -One;
 
-        public const int ZeroCollectionSize = 0;
+        public const int Zero = 0;
 
-        public const int OneCollectionSize = 1;
+        public const int One = 1;
 
-        public const int TwoCollectionSize = 2;
+        public const int Two = 2;
 
-        public const int FiveCollectionSie = 5;
+        public const int Five = 5;
 
-        public const int TenCollectionSize = 10;
+        public const int Ten = 10;
 
-        public const int HundredCollectionSize = 100;
+        public const int Hundred = 100;
 
-        public const int TenThousandCollectionSize = 10_000;
+        public const int TenThousand = 10_000;
 
         // Max collection size in C# is equal to 2_146_435_071 but we do not need such large values.
         public const int MaxCollectionSize = 2_146_435;

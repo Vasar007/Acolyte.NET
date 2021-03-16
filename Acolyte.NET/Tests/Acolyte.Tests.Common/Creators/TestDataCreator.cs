@@ -266,14 +266,14 @@ namespace Acolyte.Tests.Creators
         {
             random ??= RandomInstance;
 
-            return CreateRandomNonNegativeInt32(TestHelper.HundredCollectionSize, random);
+            return CreateRandomNonNegativeInt32(TestHelper.Hundred, random);
         }
 
         public static int GetRandomPositiveSmallCountNumber(Random? random = null)
         {
             random ??= RandomInstance;
 
-            return CreateRandomPositiveInt32(TestHelper.HundredCollectionSize, random);
+            return CreateRandomPositiveInt32(TestHelper.Hundred, random);
         }
 
         #endregion

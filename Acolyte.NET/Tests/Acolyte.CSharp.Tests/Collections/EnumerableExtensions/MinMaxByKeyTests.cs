@@ -220,12 +220,12 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Theory]
-        [InlineData(TestHelper.OneCollectionSize)]
-        [InlineData(TestHelper.TwoCollectionSize)]
-        [InlineData(TestHelper.FiveCollectionSie)]
-        [InlineData(TestHelper.TenCollectionSize)]
-        [InlineData(TestHelper.HundredCollectionSize)]
-        [InlineData(TestHelper.TenThousandCollectionSize)]
+        [InlineData(TestHelper.One)]
+        [InlineData(TestHelper.Two)]
+        [InlineData(TestHelper.Five)]
+        [InlineData(TestHelper.Ten)]
+        [InlineData(TestHelper.Hundred)]
+        [InlineData(TestHelper.TenThousand)]
         public void MinMaxBy_WithoutComparer_ForCollectionWithSomeItems_ShouldReturnProperMinMax(
             int count)
         {
@@ -245,12 +245,12 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Theory]
-        [InlineData(TestHelper.OneCollectionSize)]
-        [InlineData(TestHelper.TwoCollectionSize)]
-        [InlineData(TestHelper.FiveCollectionSie)]
-        [InlineData(TestHelper.TenCollectionSize)]
-        [InlineData(TestHelper.HundredCollectionSize)]
-        [InlineData(TestHelper.TenThousandCollectionSize)]
+        [InlineData(TestHelper.One)]
+        [InlineData(TestHelper.Two)]
+        [InlineData(TestHelper.Five)]
+        [InlineData(TestHelper.Ten)]
+        [InlineData(TestHelper.Hundred)]
+        [InlineData(TestHelper.TenThousand)]
         public void MinMaxBy_WithComparer_ForCollectionWithSomeItems_ShouldReturnProperMinMax(
             int count)
         {
@@ -272,12 +272,12 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Theory]
-        [InlineData(TestHelper.OneCollectionSize)]
-        [InlineData(TestHelper.TwoCollectionSize)]
-        [InlineData(TestHelper.FiveCollectionSie)]
-        [InlineData(TestHelper.TenCollectionSize)]
-        [InlineData(TestHelper.HundredCollectionSize)]
-        [InlineData(TestHelper.TenThousandCollectionSize)]
+        [InlineData(TestHelper.One)]
+        [InlineData(TestHelper.Two)]
+        [InlineData(TestHelper.Five)]
+        [InlineData(TestHelper.Ten)]
+        [InlineData(TestHelper.Hundred)]
+        [InlineData(TestHelper.TenThousand)]
         public void MinMaxBy_WithoutComparer_ForCollectionWithTheSameItems_ShouldReturnThatItem(
             int count)
         {
@@ -295,12 +295,12 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Theory]
-        [InlineData(TestHelper.OneCollectionSize)]
-        [InlineData(TestHelper.TwoCollectionSize)]
-        [InlineData(TestHelper.FiveCollectionSie)]
-        [InlineData(TestHelper.TenCollectionSize)]
-        [InlineData(TestHelper.HundredCollectionSize)]
-        [InlineData(TestHelper.TenThousandCollectionSize)]
+        [InlineData(TestHelper.One)]
+        [InlineData(TestHelper.Two)]
+        [InlineData(TestHelper.Five)]
+        [InlineData(TestHelper.Ten)]
+        [InlineData(TestHelper.Hundred)]
+        [InlineData(TestHelper.TenThousand)]
         public void MinMaxBy_WithComparer_ForCollectionWithTheSameItems_ShouldReturnThatItem(
             int count)
         {
