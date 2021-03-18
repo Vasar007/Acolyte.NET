@@ -116,12 +116,12 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Theory]
-        [InlineData(Consts._1)]
-        [InlineData(Consts._2)]
-        [InlineData(Consts._5)]
-        [InlineData(Consts._10)]
-        [InlineData(Consts._100)]
-        [InlineData(Consts._10_000)]
+        [InlineData(TestConstants._1)]
+        [InlineData(TestConstants._2)]
+        [InlineData(TestConstants._5)]
+        [InlineData(TestConstants._10)]
+        [InlineData(TestConstants._100)]
+        [InlineData(TestConstants._10_000)]
         public void FirstOrDefault_ForCollectionWithSomeItems_ShouldReturnFirstItem(int count)
         {
             // Arrange.
@@ -136,12 +136,12 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Theory]
-        [InlineData(Consts._1)]
-        [InlineData(Consts._2)]
-        [InlineData(Consts._5)]
-        [InlineData(Consts._10)]
-        [InlineData(Consts._100)]
-        [InlineData(Consts._10_000)]
+        [InlineData(TestConstants._1)]
+        [InlineData(TestConstants._2)]
+        [InlineData(TestConstants._5)]
+        [InlineData(TestConstants._10)]
+        [InlineData(TestConstants._100)]
+        [InlineData(TestConstants._10_000)]
         public void FirstOrDefault_WithPredicate_ForCollectionWithSomeItems_ShouldReturnFirstItem(
             int count)
         {
@@ -159,12 +159,12 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Theory]
-        [InlineData(Consts._1)]
-        [InlineData(Consts._2)]
-        [InlineData(Consts._5)]
-        [InlineData(Consts._10)]
-        [InlineData(Consts._100)]
-        [InlineData(Consts._10_000)]
+        [InlineData(TestConstants._1)]
+        [InlineData(TestConstants._2)]
+        [InlineData(TestConstants._5)]
+        [InlineData(TestConstants._10)]
+        [InlineData(TestConstants._100)]
+        [InlineData(TestConstants._10_000)]
         public void FirstOrDefault_WithPredicate_ForCollectionWithSomeItems_ShouldReturnDefaultItem(
             int count)
         {
@@ -241,7 +241,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             const int count = 2;
             var explosiveCollection = ExplosiveCollection.Create(
                 TestDataCreator.CreateRandomInt32List(count),
-                explosiveIndex: Constants.FirstIndex + 1
+                explosiveIndex: Common.Constants.FirstIndex + 1
             );
             int expectedValue = explosiveCollection.First();
 
@@ -258,7 +258,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         {
             // Arrange.
             // Do not use random because we should find exactly second item.
-            int expectedIndex = Constants.FirstIndex + 1;
+            int expectedIndex = Common.Constants.FirstIndex + 1;
             IReadOnlyList<int> collection = new[] { 1, 2, 3, 4 };
             var explosiveCollection = ExplosiveCollection.Create(
                 collection, explosiveIndex: expectedIndex + 1

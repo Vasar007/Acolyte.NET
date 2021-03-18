@@ -1,11 +1,12 @@
-﻿using System;
+﻿#if NETSTANDARD2_1
+
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Acolyte.Assertions;
 
 namespace Acolyte.Collections
 {
-#if NETSTANDARD2_1
     /// <summary>
     /// Contains useful methods to work with asynchronous enumerable items.
     /// </summary>
@@ -43,5 +44,6 @@ namespace Acolyte.Collections
             return result;
         }
     }
-#endif
 }
+
+#endif

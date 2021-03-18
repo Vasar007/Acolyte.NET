@@ -423,12 +423,12 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Theory]
-        [InlineData(Consts._1)]
-        [InlineData(Consts._2)]
-        [InlineData(Consts._5)]
-        [InlineData(Consts._10)]
-        [InlineData(Consts._100)]
-        [InlineData(Consts._10_000)]
+        [InlineData(TestConstants._1)]
+        [InlineData(TestConstants._2)]
+        [InlineData(TestConstants._5)]
+        [InlineData(TestConstants._10)]
+        [InlineData(TestConstants._100)]
+        [InlineData(TestConstants._10_000)]
         public void ToSingleString_ForCollectionWithSomeItems_ShouldReturnPropperMessageWithItems(int count)
         {
             // Arrange.
@@ -445,12 +445,12 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Theory]
-        [InlineData(Consts._1)]
-        [InlineData(Consts._2)]
-        [InlineData(Consts._5)]
-        [InlineData(Consts._10)]
-        [InlineData(Consts._100)]
-        [InlineData(Consts._10_000)]
+        [InlineData(TestConstants._1)]
+        [InlineData(TestConstants._2)]
+        [InlineData(TestConstants._5)]
+        [InlineData(TestConstants._10)]
+        [InlineData(TestConstants._100)]
+        [InlineData(TestConstants._10_000)]
         public void ToSingleString_WithEmptyCollectionMessage_ForCollectionWithSomeItems_ShouldReturnPropperMessageWithItems(int count)
         {
             // Arrange.
@@ -468,12 +468,12 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Theory]
-        [InlineData(Consts._1)]
-        [InlineData(Consts._2)]
-        [InlineData(Consts._5)]
-        [InlineData(Consts._10)]
-        [InlineData(Consts._100)]
-        [InlineData(Consts._10_000)]
+        [InlineData(TestConstants._1)]
+        [InlineData(TestConstants._2)]
+        [InlineData(TestConstants._5)]
+        [InlineData(TestConstants._10)]
+        [InlineData(TestConstants._100)]
+        [InlineData(TestConstants._10_000)]
         public void ToSingleString_WithEmptyCollectionMessageAndSeparator_ForCollectionWithSomeItems_ShouldReturnPropperMessageWithItems(int count)
         {
             // Arrange.
@@ -493,12 +493,12 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Theory]
-        [InlineData(Consts._1)]
-        [InlineData(Consts._2)]
-        [InlineData(Consts._5)]
-        [InlineData(Consts._10)]
-        [InlineData(Consts._100)]
-        [InlineData(Consts._10_000)]
+        [InlineData(TestConstants._1)]
+        [InlineData(TestConstants._2)]
+        [InlineData(TestConstants._5)]
+        [InlineData(TestConstants._10)]
+        [InlineData(TestConstants._100)]
+        [InlineData(TestConstants._10_000)]
         public void ToSingleString_WithSelector_ForCollectionWithSomeItems_ShouldReturnPropperMessageWithItems(int count)
         {
             // Arrange.
@@ -515,12 +515,12 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Theory]
-        [InlineData(Consts._1)]
-        [InlineData(Consts._2)]
-        [InlineData(Consts._5)]
-        [InlineData(Consts._10)]
-        [InlineData(Consts._100)]
-        [InlineData(Consts._10_000)]
+        [InlineData(TestConstants._1)]
+        [InlineData(TestConstants._2)]
+        [InlineData(TestConstants._5)]
+        [InlineData(TestConstants._10)]
+        [InlineData(TestConstants._100)]
+        [InlineData(TestConstants._10_000)]
         public void ToSingleString_WithEmptyCollectionMessageAndSelector_ForCollectionWithSomeItems_ShouldReturnPropperMessageWithItems(int count)
         {
             // Arrange.
@@ -540,12 +540,12 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Theory]
-        [InlineData(Consts._1)]
-        [InlineData(Consts._2)]
-        [InlineData(Consts._5)]
-        [InlineData(Consts._10)]
-        [InlineData(Consts._100)]
-        [InlineData(Consts._10_000)]
+        [InlineData(TestConstants._1)]
+        [InlineData(TestConstants._2)]
+        [InlineData(TestConstants._5)]
+        [InlineData(TestConstants._10)]
+        [InlineData(TestConstants._100)]
+        [InlineData(TestConstants._10_000)]
         public void ToSingleString_WithEmptyCollectionMessageAndSeparatorAndSelector_ForCollectionWithSomeItems_ShouldReturnPropperMessageWithItems(int count)
         {
             // Arrange.

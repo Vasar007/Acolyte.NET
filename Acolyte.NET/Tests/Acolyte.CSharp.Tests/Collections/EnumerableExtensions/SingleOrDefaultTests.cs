@@ -90,7 +90,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         {
             // Arrange.
             IEnumerable<int> collectionWithSingleItem =
-                TestDataCreator.CreateRandomInt32List(Consts._1);
+                TestDataCreator.CreateRandomInt32List(TestConstants._1);
             int expectedValue = collectionWithSingleItem.Single();
 
             // Act.
@@ -105,7 +105,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         {
             // Arrange.
             IEnumerable<int> collectionWithSingleItem =
-                TestDataCreator.CreateRandomInt32List(Consts._1);
+                TestDataCreator.CreateRandomInt32List(TestConstants._1);
             int expectedValue = collectionWithSingleItem.Single();
 
             // Act.
@@ -161,11 +161,11 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Theory]
-        [InlineData(Consts._2)]
-        [InlineData(Consts._5)]
-        [InlineData(Consts._10)]
-        [InlineData(Consts._100)]
-        [InlineData(Consts._10_000)]
+        [InlineData(TestConstants._2)]
+        [InlineData(TestConstants._5)]
+        [InlineData(TestConstants._10)]
+        [InlineData(TestConstants._100)]
+        [InlineData(TestConstants._10_000)]
         public void SingleOrDefault_ForCollectionWithSomeItems_ShouldFail(int count)
         {
             // Arrange.
@@ -179,11 +179,11 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Theory]
-        [InlineData(Consts._2)]
-        [InlineData(Consts._5)]
-        [InlineData(Consts._10)]
-        [InlineData(Consts._100)]
-        [InlineData(Consts._10_000)]
+        [InlineData(TestConstants._2)]
+        [InlineData(TestConstants._5)]
+        [InlineData(TestConstants._10)]
+        [InlineData(TestConstants._100)]
+        [InlineData(TestConstants._10_000)]
         public void SingleOrDefault_WithPredicate_ForCollectionWithSomeItems_ShouldFailIfFoundTwoAndMoreItmsAccordingToPredicate(
             int count)
         {
@@ -198,12 +198,12 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Theory]
-        [InlineData(Consts._1)]
-        [InlineData(Consts._2)]
-        [InlineData(Consts._5)]
-        [InlineData(Consts._10)]
-        [InlineData(Consts._100)]
-        [InlineData(Consts._10_000)]
+        [InlineData(TestConstants._1)]
+        [InlineData(TestConstants._2)]
+        [InlineData(TestConstants._5)]
+        [InlineData(TestConstants._10)]
+        [InlineData(TestConstants._100)]
+        [InlineData(TestConstants._10_000)]
         public void SingleOrDefault_WithPredicate_ForCollectionWithSomeItems_ShouldReturnDefaultItemIfFoundNoItemsAccordingToPredicate(
             int count)
         {
@@ -301,7 +301,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             // Arrange.
             var collection = new[] { 1, 2, 3, 4 };
             var explosiveCollection = ExplosiveCollection.Create(
-                collection, explosiveIndex: Constants.FirstIndex + 2
+                collection, explosiveIndex: Common.Constants.FirstIndex + 2
             );
 
             // Act & Assert.

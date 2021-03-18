@@ -102,12 +102,12 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Theory]
-        [InlineData(Consts._1)]
-        [InlineData(Consts._2)]
-        [InlineData(Consts._5)]
-        [InlineData(Consts._10)]
-        [InlineData(Consts._100)]
-        [InlineData(Consts._10_000)]
+        [InlineData(TestConstants._1)]
+        [InlineData(TestConstants._2)]
+        [InlineData(TestConstants._5)]
+        [InlineData(TestConstants._10)]
+        [InlineData(TestConstants._100)]
+        [InlineData(TestConstants._10_000)]
         public void MinMax_Int32_ForCollectionWithSomeItems_ShouldReturnMinMax(int count)
         {
             // Arrange.
@@ -123,12 +123,12 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Theory]
-        [InlineData(Consts._1)]
-        [InlineData(Consts._2)]
-        [InlineData(Consts._5)]
-        [InlineData(Consts._10)]
-        [InlineData(Consts._100)]
-        [InlineData(Consts._10_000)]
+        [InlineData(TestConstants._1)]
+        [InlineData(TestConstants._2)]
+        [InlineData(TestConstants._5)]
+        [InlineData(TestConstants._10)]
+        [InlineData(TestConstants._100)]
+        [InlineData(TestConstants._10_000)]
         public void MinMax_NullableInt32_ForCollectionWithSomeItems_ShouldReturnMinMax(
             int count)
         {
@@ -313,12 +313,12 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Theory]
-        [InlineData(Consts._1)]
-        [InlineData(Consts._2)]
-        [InlineData(Consts._5)]
-        [InlineData(Consts._10)]
-        [InlineData(Consts._100)]
-        [InlineData(Consts._10_000)]
+        [InlineData(TestConstants._1)]
+        [InlineData(TestConstants._2)]
+        [InlineData(TestConstants._5)]
+        [InlineData(TestConstants._10)]
+        [InlineData(TestConstants._100)]
+        [InlineData(TestConstants._10_000)]
         public void MinMax_Int64_ForCollectionWithSomeItems_ShouldReturnMinMax(int count)
         {
             // Arrange.
@@ -335,12 +335,12 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Theory]
-        [InlineData(Consts._1)]
-        [InlineData(Consts._2)]
-        [InlineData(Consts._5)]
-        [InlineData(Consts._10)]
-        [InlineData(Consts._100)]
-        [InlineData(Consts._10_000)]
+        [InlineData(TestConstants._1)]
+        [InlineData(TestConstants._2)]
+        [InlineData(TestConstants._5)]
+        [InlineData(TestConstants._10)]
+        [InlineData(TestConstants._100)]
+        [InlineData(TestConstants._10_000)]
         public void MinMax_NullableInt64_ForCollectionWithSomeItems_ShouldReturnMinMax(
             int count)
         {
@@ -525,12 +525,12 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Theory]
-        [InlineData(Consts._1)]
-        [InlineData(Consts._2)]
-        [InlineData(Consts._5)]
-        [InlineData(Consts._10)]
-        [InlineData(Consts._100)]
-        [InlineData(Consts._10_000)]
+        [InlineData(TestConstants._1)]
+        [InlineData(TestConstants._2)]
+        [InlineData(TestConstants._5)]
+        [InlineData(TestConstants._10)]
+        [InlineData(TestConstants._100)]
+        [InlineData(TestConstants._10_000)]
         public void MinMax_Single_ForCollectionWithSomeItems_ShouldReturnMinMax(int count)
         {
             // Arrange.
@@ -547,12 +547,12 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Theory]
-        [InlineData(Consts._1)]
-        [InlineData(Consts._2)]
-        [InlineData(Consts._5)]
-        [InlineData(Consts._10)]
-        [InlineData(Consts._100)]
-        [InlineData(Consts._10_000)]
+        [InlineData(TestConstants._1)]
+        [InlineData(TestConstants._2)]
+        [InlineData(TestConstants._5)]
+        [InlineData(TestConstants._10)]
+        [InlineData(TestConstants._100)]
+        [InlineData(TestConstants._10_000)]
         public void MinMax_NullableSingle_ForCollectionWithSomeItems_ShouldReturnMinMax(
             int count)
         {
@@ -737,12 +737,12 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Theory]
-        [InlineData(Consts._1)]
-        [InlineData(Consts._2)]
-        [InlineData(Consts._5)]
-        [InlineData(Consts._10)]
-        [InlineData(Consts._100)]
-        [InlineData(Consts._10_000)]
+        [InlineData(TestConstants._1)]
+        [InlineData(TestConstants._2)]
+        [InlineData(TestConstants._5)]
+        [InlineData(TestConstants._10)]
+        [InlineData(TestConstants._100)]
+        [InlineData(TestConstants._10_000)]
         public void MinMax_Double_ForCollectionWithSomeItems_ShouldReturnMinMax(int count)
         {
             // Arrange.
@@ -759,12 +759,12 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Theory]
-        [InlineData(Consts._1)]
-        [InlineData(Consts._2)]
-        [InlineData(Consts._5)]
-        [InlineData(Consts._10)]
-        [InlineData(Consts._100)]
-        [InlineData(Consts._10_000)]
+        [InlineData(TestConstants._1)]
+        [InlineData(TestConstants._2)]
+        [InlineData(TestConstants._5)]
+        [InlineData(TestConstants._10)]
+        [InlineData(TestConstants._100)]
+        [InlineData(TestConstants._10_000)]
         public void MinMax_NullableDouble_ForCollectionWithSomeItems_ShouldReturnMinMax(
             int count)
         {
@@ -949,12 +949,12 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Theory]
-        [InlineData(Consts._1)]
-        [InlineData(Consts._2)]
-        [InlineData(Consts._5)]
-        [InlineData(Consts._10)]
-        [InlineData(Consts._100)]
-        [InlineData(Consts._10_000)]
+        [InlineData(TestConstants._1)]
+        [InlineData(TestConstants._2)]
+        [InlineData(TestConstants._5)]
+        [InlineData(TestConstants._10)]
+        [InlineData(TestConstants._100)]
+        [InlineData(TestConstants._10_000)]
         public void MinMax_Decimal_ForCollectionWithSomeItems_ShouldReturnMinMax(int count)
         {
             // Arrange.
@@ -971,12 +971,12 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Theory]
-        [InlineData(Consts._1)]
-        [InlineData(Consts._2)]
-        [InlineData(Consts._5)]
-        [InlineData(Consts._10)]
-        [InlineData(Consts._100)]
-        [InlineData(Consts._10_000)]
+        [InlineData(TestConstants._1)]
+        [InlineData(TestConstants._2)]
+        [InlineData(TestConstants._5)]
+        [InlineData(TestConstants._10)]
+        [InlineData(TestConstants._100)]
+        [InlineData(TestConstants._10_000)]
         public void MinMax_NullableDecimal_ForCollectionWithSomeItems_ShouldReturnMinMax(
             int count)
         {
@@ -1236,12 +1236,12 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Theory]
-        [InlineData(Consts._1)]
-        [InlineData(Consts._2)]
-        [InlineData(Consts._5)]
-        [InlineData(Consts._10)]
-        [InlineData(Consts._100)]
-        [InlineData(Consts._10_000)]
+        [InlineData(TestConstants._1)]
+        [InlineData(TestConstants._2)]
+        [InlineData(TestConstants._5)]
+        [InlineData(TestConstants._10)]
+        [InlineData(TestConstants._100)]
+        [InlineData(TestConstants._10_000)]
         public void MinMax_GenericTypes_ForCollectionWithSomeItems_ShouldReturnMinMax(
             int count)
         {
@@ -1259,12 +1259,12 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Theory]
-        [InlineData(Consts._1)]
-        [InlineData(Consts._2)]
-        [InlineData(Consts._5)]
-        [InlineData(Consts._10)]
-        [InlineData(Consts._100)]
-        [InlineData(Consts._10_000)]
+        [InlineData(TestConstants._1)]
+        [InlineData(TestConstants._2)]
+        [InlineData(TestConstants._5)]
+        [InlineData(TestConstants._10)]
+        [InlineData(TestConstants._100)]
+        [InlineData(TestConstants._10_000)]
         public void MinMax_GenericTypes_WithComparer_ForCollectionWithSomeItems_ShouldReturnMinMax(
             int count)
         {

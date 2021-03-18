@@ -1,10 +1,11 @@
-﻿using System;
+﻿#if NETSTANDARD2_0
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 
 namespace Acolyte.Common
 {
-#if NETSTANDARD2_0
     /// <summary>
     /// A hash code used to help with implementing <see cref="object.GetHashCode()" />.
     /// If you can use <see href="https://docs.microsoft.com/en-us/dotnet/api/system.hashcode" />,
@@ -468,5 +469,6 @@ namespace Acolyte.Common
             return temp;
         }
     }
-#endif
 }
+
+#endif

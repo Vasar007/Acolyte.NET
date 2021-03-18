@@ -27,7 +27,7 @@ namespace Acolyte.Tests.Collections
         {
             _originalEnumerator = originalEnumerator.ThrowIfNull(nameof(originalEnumerator));
             _explosiveIndex = explosiveIndex.ThrowIfValueIsOutOfRange(
-                nameof(explosiveIndex), Constants.NotFoundIndex, int.MaxValue
+                nameof(explosiveIndex), Common.Constants.NotFoundIndex, int.MaxValue
             );
             _visitedItemsNumber = visitedItemsNumber.ThrowIfNull(nameof(visitedItemsNumber));
 

@@ -252,28 +252,28 @@ namespace Acolyte.Tests.Creators
         {
             random ??= RandomInstance;
 
-            return CreateRandomNonNegativeInt32(TestHelper.MaxCollectionSize, random);
+            return CreateRandomNonNegativeInt32(TestConstants.MaxCollectionSize, random);
         }
 
         public static int GetRandomPositiveCountNumber(Random? random = null)
         {
             random ??= RandomInstance;
 
-            return CreateRandomPositiveInt32(TestHelper.MaxCollectionSize, random);
+            return CreateRandomPositiveInt32(TestConstants.MaxCollectionSize, random);
         }
 
         public static int GetRandomSmallCountNumber(Random? random = null)
         {
             random ??= RandomInstance;
 
-            return CreateRandomNonNegativeInt32(TestHelper.Hundred, random);
+            return CreateRandomNonNegativeInt32(TestConstants._100, random);
         }
 
         public static int GetRandomPositiveSmallCountNumber(Random? random = null)
         {
             random ??= RandomInstance;
 
-            return CreateRandomPositiveInt32(TestHelper.Hundred, random);
+            return CreateRandomPositiveInt32(TestConstants._100, random);
         }
 
         #endregion
