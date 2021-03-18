@@ -99,12 +99,12 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Theory]
-        [InlineData(TestHelper.One)]
-        [InlineData(TestHelper.Two)]
-        [InlineData(TestHelper.Five)]
-        [InlineData(TestHelper.Ten)]
-        [InlineData(TestHelper.Hundred)]
-        [InlineData(TestHelper.TenThousand)]
+        [InlineData(Consts._1)]
+        [InlineData(Consts._2)]
+        [InlineData(Consts._5)]
+        [InlineData(Consts._10)]
+        [InlineData(Consts._100)]
+        [InlineData(Consts._10_000)]
         public void Max_WithComparer_ForCollectionWithSomeItems_ShouldReturnMax(int count)
         {
             // Arrange.
@@ -119,12 +119,12 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Theory]
-        [InlineData(TestHelper.One)]
-        [InlineData(TestHelper.Two)]
-        [InlineData(TestHelper.Five)]
-        [InlineData(TestHelper.Ten)]
-        [InlineData(TestHelper.Hundred)]
-        [InlineData(TestHelper.TenThousand)]
+        [InlineData(Consts._1)]
+        [InlineData(Consts._2)]
+        [InlineData(Consts._5)]
+        [InlineData(Consts._10)]
+        [InlineData(Consts._100)]
+        [InlineData(Consts._10_000)]
         public void Max_WithComparer_ForCollectionWithTheSameItems_ShouldReturnThatItem(
             int count)
         {

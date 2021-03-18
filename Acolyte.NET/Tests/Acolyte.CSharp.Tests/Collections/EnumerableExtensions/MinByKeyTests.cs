@@ -213,12 +213,12 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Theory]
-        [InlineData(TestHelper.One)]
-        [InlineData(TestHelper.Two)]
-        [InlineData(TestHelper.Five)]
-        [InlineData(TestHelper.Ten)]
-        [InlineData(TestHelper.Hundred)]
-        [InlineData(TestHelper.TenThousand)]
+        [InlineData(Consts._1)]
+        [InlineData(Consts._2)]
+        [InlineData(Consts._5)]
+        [InlineData(Consts._10)]
+        [InlineData(Consts._100)]
+        [InlineData(Consts._10_000)]
         public void MinBy_WithoutComparer_ForCollectionWithSomeItems_ShouldReturnProperMin(
             int count)
         {
@@ -236,12 +236,12 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Theory]
-        [InlineData(TestHelper.One)]
-        [InlineData(TestHelper.Two)]
-        [InlineData(TestHelper.Five)]
-        [InlineData(TestHelper.Ten)]
-        [InlineData(TestHelper.Hundred)]
-        [InlineData(TestHelper.TenThousand)]
+        [InlineData(Consts._1)]
+        [InlineData(Consts._2)]
+        [InlineData(Consts._5)]
+        [InlineData(Consts._10)]
+        [InlineData(Consts._100)]
+        [InlineData(Consts._10_000)]
         public void MinBy_WithComparer_ForCollectionWithSomeItems_ShouldReturnProperMin(
             int count)
         {
@@ -261,12 +261,12 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Theory]
-        [InlineData(TestHelper.One)]
-        [InlineData(TestHelper.Two)]
-        [InlineData(TestHelper.Five)]
-        [InlineData(TestHelper.Ten)]
-        [InlineData(TestHelper.Hundred)]
-        [InlineData(TestHelper.TenThousand)]
+        [InlineData(Consts._1)]
+        [InlineData(Consts._2)]
+        [InlineData(Consts._5)]
+        [InlineData(Consts._10)]
+        [InlineData(Consts._100)]
+        [InlineData(Consts._10_000)]
         public void MinBy_WithoutComparer_ForCollectionWithTheSameItems_ShouldReturnThatItem(
             int count)
         {
@@ -284,12 +284,12 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Theory]
-        [InlineData(TestHelper.One)]
-        [InlineData(TestHelper.Two)]
-        [InlineData(TestHelper.Five)]
-        [InlineData(TestHelper.Ten)]
-        [InlineData(TestHelper.Hundred)]
-        [InlineData(TestHelper.TenThousand)]
+        [InlineData(Consts._1)]
+        [InlineData(Consts._2)]
+        [InlineData(Consts._5)]
+        [InlineData(Consts._10)]
+        [InlineData(Consts._100)]
+        [InlineData(Consts._10_000)]
         public void MinBy_WithComparer_ForCollectionWithTheSameItems_ShouldReturnThatItem(
             int count)
         {

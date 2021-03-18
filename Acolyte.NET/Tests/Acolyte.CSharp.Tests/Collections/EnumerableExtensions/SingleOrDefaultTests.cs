@@ -90,7 +90,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         {
             // Arrange.
             IEnumerable<int> collectionWithSingleItem =
-                TestDataCreator.CreateRandomInt32List(TestHelper.One);
+                TestDataCreator.CreateRandomInt32List(Consts._1);
             int expectedValue = collectionWithSingleItem.Single();
 
             // Act.
@@ -105,7 +105,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         {
             // Arrange.
             IEnumerable<int> collectionWithSingleItem =
-                TestDataCreator.CreateRandomInt32List(TestHelper.One);
+                TestDataCreator.CreateRandomInt32List(Consts._1);
             int expectedValue = collectionWithSingleItem.Single();
 
             // Act.
@@ -161,11 +161,11 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Theory]
-        [InlineData(TestHelper.Two)]
-        [InlineData(TestHelper.Five)]
-        [InlineData(TestHelper.Ten)]
-        [InlineData(TestHelper.Hundred)]
-        [InlineData(TestHelper.TenThousand)]
+        [InlineData(Consts._2)]
+        [InlineData(Consts._5)]
+        [InlineData(Consts._10)]
+        [InlineData(Consts._100)]
+        [InlineData(Consts._10_000)]
         public void SingleOrDefault_ForCollectionWithSomeItems_ShouldFail(int count)
         {
             // Arrange.
@@ -179,11 +179,11 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Theory]
-        [InlineData(TestHelper.Two)]
-        [InlineData(TestHelper.Five)]
-        [InlineData(TestHelper.Ten)]
-        [InlineData(TestHelper.Hundred)]
-        [InlineData(TestHelper.TenThousand)]
+        [InlineData(Consts._2)]
+        [InlineData(Consts._5)]
+        [InlineData(Consts._10)]
+        [InlineData(Consts._100)]
+        [InlineData(Consts._10_000)]
         public void SingleOrDefault_WithPredicate_ForCollectionWithSomeItems_ShouldFailIfFoundTwoAndMoreItmsAccordingToPredicate(
             int count)
         {
@@ -198,12 +198,12 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Theory]
-        [InlineData(TestHelper.One)]
-        [InlineData(TestHelper.Two)]
-        [InlineData(TestHelper.Five)]
-        [InlineData(TestHelper.Ten)]
-        [InlineData(TestHelper.Hundred)]
-        [InlineData(TestHelper.TenThousand)]
+        [InlineData(Consts._1)]
+        [InlineData(Consts._2)]
+        [InlineData(Consts._5)]
+        [InlineData(Consts._10)]
+        [InlineData(Consts._100)]
+        [InlineData(Consts._10_000)]
         public void SingleOrDefault_WithPredicate_ForCollectionWithSomeItems_ShouldReturnDefaultItemIfFoundNoItemsAccordingToPredicate(
             int count)
         {
