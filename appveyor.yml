@@ -51,6 +51,12 @@ artifacts:
 before_deploy:
   - dotnet pack --configuration Release --no-build "../Acolyte.NET"
 
+# 1. Regenerate AppVeyor Api Key
+# https://www.nuget.org/account/apikeys
+# 2. Encrypt configuration data
+# https://ci.appveyor.com/tools/encrypt
+# 3. Paste below
+
 # Deploy from master branch only.
 deploy:
   # Deploy to NuGet repository.
