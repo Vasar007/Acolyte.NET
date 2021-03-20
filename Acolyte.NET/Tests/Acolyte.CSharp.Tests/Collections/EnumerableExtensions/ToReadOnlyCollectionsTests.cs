@@ -392,12 +392,12 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Theory]
-        [InlineData(TestHelper.OneCollectionSize)]
-        [InlineData(TestHelper.TwoCollectionSize)]
-        [InlineData(TestHelper.FiveCollectionSie)]
-        [InlineData(TestHelper.TenCollectionSize)]
-        [InlineData(TestHelper.HundredCollectionSize)]
-        [InlineData(TestHelper.TenThousandCollectionSize)]
+        [InlineData(TestConstants._1)]
+        [InlineData(TestConstants._2)]
+        [InlineData(TestConstants._5)]
+        [InlineData(TestConstants._10)]
+        [InlineData(TestConstants._100)]
+        [InlineData(TestConstants._10_000)]
         public void ToReadOnlyDictionary_WithKeySelector_ForCollectionWithSomeItems_ShouldReturnFilledDictionary(
             int count)
         {
@@ -419,12 +419,12 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Theory]
-        [InlineData(TestHelper.OneCollectionSize)]
-        [InlineData(TestHelper.TwoCollectionSize)]
-        [InlineData(TestHelper.FiveCollectionSie)]
-        [InlineData(TestHelper.TenCollectionSize)]
-        [InlineData(TestHelper.HundredCollectionSize)]
-        [InlineData(TestHelper.TenThousandCollectionSize)]
+        [InlineData(TestConstants._1)]
+        [InlineData(TestConstants._2)]
+        [InlineData(TestConstants._5)]
+        [InlineData(TestConstants._10)]
+        [InlineData(TestConstants._100)]
+        [InlineData(TestConstants._10_000)]
         public void ToReadOnlyDictionary_WithKeySelectorAndComparer_ForCollectionWithSomeItems_ShouldReturnFilledDictionary(
             int count)
         {
@@ -448,12 +448,12 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Theory]
-        [InlineData(TestHelper.OneCollectionSize)]
-        [InlineData(TestHelper.TwoCollectionSize)]
-        [InlineData(TestHelper.FiveCollectionSie)]
-        [InlineData(TestHelper.TenCollectionSize)]
-        [InlineData(TestHelper.HundredCollectionSize)]
-        [InlineData(TestHelper.TenThousandCollectionSize)]
+        [InlineData(TestConstants._1)]
+        [InlineData(TestConstants._2)]
+        [InlineData(TestConstants._5)]
+        [InlineData(TestConstants._10)]
+        [InlineData(TestConstants._100)]
+        [InlineData(TestConstants._10_000)]
         public void ToReadOnlyDictionary_WithKeyElementSelectors_ForCollectionWithSomeItems_ShouldReturnFilledDictionary(
             int count)
         {
@@ -477,12 +477,12 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Theory]
-        [InlineData(TestHelper.OneCollectionSize)]
-        [InlineData(TestHelper.TwoCollectionSize)]
-        [InlineData(TestHelper.FiveCollectionSie)]
-        [InlineData(TestHelper.TenCollectionSize)]
-        [InlineData(TestHelper.HundredCollectionSize)]
-        [InlineData(TestHelper.TenThousandCollectionSize)]
+        [InlineData(TestConstants._1)]
+        [InlineData(TestConstants._2)]
+        [InlineData(TestConstants._5)]
+        [InlineData(TestConstants._10)]
+        [InlineData(TestConstants._100)]
+        [InlineData(TestConstants._10_000)]
         public void ToReadOnlyDictionary_WithKeyElementSelectorsAndComparer_ForCollectionWithSomeItems_ShouldReturnFilledDictionary(
             int count)
         {
@@ -854,12 +854,12 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Theory]
-        [InlineData(TestHelper.OneCollectionSize)]
-        [InlineData(TestHelper.TwoCollectionSize)]
-        [InlineData(TestHelper.FiveCollectionSie)]
-        [InlineData(TestHelper.TenCollectionSize)]
-        [InlineData(TestHelper.HundredCollectionSize)]
-        [InlineData(TestHelper.TenThousandCollectionSize)]
+        [InlineData(TestConstants._1)]
+        [InlineData(TestConstants._2)]
+        [InlineData(TestConstants._5)]
+        [InlineData(TestConstants._10)]
+        [InlineData(TestConstants._100)]
+        [InlineData(TestConstants._10_000)]
         public void ToReadOnlyList_ForCollectionWithSomeItems_ShouldReturnFilledList(int count)
         {
             // Arrange.
@@ -983,12 +983,12 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Theory]
-        [InlineData(TestHelper.OneCollectionSize)]
-        [InlineData(TestHelper.TwoCollectionSize)]
-        [InlineData(TestHelper.FiveCollectionSie)]
-        [InlineData(TestHelper.TenCollectionSize)]
-        [InlineData(TestHelper.HundredCollectionSize)]
-        [InlineData(TestHelper.TenThousandCollectionSize)]
+        [InlineData(TestConstants._1)]
+        [InlineData(TestConstants._2)]
+        [InlineData(TestConstants._5)]
+        [InlineData(TestConstants._10)]
+        [InlineData(TestConstants._100)]
+        [InlineData(TestConstants._10_000)]
         public void ToReadOnlyCollection_ForCollectionWithSomeItems_ShouldReturnFilledCollection(
             int count)
         {

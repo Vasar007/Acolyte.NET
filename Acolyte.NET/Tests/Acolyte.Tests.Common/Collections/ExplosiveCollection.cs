@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Acolyte.Assertions;
 using Acolyte.Common;
+using Acolyte.Threading;
 
 namespace Acolyte.Tests.Collections
 {
@@ -21,7 +22,7 @@ namespace Acolyte.Tests.Collections
         {
             _originalCollection = originalCollection.ThrowIfNull(nameof(originalCollection));
             _explosiveIndex = explosiveIndex.ThrowIfValueIsOutOfRange(
-                nameof(explosiveIndex), Constants.NotFoundIndex, int.MaxValue
+                nameof(explosiveIndex), Common.Constants.NotFoundIndex, int.MaxValue
             );
 
             _visitedItemsNumber = new CounterInt32();
@@ -67,7 +68,7 @@ namespace Acolyte.Tests.Collections
         {
             return new ExplosiveCollection<T>(
                 originalCollection: originalCollection,
-                explosiveIndex: Constants.NotFoundIndex
+                explosiveIndex: Common.Constants.NotFoundIndex
             );
         }
     }

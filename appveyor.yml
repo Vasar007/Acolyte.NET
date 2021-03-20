@@ -1,5 +1,5 @@
 environment:
-  packageVersion: 2.0.0
+  packageVersion: 2.1.0
   acolytePackageZip: 'Acolyte.NET.$(packageVersion).zip'
 
 version: '$(packageVersion).{build}'
@@ -13,8 +13,8 @@ shallow_clone: true
 dotnet_csproj:
   patch: true
   file: '**\*.csproj;**\*.fsproj'
-  assembly_version: '{version}'
-  file_version: '{version}'
+  assembly_version: '$(packageVersion)'
+  file_version: '$(packageVersion)'
   version: '$(packageVersion)'
 
 branches:
@@ -60,6 +60,12 @@ artifacts:
   - path: '$(acolytePackageZip)'
     name: AcolyteZip
     type: zip
+
+# 1. Regenerate AppVeyor Api Key
+# https://www.nuget.org/account/apikeys
+# 2. Encrypt configuration data
+# https://ci.appveyor.com/tools/encrypt
+# 3. Paste below
 
 # Deploy from master branch only.
 deploy:

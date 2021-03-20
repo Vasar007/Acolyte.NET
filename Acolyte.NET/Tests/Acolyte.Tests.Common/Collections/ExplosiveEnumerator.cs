@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Acolyte.Assertions;
 using Acolyte.Common;
 using Acolyte.Tests.Exceptions;
+using Acolyte.Threading;
 
 namespace Acolyte.Tests.Collections
 {
@@ -26,7 +27,7 @@ namespace Acolyte.Tests.Collections
         {
             _originalEnumerator = originalEnumerator.ThrowIfNull(nameof(originalEnumerator));
             _explosiveIndex = explosiveIndex.ThrowIfValueIsOutOfRange(
-                nameof(explosiveIndex), Constants.NotFoundIndex, int.MaxValue
+                nameof(explosiveIndex), Common.Constants.NotFoundIndex, int.MaxValue
             );
             _visitedItemsNumber = visitedItemsNumber.ThrowIfNull(nameof(visitedItemsNumber));
 

@@ -1,10 +1,11 @@
-﻿using System;
+﻿#if NETSTANDARD2_0
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 
 namespace Acolyte.Common
 {
-#if NETSTANDARD2_0
     /// <summary>
     /// A hash code used to help with implementing <see cref="object.GetHashCode()" />.
     /// If you can use <see href="https://docs.microsoft.com/en-us/dotnet/api/system.hashcode" />,
@@ -14,6 +15,8 @@ namespace Acolyte.Common
     /// <see href="https://stackoverflow.com/questions/263400/what-is-the-best-algorithm-for-an-overridden-system-object-gethashcode" />
     /// <see href="https://rehansaeed.com/gethashcode-made-easy/" />
     /// </remarks>
+    [Obsolete("Use System.HashCode from package Microsoft.Bcl.HashCode.", error: false)]
+    // TODO: replace this class with static helper for System.HashCode.
     public readonly struct HashCode : IEquatable<HashCode>
     {
         /// <summary>
@@ -466,5 +469,6 @@ namespace Acolyte.Common
             return temp;
         }
     }
-#endif
 }
+
+#endif

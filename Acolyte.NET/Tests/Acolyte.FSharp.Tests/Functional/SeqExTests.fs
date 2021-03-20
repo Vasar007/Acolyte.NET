@@ -15,13 +15,13 @@ let ``"skipSafe" throw an exception if argument is null`` () =
     raises<ArgumentNullException> <@ SeqEx.skipSafe Unchecked.defaultof<int> null @>
 
 [<Theory>]
-[<InlineData(TestHelper.ZeroCollectionSize)>]
-[<InlineData(TestHelper.NegativeOneCollectionSize)>]
-[<InlineData(TestHelper.NegativeTwoCollectionSize)>]
-[<InlineData(TestHelper.NegativeFiveCollectionSie)>]
-[<InlineData(TestHelper.NegativeTenCollectionSize)>]
-[<InlineData(TestHelper.NegativeHundredCollectionSize)>]
-[<InlineData(TestHelper.NegativeTenThousandCollectionSize)>]
+[<InlineData(TestConstants._0)>]
+[<InlineData(TestConstants.Negative_1)>]
+[<InlineData(TestConstants.Negative_2)>]
+[<InlineData(TestConstants.Negative_5)>]
+[<InlineData(TestConstants.Negative_10)>]
+[<InlineData(TestConstants.Negative_100)>]
+[<InlineData(TestConstants.Negative_10_000)>]
 let ``"skipSafe" does not skip any items if "count" parameter is not positive``
     (count: int32) =
     // Arrange.
@@ -38,12 +38,12 @@ let ``"skipSafe" does not skip any items if "count" parameter is not positive``
     Assert.Equal<seq<int>>(expectedSeq, actualSeq)
 
 [<Theory>]
-[<InlineData(TestHelper.OneCollectionSize)>]
-[<InlineData(TestHelper.TwoCollectionSize)>]
-[<InlineData(TestHelper.FiveCollectionSie)>]
-[<InlineData(TestHelper.TenCollectionSize)>]
-[<InlineData(TestHelper.HundredCollectionSize)>]
-[<InlineData(TestHelper.TenThousandCollectionSize)>]
+[<InlineData(TestConstants._1)>]
+[<InlineData(TestConstants._2)>]
+[<InlineData(TestConstants._5)>]
+[<InlineData(TestConstants._10)>]
+[<InlineData(TestConstants._100)>]
+[<InlineData(TestConstants._10_000)>]
 let ``"skipSafe" can skip specified number of items if "count" parameter is less than collection length``
     (count: int32) =
     // Arrange.
@@ -65,12 +65,12 @@ let ``"skipSafe" can skip specified number of items if "count" parameter is less
     Assert.Equal<seq<int>>(expectedSeq, actualSeq)
 
 [<Theory>]
-[<InlineData(TestHelper.OneCollectionSize)>]
-[<InlineData(TestHelper.TwoCollectionSize)>]
-[<InlineData(TestHelper.FiveCollectionSie)>]
-[<InlineData(TestHelper.TenCollectionSize)>]
-[<InlineData(TestHelper.HundredCollectionSize)>]
-[<InlineData(TestHelper.TenThousandCollectionSize)>]
+[<InlineData(TestConstants._1)>]
+[<InlineData(TestConstants._2)>]
+[<InlineData(TestConstants._5)>]
+[<InlineData(TestConstants._10)>]
+[<InlineData(TestConstants._100)>]
+[<InlineData(TestConstants._10_000)>]
 let ``"skipSafe" can skip specified number of items if "count" parameter is equal to collection length``
     (count: int32) =
     // Arrange.
@@ -87,12 +87,12 @@ let ``"skipSafe" can skip specified number of items if "count" parameter is equa
     Assert.Empty(actualSeq)
 
 [<Theory>]
-[<InlineData(TestHelper.OneCollectionSize)>]
-[<InlineData(TestHelper.TwoCollectionSize)>]
-[<InlineData(TestHelper.FiveCollectionSie)>]
-[<InlineData(TestHelper.TenCollectionSize)>]
-[<InlineData(TestHelper.HundredCollectionSize)>]
-[<InlineData(TestHelper.TenThousandCollectionSize)>]
+[<InlineData(TestConstants._1)>]
+[<InlineData(TestConstants._2)>]
+[<InlineData(TestConstants._5)>]
+[<InlineData(TestConstants._10)>]
+[<InlineData(TestConstants._100)>]
+[<InlineData(TestConstants._10_000)>]
 let ``"skipSafe" can skip specified number of items if "count" parameter is greater than collection length``
     (count: int32) =
     // Arrange.

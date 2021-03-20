@@ -44,12 +44,12 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Theory]
-        [InlineData(TestHelper.OneCollectionSize)]
-        [InlineData(TestHelper.TwoCollectionSize)]
-        [InlineData(TestHelper.FiveCollectionSie)]
-        [InlineData(TestHelper.TenCollectionSize)]
-        [InlineData(TestHelper.HundredCollectionSize)]
-        [InlineData(TestHelper.TenThousandCollectionSize)]
+        [InlineData(TestConstants._1)]
+        [InlineData(TestConstants._2)]
+        [InlineData(TestConstants._5)]
+        [InlineData(TestConstants._10)]
+        [InlineData(TestConstants._100)]
+        [InlineData(TestConstants._10_000)]
         public void IsNullOrEmpty_ForCollectionWithSomeItems_ShouldReturnFalse(int count)
         {
             // Arrange.
@@ -97,7 +97,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             const int count = 2;
             var explosiveCollection = ExplosiveCollection.Create(
                 TestDataCreator.CreateRandomInt32List(count),
-                explosiveIndex: Constants.FirstIndex + 1
+                explosiveIndex: Common.Constants.FirstIndex + 1
             );
             bool expectedResult = !explosiveCollection.Any();
 

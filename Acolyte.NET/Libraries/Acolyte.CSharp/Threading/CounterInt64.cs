@@ -1,6 +1,6 @@
 ﻿using System.Threading;
 
-namespace Acolyte.Common
+namespace Acolyte.Threading
 {
     public sealed class CounterInt64
     {
