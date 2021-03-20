@@ -13,8 +13,8 @@ shallow_clone: true
 dotnet_csproj:
   patch: true
   file: '**\*.csproj;**\*.fsproj'
-  assembly_version: '{packageVersion}'
-  file_version: '{packageVersion}'
+  assembly_version: '$(packageVersion)'
+  file_version: '$(packageVersion)'
   version: '$(packageVersion)'
 
 branches:
