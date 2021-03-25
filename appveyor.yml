@@ -44,11 +44,13 @@ after_build:
         7z a -tzip "$env:APPVEYOR_BUILD_FOLDER/$env:acolytePackageZip" "$env:APPVEYOR_BUILD_FOLDER/Acolyte.NET/Libraries/Acolyte.CSharp/bin/Release/*.nupkg" "$env:APPVEYOR_BUILD_FOLDER/Acolyte.NET/Libraries/Acolyte.FSharp/bin/Release/*.nupkg" "$env:APPVEYOR_BUILD_FOLDER/Acolyte.NET/Libraries/Acolyte.NET/bin/Release/*.nupkg"
       }
 
-test: off
+test:
+  assemblies:
+    - '**\*.Tests.dll'
 
-# Execute tests for a whole solution.
+# F# tests does not execute at all.
 after_test:
-  - ps: dotnet test "Acolyte.NET.sln" --configuration $env:configuration --no-build
+  - ps: dotnet test "Tests/Acolyte.FSharp.Tests/Acolyte.FSharp.Tests.fsproj" --configuration $env:configuration --no-build
 
   # Upload all NuGet packages to release assets.
 artifacts:
