@@ -45,12 +45,7 @@ after_build:
       }
 
 test:
-  assemblies:
-    - '**\*.Tests.dll'
-
-# F# tests does not execute at all.
-after_test:
-  - ps: dotnet test "Tests/Acolyte.FSharp.Tests/Acolyte.FSharp.Tests.fsproj" --configuration $env:configuration --no-build
+  - cmd: dotnet test "Acolyte.NET.sln" --configuration $env:configuration --no-build
 
   # Upload all NuGet packages to release assets.
 artifacts:
