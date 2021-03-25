@@ -30,8 +30,8 @@ matrix:
   fast_finish: true
 
 before_build:
-  - cmd: cd Acolyte.NET
-  - cmd: dotnet restore
+  - ps: cd Acolyte.NET
+  - ps: dotnet restore
 
 build:
   verbosity: minimal
@@ -44,8 +44,11 @@ after_build:
         7z a -tzip "$env:APPVEYOR_BUILD_FOLDER/$env:acolytePackageZip" "$env:APPVEYOR_BUILD_FOLDER/Acolyte.NET/Libraries/Acolyte.CSharp/bin/Release/*.nupkg" "$env:APPVEYOR_BUILD_FOLDER/Acolyte.NET/Libraries/Acolyte.FSharp/bin/Release/*.nupkg" "$env:APPVEYOR_BUILD_FOLDER/Acolyte.NET/Libraries/Acolyte.NET/bin/Release/*.nupkg"
       }
 
-test:
-  - cmd: dotnet test "Acolyte.NET.sln" --configuration $env:configuration --no-build
+test: off
+
+# Execute tests for a whole solution.
+after_test:
+  - ps: dotnet test "Acolyte.NET.sln" --configuration $env:configuration --no-build
 
   # Upload all NuGet packages to release assets.
 artifacts:
