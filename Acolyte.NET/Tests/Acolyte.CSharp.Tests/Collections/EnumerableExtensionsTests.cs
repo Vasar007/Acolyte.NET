@@ -8,12 +8,6 @@
 
         // TODO: write mock equality comparer to test overloads with it.
 
-        #region Tests for "For Each" section
-
-        // TODO: write tests.
-
-        #endregion
-
         #region Tests for "Distinct By" section
 
         // TODO: write tests.
