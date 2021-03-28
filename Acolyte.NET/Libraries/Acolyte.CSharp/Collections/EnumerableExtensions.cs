@@ -617,7 +617,7 @@ namespace Acolyte.Collections
             return Linq.EnumerableExtensions.ForEachAsync(source, action);
         }
 
-        /// <inheritdoc cref="Linq.EnumerableExtensions.ForEachAsync{TSource, TResult}(IAsyncEnumerable{TSource}, Func{TSource, Task{TResult}}, CancellationToken)" />
+        /// <inheritdoc cref="Linq.EnumerableExtensions.ForEachAsync{TSource, TResult}(IEnumerable{TSource}, Func{TSource, Task{TResult}}, CancellationToken)" />
         [Obsolete("Use \"Acolyte.Linq.EnumerableExtensions.ForEachAsync\" instead. This method will be removed in next major version.")]
         public static Task<TResult[]> ForEachAsync<TSource, TResult>(
             this IEnumerable<TSource> source, Func<TSource, Task<TResult>> function,
