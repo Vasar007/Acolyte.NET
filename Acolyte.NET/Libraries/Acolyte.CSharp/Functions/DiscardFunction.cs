@@ -11,12 +11,12 @@ namespace Acolyte.Functions
     public sealed class DiscardFunction<TElement>
     {
         /// <summary>
-        /// Action to discard elements of type <<typeparamref name="TElement" />.
+        /// Action to discard elements of type <typeparamref name="TElement" />.
         /// </summary>
         public static Action<TElement> Action { get; } = _ => { };
 
         /// <summary>
-        /// Function to discard elements of type <<typeparamref name="TElement" />.
+        /// Function to discard elements of type <typeparamref name="TElement" />.
         /// </summary>
         public static Func<TElement, TElement?> Func { get; } = _ => default;
     }
@@ -29,7 +29,7 @@ namespace Acolyte.Functions
     public sealed class DiscardFunction<TElement, TReturn>
     {
         /// <summary>
-        /// Function to discard elements of type <<typeparamref name="TElement" /> and return
+        /// Function to discard elements of type <typeparamref name="TElement" /> and return
         /// default value of type <typeparamref name="TReturn" />.
         /// </summary>
         public static Func<TElement, TReturn?> Func { get; } = _ => default;
