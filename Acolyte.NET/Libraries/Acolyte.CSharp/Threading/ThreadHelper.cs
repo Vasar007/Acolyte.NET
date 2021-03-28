@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading;
-using Acolyte.Collections;
+using Acolyte.Linq;
 
 namespace Acolyte.Threading
 {

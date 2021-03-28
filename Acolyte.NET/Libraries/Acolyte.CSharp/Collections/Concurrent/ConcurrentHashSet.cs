@@ -117,7 +117,7 @@ namespace Acolyte.Collections.Concurrent
         {
             lock (_lock)
             {
-                return _set.ToReadOnlyList();
+                return Linq.EnumerableExtensions.ToReadOnlyList(_set);
             }
         }
 
@@ -125,7 +125,7 @@ namespace Acolyte.Collections.Concurrent
         {
             lock (_lock)
             {
-                return _set.ToReadOnlyCollection();
+                return Linq.EnumerableExtensions.ToReadOnlyCollection(_set);
             }
         }
 

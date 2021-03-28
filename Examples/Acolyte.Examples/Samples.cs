@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Acolyte.Assertions;
-using Acolyte.Collections;
 using Acolyte.Common;
+using Acolyte.Linq;
 using Acolyte.Threading;
 
 namespace Acolyte.Examples

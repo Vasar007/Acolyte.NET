@@ -9,19 +9,19 @@ namespace Acolyte.Functions
     {
         #region Obsolete
 
-        [Obsolete("Use \"ForIntt32\" instead. This property will be remove in next major version.")]
+        [Obsolete("Use \"Acolyte.Functions.InverseFunction.ForIntt32\" instead. This property will be removed in next major version.")]
         public static Func<int, int> Int32 { get; } = x => -x;
 
-        [Obsolete("Use \"ForInt64\" instead. This property will be remove in next major version.")]
+        [Obsolete("Use \"Acolyte.Functions.InverseFunction.ForInt64\" instead. This property will be removed in next major version.")]
         public static Func<long, long> Int64 { get; } = x => -x;
 
-        [Obsolete("Use \"ForSingle\" instead. This property will be remove in next major version.")]
+        [Obsolete("Use \"Acolyte.Functions.InverseFunction.ForSingle\" instead. This property will be removed in next major version.")]
         public static Func<float, float> Single { get; } = x => -x;
 
-        [Obsolete("Use \"ForDouble\" instead. This property will be remove in next major version.")]
+        [Obsolete("Use \"Acolyte.Functions.InverseFunction.ForDouble\" instead. This property will be removed in next major version.")]
         public static Func<double, double> Double { get; } = x => -x;
 
-        [Obsolete("Use \"ForDecimal\" instead. This property will be remove in next major version.")]
+        [Obsolete("Use \"Acolyte.Functions.InverseFunction.ForDecimal\" instead. This property will be removed in next major version.")]
         public static Func<decimal, decimal> Decimal { get; } = x => -x;
 
         #endregion

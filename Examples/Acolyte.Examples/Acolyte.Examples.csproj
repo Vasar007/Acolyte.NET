@@ -6,7 +6,7 @@
     <OutputType>Exe</OutputType>
     <LangVersion>9.0</LangVersion>
     <Nullable>enable</Nullable>
-    <WarningsAsErrors>CS8600,CS8602,CS8603,CS8618,CS8625</WarningsAsErrors>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <RootNamespace>Acolyte.Examples</RootNamespace>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
@@ -25,7 +25,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Acolyte.NET\Libraries\Acolyte.NET\Acolyte.NET.csproj" />
+    <ProjectReference Include="$(SolutionDir)Libraries\Acolyte.NET\Acolyte.NET.csproj" />
   </ItemGroup>
 
 </Project>

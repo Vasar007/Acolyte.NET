@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using Acolyte.Assertions;
-using Acolyte.Collections;
+using Acolyte.Linq;
 
 namespace Acolyte.Common
 {
