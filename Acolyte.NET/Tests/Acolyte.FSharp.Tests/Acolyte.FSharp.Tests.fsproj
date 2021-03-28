@@ -68,8 +68,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Libraries\Acolyte.FSharp\Acolyte.FSharp.fsproj" />
-    <ProjectReference Include="..\Acolyte.Tests.Common\Acolyte.Tests.Common.csproj" />
+    <ProjectReference Include="$(SolutionDir)Libraries\Acolyte.FSharp\Acolyte.FSharp.fsproj" />
+    <ProjectReference Include="$(SolutionDir)Tests\Acolyte.Tests.Common\Acolyte.Tests.Common.csproj" />
   </ItemGroup>
 
 </Project>

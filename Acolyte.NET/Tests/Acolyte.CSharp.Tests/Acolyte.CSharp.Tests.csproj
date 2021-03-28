@@ -59,8 +59,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Libraries\Acolyte.CSharp\Acolyte.CSharp.csproj" />
-    <ProjectReference Include="..\Acolyte.Tests.Common\Acolyte.Tests.Common.csproj" />
+    <ProjectReference Include="$(SolutionDir)Libraries\Acolyte.CSharp\Acolyte.CSharp.csproj" />
+    <ProjectReference Include="$(SolutionDir)Tests\Acolyte.Tests.Common\Acolyte.Tests.Common.csproj" />
   </ItemGroup>
 
 </Project>
