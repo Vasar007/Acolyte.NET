@@ -17,10 +17,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         {
             // Arrange.
             const IEnumerable<int>? nullValue = null;
-            Action<int> someAction = DiscardFunction<int>.Instance;
+            Action<int> discard = DiscardFunction<int>.Action;
 
             // Act & Assert.
-            Assert.Throws<ArgumentNullException>("source", () => nullValue!.ForEach(someAction));
+            Assert.Throws<ArgumentNullException>("source", () => nullValue!.ForEach(discard));
         }
     }
 }

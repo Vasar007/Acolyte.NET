@@ -21,7 +21,7 @@ namespace Acolyte.Tests.Collections
         {
             _originalCollection = originalCollection.ThrowIfNull(nameof(originalCollection));
             _explosiveIndex = explosiveIndex.ThrowIfValueIsOutOfRange(
-                nameof(explosiveIndex), Common.Constants.NotFoundIndex, int.MaxValue
+                nameof(explosiveIndex), Constants.NotFoundIndex, int.MaxValue
             );
 
             _visitedItemsNumber = new CounterInt32();
@@ -67,7 +67,7 @@ namespace Acolyte.Tests.Collections
         {
             return new ExplosiveCollection<T>(
                 originalCollection: originalCollection,
-                explosiveIndex: Common.Constants.NotFoundIndex
+                explosiveIndex: Constants.NotFoundIndex
             );
         }
     }

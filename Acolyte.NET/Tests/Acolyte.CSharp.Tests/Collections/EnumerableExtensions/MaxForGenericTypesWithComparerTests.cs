@@ -21,11 +21,9 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             const IEnumerable<int>? nullValue = null;
 
             // Act & Assert.
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             Assert.Throws<ArgumentNullException>(
-                "source", () => nullValue.Max(Comparer<int>.Default)
+                "source", () => nullValue!.Max(Comparer<int>.Default)
             );
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
 
         [Fact]

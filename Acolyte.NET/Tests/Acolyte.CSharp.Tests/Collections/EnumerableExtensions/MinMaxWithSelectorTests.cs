@@ -25,11 +25,9 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             const IEnumerable<int>? nullValue = null;
 
             // Act & Assert.
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             Assert.Throws<ArgumentNullException>(
-                "source", () => nullValue.MinMax(selector: default)
+                "source", () => nullValue!.MinMax(DiscardFunction<int>.Func)
             );
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
 
         [Fact]
@@ -39,11 +37,9 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
 
             // Act & Assert.
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             Assert.Throws<ArgumentNullException>(
-                "selector", () => emptyCollection.MinMax(selector: null)
+                "selector", () => emptyCollection.MinMax(selector: null!)
             );
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
 
         [Fact]
@@ -53,11 +49,9 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             const IEnumerable<int?>? nullValue = null;
 
             // Act & Assert.
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             Assert.Throws<ArgumentNullException>(
-                "source", () => nullValue.MinMax(selector: default)
+                "source", () => nullValue!.MinMax(DiscardFunction<int?>.Func)
             );
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
 
         [Fact]
@@ -67,11 +61,9 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             IEnumerable<int?> emptyCollection = Enumerable.Empty<int?>();
 
             // Act & Assert.
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             Assert.Throws<ArgumentNullException>(
-                "selector", () => emptyCollection.MinMax(selector: null)
+                "selector", () => emptyCollection.MinMax(selector: null!)
             );
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
 
         [Fact]
@@ -292,11 +284,9 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             const IEnumerable<long>? nullValue = null;
 
             // Act & Assert.
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             Assert.Throws<ArgumentNullException>(
-                "source", () => nullValue.MinMax(selector: default)
+                "source", () => nullValue!.MinMax(DiscardFunction<long>.Func)
             );
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
 
         [Fact]
@@ -306,11 +296,9 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             IEnumerable<long> emptyCollection = Enumerable.Empty<long>();
 
             // Act & Assert.
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             Assert.Throws<ArgumentNullException>(
-                "selector", () => emptyCollection.MinMax(selector: null)
+                "selector", () => emptyCollection.MinMax(selector: null!)
             );
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
 
         [Fact]
@@ -320,11 +308,9 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             const IEnumerable<long?>? nullValue = null;
 
             // Act & Assert.
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             Assert.Throws<ArgumentNullException>(
-                "source", () => nullValue.MinMax(selector: default)
+                "source", () => nullValue!.MinMax(DiscardFunction<long?>.Func)
             );
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
 
         [Fact]
@@ -334,11 +320,9 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             IEnumerable<long?> emptyCollection = Enumerable.Empty<long?>();
 
             // Act & Assert.
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             Assert.Throws<ArgumentNullException>(
-                "selector", () => emptyCollection.MinMax(selector: null)
+                "selector", () => emptyCollection.MinMax(selector: null!)
             );
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
 
         [Fact]
@@ -561,11 +545,9 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             const IEnumerable<float>? nullValue = null;
 
             // Act & Assert.
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             Assert.Throws<ArgumentNullException>(
-                "source", () => nullValue.MinMax(selector: default)
+                "source", () => nullValue!.MinMax(DiscardFunction<float>.Func)
             );
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
 
         [Fact]
@@ -575,11 +557,9 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             IEnumerable<float> emptyCollection = Enumerable.Empty<float>();
 
             // Act & Assert.
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             Assert.Throws<ArgumentNullException>(
-                "selector", () => emptyCollection.MinMax(selector: null)
+                "selector", () => emptyCollection.MinMax(selector: null!)
             );
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
 
         [Fact]
@@ -589,11 +569,9 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             const IEnumerable<float?>? nullValue = null;
 
             // Act & Assert.
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             Assert.Throws<ArgumentNullException>(
-                "source", () => nullValue.MinMax(selector: default)
+                "source", () => nullValue!.MinMax(DiscardFunction<float?>.Func)
             );
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
 
         [Fact]
@@ -603,11 +581,9 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             IEnumerable<float?> emptyCollection = Enumerable.Empty<float?>();
 
             // Act & Assert.
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             Assert.Throws<ArgumentNullException>(
-                "selector", () => emptyCollection.MinMax(selector: null)
+                "selector", () => emptyCollection.MinMax(selector: null!)
             );
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
 
         [Fact]
@@ -830,11 +806,9 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             const IEnumerable<double>? nullValue = null;
 
             // Act & Assert.
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             Assert.Throws<ArgumentNullException>(
-                "source", () => nullValue.MinMax(selector: default)
+                "source", () => nullValue!.MinMax(DiscardFunction<double>.Func)
             );
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
 
         [Fact]
@@ -844,11 +818,9 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             IEnumerable<double> emptyCollection = Enumerable.Empty<double>();
 
             // Act & Assert.
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             Assert.Throws<ArgumentNullException>(
-                "selector", () => emptyCollection.MinMax(selector: null)
+                "selector", () => emptyCollection.MinMax(selector: null!)
             );
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
 
         [Fact]
@@ -858,11 +830,9 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             const IEnumerable<double?>? nullValue = null;
 
             // Act & Assert.
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             Assert.Throws<ArgumentNullException>(
-                "source", () => nullValue.MinMax(selector: default)
+                "source", () => nullValue!.MinMax(DiscardFunction<double?>.Func)
             );
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
 
         [Fact]
@@ -872,11 +842,9 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             IEnumerable<double?> emptyCollection = Enumerable.Empty<double?>();
 
             // Act & Assert.
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             Assert.Throws<ArgumentNullException>(
-                "selector", () => emptyCollection.MinMax(selector: null)
+                "selector", () => emptyCollection.MinMax(selector: null!)
             );
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
 
         [Fact]
@@ -1099,11 +1067,9 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             const IEnumerable<decimal>? nullValue = null;
 
             // Act & Assert.
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             Assert.Throws<ArgumentNullException>(
-                "source", () => nullValue.MinMax(selector: default)
+                "source", () => nullValue!.MinMax(DiscardFunction<decimal>.Func)
             );
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
 
         [Fact]
@@ -1113,11 +1079,9 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             IEnumerable<decimal> emptyCollection = Enumerable.Empty<decimal>();
 
             // Act & Assert.
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             Assert.Throws<ArgumentNullException>(
-                "selector", () => emptyCollection.MinMax(selector: null)
+                "selector", () => emptyCollection.MinMax(selector: null!)
             );
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
 
         [Fact]
@@ -1127,11 +1091,9 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             const IEnumerable<decimal?>? nullValue = null;
 
             // Act & Assert.
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             Assert.Throws<ArgumentNullException>(
-                "source", () => nullValue.MinMax(selector: default)
+                "source", () => nullValue!.MinMax(DiscardFunction<decimal?>.Func)
             );
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
 
         [Fact]
@@ -1141,11 +1103,9 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             IEnumerable<decimal?> emptyCollection = Enumerable.Empty<decimal?>();
 
             // Act & Assert.
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             Assert.Throws<ArgumentNullException>(
-                "selector", () => emptyCollection.MinMax(selector: null)
+                "selector", () => emptyCollection.MinMax(selector: null!)
             );
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
 
         [Fact]
@@ -1370,11 +1330,9 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             const IEnumerable<DummyClass>? nullValue = null;
 
             // Act & Assert.
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             Assert.Throws<ArgumentNullException>(
-                "source", () => nullValue.MinMax(selector: default)
+                "source", () => nullValue!.MinMax(DiscardFunction<DummyClass>.Func)
             );
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
 
         [Fact]
@@ -1384,11 +1342,9 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             IEnumerable<DummyClass> emptyCollection = Enumerable.Empty<DummyClass>();
 
             // Act & Assert.
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             Assert.Throws<ArgumentNullException>(
-                "selector", () => emptyCollection.MinMax(selector: null)
+                "selector", () => emptyCollection.MinMax(selector: null!)
             );
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
 
         [Fact]
@@ -1398,12 +1354,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             const IEnumerable<DummyClass>? nullValue = null;
 
             // Act & Assert.
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             Assert.Throws<ArgumentNullException>(
                 "source",
-                () => nullValue.MinMax(IdentityFunction<DummyClass>.Instance, comparer: default)
+                () => nullValue!.MinMax(DiscardFunction<DummyClass>.Func, comparer: default)
             );
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
 
         [Fact]
@@ -1413,12 +1367,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             IEnumerable<DummyClass> emptyCollection = Enumerable.Empty<DummyClass>();
 
             // Act & Assert.
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             Assert.Throws<ArgumentNullException>(
                 "selector",
-                () => emptyCollection.MinMax(selector: null, Comparer<DummyClass>.Default)
+                () => emptyCollection.MinMax(selector: null!, Comparer<DummyClass>.Default)
             );
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
 
         [Fact]

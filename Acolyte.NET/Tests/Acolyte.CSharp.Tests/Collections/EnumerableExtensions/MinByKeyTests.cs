@@ -22,11 +22,9 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             const IEnumerable<int>? nullValue = null;
 
             // Act & Assert.
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             Assert.Throws<ArgumentNullException>(
-                "source", () => nullValue.MinBy(IdentityFunction<int>.Instance)
+                "source", () => nullValue!.MinBy(DiscardFunction<int>.Func)
             );
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
 
         [Fact]
@@ -36,12 +34,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
 
             // Act & Assert.
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             const Func<int, int>? keySelector = null;
             Assert.Throws<ArgumentNullException>(
-                "keySelector", () => emptyCollection.MinBy(keySelector)
+                "keySelector", () => emptyCollection.MinBy(keySelector!)
             );
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
 
         [Fact]
@@ -51,11 +47,9 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             const IEnumerable<int>? nullValue = null;
 
             // Act & Assert.
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             Assert.Throws<ArgumentNullException>(
-                "source", () => nullValue.MinBy(keySelector: default, Comparer<int>.Default)
+                "source", () => nullValue!.MinBy(DiscardFunction<int>.Func, Comparer<int>.Default)
             );
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
 
         [Fact]
@@ -65,12 +59,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
 
             // Act & Assert.
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             Assert.Throws<ArgumentNullException>(
                 "keySelector",
-                () => emptyCollection.MinBy(keySelector: default, Comparer<int>.Default)
+                () => emptyCollection.MinBy(keySelector: null!, Comparer<int>.Default)
             );
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
 
         [Fact]
@@ -183,12 +175,12 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             // Arrange.
             IReadOnlyList<int> predefinedCollection = new[] { 1, 2, 3 };
             // Min with selector returns transformed value. Need to transform it back.
-            int minValue = predefinedCollection.Min(InverseFunction.Int32);
-            int expectedValue = InverseFunction.Int32(minValue);
+            int minValue = predefinedCollection.Min(InverseFunction.ForInt32);
+            int expectedValue = InverseFunction.ForInt32(minValue);
 
             // Act.
             int actualValue = predefinedCollection.MinBy(
-                InverseFunction.Int32, Comparer<int>.Default
+                InverseFunction.ForInt32, Comparer<int>.Default
             );
 
             // Assert.
@@ -202,11 +194,11 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             // Arrange.
             IReadOnlyList<int> predefinedCollection = new[] { 1, 2, 3 };
             // Min with selector returns transformed value. Need to transform it back.
-            int minValue = predefinedCollection.Min(InverseFunction.Int32);
-            int expectedValue = InverseFunction.Int32(minValue);
+            int minValue = predefinedCollection.Min(InverseFunction.ForInt32);
+            int expectedValue = InverseFunction.ForInt32(minValue);
 
             // Act.
-            int actualValue = predefinedCollection.MinBy(InverseFunction.Int32);
+            int actualValue = predefinedCollection.MinBy(InverseFunction.ForInt32);
 
             // Assert.
             Assert.Equal(expectedValue, actualValue);
@@ -225,11 +217,11 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             // Arrange.
             IEnumerable<int> collectionWithSomeItems = TestDataCreator.CreateRandomInt32List(count);
             // Min with selector returns transformed value. Need to transform it back.
-            int minValue = collectionWithSomeItems.Min(InverseFunction.Int32);
-            int expectedValue = InverseFunction.Int32(minValue);
+            int minValue = collectionWithSomeItems.Min(InverseFunction.ForInt32);
+            int expectedValue = InverseFunction.ForInt32(minValue);
 
             // Act.
-            int actualValue = collectionWithSomeItems.MinBy(InverseFunction.Int32);
+            int actualValue = collectionWithSomeItems.MinBy(InverseFunction.ForInt32);
 
             // Assert.
             Assert.Equal(expectedValue, actualValue);
@@ -248,12 +240,12 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             // Arrange.
             IEnumerable<int> collectionWithSomeItems = TestDataCreator.CreateRandomInt32List(count);
             // Min with selector returns transformed value. Need to transform it back.
-            int minValue = collectionWithSomeItems.Min(InverseFunction.Int32);
-            int expectedValue = InverseFunction.Int32(minValue);
+            int minValue = collectionWithSomeItems.Min(InverseFunction.ForInt32);
+            int expectedValue = InverseFunction.ForInt32(minValue);
 
             // Act.
             int actualValue = collectionWithSomeItems.MinBy(
-                InverseFunction.Int32, Comparer<int>.Default
+                InverseFunction.ForInt32, Comparer<int>.Default
             );
 
             // Assert.
@@ -277,7 +269,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             int expectedValue = count;
 
             // Act.
-            int actualValue = collectionWithTheSameItems.MinBy(InverseFunction.Int32);
+            int actualValue = collectionWithTheSameItems.MinBy(InverseFunction.ForInt32);
 
             // Assert.
             Assert.Equal(expectedValue, actualValue);
@@ -301,7 +293,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
 
             // Act.
             int actualValue = collectionWithTheSameItems.MinBy(
-                InverseFunction.Int32, Comparer<int>.Default
+                InverseFunction.ForInt32, Comparer<int>.Default
             );
 
             // Assert.
@@ -316,11 +308,11 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             IEnumerable<int> collectionWithRandomSize =
                 TestDataCreator.CreateRandomInt32List(count);
             // Min with selector returns transformed value. Need to transform it back.
-            int minValue = collectionWithRandomSize.Min(InverseFunction.Int32);
-            int expectedValue = InverseFunction.Int32(minValue);
+            int minValue = collectionWithRandomSize.Min(InverseFunction.ForInt32);
+            int expectedValue = InverseFunction.ForInt32(minValue);
 
             // Act.
-            int actualValue = collectionWithRandomSize.MinBy(InverseFunction.Int32);
+            int actualValue = collectionWithRandomSize.MinBy(InverseFunction.ForInt32);
 
             // Assert.
             Assert.Equal(expectedValue, actualValue);
@@ -334,12 +326,12 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             IEnumerable<int> collectionWithRandomSize =
                 TestDataCreator.CreateRandomInt32List(count);
             // Min with selector returns transformed value. Need to transform it back.
-            int minValue = collectionWithRandomSize.Min(InverseFunction.Int32);
-            int expectedValue = InverseFunction.Int32(minValue);
+            int minValue = collectionWithRandomSize.Min(InverseFunction.ForInt32);
+            int expectedValue = InverseFunction.ForInt32(minValue);
 
             // Act.
             int actualValue = collectionWithRandomSize.MinBy(
-                InverseFunction.Int32, Comparer<int>.Default
+                InverseFunction.ForInt32, Comparer<int>.Default
             );
 
             // Assert.
@@ -353,11 +345,11 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             var collection = new[] { 1, 2, 3, 4 };
             var explosiveCollection = ExplosiveCollection.CreateNotExplosive(collection);
             // Min with selector returns transformed value. Need to transform it back.
-            int minValue = explosiveCollection.Min(InverseFunction.Int32);
-            int expectedValue = InverseFunction.Int32(minValue);
+            int minValue = explosiveCollection.Min(InverseFunction.ForInt32);
+            int expectedValue = InverseFunction.ForInt32(minValue);
 
             // Act.
-            int actualValue = explosiveCollection.MinBy(InverseFunction.Int32);
+            int actualValue = explosiveCollection.MinBy(InverseFunction.ForInt32);
 
             // Assert.
             Assert.Equal(expected: collection.Length, explosiveCollection.VisitedItemsNumber);
@@ -371,12 +363,12 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             var collection = new[] { 1, 2, 3, 4 };
             var explosiveCollection = ExplosiveCollection.CreateNotExplosive(collection);
             // Min with selector returns transformed value. Need to transform it back.
-            int minValue = explosiveCollection.Min(InverseFunction.Int32);
-            int expectedValue = InverseFunction.Int32(minValue);
+            int minValue = explosiveCollection.Min(InverseFunction.ForInt32);
+            int expectedValue = InverseFunction.ForInt32(minValue);
 
             // Act.
             int actualValue = explosiveCollection.MinBy(
-                InverseFunction.Int32, Comparer<int>.Default
+                InverseFunction.ForInt32, Comparer<int>.Default
             );
 
             // Assert.

@@ -2,6 +2,7 @@
 using System.Linq;
 using Xunit;
 using Acolyte.Collections;
+using Acolyte.Common;
 using Acolyte.Tests.Creators;
 
 namespace Acolyte.Tests.Collections.EnumerableExtensions
@@ -96,7 +97,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             const int count = 2;
             var explosiveCollection = ExplosiveCollection.Create(
                 TestDataCreator.CreateRandomInt32List(count),
-                explosiveIndex: Common.Constants.FirstIndex + 1
+                explosiveIndex: Constants.FirstIndex + 1
             );
             bool expectedResult = !explosiveCollection.Any();
 

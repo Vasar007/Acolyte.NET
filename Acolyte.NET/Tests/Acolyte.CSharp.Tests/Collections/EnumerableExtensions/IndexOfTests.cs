@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 using Acolyte.Collections;
+using Acolyte.Common;
+using Acolyte.Functions;
 using Acolyte.Tests.Creators;
 
 namespace Acolyte.Tests.Collections.EnumerableExtensions
@@ -18,11 +20,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         {
             // Arrange.
             const IEnumerable<int>? nullValue = null;
+            Func<int, bool> discard = DiscardFunction<int, bool>.Func;
 
             // Act & Assert.
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
-            Assert.Throws<ArgumentNullException>("source", () => nullValue.IndexOf(_ => default));
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+            Assert.Throws<ArgumentNullException>("source", () => nullValue!.IndexOf(discard));
         }
 
         [Fact]
@@ -32,9 +33,9 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
 
             // Act & Assert.
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
-            Assert.Throws<ArgumentNullException>("predicate", () => emptyCollection.IndexOf(null));
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+            Assert.Throws<ArgumentNullException>(
+                "predicate", () => emptyCollection.IndexOf(predicate: null!)
+            );
         }
 
         [Fact]
@@ -44,9 +45,9 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             const IEnumerable<int>? nullValue = null;
 
             // Act & Assert.
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
-            Assert.Throws<ArgumentNullException>("source", () => nullValue.IndexOf(default(int)));
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+            Assert.Throws<ArgumentNullException>(
+                "source", () => nullValue!.IndexOf(value: default)
+            );
         }
 
         [Fact]
@@ -56,11 +57,9 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             const IEnumerable<int>? nullValue = null;
 
             // Act & Assert.
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             Assert.Throws<ArgumentNullException>(
-                "source", () => nullValue.IndexOf(default, EqualityComparer<int>.Default)
+                "source", () => nullValue!.IndexOf(value: default, EqualityComparer<int>.Default)
             );
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
 
         [Fact]
@@ -85,10 +84,11 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
-            int expectedIndex = Common.Constants.NotFoundIndex;
+            Func<int, bool> discard = DiscardFunction<int, bool>.Func;
+            int expectedIndex = Constants.NotFoundIndex;
 
             // Act.
-            int actualIndex = emptyCollection.IndexOf(_ => default);
+            int actualIndex = emptyCollection.IndexOf(discard);
 
             // Assert.
             Assert.Equal(expectedIndex, actualIndex);
@@ -99,10 +99,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
-            int expectedIndex = Common.Constants.NotFoundIndex;
+            int expectedIndex = Constants.NotFoundIndex;
 
             // Act.
-            int actualIndex = emptyCollection.IndexOf(default(int));
+            int actualIndex = emptyCollection.IndexOf(value: default);
 
             // Assert.
             Assert.Equal(expectedIndex, actualIndex);
@@ -113,10 +113,12 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
-            int expectedIndex = Common.Constants.NotFoundIndex;
+            int expectedIndex = Constants.NotFoundIndex;
 
             // Act.
-            int actualIndex = emptyCollection.IndexOf(default, EqualityComparer<int>.Default);
+            int actualIndex = emptyCollection.IndexOf(
+                value: default, EqualityComparer<int>.Default
+            );
 
             // Assert.
             Assert.Equal(expectedIndex, actualIndex);
@@ -127,7 +129,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         {
             // Arrange.
             IReadOnlyList<int> predefinedCollection = new[] { 1, 2, 3 };
-            int expectedIndex = Common.Constants.FirstIndex + 1;
+            int expectedIndex = Constants.FirstIndex + 1;
             int expectedItem = predefinedCollection[expectedIndex];
 
             // Act.
@@ -142,7 +144,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         {
             // Arrange.
             IReadOnlyList<int> predefinedCollection = new[] { 1, 2, 3 };
-            int expectedIndex = Common.Constants.FirstIndex + 1;
+            int expectedIndex = Constants.FirstIndex + 1;
             int expectedItem = predefinedCollection[expectedIndex];
 
             // Act.
@@ -157,7 +159,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         {
             // Arrange.
             IReadOnlyList<int> predefinedCollection = new[] { 1, 2, 3 };
-            int expectedIndex = Common.Constants.FirstIndex + 1;
+            int expectedIndex = Constants.FirstIndex + 1;
             int expectedItem = predefinedCollection[expectedIndex];
 
             // Act.
@@ -251,7 +253,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         {
             // Arrange.
             IEnumerable<int> collectionWithSomeItems = TestDataCreator.CreateRandomInt32List(count);
-            int expectedIndex = Common.Constants.NotFoundIndex;
+            int expectedIndex = Constants.NotFoundIndex;
 
             // Act.
             int actualIndex = collectionWithSomeItems.IndexOf(_ => false);
@@ -274,10 +276,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             IEnumerable<int?> collectionWithSomeItems = TestDataCreator
                 .CreateRandomInt32List(count)
                 .ToNullable();
-            int expectedIndex = Common.Constants.NotFoundIndex;
+            int expectedIndex = Constants.NotFoundIndex;
 
             // Act.
-            int actualIndex = collectionWithSomeItems.IndexOf((int?) null);
+            int actualIndex = collectionWithSomeItems.IndexOf(value: null);
 
             // Assert.
             Assert.Equal(expectedIndex, actualIndex);
@@ -297,11 +299,11 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             IEnumerable<int?> collectionWithSomeItems = TestDataCreator
                  .CreateRandomInt32List(count)
                  .ToNullable();
-            int expectedIndex = Common.Constants.NotFoundIndex;
+            int expectedIndex = Constants.NotFoundIndex;
 
             // Act.
             int actualIndex = collectionWithSomeItems.IndexOf(
-                null, EqualityComparer<int?>.Default
+                value: null, EqualityComparer<int?>.Default
             );
 
             // Assert.
@@ -368,7 +370,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             int count = TestDataCreator.GetRandomCountNumber();
             IEnumerable<int> collectionWithRandomSize =
                 TestDataCreator.CreateRandomInt32List(count);
-            int expectedIndex = Common.Constants.NotFoundIndex;
+            int expectedIndex = Constants.NotFoundIndex;
 
             // Act.
             int actualIndex = collectionWithRandomSize.IndexOf(_ => false);
@@ -385,10 +387,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             IEnumerable<int?> collectionWithRandomSize = TestDataCreator
                .CreateRandomInt32List(count)
                .ToNullable();
-            int expectedIndex = Common.Constants.NotFoundIndex;
+            int expectedIndex = Constants.NotFoundIndex;
 
             // Act.
-            int actualIndex = collectionWithRandomSize.IndexOf((int?) null);
+            int actualIndex = collectionWithRandomSize.IndexOf(value: null);
 
             // Assert.
             Assert.Equal(expectedIndex, actualIndex);
@@ -402,11 +404,11 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             IEnumerable<int?> collectionWithRandomSize = TestDataCreator
                 .CreateRandomInt32List(count)
                 .ToNullable();
-            int expectedIndex = Common.Constants.NotFoundIndex;
+            int expectedIndex = Constants.NotFoundIndex;
 
             // Act.
             int actualIndex = collectionWithRandomSize.IndexOf(
-                null, EqualityComparer<int?>.Default
+                value: null, EqualityComparer<int?>.Default
             );
 
             // Assert.
@@ -420,7 +422,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             // Do not use random because we should find exactly second item (2).
             IReadOnlyList<int> collection = new[] { 1, 2, 2, 2 };
             var explosiveCollection = ExplosiveCollection.Create(
-                collection, explosiveIndex: Common.Constants.FirstIndex + 2
+                collection, explosiveIndex: Constants.FirstIndex + 2
             );
             int expectedValue = explosiveCollection.Skip(1).First();
             const int expectedIndex = 1;
@@ -439,7 +441,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             // Arrange.
             IReadOnlyList<int> collection = new[] { 1, 2, 3, 4 };
             var explosiveCollection = ExplosiveCollection.CreateNotExplosive(collection);
-            int expectedValue = Common.Constants.NotFoundIndex;
+            int expectedValue = Constants.NotFoundIndex;
 
             // Act.
             int actualIndex = explosiveCollection.IndexOf(_ => false);
@@ -456,7 +458,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             // Do not use random because we should find exactly second item (2).
             IReadOnlyList<int> collection = new[] { 1, 2, 2, 2 };
             var explosiveCollection = ExplosiveCollection.Create(
-                collection, explosiveIndex: Common.Constants.FirstIndex + 2
+                collection, explosiveIndex: Constants.FirstIndex + 2
             );
             int value = explosiveCollection.Skip(1).First();
             const int expectedIndex = 1;
@@ -475,7 +477,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             // Arrange.
             IReadOnlyList<int> collection = new[] { 1, 2, 3, 4 };
             var explosiveCollection = ExplosiveCollection.CreateNotExplosive(collection);
-            int expectedValue = Common.Constants.NotFoundIndex;
+            int expectedValue = Constants.NotFoundIndex;
 
             // Act.
             int actualIndex = explosiveCollection.IndexOf(value: 0);
@@ -492,7 +494,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             // Do not use random because we should find exactly second item (2).
             IReadOnlyList<int> collection = new[] { 1, 2, 2, 2 };
             var explosiveCollection = ExplosiveCollection.Create(
-                collection, explosiveIndex: Common.Constants.FirstIndex + 2
+                collection, explosiveIndex: Constants.FirstIndex + 2
             );
             int value = explosiveCollection.Skip(1).First();
             const int expectedIndex = 1;
@@ -513,7 +515,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             // Arrange.
             IReadOnlyList<int> collection = new[] { 1, 2, 3, 4 };
             var explosiveCollection = ExplosiveCollection.CreateNotExplosive(collection);
-            int expectedValue = Common.Constants.NotFoundIndex;
+            int expectedValue = Constants.NotFoundIndex;
 
             // Act.
             int actualIndex = explosiveCollection.IndexOf(value: 0, EqualityComparer<int>.Default);

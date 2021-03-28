@@ -22,11 +22,9 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             const IEnumerable<int>? nullValue = null;
 
             // Act & Assert.
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             Assert.Throws<ArgumentNullException>(
-                "source", () => nullValue.SingleOrDefault(default(int))
+                "source", () => nullValue!.SingleOrDefault(defaultValue: default)
             );
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
 
         [Fact]
@@ -36,11 +34,9 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             const IEnumerable<int>? nullValue = null;
 
             // Act & Assert.
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             Assert.Throws<ArgumentNullException>(
-                "source", () => nullValue.SingleOrDefault(default, default)
+                "source", () => nullValue!.SingleOrDefault(predicate: null!, defaultValue: default)
             );
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
 
         [Fact]
@@ -50,11 +46,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
 
             // Act & Assert.
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             Assert.Throws<ArgumentNullException>(
-                "predicate", () => emptyCollection.SingleOrDefault(null, default)
+                "predicate",
+                () => emptyCollection.SingleOrDefault(predicate: null!, defaultValue: default)
             );
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
 
         [Fact]
@@ -76,10 +71,11 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
+            Func<int, bool> discard = DiscardFunction<int, bool>.Func;
             int expectedValue = TestDataCreator.CreateRandomInt32();
 
             // Act.
-            int actualValue = emptyCollection.SingleOrDefault(_ => default, expectedValue);
+            int actualValue = emptyCollection.SingleOrDefault(discard, expectedValue);
 
             // Assert.
             Assert.Equal(expectedValue, actualValue);
@@ -94,7 +90,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             int expectedValue = collectionWithSingleItem.Single();
 
             // Act.
-            int actualValue = collectionWithSingleItem.SingleOrDefault(default(int));
+            int actualValue = collectionWithSingleItem.SingleOrDefault(defaultValue: default);
 
             // Assert.
             Assert.Equal(expectedValue, actualValue);
@@ -110,7 +106,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
 
             // Act.
             int actualValue = collectionWithSingleItem.SingleOrDefault(
-                i => i.Equals(expectedValue), default
+                i => i.Equals(expectedValue), defaultValue: default
             );
 
             // Assert.
@@ -126,7 +122,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             // Act & Assert.
             Assert.Throws(
                 Error.MoreThanOneElement().GetType(),
-                () => predefinedCollection.SingleOrDefault(default(int))
+                () => predefinedCollection.SingleOrDefault(defaultValue: default)
             );
         }
 
@@ -140,7 +136,9 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             // Act & Assert.
             Assert.Throws(
                 Error.MoreThanOneElement().GetType(),
-                () => predefinedCollection.SingleOrDefault(i => i.Equals(expectedValue), default)
+                () => predefinedCollection.SingleOrDefault(
+                    i => i.Equals(expectedValue), defaultValue: default
+                )
             );
         }
 
@@ -153,7 +151,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
 
             // Act.
             int actualValue = predefinedCollection.SingleOrDefault(
-                i => i.Equals(expectedValue), default
+                i => i.Equals(expectedValue), defaultValue: default
             );
 
             // Assert.
@@ -174,7 +172,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             // Act & Assert.
             Assert.Throws(
                 Error.MoreThanOneElement().GetType(),
-                () => collectionWithSomeItems.SingleOrDefault(default(int))
+                () => collectionWithSomeItems.SingleOrDefault(defaultValue: default)
             );
         }
 
@@ -193,7 +191,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             // Act & Assert.
             Assert.Throws(
                 Error.MoreThanOneElement().GetType(),
-                () => collectionWithSomeItems.SingleOrDefault(_ => true, default)
+                () => collectionWithSomeItems.SingleOrDefault(_ => true, defaultValue: default)
             );
         }
 
@@ -301,13 +299,13 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             // Arrange.
             var collection = new[] { 1, 2, 3, 4 };
             var explosiveCollection = ExplosiveCollection.Create(
-                collection, explosiveIndex: Common.Constants.FirstIndex + 2
+                collection, explosiveIndex: Constants.FirstIndex + 2
             );
 
             // Act & Assert.
             Assert.Throws(
                 Error.MoreThanOneElement().GetType(),
-                () => explosiveCollection.SingleOrDefault(default(int))
+                () => explosiveCollection.SingleOrDefault(defaultValue: default)
             );
 
             Assert.Equal(expected: 2, explosiveCollection.VisitedItemsNumber);
@@ -324,7 +322,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
 
             // Act.
             int actualValue = explosiveCollection.SingleOrDefault(
-                i => i.Equals(expectedValue), default
+                i => i.Equals(expectedValue), defaultValue: default
             );
 
             // Assert.
@@ -344,8 +342,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             // Act & Assert.
             Assert.Throws(
              Error.MoreThanOneElement().GetType(),
-             () => explosiveCollection.SingleOrDefault(i => i.Equals(expectedValue), default)
-         );
+             () => explosiveCollection.SingleOrDefault(
+                 i => i.Equals(expectedValue), defaultValue: default
+                )
+            );
 
             Assert.Equal(expected: 4, explosiveCollection.VisitedItemsNumber);
         }

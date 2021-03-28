@@ -21,11 +21,9 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             const IEnumerable<int>? nullValue = null;
 
             // Act & Assert.
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             Assert.Throws<ArgumentNullException>(
-                "source", () => nullValue.FirstOrDefault(default(int))
+                "source", () => nullValue!.FirstOrDefault(defaultValue: default)
             );
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
 
         [Fact]
@@ -33,13 +31,12 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         {
             // Arrange.
             const IEnumerable<int>? nullValue = null;
+            Func<int, bool> discard = DiscardFunction<int, bool>.Func;
 
             // Act & Assert.
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             Assert.Throws<ArgumentNullException>(
-                "source", () => nullValue.FirstOrDefault(default, default)
+                "source", () => nullValue!.FirstOrDefault(discard, defaultValue: default)
             );
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
 
         [Fact]
@@ -49,11 +46,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
 
             // Act & Assert.
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             Assert.Throws<ArgumentNullException>(
-                "predicate", () => emptyCollection.FirstOrDefault(null, default)
+                "predicate",
+                () => emptyCollection.FirstOrDefault(predicate: null!, defaultValue: default)
             );
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
 
         [Fact]
@@ -75,10 +71,11 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
+            Func<int, bool> discard = DiscardFunction<int, bool>.Func;
             int expectedValue = TestDataCreator.CreateRandomInt32();
 
             // Act.
-            int actualValue = emptyCollection.FirstOrDefault(_ => default, expectedValue);
+            int actualValue = emptyCollection.FirstOrDefault(discard, expectedValue);
 
             // Assert.
             Assert.Equal(expectedValue, actualValue);
@@ -92,7 +89,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             int expectedValue = predefinedCollection[0];
 
             // Act.
-            int actualValue = predefinedCollection.FirstOrDefault(default(int));
+            int actualValue = predefinedCollection.FirstOrDefault(defaultValue: default);
 
             // Assert.
             Assert.Equal(expectedValue, actualValue);
@@ -107,7 +104,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
 
             // Act.
             int actualValue = predefinedCollection.FirstOrDefault(
-                i => i.Equals(expectedValue), default
+                i => i.Equals(expectedValue), defaultValue: default
             );
 
             // Assert.
@@ -128,7 +125,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             int expectedValue = collectionWithSomeItems.First();
 
             // Act.
-            int actualValue = collectionWithSomeItems.FirstOrDefault(default(int));
+            int actualValue = collectionWithSomeItems.FirstOrDefault(defaultValue: default);
 
             // Assert.
             Assert.Equal(expectedValue, actualValue);
@@ -150,7 +147,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
 
             // Act.
             int actualValue = collectionWithSomeItems.FirstOrDefault(
-                i => i.Equals(expectedValue), default
+                i => i.Equals(expectedValue), defaultValue: default
             );
 
             // Assert.
@@ -240,12 +237,12 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             const int count = 2;
             var explosiveCollection = ExplosiveCollection.Create(
                 TestDataCreator.CreateRandomInt32List(count),
-                explosiveIndex: Common.Constants.FirstIndex + 1
+                explosiveIndex: Constants.FirstIndex + 1
             );
             int expectedValue = explosiveCollection.First();
 
             // Act.
-            int actualValue = explosiveCollection.FirstOrDefault(default(int));
+            int actualValue = explosiveCollection.FirstOrDefault(defaultValue: default);
 
             // Assert.
             Assert.Equal(expected: 1, explosiveCollection.VisitedItemsNumber);
@@ -257,7 +254,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         {
             // Arrange.
             // Do not use random because we should find exactly second item.
-            int expectedIndex = Common.Constants.FirstIndex + 1;
+            int expectedIndex = Constants.FirstIndex + 1;
             IReadOnlyList<int> collection = new[] { 1, 2, 3, 4 };
             var explosiveCollection = ExplosiveCollection.Create(
                 collection, explosiveIndex: expectedIndex + 1
@@ -266,7 +263,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
 
             // Act.
             int actualValue = explosiveCollection.FirstOrDefault(
-                i => i.Equals(expectedValue), default
+                i => i.Equals(expectedValue), defaultValue: default
             );
 
             // Assert.

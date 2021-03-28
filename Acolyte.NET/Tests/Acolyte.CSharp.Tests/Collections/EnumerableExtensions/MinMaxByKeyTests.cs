@@ -22,11 +22,9 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             const IEnumerable<int>? nullValue = null;
 
             // Act & Assert.
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             Assert.Throws<ArgumentNullException>(
-                "source", () => nullValue.MinMaxBy(IdentityFunction<int>.Instance)
+                "source", () => nullValue!.MinMaxBy(DiscardFunction<int>.Func)
             );
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
 
         [Fact]
@@ -36,12 +34,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
 
             // Act & Assert.
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             const Func<int, int>? keySelector = null;
             Assert.Throws<ArgumentNullException>(
-                "keySelector", () => emptyCollection.MinMaxBy(keySelector)
+                "keySelector", () => emptyCollection.MinMaxBy(keySelector!)
             );
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
 
         [Fact]
@@ -51,12 +47,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             const IEnumerable<int>? nullValue = null;
 
             // Act & Assert.
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             Assert.Throws<ArgumentNullException>(
                 "source",
-                () => nullValue.MinMaxBy(keySelector: default, Comparer<int>.Default)
+                () => nullValue!.MinMaxBy(DiscardFunction<int>.Func, Comparer<int>.Default)
             );
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
 
         [Fact]
@@ -66,12 +60,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
 
             // Act & Assert.
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             Assert.Throws<ArgumentNullException>(
                 "keySelector",
-                () => emptyCollection.MinMaxBy(keySelector: default, Comparer<int>.Default)
+                () => emptyCollection.MinMaxBy(keySelector: null!, Comparer<int>.Default)
             );
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
 
         [Fact]
@@ -187,13 +179,13 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             // Arrange.
             IReadOnlyList<int> predefinedCollection = new[] { 2, 2, 3, 1 };
             // Min/max with selector returns transformed value. Need to transform it back.
-            int minValue = predefinedCollection.Min(InverseFunction.Int32);
-            int maxValue = predefinedCollection.Max(InverseFunction.Int32);
+            int minValue = predefinedCollection.Min(InverseFunction.ForInt32);
+            int maxValue = predefinedCollection.Max(InverseFunction.ForInt32);
             (int minValue, int maxValue) expectedValue =
-                (InverseFunction.Int32(minValue), InverseFunction.Int32(maxValue));
+                (InverseFunction.ForInt32(minValue), InverseFunction.ForInt32(maxValue));
 
             // Act.
-            var actualValue = predefinedCollection.MinMaxBy(InverseFunction.Int32);
+            var actualValue = predefinedCollection.MinMaxBy(InverseFunction.ForInt32);
 
             // Assert.
             Assert.Equal(expectedValue, actualValue);
@@ -205,14 +197,14 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             // Arrange.
             IReadOnlyList<int> predefinedCollection = new[] { 2, 2, 3, 1 };
             // Min/max with selector returns transformed value. Need to transform it back.
-            int minValue = predefinedCollection.Min(InverseFunction.Int32);
-            int maxValue = predefinedCollection.Max(InverseFunction.Int32);
+            int minValue = predefinedCollection.Min(InverseFunction.ForInt32);
+            int maxValue = predefinedCollection.Max(InverseFunction.ForInt32);
             (int minValue, int maxValue) expectedValue =
-                (InverseFunction.Int32(minValue), InverseFunction.Int32(maxValue));
+                (InverseFunction.ForInt32(minValue), InverseFunction.ForInt32(maxValue));
 
             // Act.
             var actualValue = predefinedCollection.MinMaxBy(
-                InverseFunction.Int32, Comparer<int>.Default
+                InverseFunction.ForInt32, Comparer<int>.Default
             );
 
             // Assert.
@@ -232,13 +224,13 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             // Arrange.
             IEnumerable<int> collectionWithSomeItems = TestDataCreator.CreateRandomInt32List(count);
             // Min/max with selector returns transformed value. Need to transform it back.
-            int minValue = collectionWithSomeItems.Min(InverseFunction.Int32);
-            int maxValue = collectionWithSomeItems.Max(InverseFunction.Int32);
+            int minValue = collectionWithSomeItems.Min(InverseFunction.ForInt32);
+            int maxValue = collectionWithSomeItems.Max(InverseFunction.ForInt32);
             (int minValue, int maxValue) expectedValue =
-                (InverseFunction.Int32(minValue), InverseFunction.Int32(maxValue));
+                (InverseFunction.ForInt32(minValue), InverseFunction.ForInt32(maxValue));
 
             // Act.
-            var actualValue = collectionWithSomeItems.MinMaxBy(InverseFunction.Int32);
+            var actualValue = collectionWithSomeItems.MinMaxBy(InverseFunction.ForInt32);
 
             // Assert.
             Assert.Equal(expectedValue, actualValue);
@@ -257,14 +249,14 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             // Arrange.
             IEnumerable<int> collectionWithSomeItems = TestDataCreator.CreateRandomInt32List(count);
             // Min/max with selector returns transformed value. Need to transform it back.
-            int minValue = collectionWithSomeItems.Min(InverseFunction.Int32);
-            int maxValue = collectionWithSomeItems.Max(InverseFunction.Int32);
+            int minValue = collectionWithSomeItems.Min(InverseFunction.ForInt32);
+            int maxValue = collectionWithSomeItems.Max(InverseFunction.ForInt32);
             (int minValue, int maxValue) expectedValue =
-                (InverseFunction.Int32(minValue), InverseFunction.Int32(maxValue));
+                (InverseFunction.ForInt32(minValue), InverseFunction.ForInt32(maxValue));
 
             // Act.
             var actualValue = collectionWithSomeItems.MinMaxBy(
-                InverseFunction.Int32, Comparer<int>.Default
+                InverseFunction.ForInt32, Comparer<int>.Default
             );
 
             // Assert.
@@ -288,7 +280,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             (int minValue, int maxValue) expectedValue = (count, count);
 
             // Act.
-            var actualValue = collectionWithTheSameItems.MinMaxBy(InverseFunction.Int32);
+            var actualValue = collectionWithTheSameItems.MinMaxBy(InverseFunction.ForInt32);
 
             // Assert.
             Assert.Equal(expectedValue, actualValue);
@@ -312,7 +304,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
 
             // Act.
             var actualValue = collectionWithTheSameItems.MinMaxBy(
-                InverseFunction.Int32, Comparer<int>.Default
+                InverseFunction.ForInt32, Comparer<int>.Default
             );
 
             // Assert.
@@ -327,13 +319,13 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             IEnumerable<int> collectionWithRandomSize =
                 TestDataCreator.CreateRandomInt32List(count);
             // Min/max with selector returns transformed value. Need to transform it back.
-            int minValue = collectionWithRandomSize.Min(InverseFunction.Int32);
-            int maxValue = collectionWithRandomSize.Max(InverseFunction.Int32);
+            int minValue = collectionWithRandomSize.Min(InverseFunction.ForInt32);
+            int maxValue = collectionWithRandomSize.Max(InverseFunction.ForInt32);
             (int minValue, int maxValue) expectedValue =
-                (InverseFunction.Int32(minValue), InverseFunction.Int32(maxValue));
+                (InverseFunction.ForInt32(minValue), InverseFunction.ForInt32(maxValue));
 
             // Act.
-            var actualValue = collectionWithRandomSize.MinMaxBy(InverseFunction.Int32);
+            var actualValue = collectionWithRandomSize.MinMaxBy(InverseFunction.ForInt32);
 
             // Assert.
             Assert.Equal(expectedValue, actualValue);
@@ -347,14 +339,14 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             IEnumerable<int> collectionWithRandomSize =
                 TestDataCreator.CreateRandomInt32List(count);
             // Min/max with selector returns transformed value. Need to transform it back.
-            int minValue = collectionWithRandomSize.Min(InverseFunction.Int32);
-            int maxValue = collectionWithRandomSize.Max(InverseFunction.Int32);
+            int minValue = collectionWithRandomSize.Min(InverseFunction.ForInt32);
+            int maxValue = collectionWithRandomSize.Max(InverseFunction.ForInt32);
             (int minValue, int maxValue) expectedValue =
-                (InverseFunction.Int32(minValue), InverseFunction.Int32(maxValue));
+                (InverseFunction.ForInt32(minValue), InverseFunction.ForInt32(maxValue));
 
             // Act.
             var actualValue = collectionWithRandomSize.MinMaxBy(
-                InverseFunction.Int32, Comparer<int>.Default
+                InverseFunction.ForInt32, Comparer<int>.Default
             );
 
             // Assert.
@@ -368,13 +360,13 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             var collection = new[] { 1, 2, 3, 4 };
             var explosiveCollection = ExplosiveCollection.CreateNotExplosive(collection);
             // Min/max with selector returns transformed value. Need to transform it back.
-            int minValue = explosiveCollection.Min(InverseFunction.Int32);
-            int maxValue = explosiveCollection.Max(InverseFunction.Int32);
+            int minValue = explosiveCollection.Min(InverseFunction.ForInt32);
+            int maxValue = explosiveCollection.Max(InverseFunction.ForInt32);
             (int minValue, int maxValue) expectedValue =
-                (InverseFunction.Int32(minValue), InverseFunction.Int32(maxValue));
+                (InverseFunction.ForInt32(minValue), InverseFunction.ForInt32(maxValue));
 
             // Act.
-            var actualValue = explosiveCollection.MinMaxBy(InverseFunction.Int32);
+            var actualValue = explosiveCollection.MinMaxBy(InverseFunction.ForInt32);
 
             // Assert.
             Assert.Equal(expected: collection.Length, explosiveCollection.VisitedItemsNumber);
@@ -388,14 +380,14 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             var collection = new[] { 1, 2, 3, 4 };
             var explosiveCollection = ExplosiveCollection.CreateNotExplosive(collection);
             // Min/max with selector returns transformed value. Need to transform it back.
-            int minValue = explosiveCollection.Min(InverseFunction.Int32);
-            int maxValue = explosiveCollection.Max(InverseFunction.Int32);
+            int minValue = explosiveCollection.Min(InverseFunction.ForInt32);
+            int maxValue = explosiveCollection.Max(InverseFunction.ForInt32);
             (int minValue, int maxValue) expectedValue =
-                (InverseFunction.Int32(minValue), InverseFunction.Int32(maxValue));
+                (InverseFunction.ForInt32(minValue), InverseFunction.ForInt32(maxValue));
 
             // Act.
             var actualValue = explosiveCollection.MinMaxBy(
-                InverseFunction.Int32, Comparer<int>.Default
+                InverseFunction.ForInt32, Comparer<int>.Default
             );
 
             // Assert.
