@@ -29,7 +29,7 @@ namespace Acolyte.Collections.Concurrent
         #region Private Fields
 
         private readonly TimeSpan _lifeTime;
-        
+
         private readonly ConcurrentDictionary<TKey, TValue> _dictionary;
 
         #endregion
@@ -338,7 +338,7 @@ namespace Acolyte.Collections.Concurrent
 
         private void CleanupExpiredObjects()
         {
-            List<TKey> keysToRemove = new List<TKey>();
+            var keysToRemove = new List<TKey>();
             foreach (var kvpCode in _dictionary)
             {
                 TimeSpan timeDifference = DateTime.UtcNow - kvpCode.Value.CreationTime;
@@ -353,7 +353,7 @@ namespace Acolyte.Collections.Concurrent
                 _dictionary.TryRemove(key, out TValue forgetAboutMe);
             });
         }
-        
+
         #endregion
     }
 }

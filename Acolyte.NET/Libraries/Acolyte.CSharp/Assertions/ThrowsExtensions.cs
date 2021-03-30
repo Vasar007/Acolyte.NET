@@ -86,7 +86,6 @@ namespace Acolyte.Assertions
                         "The passed parameter is a pure value type parameter.", paramName
                     );
                 }
-                
             }
 
             if (obj is null)

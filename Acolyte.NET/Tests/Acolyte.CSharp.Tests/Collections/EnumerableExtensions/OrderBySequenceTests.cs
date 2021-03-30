@@ -2,9 +2,9 @@
 
 using System;
 using System.Collections.Generic;
-using Xunit;
 using Acolyte.Collections;
 using Acolyte.Functions;
+using Xunit;
 
 namespace Acolyte.Tests.Collections.EnumerableExtensions
 {

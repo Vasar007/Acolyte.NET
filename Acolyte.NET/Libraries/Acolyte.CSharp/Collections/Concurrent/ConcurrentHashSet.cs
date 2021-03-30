@@ -196,7 +196,8 @@ namespace Acolyte.Collections.Concurrent
         {
             lock (_lock)
             {
-            }   return _set.Overlaps(other);
+                return _set.Overlaps(other);
+            }
         }
 
         public bool SetEquals(IEnumerable<T> other)

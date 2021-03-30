@@ -3,11 +3,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Xunit;
 using Acolyte.Collections;
 using Acolyte.Common;
 using Acolyte.Tests.Creators;
 using Acolyte.Tests.Objects;
+using Xunit;
 
 namespace Acolyte.Tests.Collections.EnumerableExtensions
 {
@@ -282,7 +282,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         public void MinMax_NullableInt64_ForPredefinedCollection_ShouldReturnMinMax()
         {
             // Arrange.
-            IReadOnlyList <long?> predefinedCollection =
+            IReadOnlyList<long?> predefinedCollection =
                 new long?[] { null, 1L, null, 2L, null, 3L };
             (long? minValue, long? maxValue) expectedValue =
                   (predefinedCollection[1], predefinedCollection[^1]);

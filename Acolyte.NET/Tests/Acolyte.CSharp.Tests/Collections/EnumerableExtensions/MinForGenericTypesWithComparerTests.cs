@@ -3,10 +3,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Xunit;
 using Acolyte.Collections;
 using Acolyte.Common;
 using Acolyte.Tests.Creators;
+using Xunit;
 
 namespace Acolyte.Tests.Collections.EnumerableExtensions
 {

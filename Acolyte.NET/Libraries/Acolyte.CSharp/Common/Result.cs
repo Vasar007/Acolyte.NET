@@ -222,4 +222,4 @@ namespace Acolyte.Common
             return new DelayedError<TError>(error);
         }
     }
- }
+}

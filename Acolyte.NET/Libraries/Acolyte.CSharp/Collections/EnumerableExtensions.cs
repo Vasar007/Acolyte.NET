@@ -118,7 +118,7 @@ namespace Acolyte.Collections
             ToReadOnlyDictionary<TKey, TSource>(
                 this IEnumerable<TSource> source,
                 Func<TSource, TKey> keySelector)
-            where TKey: notnull
+            where TKey : notnull
         {
             return Linq.EnumerableExtensions.ToReadOnlyDictionary(source, keySelector);
         }
