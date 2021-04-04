@@ -25,20 +25,20 @@ namespace Acolyte.Functions
             x => { unchecked { return x * 2.0; } };
 
         public static Func<decimal, decimal> RedoubleDecimal { get; } =
-            x =>
+        x =>
+        {
+            // As decimal is not primitive type and has overloads for operators,
+            // unchecked does not work.
+            // So, I catch exception and return original value if something goes wrong.
+            try
             {
-                // As decimal is not primitive type and has overloads for operators,
-                // unchecked does not work.
-                // So, I catch exception and return original value if something goes wrong.
-                try
-                {
-                    return x * 2.0M;
-                }
-                catch (OverflowException)
-                {
-                    return x;
-                }
-            };
+                return x * 2.0M;
+            }
+            catch (OverflowException)
+            {
+                return x;
+            }
+        };
         public static Func<decimal?, decimal?> RedoubleNullableDecimal { get; } =
         x =>
         {

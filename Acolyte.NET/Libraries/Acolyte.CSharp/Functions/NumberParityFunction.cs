@@ -16,7 +16,7 @@ namespace Acolyte.Functions
             // Convert all odd values to null.
             return IsEven(value)
                 ? value
-                : (int?) null;
+                : null;
         }
 
         #endregion
@@ -33,7 +33,7 @@ namespace Acolyte.Functions
             // Convert all odd values to null.
             return IsEven(value)
                 ? value
-                : (long?) null;
+                : null;
         }
 
         #endregion
@@ -46,7 +46,7 @@ namespace Acolyte.Functions
             int mark = StaticRandom.Next();
             return IsEven(mark)
                 ? value
-                : (float?) null;
+                : null;
         }
 
         #endregion
@@ -59,7 +59,7 @@ namespace Acolyte.Functions
             int mark = StaticRandom.Next();
             return IsEven(mark)
                 ? value
-                : (double?) null;
+                : null;
         }
 
         #endregion
@@ -72,7 +72,7 @@ namespace Acolyte.Functions
             int mark = StaticRandom.Next();
             return IsEven(mark)
                 ? value
-                : (decimal?) null;
+                : null;
         }
 
         #endregion
