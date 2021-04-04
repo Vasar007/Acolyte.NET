@@ -30,7 +30,7 @@ matrix:
   fast_finish: true
 
 install:
-  - ps: dotnet tool install dotnet-format --tool-path tools
+  - ps: dotnet tool update -g dotnet-format
 
 before_build:
   - ps: cd Acolyte.NET
