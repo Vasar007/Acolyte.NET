@@ -226,4 +226,3 @@ dotnet_style_prefer_simplified_interpolation = false:suggestion
 
 # IDE0079: Remove unnecessary suppression
 dotnet_diagnostic.IDE0079.severity = error
-
