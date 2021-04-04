@@ -14,6 +14,8 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         {
         }
 
+        #region Null Values
+
         [Fact]
         public void ForEach_ForNullValue_ShouldFail()
         {
@@ -24,5 +26,27 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             // Act & Assert.
             Assert.Throws<ArgumentNullException>("source", () => nullValue!.ForEach(discard));
         }
+
+        #endregion
+
+        #region Empty Values
+
+        #endregion
+
+        #region Predefined Values
+
+        #endregion
+
+        #region Some Values
+
+        #endregion
+
+        #region Random Values
+
+        #endregion
+
+        #region Extended Logical Coverage
+
+        #endregion
     }
 }

@@ -18,6 +18,8 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
 
         #region ToReadOnlyDictionary
 
+        #region Null Values
+
         [Fact]
         public void ToReadOnlyDictionary_WithKeySelector_ForNullValue_ShouldFail()
         {
@@ -207,6 +209,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             Assert.Equal(expectedDictionary, actualDictionary);
         }
 
+        #endregion
+
+        #region Empty Values
+
         [Fact]
         public void ToReadOnlyDictionary_WithKeySelector_ForEmptyCollection_ShouldReturnEmptyDictionary()
         {
@@ -286,6 +292,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             Assert.Empty(actualDictionary);
             Assert.Equal(expectedDictionary, actualDictionary);
         }
+
+        #endregion
+
+        #region Predefined Values
 
         [Fact]
         public void ToReadOnlyDictionary_WithKeySelector_ForPredefinedCollection_ShouldReturnFilledDictionary()
@@ -376,6 +386,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             Assert.NotEmpty(actualDictionary);
             Assert.Equal(expectedDictionary, actualDictionary);
         }
+
+        #endregion
+
+        #region Some Values
 
         [Theory]
         [InlineData(TestConstants._1)]
@@ -494,6 +508,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             Assert.NotEmpty(actualDictionary);
             Assert.Equal(expectedDictionary, actualDictionary);
         }
+
+        #endregion
+
+        #region Random Values
 
         [Fact]
         public void ToReadOnlyDictionary_WithKeySelector_ForCollectionWithRandomSize_ShouldReturnProperDictionary()
@@ -620,6 +638,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             }
             Assert.Equal(expectedDictionary, actualDictionary);
         }
+
+        #endregion
+
+        #region Extended Logical Coverage
 
         [Fact]
         public void ToReadOnlyDictionary_WithKeySelector_ShouldReturnImmutableCollection()
@@ -793,7 +815,11 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
 
         #endregion
 
+        #endregion
+
         #region ToReadOnlyList
+
+        #region Null Values
 
         [Fact]
         public void ToReadOnlyList_ForNullValue_ShouldFail()
@@ -804,6 +830,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             // Act & Assert.
             Assert.Throws<ArgumentNullException>("source", () => nullValue!.ToReadOnlyList());
         }
+
+        #endregion
+
+        #region Empty Values
 
         [Fact]
         public void ToReadOnlyList_ForEmptyCollection_ShouldReturnEmptyList()
@@ -821,6 +851,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             Assert.Equal(expectedList, actualList);
         }
 
+        #endregion
+
+        #region Predefined Values
+
         [Fact]
         public void ToReadOnlyList_ForPredefinedCollection_ShouldReturnFilledList()
         {
@@ -836,6 +870,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             Assert.NotEmpty(actualList);
             Assert.Equal(expectedList, actualList);
         }
+
+        #endregion
+
+        #region Some Values
 
         [Theory]
         [InlineData(TestConstants._1)]
@@ -858,6 +896,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             Assert.NotEmpty(actualList);
             Assert.Equal(expectedList, actualList);
         }
+
+        #endregion
+
+        #region Random Values
 
         [Fact]
         public void ToReadOnlyList_ForCollectionWithRandomSize_ShouldReturnProperList()
@@ -883,6 +925,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             }
             Assert.Equal(expectedList, actualList);
         }
+
+        #endregion
+
+        #region Extended Logical Coverage
 
         [Fact]
         public void ToReadOnlyList_ShouldReturnImmutableCollection()
@@ -920,7 +966,11 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
 
         #endregion
 
+        #endregion
+
         #region ToReadOnlyCollection
+
+        #region Null Values
 
         [Fact]
         public void ToReadOnlyCollection_ForNullValue_ShouldFail()
@@ -931,6 +981,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             // Act & Assert.
             Assert.Throws<ArgumentNullException>("source", () => nullValue!.ToReadOnlyCollection());
         }
+
+        #endregion
+
+        #region Empty Values
 
         [Fact]
         public void ToReadOnlyCollection_ForEmptyCollection_ShouldReturnEmptyCollection()
@@ -948,6 +1002,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             Assert.Equal(expectedCollection, actualCollection);
         }
 
+        #endregion
+
+        #region Predefined Values
+
         [Fact]
         public void ToReadOnlyCollection_ForPredefinedCollection_ShouldReturnFilledCollection()
         {
@@ -963,6 +1021,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             Assert.NotEmpty(actualCollection);
             Assert.Equal(expectedCollection, actualCollection);
         }
+
+        #endregion
+
+        #region Some Values
 
         [Theory]
         [InlineData(TestConstants._1)]
@@ -986,6 +1048,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             Assert.NotEmpty(actualCollection);
             Assert.Equal(expectedCollection, actualCollection);
         }
+
+        #endregion
+
+        #region Random Values
 
         [Fact]
         public void ToReadOnlyCollection_ForCollectionWithRandomSize_ShouldReturnProperCollection()
@@ -1011,6 +1077,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             }
             Assert.Equal(expectedCollection, actualCollection);
         }
+
+        #endregion
+
+        #region Extended Logical Coverage
 
         [Fact]
         public void ToReadOnlyCollection_ShouldReturnImmutableCollection()
@@ -1042,6 +1112,8 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
                 CustomAssert.Fail(message);
             }
         }
+
+        #endregion
 
         #endregion
     }

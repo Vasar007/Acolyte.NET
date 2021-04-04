@@ -20,6 +20,8 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
 
         #region MinMax For Int32
 
+        #region Null Values
+
         [Fact]
         public void MinMax_WithSelector_Int32_ForNullValue_ShouldFail()
         {
@@ -68,6 +70,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             );
         }
 
+        #endregion
+
+        #region Empty Values
+
         [Fact]
         public void MinMax_WithSelector_Int32_ForEmptyCollection_ShouldFail()
         {
@@ -94,6 +100,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             // Assert.
             Assert.Equal(expectedValue, actualValue);
         }
+
+        #endregion
+
+        #region Predefined Values
 
         [Fact]
         public void MinMax_WithSelector_Int32_ForPredefinedCollection_ShouldReturnMinMax()
@@ -130,6 +140,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             // Assert.
             Assert.Equal(expectedValue, actualValue);
         }
+
+        #endregion
+
+        #region Some Values
 
         [Theory]
         [InlineData(TestConstants._1)]
@@ -183,6 +197,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             Assert.Equal(expectedValue, actualValue);
         }
 
+        #endregion
+
+        #region Random Values
+
         [Fact]
         public void MinMax_WithSelector_Int32_ForCollectionWithRandomSize_ShouldReturnMinMaxOrFailIfNoItems()
         {
@@ -235,6 +253,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             Assert.Equal(expectedValue, actualValue);
         }
 
+        #endregion
+
+        #region Extended Logical Coverage
+
         [Fact]
         public void MinMax_Int32_WithSelector_ShouldLookWholeCollectionToFindValues()
         {
@@ -277,7 +299,11 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
 
         #endregion
 
+        #endregion
+
         #region MinMax For Int64
+
+        #region Null Values
 
         [Fact]
         public void MinMax_WithSelector_Int64_ForNullValue_ShouldFail()
@@ -327,6 +353,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             );
         }
 
+        #endregion
+
+        #region Empty Values
+
         [Fact]
         public void MinMax_WithSelector_Int64_ForEmptyCollection_ShouldFail()
         {
@@ -353,6 +383,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             // Assert.
             Assert.Equal(expectedValue, actualValue);
         }
+
+        #endregion
+
+        #region Predefined Values
 
         [Fact]
         public void MinMax_WithSelector_Int64_ForPredefinedCollection_ShouldReturnMinMax()
@@ -390,6 +424,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             // Assert.
             Assert.Equal(expectedValue, actualValue);
         }
+
+        #endregion
+
+        #region Some Values
 
         [Theory]
         [InlineData(TestConstants._1)]
@@ -444,6 +482,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             Assert.Equal(expectedValue, actualValue);
         }
 
+        #endregion
+
+        #region Random Values
+
         [Fact]
         public void MinMax_WithSelector_Int64_ForCollectionWithRandomSize_ShouldReturnMinMaxOrFailIfNoItems()
         {
@@ -496,6 +538,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             Assert.Equal(expectedValue, actualValue);
         }
 
+        #endregion
+
+        #region Extended Logical Coverage
+
         [Fact]
         public void MinMax_Int64_WithSelector_ShouldLookWholeCollectionToFindValues()
         {
@@ -538,7 +584,11 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
 
         #endregion
 
+        #endregion
+
         #region MinMax For Single
+
+        #region Null Values
 
         [Fact]
         public void MinMax_WithSelector_Single_ForNullValue_ShouldFail()
@@ -588,6 +638,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             );
         }
 
+        #endregion
+
+        #region Empty Values
+
         [Fact]
         public void MinMax_WithSelector_Single_ForEmptyCollection_ShouldFail()
         {
@@ -614,6 +668,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             // Assert.
             Assert.Equal(expectedValue, actualValue);
         }
+
+        #endregion
+
+        #region Predefined Values
 
         [Fact]
         public void MinMax_WithSelector_Single_ForPredefinedCollection_ShouldReturnMinMax()
@@ -651,6 +709,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             // Assert.
             Assert.Equal(expectedValue, actualValue);
         }
+
+        #endregion
+
+        #region Some Values
 
         [Theory]
         [InlineData(TestConstants._1)]
@@ -705,6 +767,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             Assert.Equal(expectedValue, actualValue);
         }
 
+        #endregion
+
+        #region Random Values
+
         [Fact]
         public void MinMax_WithSelector_Single_ForCollectionWithRandomSize_ShouldReturnMinMaxOrFailIfNoItems()
         {
@@ -757,6 +823,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             Assert.Equal(expectedValue, actualValue);
         }
 
+        #endregion
+
+        #region Extended Logical Coverage
+
         [Fact]
         public void MinMax_WithSelector_Single_ShouldLookWholeCollectionToFindValues()
         {
@@ -799,7 +869,11 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
 
         #endregion
 
+        #endregion
+
         #region MinMax For Double
+
+        #region Null Values
 
         [Fact]
         public void MinMax_WithSelector_Double_ForNullValue_ShouldFail()
@@ -849,6 +923,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             );
         }
 
+        #endregion
+
+        #region Empty Values
+
         [Fact]
         public void MinMax_WithSelector_Double_ForEmptyCollection_ShouldFail()
         {
@@ -875,6 +953,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             // Assert.
             Assert.Equal(expectedValue, actualValue);
         }
+
+        #endregion
+
+        #region Predefined Values
 
         [Fact]
         public void MinMax_WithSelector_Double_ForPredefinedCollection_ShouldReturnMinMax()
@@ -912,6 +994,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             // Assert.
             Assert.Equal(expectedValue, actualValue);
         }
+
+        #endregion
+
+        #region Some Values
 
         [Theory]
         [InlineData(TestConstants._1)]
@@ -966,6 +1052,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             Assert.Equal(expectedValue, actualValue);
         }
 
+        #endregion
+
+        #region Random Values
+
         [Fact]
         public void MinMax_WithSelector_Double_ForCollectionWithRandomSize_ShouldReturnMinMaxOrFailIfNoItems()
         {
@@ -1018,6 +1108,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             Assert.Equal(expectedValue, actualValue);
         }
 
+        #endregion
+
+        #region Extended Logical Coverage
+
         [Fact]
         public void MinMax_WithSelector_Double_ShouldLookWholeCollectionToFindValues()
         {
@@ -1060,7 +1154,11 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
 
         #endregion
 
+        #endregion
+
         #region MinMax For Decimal
+
+        #region Null Values
 
         [Fact]
         public void MinMax_WithSelector_Decimal_ForNullValue_ShouldFail()
@@ -1110,6 +1208,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             );
         }
 
+        #endregion
+
+        #region Empty Values
+
         [Fact]
         public void MinMax_WithSelector_Decimal_ForEmptyCollection_ShouldFail()
         {
@@ -1136,6 +1238,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             // Assert.
             Assert.Equal(expectedValue, actualValue);
         }
+
+        #endregion
+
+        #region Predefined Values
 
         [Fact]
         public void MinMax_WithSelector_Decimal_ForPredefinedCollection_ShouldReturnMinMax()
@@ -1173,6 +1279,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             // Assert.
             Assert.Equal(expectedValue, actualValue);
         }
+
+        #endregion
+
+        #region Some Values
 
         [Theory]
         [InlineData(TestConstants._1)]
@@ -1227,6 +1337,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             Assert.Equal(expectedValue, actualValue);
         }
 
+        #endregion
+
+        #region Random Values
+
         [Fact]
         public void MinMax_WithSelector_Decimal_ForCollectionWithRandomSize_ShouldReturnMinMaxOrFailIfNoItems()
         {
@@ -1279,6 +1393,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             Assert.Equal(expectedValue, actualValue);
         }
 
+        #endregion
+
+        #region Extended Logical Coverage
+
         [Fact]
         public void MinMax_WithSelector_Decimal_ShouldLookWholeCollectionToFindValues()
         {
@@ -1321,9 +1439,13 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
 
         #endregion
 
+        #endregion
+
         #region MinMax For Generic Types
 
         // Using user-defined struct and class to test generic overload.
+
+        #region Null Values
 
         [Fact]
         public void MinMax_WithSelector_GenericTypes_ForNullValue_ShouldFail()
@@ -1393,6 +1515,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             // Assert.
             Assert.Equal(expectedValue, actualValue);
         }
+
+        #endregion
+
+        #region Empty Values
 
         [Fact]
         public void MinMax_WithSelector_GenericTypes_ForEmptyCollection_ShouldFailForValueTypes()
@@ -1482,6 +1608,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             Assert.Equal(expectedValue, actualValue);
         }
 
+        #endregion
+
+        #region Predefined Values
+
         [Fact]
         public void MinMax_WithSelector_GenericTypes_ForPredefinedCollection_ShouldReturnMinMax()
         {
@@ -1514,6 +1644,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             // Assert.
             Assert.Equal(expectedValue, actualValue);
         }
+
+        #endregion
+
+        #region Some Values
 
         [Theory]
         [InlineData(TestConstants._1)]
@@ -1563,6 +1697,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             Assert.Equal(expectedValue, actualValue);
         }
 
+        #endregion
+
+        #region Random Values
+
         [Fact]
         public void MinMax_WithSelector_GenericTypes_ForCollectionWithRandomSize_ShouldReturnMinMaxOrNullIfNoItems()
         {
@@ -1598,6 +1736,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             // Assert.
             Assert.Equal(expectedValue, actualValue);
         }
+
+        #endregion
+
+        #region Extended Logical Coverage
 
         [Fact]
         public void MinMax_WithSelector_GenericTypes_ShouldLookWholeCollectionToFindValues()
@@ -1636,6 +1778,8 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             Assert.Equal(expected: collection.Length, explosiveCollection.VisitedItemsNumber);
             Assert.Equal(expectedValue, actualValue);
         }
+
+        #endregion
 
         #endregion
     }

@@ -17,6 +17,8 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         {
         }
 
+        #region Null Values
+
         [Fact]
         public void MaxBy_WithoutComparer_ForNullValue_ShouldFail()
         {
@@ -84,6 +86,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             Assert.Equal(expectedValue, actualValue);
         }
 
+
+        #endregion
+
+        #region Empty Values
 
         [Fact]
         public void MaxBy_WithoutComparer_ForEmptyCollection_ShouldFailForValueTypes()
@@ -171,6 +177,9 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             Assert.Equal(expectedValue, actualValue);
         }
 
+        #endregion
+
+        #region Predefined Values
 
         [Fact]
         public void MaxBy_WithComparer_ForPredefinedCollection_ShouldReturnProperMax()
@@ -207,6 +216,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             Assert.Equal(expectedValue, actualValue);
         }
 
+        #endregion
+
+        #region Some Values
+
         [Theory]
         [InlineData(TestConstants._1)]
         [InlineData(TestConstants._2)]
@@ -215,7 +228,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         [InlineData(TestConstants._100)]
         [InlineData(TestConstants._10_000)]
         public void MaxBy_WithoutComparer_ForCollectionWithSomeItems_ShouldReturnProperMax(
-    int count)
+            int count)
         {
             // Arrange.
             IEnumerable<int> collectionWithSomeItems = TestDataCreator.CreateRandomInt32List(count);
@@ -303,6 +316,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             Assert.Equal(expectedValue, actualValue);
         }
 
+        #endregion
+
+        #region Random Values
+
         [Fact]
         public void MaxBy_WithoutComparer_ForCollectionWithRandomSize_ShouldReturnMax()
         {
@@ -341,6 +358,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             Assert.Equal(expectedValue, actualValue);
         }
 
+        #endregion
+
+        #region Extended Logical Coverage
+
         [Fact]
         public void MaxBy_WithoutComparer_ShouldLookWholeCollectionToFindItem()
         {
@@ -378,5 +399,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             Assert.Equal(expected: collection.Length, explosiveCollection.VisitedItemsNumber);
             Assert.Equal(expectedValue, actualValue);
         }
+
+        #endregion
     }
 }

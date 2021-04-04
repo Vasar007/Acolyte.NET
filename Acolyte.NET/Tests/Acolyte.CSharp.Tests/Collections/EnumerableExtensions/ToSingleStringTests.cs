@@ -17,6 +17,8 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         {
         }
 
+        #region Null Values
+
         [Fact]
         public void ToSingleString_ForNullValue_ShouldReturnEmptyCollectionMessage()
         {
@@ -224,6 +226,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             );
         }
 
+        #endregion
+
+        #region Empty Values
+
         [Fact]
         public void ToSingleString_ForEmptyCollection_ShouldReturnEmptyCollectionMessage()
         {
@@ -311,6 +317,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             // Assert.
             Assert.Equal(expectedValue, actualValue);
         }
+
+        #endregion
+
+        #region Predefined Values
 
         [Fact]
         public void ToSingleString_ForPredefinedCollection_ShouldReturnPropperMessageWithItems()
@@ -417,6 +427,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             // Assert.
             Assert.Equal(expectedValue, actualValue);
         }
+
+        #endregion
+
+        #region Some Values
 
         [Theory]
         [InlineData(TestConstants._1)]
@@ -560,6 +574,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             Assert.Equal(expectedValue, actualValue);
         }
 
+        #endregion
+
+        #region Random Values
+
         [Fact]
         public void ToSingleString_ForCollectionWithRandomSize_ShouldReturnEmptyMessageOrPropperMessageWithItemsDependOnCollection()
         {
@@ -690,6 +708,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             Assert.Equal(expectedValue, actualValue);
         }
 
+        #endregion
+
+        #region Extended Logical Coverage
+
         [Fact]
         public void ToSingleString_ShouldLookWholeCollectionToConstrtuctMessage()
         {
@@ -807,5 +829,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             Assert.Equal(expected: collection.Count, explosiveCollection.VisitedItemsNumber);
             Assert.Equal(expectedValue, actualValue);
         }
+
+        #endregion
     }
 }

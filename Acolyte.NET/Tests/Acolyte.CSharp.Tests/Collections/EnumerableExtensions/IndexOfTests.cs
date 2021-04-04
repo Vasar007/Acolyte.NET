@@ -17,6 +17,8 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         {
         }
 
+        #region Null Values
+
         [Fact]
         public void IndexOf_ForNullValue_ShouldFail()
         {
@@ -81,6 +83,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             Assert.Equal(expectedIndex, actualIndex);
         }
 
+        #endregion
+
+        #region Empty Values
+
         [Fact]
         public void IndexOf_ForEmptyCollection_ShouldReturnNotFoundIndex()
         {
@@ -125,6 +131,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             // Assert.
             Assert.Equal(expectedIndex, actualIndex);
         }
+
+        #endregion
+
+        #region Predefined Values
 
         [Fact]
         public void IndexOf_ForPredefinedCollection_ShouldReturnIndexOfSecondItem()
@@ -172,6 +182,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             // Assert.
             Assert.Equal(expectedIndex, actualIndex);
         }
+
+        #endregion
+
+        #region Some Values
 
         [Theory]
         [InlineData(TestConstants._1)]
@@ -312,6 +326,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             Assert.Equal(expectedIndex, actualIndex);
         }
 
+        #endregion
+
+        #region Random Values
+
         [Fact]
         public void IndexOf_ForCollectionWithRandomSize_ShouldReturnIndexOfRandomlySelectedItem()
         {
@@ -416,6 +434,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             // Assert.
             Assert.Equal(expectedIndex, actualIndex);
         }
+
+        #endregion
+
+        #region Extended Logical Coverage
 
         [Fact]
         public void IndexOf_ShouldStopAfterFoundItemFromCollection()
@@ -526,5 +548,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             Assert.Equal(expected: collection.Count, explosiveCollection.VisitedItemsNumber);
             Assert.Equal(expectedValue, actualIndex);
         }
+
+        #endregion
     }
 }

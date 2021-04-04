@@ -16,6 +16,8 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         {
         }
 
+        #region Null Values
+
         [Fact]
         public void Min_WithComparer_ForNullValue_ShouldFail()
         {
@@ -43,6 +45,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             // Assert.
             Assert.Equal(expectedValue, actualValue);
         }
+
+        #endregion
+
+        #region Empty Values
 
         [Fact]
         public void Min_WithComparer_ForEmptyCollection_ShouldFailForValueTypes()
@@ -84,6 +90,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             Assert.Equal(expectedValue, actualValue);
         }
 
+        #endregion
+
+        #region Predefined Values
+
         [Fact]
         public void Min_WithComparer_ForPredefinedCollection_ShouldReturnMin()
         {
@@ -97,6 +107,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             // Assert.
             Assert.Equal(expectedValue, actualValue);
         }
+
+        #endregion
+
+        #region Some Values
 
         [Theory]
         [InlineData(TestConstants._1)]
@@ -141,6 +155,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             Assert.Equal(expectedValue, actualValue);
         }
 
+        #endregion
+
+        #region Random Values
+
         [Fact]
         public void Min_WithComparer_ForCollectionWithRandomSize_ShouldReturnMin()
         {
@@ -157,6 +175,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             Assert.Equal(expectedValue, actualValue);
         }
 
+        #endregion
+
+        #region Extended Logical Coverage
+
         [Fact]
         public void Min_WithComparer_ShouldLookWholeCollectionToFindItem()
         {
@@ -172,5 +194,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             Assert.Equal(expected: collection.Length, explosiveCollection.VisitedItemsNumber);
             Assert.Equal(expectedValue, actualValue);
         }
+
+        #endregion
     }
 }

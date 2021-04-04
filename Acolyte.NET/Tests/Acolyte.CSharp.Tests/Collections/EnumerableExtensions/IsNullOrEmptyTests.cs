@@ -15,6 +15,8 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         {
         }
 
+        #region Null Values
+
         [Fact]
         public void IsNullOrEmpty_ForNullValue_ShouldReturnTrue()
         {
@@ -24,6 +26,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             // Act & Assert.
             Assert.True(nullValue.IsNullOrEmpty());
         }
+
+        #endregion
+
+        #region Empty Values
 
         [Fact]
         public void IsNullOrEmpty_ForEmptyCollection_ShouldReturnTrue()
@@ -35,6 +41,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             Assert.True(emptyCollection.IsNullOrEmpty());
         }
 
+        #endregion
+
+        #region Predefined Values
+
         [Fact]
         public void IsNullOrEmpty_ForPredefinedCollection_ShouldReturnFalse()
         {
@@ -44,6 +54,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             // Act & Assert.
             Assert.False(predefinedCollection.IsNullOrEmpty());
         }
+
+        #endregion
+
+        #region Some Values
 
         [Theory]
         [InlineData(TestConstants._1)]
@@ -60,6 +74,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             // Act & Assert.
             Assert.False(collectionWithSomeItems.IsNullOrEmpty());
         }
+
+        #endregion
+
+        #region Random Values
 
         [Fact]
         public void IsNullOrEmpty_ForCollectionWithRandomSize_ShouldReturnProperResult()
@@ -92,6 +110,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             Assert.Equal(expectedResult, actualResult);
         }
 
+        #endregion
+
+        #region Extended Logical Coverage
+
         [Fact]
         public void IsNullOrEmpty_ShouldLookOnlyAtFirstItemFromCollection()
         {
@@ -110,5 +132,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             Assert.Equal(expected: 1, explosiveCollection.VisitedItemsNumber);
             Assert.Equal(expectedResult, actualResult);
         }
+
+        #endregion
     }
 }

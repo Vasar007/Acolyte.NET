@@ -17,6 +17,8 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         {
         }
 
+        #region Null Values
+
         [Fact]
         public void MinMaxBy_WithoutComparer_ForNullValue_ShouldFail()
         {
@@ -86,6 +88,9 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             Assert.Equal(expectedValue, actualValue);
         }
 
+        #endregion
+
+        #region Empty Values
 
         [Fact]
         public void MinMaxBy_WithoutComparer_ForEmptyCollection_ShouldFailForValueTypes()
@@ -175,6 +180,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             Assert.Equal(expectedValue, actualValue);
         }
 
+        #endregion
+
+        #region Predefined Values
+
         [Fact]
         public void MinMaxBy_WithoutComparer_ForPredefinedCollection_ShouldReturnProperMinMax()
         {
@@ -212,6 +221,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             // Assert.
             Assert.Equal(expectedValue, actualValue);
         }
+
+        #endregion
+
+        #region Some Values
 
         [Theory]
         [InlineData(TestConstants._1)]
@@ -313,6 +326,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             Assert.Equal(expectedValue, actualValue);
         }
 
+        #endregion
+
+        #region Random Values
+
         [Fact]
         public void MinMaxBy_WithoutComparer_ForCollectionWithRandomSize_ShouldReturnMinMax()
         {
@@ -355,6 +372,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             Assert.Equal(expectedValue, actualValue);
         }
 
+        #endregion
+
+        #region Extended Logical Coverage
+
         [Fact]
         public void MinMaxBy_WithoutComparer_ShouldLookWholeCollectionToFindItem()
         {
@@ -396,5 +417,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             Assert.Equal(expected: collection.Length, explosiveCollection.VisitedItemsNumber);
             Assert.Equal(expectedValue, actualValue);
         }
+
+        #endregion
     }
 }

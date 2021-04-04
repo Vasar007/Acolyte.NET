@@ -17,6 +17,8 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         {
         }
 
+        #region Null Values
+
         [Fact]
         public void SingleOrDefault_ForNullValue_ShouldFail()
         {
@@ -54,6 +56,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             );
         }
 
+        #endregion
+
+        #region Empty Values
+
         [Fact]
         public void SingleOrDefault_ForEmptyCollection_ShouldReturnDefaultItem()
         {
@@ -82,6 +88,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             // Assert.
             Assert.Equal(expectedValue, actualValue);
         }
+
+        #endregion
+
+        #region Single Values
 
         [Fact]
         public void SingleOrDefault_ForCollectionWithSingleItem_ShouldReturnFirstItem()
@@ -114,6 +124,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             // Assert.
             Assert.Equal(expectedValue, actualValue);
         }
+
+        #endregion
+
+        #region Predefined Values
 
         [Fact]
         public void SingleOrDefault_ForPredefinedCollection_ShouldFail()
@@ -159,6 +173,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             // Assert.
             Assert.Equal(expectedValue, actualValue);
         }
+
+        #endregion
+
+        #region Some Values
 
         [Theory]
         [InlineData(TestConstants._2)]
@@ -217,6 +235,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             // Assert.
             Assert.Equal(expectedValue, actualValue);
         }
+
+        #endregion
+
+        #region Random Values
 
         [Fact]
         public void SingleOrDefault_ForCollectionWithRandomSize_ShouldReturnSingleOrDefaultItemOrFailIfNoItems()
@@ -295,6 +317,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             Assert.Equal(expectedValue, actualValue);
         }
 
+        #endregion
+
+        #region Extended Logical Coverage
+
         [Fact]
         public void SingleOrDefault_ShouldLookOnlyAtFirstAndSecondItemsFromCollectionBeforeFail()
         {
@@ -351,5 +377,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
 
             Assert.Equal(expected: 4, explosiveCollection.VisitedItemsNumber);
         }
+
+        #endregion
     }
 }
