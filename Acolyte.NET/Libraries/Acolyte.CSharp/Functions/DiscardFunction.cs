@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace Acolyte.Functions
 {
@@ -19,6 +20,12 @@ namespace Acolyte.Functions
         /// Function to discard elements of type <typeparamref name="TElement" />.
         /// </summary>
         public static Func<TElement, TElement?> Func { get; } = _ => default;
+
+        /// <summary>
+        /// "Asynchronous" function to discard elements of type <typeparamref name="TElement" />.
+        /// </summary>
+        public static Func<TElement, Task<TElement?>> FuncAsync { get; } =
+            _ => Task.FromResult(default(TElement));
     }
 
     /// <summary>
@@ -33,5 +40,12 @@ namespace Acolyte.Functions
         /// default value of type <typeparamref name="TReturn" />.
         /// </summary>
         public static Func<TElement, TReturn?> Func { get; } = _ => default;
+
+        /// <summary>
+        /// "Asynchronous" function to discard elements of type <typeparamref name="TElement" /> and
+        /// return task with default value of type <typeparamref name="TReturn" />.
+        /// </summary>
+        public static Func<TElement, Task<TReturn?>> FuncAsync { get; } =
+            _ => Task.FromResult(default(TReturn));
     }
 }

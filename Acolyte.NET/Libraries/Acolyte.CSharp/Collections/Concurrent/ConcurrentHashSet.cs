@@ -117,6 +117,7 @@ namespace Acolyte.Collections.Concurrent
         {
             lock (_lock)
             {
+                // TODO: simplify before 3.0 release.
                 return Linq.EnumerableExtensions.ToReadOnlyList(_set);
             }
         }
@@ -125,6 +126,7 @@ namespace Acolyte.Collections.Concurrent
         {
             lock (_lock)
             {
+                // TODO: simplify before 3.0 release.
                 return Linq.EnumerableExtensions.ToReadOnlyCollection(_set);
             }
         }
