@@ -29,6 +29,9 @@ configuration:
 matrix:
   fast_finish: true
 
+install:
+  - ps: dotnet tool install dotnet-format --tool-path tools
+
 before_build:
   - ps: cd Acolyte.NET
   - ps: dotnet restore
@@ -48,9 +51,11 @@ test:
   assemblies:
     - '**\*.Tests.dll'
 
-# F# tests does not execute at all.
 after_test:
+  # F# tests does not execute at all.
   - ps: dotnet test "Tests/Acolyte.FSharp.Tests/Acolyte.FSharp.Tests.fsproj" --configuration $env:configuration --no-build
+  # Check code style.
+  - ps: dotnet format "Acolyte.NET.sln" --check
 
   # Upload all NuGet packages to release assets.
 artifacts:
