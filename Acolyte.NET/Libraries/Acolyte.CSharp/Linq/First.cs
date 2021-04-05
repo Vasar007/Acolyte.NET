@@ -37,9 +37,10 @@ namespace Acolyte.Linq
             }
             else
             {
-                using IEnumerator<TSource> enumerator = source.GetEnumerator();
-
-                if (enumerator.MoveNext()) return enumerator.Current;
+                foreach (TSource item in source)
+                {
+                    return item;
+                }
             }
 
             return defaultValue;

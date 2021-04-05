@@ -312,6 +312,42 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             Assert.Equal(expectedValue, actualValue);
         }
 
+        [Fact]
+        public void LastOrDefault_ShoulReturnNullValueIfItIsTheLastFoundValue()
+        {
+            // Arrange.
+            // Do not use random because we should find exactly last item.
+            IReadOnlyList<int?> collection = new int?[] { 1, 2, 3, null };
+            var explosiveCollection = ExplosiveCollection.CreateNotExplosive(collection);
+            int? expectedValue = collection[^1];
+
+            // Act.
+            int? actualValue = explosiveCollection.LastOrDefault(defaultValue: 0);
+
+            // Assert.
+            Assert.Equal(collection.Count, explosiveCollection.VisitedItemsNumber);
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Fact]
+        public void LastOrDefault_WithPredicate_ShoulReturnNullValueIfItIsTheFLastFoundValue()
+        {
+            // Arrange.
+            // Do not use random because we should find exactly last item.
+            IReadOnlyList<int?> collection = new int?[] { 1, 2, 3, null };
+            var explosiveCollection = ExplosiveCollection.CreateNotExplosive(collection);
+            int? expectedValue = collection[^1];
+
+            // Act.
+            int? actualValue = explosiveCollection.LastOrDefault(
+                i => i.Equals(expectedValue), defaultValue: 0
+            );
+
+            // Assert.
+            Assert.Equal(collection.Count, explosiveCollection.VisitedItemsNumber);
+            Assert.Equal(expectedValue, actualValue);
+        }
+
         #endregion
     }
 }

@@ -312,6 +312,48 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             Assert.Equal(expectedValue, actualValue);
         }
 
+        [Fact]
+        public void FirstOrDefault_ShoulReturnNullValueIfItIsTheFirstFoundValue()
+        {
+            // Arrange.
+            // Do not use random because we should find exactly first item.
+            int expectedIndex = Constants.FirstIndex;
+            IReadOnlyList<int?> collection = new int?[] { null, 2, 3, 4 };
+            var explosiveCollection = ExplosiveCollection.Create(
+               collection, explosiveIndex: expectedIndex + 1
+           );
+            int? expectedValue = collection[expectedIndex];
+
+            // Act.
+            int? actualValue = explosiveCollection.FirstOrDefault(defaultValue: 0);
+
+            // Assert.
+            Assert.Equal(expected: 1, explosiveCollection.VisitedItemsNumber);
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Fact]
+        public void FirstOrDefault_WithPredicate_ShoulReturnNullValueIfItIsTheFirstFoundValue()
+        {
+            // Arrange.
+            // Do not use random because we should find exactly first item.
+            int expectedIndex = Constants.FirstIndex;
+            IReadOnlyList<int?> collection = new int?[] { null, 2, 3, 4 };
+            var explosiveCollection = ExplosiveCollection.Create(
+               collection, explosiveIndex: expectedIndex + 1
+           );
+            int? expectedValue = collection[expectedIndex];
+
+            // Act.
+            int? actualValue = explosiveCollection.FirstOrDefault(
+                i => i.Equals(expectedValue), defaultValue: 0
+            );
+
+            // Assert.
+            Assert.Equal(expected: 1, explosiveCollection.VisitedItemsNumber);
+            Assert.Equal(expectedValue, actualValue);
+        }
+
         #endregion
     }
 }

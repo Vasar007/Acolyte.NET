@@ -46,7 +46,8 @@ namespace Acolyte.Linq
                     do
                     {
                         result = enumerator.Current;
-                    } while (enumerator.MoveNext());
+                    }
+                    while (enumerator.MoveNext());
 
                     return result;
                 }

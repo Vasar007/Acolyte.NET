@@ -325,7 +325,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         public void SingleOrDefault_ShouldLookOnlyAtFirstAndSecondItemsFromCollectionBeforeFail()
         {
             // Arrange.
-            var collection = new[] { 1, 2, 3, 4 };
+            IReadOnlyList<int> collection = new[] { 1, 2, 3, 4 };
             var explosiveCollection = ExplosiveCollection.Create(
                 collection, explosiveIndex: Constants.FirstIndex + 2
             );
@@ -344,9 +344,9 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         {
             // Arrange.
             // Do not use random because we should find exactly second item.
-            var collection = new[] { 1, 2, 3, 4 };
+            IReadOnlyList<int> collection = new[] { 1, 2, 3, 4 };
             var explosiveCollection = ExplosiveCollection.CreateNotExplosive(collection);
-            int expectedValue = explosiveCollection.Skip(1).First();
+            int expectedValue = collection[1];
 
             // Act.
             int actualValue = explosiveCollection.SingleOrDefault(
@@ -354,7 +354,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             );
 
             // Assert.
-            Assert.Equal(collection.Length, explosiveCollection.VisitedItemsNumber);
+            Assert.Equal(collection.Count, explosiveCollection.VisitedItemsNumber);
             Assert.Equal(expectedValue, actualValue);
         }
 
@@ -363,19 +363,57 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         {
             // Arrange.
             // Do not use random because we should find exactly two equal items.
-            var collection = new[] { 1, 2, 3, 2, 5 };
+            IReadOnlyList<int> collection = new[] { 1, 2, 3, 2, 5 };
             var explosiveCollection = ExplosiveCollection.CreateNotExplosive(collection);
-            int expectedValue = explosiveCollection.Skip(1).First();
+            int expectedValue = collection[1];
 
             // Act & Assert.
             Assert.Throws(
-             Error.MoreThanOneElement().GetType(),
-             () => explosiveCollection.SingleOrDefault(
-                 i => i.Equals(expectedValue), defaultValue: default
+                Error.MoreThanOneElement().GetType(),
+                () => explosiveCollection.SingleOrDefault(
+                    i => i.Equals(expectedValue), defaultValue: default
                 )
             );
 
             Assert.Equal(expected: 4, explosiveCollection.VisitedItemsNumber);
+        }
+
+        [Fact]
+        public void SingleOrDefault_ShoulReturnNullValueIfItIsTheSingleFoundValue()
+        {
+            // Arrange.
+            // Do not use random because we should find exactly first item.
+            int expectedIndex = Constants.FirstIndex;
+            IReadOnlyList<int?> collection = new int?[] { null };
+            var explosiveCollection = ExplosiveCollection.CreateNotExplosive(collection);
+            int? expectedValue = collection[expectedIndex];
+
+            // Act.
+            int? actualValue = explosiveCollection.SingleOrDefault(defaultValue: 0);
+
+            // Assert.
+            Assert.Equal(expected: collection.Count, explosiveCollection.VisitedItemsNumber);
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Fact]
+        public void SingleOrDefault_WithPredicate_ShoulReturnNullValueIfItIsTheSingleFoundValue()
+        {
+            // Arrange.
+            // Do not use random because we should find exactly first item.
+            int expectedIndex = Constants.FirstIndex;
+            IReadOnlyList<int?> collection = new int?[] { null, 2, 3, 4 };
+            var explosiveCollection = ExplosiveCollection.CreateNotExplosive(collection);
+            int? expectedValue = collection[expectedIndex];
+
+            // Act.
+            int? actualValue = explosiveCollection.SingleOrDefault(
+                i => i.Equals(expectedValue), defaultValue: 0
+            );
+
+            // Assert.
+            Assert.Equal(expected: collection.Count, explosiveCollection.VisitedItemsNumber);
+            Assert.Equal(expectedValue, actualValue);
         }
 
         #endregion
