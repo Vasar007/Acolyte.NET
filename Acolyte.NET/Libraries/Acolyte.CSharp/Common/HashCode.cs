@@ -451,7 +451,7 @@ namespace Acolyte.Common
         {
             int temp = startHashCode;
 
-            IEnumerator<T> enumerator = items.GetEnumerator();
+            using IEnumerator<T> enumerator = items.GetEnumerator();
             if (enumerator.MoveNext())
             {
                 temp = CombineHashCodes(temp, GetHashCode(enumerator.Current));
