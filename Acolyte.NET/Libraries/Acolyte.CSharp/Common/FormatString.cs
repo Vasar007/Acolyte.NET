@@ -9,20 +9,9 @@ namespace Acolyte.Common
 
         private readonly object[] _args;
 
-        private volatile string? _value;
+        private readonly Lazy<string> _lazyValue;
 
-        public string Value
-        {
-            get
-            {
-                if (_value is null)
-                {
-                    _value = string.Format(_format, _args);
-                }
-
-                return _value;
-            }
-        }
+        public string Value => _lazyValue.Value;
 
 
         public FormatString(
@@ -31,6 +20,8 @@ namespace Acolyte.Common
         {
             _format = format.ThrowIfNull(nameof(format));
             _args = args.ThrowIfNull(nameof(args));
+
+            _lazyValue = new Lazy<string>(() => string.Format(_format, _args), isThreadSafe: false);
         }
 
         #region Object Overridden Methods
