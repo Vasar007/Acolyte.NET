@@ -13,7 +13,7 @@ namespace Acolyte.Linq
         #region Internals For Each Asynchronous
 
         /// <summary>
-        /// Helper method to perform function with cancellation check.
+        /// Helper method to perform function with cancellation token.
         /// </summary>
         /// <typeparam name="TSource">
         /// The type of <paramref name="item" /> to perform function on.
@@ -24,7 +24,7 @@ namespace Acolyte.Linq
         /// </param>
         /// <param name="cancellationToken">
         /// A cancellation token that can be used to cancel the work if it has not yet started.
-        /// <see cref="PerformFunctionWithCancellation{TSource}(TSource, Func{TSource, Task}, CancellationToken)" />
+        /// <see cref="PerformFuncWithCancellation{TSource}(TSource, Func{TSource, Task}, CancellationToken)" />
         /// does not pass <paramref name="cancellationToken" /> to <paramref name="function" />.
         /// </param>
         /// <returns>
@@ -36,7 +36,7 @@ namespace Acolyte.Linq
         /// The <see cref="CancellationTokenSource" /> associated with
         /// <paramref name="cancellationToken" /> was disposed.
         /// </exception>
-        private static Task PerformFunctionWithCancellation<TSource>(TSource item,
+        private static Task PerformFuncWithCancellation<TSource>(TSource item,
             Func<TSource, Task> function, CancellationToken cancellationToken)
         {
             Debug.Assert(
@@ -48,7 +48,43 @@ namespace Acolyte.Linq
         }
 
         /// <summary>
-        /// Helper method to perform function with cancellation check.
+        /// Helper method to perform function with cancellation token and item index.
+        /// </summary>
+        /// <typeparam name="TSource">
+        /// The type of <paramref name="item" /> to perform function on.
+        /// </typeparam>
+        /// <param name="item">An item to perform function on.</param>
+        /// <param name="index">An index of item to perform function on.</param>
+        /// <param name="function">
+        /// The <see cref="Func{T, TResult}" /> delegate to perform on the <paramref name="item" />.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// A cancellation token that can be used to cancel the work if it has not yet started.
+        /// <see cref="PerformFuncWithCancellation{TSource}(TSource, int, Func{TSource, int, Task}, CancellationToken)" />
+        /// does not pass <paramref name="cancellationToken" /> to <paramref name="function" />.
+        /// </param>
+        /// <returns>
+        /// A task that represents the work on an <paramref name="item" /> queued to execute in the
+        /// thread pool.
+        /// </returns>
+        /// <exception cref="TaskCanceledException">The task has been canceled.</exception>
+        /// <exception cref="ObjectDisposedException">
+        /// The <see cref="CancellationTokenSource" /> associated with
+        /// <paramref name="cancellationToken" /> was disposed.
+        /// </exception>
+        private static Task PerformFuncWithCancellation<TSource>(TSource item, int index,
+            Func<TSource, int, Task> function, CancellationToken cancellationToken)
+        {
+            Debug.Assert(
+                function is not null,
+                $"Caller must check \"{nameof(function)}\" parameter on null!"
+            );
+
+            return Task.Run(() => function!(item, index), cancellationToken);
+        }
+
+        /// <summary>
+        /// Helper method to perform function with cancellation token.
         /// </summary>
         /// <typeparam name="TSource">
         /// The type of <paramref name="item" /> to perform function on.
@@ -85,6 +121,46 @@ namespace Acolyte.Linq
             return Task.Run(() => function!(item), cancellationToken);
         }
 
+        /// <summary>
+        /// Helper method to perform function with cancellation token and item index.
+        /// </summary>
+        /// <typeparam name="TSource">
+        /// The type of <paramref name="item" /> to perform function on.
+        /// </typeparam>
+        /// <typeparam name="TResult">
+        /// The type of element that <paramref name="function" /> returns.
+        /// </typeparam>
+        /// <param name="item">An item to perform function on.</param>
+        /// <param name="index">An index of item to perform function on.</param>
+        /// <param name="function">
+        /// The <see cref="Func{T, TResult}" /> delegate to perform on the <paramref name="item" />.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// A cancellation token that can be used to cancel the work if it has not yet started.
+        /// <see cref="PerformFuncWithCancellation{TSource, TResult}(TSource, int, Func{TSource, int, Task{TResult}}, CancellationToken)" />
+        /// does not pass <paramref name="cancellationToken" /> to <paramref name="function" />.
+        /// </param>
+        /// <returns>
+        /// A task that represents the work on an <paramref name="item" /> queued to execute in the
+        /// thread pool.
+        /// </returns>
+        /// <exception cref="TaskCanceledException">The task has been canceled.</exception>
+        /// <exception cref="ObjectDisposedException">
+        /// The <see cref="CancellationTokenSource" /> associated with
+        /// <paramref name="cancellationToken" /> was disposed.
+        /// </exception>
+        private static Task<TResult> PerformFuncWithCancellation<TSource, TResult>(
+            TSource item, int index, Func<TSource, int, Task<TResult>> function,
+            CancellationToken cancellationToken)
+        {
+            Debug.Assert(
+                function is not null,
+                $"Caller must check \"{nameof(function)}\" parameter on null!"
+            );
+
+            return Task.Run(() => function!(item, index), cancellationToken);
+        }
+
         #endregion
 
         /// <summary>
@@ -96,8 +172,7 @@ namespace Acolyte.Linq
         /// </typeparam>
         /// <param name="source">A sequence of values to perform function.</param>
         /// <param name="function">
-        /// The <see cref="Func{T, TResult}" /> delegate to perform on the
-        /// <paramref name="source" />.
+        /// A function to apply on each <paramref name="source" /> element.
         /// </param>
         /// <param name="cancellationToken">
         /// A cancellation token that can be used to cancel the work if it has not yet started.
@@ -117,14 +192,16 @@ namespace Acolyte.Linq
         /// The <see cref="CancellationTokenSource" /> associated with
         /// <paramref name="cancellationToken" /> was disposed.
         /// </exception>
+        [Obsolete("Use \"System.Linq.Async\" package instead. This method will be removed in next major version.", error: false)]
         public static Task ForEachAsync<TSource>(this IEnumerable<TSource> source,
             Func<TSource, Task> function, CancellationToken cancellationToken = default)
         {
             // Null check for "source" parameter is provided by "Enumerable.Select" method.
             function.ThrowIfNull(nameof(function));
 
-            var results = source
-                .Select(item => PerformFunctionWithCancellation(item, function, cancellationToken));
+            var results = source.Select(
+                item => PerformFuncWithCancellation(item, function, cancellationToken)
+            );
 
             return Task.WhenAll(results);
         }
@@ -141,8 +218,7 @@ namespace Acolyte.Linq
         /// </typeparam>
         /// <param name="source">A sequence of values to perform function.</param>
         /// <param name="function">
-        /// The <see cref="Func{T, TResult}" /> delegate to perform on the
-        /// <paramref name="source" />.
+        /// A transform function to apply on each <paramref name="source" /> element.
         /// </param>
         /// <param name="cancellationToken">
         /// A cancellation token that can be used to cancel the work if it has not yet started.
@@ -163,6 +239,7 @@ namespace Acolyte.Linq
         /// The <see cref="CancellationTokenSource" /> associated with
         /// <paramref name="cancellationToken" /> was disposed.
         /// </exception>
+        [Obsolete("Use \"System.Linq.Async\" package instead. This method will be removed in next major version.", error: false)]
         public static Task<TResult[]> ForEachAsync<TSource, TResult>(
             this IEnumerable<TSource> source, Func<TSource, Task<TResult>> function,
             CancellationToken cancellationToken = default)
@@ -170,8 +247,9 @@ namespace Acolyte.Linq
             // Null check for "source" parameter is provided by "Enumerable.Select" method.
             function.ThrowIfNull(nameof(function));
 
-            var results = source
-                .Select(item => PerformFuncWithCancellation(item, function, cancellationToken));
+            var results = source.Select(
+                item => PerformFuncWithCancellation(item, function, cancellationToken)
+            );
 
             return Task.WhenAll(results);
         }
@@ -187,8 +265,7 @@ namespace Acolyte.Linq
         /// </typeparam>
         /// <param name="source">An asynchronous sequence of values to perform function.</param>
         /// <param name="function">
-        /// The <see cref="Func{T, TResult}" /> delegate to perform on the
-        /// <paramref name="source" />.
+        /// A function to apply on each <paramref name="source" /> element.
         /// </param>
         /// <param name="cancellationToken">
         /// A cancellation token that can be used to cancel the work if it has not yet started.
@@ -208,6 +285,7 @@ namespace Acolyte.Linq
         /// The <see cref="CancellationTokenSource" /> associated with
         /// <paramref name="cancellationToken" /> was disposed.
         /// </exception>
+        [Obsolete("Use \"System.Linq.Async\" package instead. This method will be removed in next major version.", error: false)]
         public static async Task ForEachAsync<TSource>(this IAsyncEnumerable<TSource> source,
             Func<TSource, Task> function, CancellationToken cancellationToken = default)
         {
@@ -218,7 +296,7 @@ namespace Acolyte.Linq
             await foreach (TSource item in source.WithCancellation(cancellationToken)
                 .ConfigureAwait(continueOnCapturedContext: false))
             {
-                var task = PerformFunctionWithCancellation(item, function, cancellationToken);
+                var task = PerformFuncWithCancellation(item, function, cancellationToken);
                 results.Add(task);
             }
 
@@ -237,8 +315,7 @@ namespace Acolyte.Linq
         /// </typeparam>
         /// <param name="source">An asynchronous sequence of values to perform function.</param>
         /// <param name="function">
-        /// The <see cref="Func{T, TResult}" /> delegate to perform on the
-        /// <paramref name="source" />.
+        /// A transform function to apply on each <paramref name="source" /> element.
         /// </param>
         /// <param name="cancellationToken">
         /// A cancellation token that can be used to cancel the work if it has not yet started.
@@ -259,6 +336,7 @@ namespace Acolyte.Linq
         /// The <see cref="CancellationTokenSource" /> associated with
         /// <paramref name="cancellationToken" /> was disposed.
         /// </exception>
+        [Obsolete("Use \"System.Linq.Async\" package instead. This method will be removed in next major version.", error: false)]
         public static async Task<TResult[]> ForEachAsync<TSource, TResult>(
             this IAsyncEnumerable<TSource> source, Func<TSource, Task<TResult>> function,
             CancellationToken cancellationToken = default)
