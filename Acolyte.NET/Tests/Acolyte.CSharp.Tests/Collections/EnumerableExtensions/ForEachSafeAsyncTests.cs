@@ -19,11 +19,11 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         #region Null Values
 
         [Fact]
-        public void ForEachSafeAsync_Enumerable_WithSelectorAndToken_ForNullValue_ShouldFail()
+        public void ForEachSafeAsync_Enumerable_WithToken_ForNullValue_ShouldFail()
         {
             // Arrange.
             const IEnumerable<int>? nullValue = null;
-            Func<int, Task<int>> discard = DiscardFunction<int>.FuncAsync;
+            Func<int, Task> discard = DiscardFunction<int>.FuncAsync;
             var cancellationToken = CancellationToken.None;
 
             // Act & Assert.
@@ -33,11 +33,11 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void ForEachSafeAsync_Enumerable_WithSelector_ForNullValue_ShouldFail()
+        public void ForEachSafeAsync_Enumerable_ForNullValue_ShouldFail()
         {
             // Arrange.
             const IEnumerable<int>? nullValue = null;
-            Func<int, Task<int>> discard = DiscardFunction<int>.FuncAsync;
+            Func<int, Task> discard = DiscardFunction<int>.FuncAsync;
 
             // Act & Assert.
             Assert.ThrowsAsync<ArgumentNullException>(
@@ -46,7 +46,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void ForEachSafeAsync_Enumerable_WithTransformAndToken_ForNullValue_ShouldFail()
+        public void ForEachSafeAsync_Enumerable_WithSelectorAndToken_ForNullValue_ShouldFail()
         {
             // Arrange.
             const IEnumerable<int>? nullValue = null;
@@ -60,7 +60,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void ForEachSafeAsync_Enumerable_WithTransform_ForNullValue_ShouldFail()
+        public void ForEachSafeAsync_Enumerable_WithSelector_ForNullValue_ShouldFail()
         {
             // Arrange.
             const IEnumerable<int>? nullValue = null;
@@ -75,11 +75,11 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
 #if NETSTANDARD2_1
 
         [Fact]
-        public void ForEachSafeAsync_AsyncEnumerable_WithSelectorAndToken_ForNullValue_ShouldFail()
+        public void ForEachSafeAsync_AsyncEnumerable_WithToken_ForNullValue_ShouldFail()
         {
             // Arrange.
             const IAsyncEnumerable<int>? nullValue = null;
-            Func<int, Task<int>> discard = DiscardFunction<int>.FuncAsync;
+            Func<int, Task> discard = DiscardFunction<int>.FuncAsync;
             var cancellationToken = CancellationToken.None;
 
             // Act & Assert.
@@ -89,11 +89,11 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void ForEachSafeAsync_AsyncEnumerable_WithSelector_ForNullValue_ShouldFail()
+        public void ForEachSafeAsync_AsyncEnumerable_ForNullValue_ShouldFail()
         {
             // Arrange.
             const IAsyncEnumerable<int>? nullValue = null;
-            Func<int, Task<int>> discard = DiscardFunction<int>.FuncAsync;
+            Func<int, Task> discard = DiscardFunction<int>.FuncAsync;
 
             // Act & Assert.
             Assert.ThrowsAsync<ArgumentNullException>(
@@ -102,7 +102,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void ForEachSafeAsync_AsyncEnumerable_WithTransformAndToken_ForNullValue_ShouldFail()
+        public void ForEachSafeAsync_AsyncEnumerable_WithSelectorAndToken_ForNullValue_ShouldFail()
         {
             // Arrange.
             const IAsyncEnumerable<int>? nullValue = null;
@@ -116,7 +116,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public void ForEachSafeAsync_AsyncEnumerable_WithTransform_ForNullValue_ShouldFail()
+        public void ForEachSafeAsync_AsyncEnumerable_WithSelector_ForNullValue_ShouldFail()
         {
             // Arrange.
             const IAsyncEnumerable<int>? nullValue = null;

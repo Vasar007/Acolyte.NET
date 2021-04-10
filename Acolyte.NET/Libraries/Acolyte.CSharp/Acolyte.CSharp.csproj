@@ -42,10 +42,6 @@
     <NoWarn>1701;1702;CS1591</NoWarn>
   </PropertyGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
-    <PackageReference Include="Microsoft.Bcl.HashCode" Version="1.1.1" />
-  </ItemGroup>
-
   <PropertyGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
     <AssemblyTitle>Acolyte.CSharp .NET Standard 2.0</AssemblyTitle>
     <DefineConstants>NETSTANDARD2_0</DefineConstants>
@@ -63,6 +59,10 @@
     <None Include="..\..\..\LICENSE">
       <Pack>True</Pack>
     </None>
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+    <PackageReference Include="Microsoft.Bcl.HashCode" Version="1.1.1" />
   </ItemGroup>
 
 </Project>

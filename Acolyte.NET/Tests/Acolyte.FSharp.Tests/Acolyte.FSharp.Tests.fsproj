@@ -27,19 +27,19 @@
     <Copyright>© 2020 Vasily Vasilyev (vasar007@yandex.ru)</Copyright>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(TargetFramework)'=='net472'">
+  <PropertyGroup Condition="'$(TargetFramework)' == 'net472'">
     <AssemblyTitle>Acolyte.FSharp Tests .NET Standard 2.0 (.NET Framework 4.7.2)</AssemblyTitle>
     <ReferringTargetFrameworkForProjectReferences>.NETStandard,Version=v2.0</ReferringTargetFrameworkForProjectReferences>
     <DefineConstants>NETSTANDARD2_0</DefineConstants>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(TargetFramework)'=='netcoreapp3.1'">
+  <PropertyGroup Condition="'$(TargetFramework)' == 'netcoreapp3.1'">
     <AssemblyTitle>Acolyte.FSharp Tests .NET Standard 2.0 (.NET Core 3.1)</AssemblyTitle>
     <ReferringTargetFrameworkForProjectReferences>.NETStandard,Version=v2.0</ReferringTargetFrameworkForProjectReferences>
     <DefineConstants>NETSTANDARD2_0</DefineConstants>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(TargetFramework)'=='net5.0'">
+  <PropertyGroup Condition="'$(TargetFramework)' == 'net5.0'">
     <AssemblyTitle>Acolyte.FSharp Tests .NET Standard 2.1 (.NET 5.0)</AssemblyTitle>
     <ReferringTargetFrameworkForProjectReferences>.NETStandard,Version=v2.1</ReferringTargetFrameworkForProjectReferences>
     <DefineConstants>NETSTANDARD2_1</DefineConstants>
@@ -50,6 +50,11 @@
     <Compile Include="Functional\UtilsTests.fs" />
     <Compile Include="Functional\SeqExTests.fs" />
     <Compile Include="Program.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="$(SolutionDir)Libraries\Acolyte.FSharp\Acolyte.FSharp.fsproj" />
+    <ProjectReference Include="$(SolutionDir)Tests\Acolyte.Tests.Common\Acolyte.Tests.Common.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -65,11 +70,6 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="$(SolutionDir)Libraries\Acolyte.FSharp\Acolyte.FSharp.fsproj" />
-    <ProjectReference Include="$(SolutionDir)Tests\Acolyte.Tests.Common\Acolyte.Tests.Common.csproj" />
   </ItemGroup>
 
 </Project>
