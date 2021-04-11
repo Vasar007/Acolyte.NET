@@ -1,10 +1,10 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Acolyte.Functions;
 using Acolyte.Linq;
-using Acolyte.Threading;
 using Xunit;
 
 namespace Acolyte.Tests.Collections.EnumerableExtensions
@@ -134,13 +134,12 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
-            Func<int, int> select = item => item;
-            int expectedValue = emptyCollection.Select(select).Sum();
+            IReadOnlyList<int> expectedCollection = emptyCollection.ToArray();
 
-            var actual = new CounterInt32();
+            var actual = new ConcurrentBag<int>();
             Func<int, Task> action = item =>
             {
-                actual.Advance(item);
+                actual.Add(item);
                 return Task.CompletedTask;
             };
 
@@ -148,7 +147,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             await emptyCollection.ParallelForEachAwaitAsync(action);
 
             // Assert.
-            Assert.Equal(expectedValue, actual.Value);
+            Assert.Equal(expectedCollection, actual.ToArray());
         }
 
         [Fact]
@@ -156,13 +155,13 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
-            Func<int, int, int> select = (item, index) => item * (index + 1);
-            int expectedValue = emptyCollection.Select(select).Sum();
+            Func<int, int, int> select = (item, index) => item + index;
+            IReadOnlyList<int> expectedCollection = emptyCollection.ToArray();
 
-            var actual = new CounterInt32();
+            var actual = new ConcurrentBag<int>();
             Func<int, int, Task> action = (item, index) =>
             {
-                actual.Advance(select(item, index));
+                actual.Add(select(item, index));
                 return Task.CompletedTask;
             };
 
@@ -170,7 +169,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             await emptyCollection.ParallelForEachAwaitAsync(action);
 
             // Assert.
-            Assert.Equal(expectedValue, actual.Value);
+            Assert.Equal(expectedCollection, actual.ToArray());
         }
 
         [Fact]
@@ -220,13 +219,12 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         {
             // Arrange.
             IAsyncEnumerable<int> emptyCollection = AsyncEnumerable.Empty<int>();
-            Func<int, int, int> select = (item, index) => item * (index + 1);
-            int expectedValue = await emptyCollection.Select(select).SumAsync();
+            IReadOnlyList<int> expectedCollection = await emptyCollection.ToArrayAsync();
 
-            var actual = new CounterInt32();
-            Func<int, int, Task> action = (item, index) =>
+            var actual = new ConcurrentBag<int>();
+            Func<int, Task> action = item =>
             {
-                actual.Advance(select(item, index));
+                actual.Add(item);
                 return Task.CompletedTask;
             };
 
@@ -234,7 +232,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             await emptyCollection.ParallelForEachAwaitAsync(action);
 
             // Assert.
-            Assert.Equal(expectedValue, actual.Value);
+            Assert.Equal(expectedCollection, actual.ToArray());
         }
 
         [Fact]
@@ -243,12 +241,14 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             // Arrange.
             IAsyncEnumerable<int> emptyCollection = AsyncEnumerable.Empty<int>();
             Func<int, int, int> select = (item, index) => item * (index + 1);
-            int expectedValue = await emptyCollection.Select(select).SumAsync();
+            IReadOnlyList<int> expectedCollection = await emptyCollection
+                .Select(select)
+                .ToArrayAsync();
 
-            var actual = new CounterInt32();
+            var actual = new ConcurrentBag<int>();
             Func<int, int, Task> action = (item, index) =>
             {
-                actual.Advance(select(item, index));
+                actual.Add(select(item, index));
                 return Task.CompletedTask;
             };
 
@@ -256,7 +256,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             await emptyCollection.ParallelForEachAwaitAsync(action);
 
             // Assert.
-            Assert.Equal(expectedValue, actual.Value);
+            Assert.Equal(expectedCollection, actual.ToArray());
         }
 
         [Fact]
@@ -271,7 +271,8 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             Func<int, Task<bool>> action = item => Task.FromResult(transform(item));
 
             // Act.
-            IReadOnlyList<bool> actualCollection = await emptyCollection.ParallelForEachAwaitAsync(action);
+            IReadOnlyList<bool> actualCollection =
+                await emptyCollection.ParallelForEachAwaitAsync(action);
 
             // Assert.
             Assert.Equal(expectedCollection, actualCollection);
