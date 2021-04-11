@@ -1,39 +1,22 @@
-﻿#pragma warning disable CS0618 // Type or member is obsolete
-
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Threading;
 using System.Threading.Tasks;
-using Acolyte.Collections;
 using Acolyte.Functions;
+using Acolyte.Linq;
 using Xunit;
 
 namespace Acolyte.Tests.Collections.EnumerableExtensions
 {
-    public sealed class ForEachSafeAsyncTests
+    public sealed class SafeParallelForEachAwaitAsyncTests
     {
-        public ForEachSafeAsyncTests()
+        public SafeParallelForEachAwaitAsyncTests()
         {
         }
 
         #region Null Values
 
         [Fact]
-        public void ForEachSafeAsync_Enumerable_WithToken_ForNullValue_ShouldFail()
-        {
-            // Arrange.
-            const IEnumerable<int>? nullValue = null;
-            Func<int, Task> discard = DiscardFunction<int>.FuncAsync;
-            var cancellationToken = CancellationToken.None;
-
-            // Act & Assert.
-            Assert.ThrowsAsync<ArgumentNullException>(
-                "source", () => nullValue!.ForEachSafeAsync(discard, cancellationToken)
-            );
-        }
-
-        [Fact]
-        public void ForEachSafeAsync_Enumerable_ForNullValue_ShouldFail()
+        public void SafeParallelForEachAwaitAsync_Enumerable_ForNullValue_ShouldFail()
         {
             // Arrange.
             const IEnumerable<int>? nullValue = null;
@@ -41,26 +24,25 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
 
             // Act & Assert.
             Assert.ThrowsAsync<ArgumentNullException>(
-                "source", () => nullValue!.ForEachSafeAsync(discard)
+                "source", () => nullValue!.SafeParallelForEachAwaitAsync(discard)
             );
         }
 
         [Fact]
-        public void ForEachSafeAsync_Enumerable_WithSelectorAndToken_ForNullValue_ShouldFail()
+        public void SafeParallelForEachAwaitAsync_Enumerable_WithIndex_ForNullValue_ShouldFail()
         {
             // Arrange.
             const IEnumerable<int>? nullValue = null;
-            Func<int, Task<bool>> discard = DiscardFunction<int, bool>.FuncAsync;
-            var cancellationToken = CancellationToken.None;
+            Func<int, int, Task> discard = DiscardFunction<int>.FuncWithIndexAsync;
 
             // Act & Assert.
             Assert.ThrowsAsync<ArgumentNullException>(
-                "source", () => nullValue!.ForEachSafeAsync(discard, cancellationToken)
+                "source", () => nullValue!.SafeParallelForEachAwaitAsync(discard)
             );
         }
 
         [Fact]
-        public void ForEachSafeAsync_Enumerable_WithSelector_ForNullValue_ShouldFail()
+        public void SafeParallelForEachAwaitAsync_Enumerable_WithSelector_ForNullValue_ShouldFail()
         {
             // Arrange.
             const IEnumerable<int>? nullValue = null;
@@ -68,28 +50,27 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
 
             // Act & Assert.
             Assert.ThrowsAsync<ArgumentNullException>(
-                "source", () => nullValue!.ForEachSafeAsync(discard)
+                "source", () => nullValue!.SafeParallelForEachAwaitAsync(discard)
+            );
+        }
+
+        [Fact]
+        public void SafeParallelForEachAwaitAsync_Enumerable_WithSelectorAndIndex_ForNullValue_ShouldFail()
+        {
+            // Arrange.
+            const IEnumerable<int>? nullValue = null;
+            Func<int, int, Task<bool>> discard = DiscardFunction<int, bool>.FuncWithIndexAsync;
+
+            // Act & Assert.
+            Assert.ThrowsAsync<ArgumentNullException>(
+                "source", () => nullValue!.SafeParallelForEachAwaitAsync(discard)
             );
         }
 
 #if NETSTANDARD2_1
 
         [Fact]
-        public void ForEachSafeAsync_AsyncEnumerable_WithToken_ForNullValue_ShouldFail()
-        {
-            // Arrange.
-            const IAsyncEnumerable<int>? nullValue = null;
-            Func<int, Task> discard = DiscardFunction<int>.FuncAsync;
-            var cancellationToken = CancellationToken.None;
-
-            // Act & Assert.
-            Assert.ThrowsAsync<ArgumentNullException>(
-                "source", () => nullValue!.ForEachSafeAsync(discard, cancellationToken)
-            );
-        }
-
-        [Fact]
-        public void ForEachSafeAsync_AsyncEnumerable_ForNullValue_ShouldFail()
+        public void SafeParallelForEachAwaitAsync_AsyncEnumerable_ForNullValue_ShouldFail()
         {
             // Arrange.
             const IAsyncEnumerable<int>? nullValue = null;
@@ -97,26 +78,25 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
 
             // Act & Assert.
             Assert.ThrowsAsync<ArgumentNullException>(
-                "source", () => nullValue!.ForEachSafeAsync(discard)
+                "source", () => nullValue!.SafeParallelForEachAwaitAsync(discard)
             );
         }
 
         [Fact]
-        public void ForEachSafeAsync_AsyncEnumerable_WithSelectorAndToken_ForNullValue_ShouldFail()
+        public void SafeParallelForEachAwaitAsync_AsyncEnumerable_WithIndex_ForNullValue_ShouldFail()
         {
             // Arrange.
             const IAsyncEnumerable<int>? nullValue = null;
-            Func<int, Task<bool>> discard = DiscardFunction<int, bool>.FuncAsync;
-            var cancellationToken = CancellationToken.None;
+            Func<int, int, Task> discard = DiscardFunction<int>.FuncWithIndexAsync;
 
             // Act & Assert.
             Assert.ThrowsAsync<ArgumentNullException>(
-                "source", () => nullValue!.ForEachSafeAsync(discard, cancellationToken)
+                "source", () => nullValue!.SafeParallelForEachAwaitAsync(discard)
             );
         }
 
         [Fact]
-        public void ForEachSafeAsync_AsyncEnumerable_WithSelector_ForNullValue_ShouldFail()
+        public void SafeParallelForEachAwaitAsync_AsyncEnumerable_WithSelector_ForNullValue_ShouldFail()
         {
             // Arrange.
             const IAsyncEnumerable<int>? nullValue = null;
@@ -124,7 +104,20 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
 
             // Act & Assert.
             Assert.ThrowsAsync<ArgumentNullException>(
-                "source", () => nullValue!.ForEachSafeAsync(discard)
+                "source", () => nullValue!.SafeParallelForEachAwaitAsync(discard)
+            );
+        }
+
+        [Fact]
+        public void SafeParallelForEachAwaitAsync_AsyncEnumerable_WithSelectorAndIndex_ForNullValue_ShouldFail()
+        {
+            // Arrange.
+            const IAsyncEnumerable<int>? nullValue = null;
+            Func<int, int, Task<bool>> discard = DiscardFunction<int, bool>.FuncWithIndexAsync;
+
+            // Act & Assert.
+            Assert.ThrowsAsync<ArgumentNullException>(
+                "source", () => nullValue!.SafeParallelForEachAwaitAsync(discard)
             );
         }
 

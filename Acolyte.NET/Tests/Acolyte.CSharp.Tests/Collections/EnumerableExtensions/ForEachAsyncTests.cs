@@ -1,40 +1,24 @@
-﻿#pragma warning disable CS0618 // Type or member is obsolete
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
-using Acolyte.Collections;
 using Acolyte.Functions;
+using Acolyte.Linq;
+using Acolyte.Threading;
 using Xunit;
 
 namespace Acolyte.Tests.Collections.EnumerableExtensions
 {
-    public sealed class ForEachAsyncTests
+    public sealed class ParallelForEachAwaitAsyncTests
     {
-        public ForEachAsyncTests()
+        public ParallelForEachAwaitAsyncTests()
         {
         }
 
         #region Null Values
 
         [Fact]
-        public async Task ForEachAsync_Enumerable_WithToken_ForNullValue_ShouldFail()
-        {
-            // Arrange.
-            const IEnumerable<int>? nullValue = null;
-            Func<int, Task> discard = DiscardFunction<int>.FuncAsync;
-            var cancellationToken = CancellationToken.None;
-
-            // Act & Assert.
-            await Assert.ThrowsAsync<ArgumentNullException>(
-                "source", () => nullValue!.ForEachAsync(discard, cancellationToken)
-            );
-        }
-
-        [Fact]
-        public async Task ForEachAsync_Enumerable_ForNullValue_ShouldFail()
+        public async Task ParallelForEachAwaitAsync_Enumerable_ForNullValue_ShouldFail()
         {
             // Arrange.
             const IEnumerable<int>? nullValue = null;
@@ -42,26 +26,25 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
 
             // Act & Assert.
             await Assert.ThrowsAsync<ArgumentNullException>(
-                "source", () => nullValue!.ForEachAsync(discard)
+                "source", () => nullValue!.ParallelForEachAwaitAsync(discard)
             );
         }
 
         [Fact]
-        public async Task ForEachAsync_Enumerable_WithSelectorAndToken_ForNullValue_ShouldFail()
+        public async Task ParallelForEachAwaitAsync_Enumerable_WithIndex_ForNullValue_ShouldFail()
         {
             // Arrange.
             const IEnumerable<int>? nullValue = null;
-            Func<int, Task<bool>> discard = DiscardFunction<int, bool>.FuncAsync;
-            var cancellationToken = CancellationToken.None;
+            Func<int, int, Task> discard = DiscardFunction<int>.FuncWithIndexAsync;
 
             // Act & Assert.
             await Assert.ThrowsAsync<ArgumentNullException>(
-                "source", () => nullValue!.ForEachAsync(discard, cancellationToken)
+                "source", () => nullValue!.ParallelForEachAwaitAsync(discard)
             );
         }
 
         [Fact]
-        public async Task ForEachAsync_Enumerable_WithSelector_ForNullValue_ShouldFail()
+        public async Task ParallelForEachAwaitAsync_Enumerable_WithSelector_ForNullValue_ShouldFail()
         {
             // Arrange.
             const IEnumerable<int>? nullValue = null;
@@ -69,28 +52,27 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
 
             // Act & Assert.
             await Assert.ThrowsAsync<ArgumentNullException>(
-                "source", () => nullValue!.ForEachAsync(discard)
+                "source", () => nullValue!.ParallelForEachAwaitAsync(discard)
+            );
+        }
+
+        [Fact]
+        public async Task ParallelForEachAwaitAsync_Enumerable_WithSelectorAndIndex_ForNullValue_ShouldFail()
+        {
+            // Arrange.
+            const IEnumerable<int>? nullValue = null;
+            Func<int, int, Task<bool>> discard = DiscardFunction<int, bool>.FuncWithIndexAsync;
+
+            // Act & Assert.
+            await Assert.ThrowsAsync<ArgumentNullException>(
+                "source", () => nullValue!.ParallelForEachAwaitAsync(discard)
             );
         }
 
 #if NETSTANDARD2_1
 
         [Fact]
-        public async Task ForEachAsync_AsyncEnumerable_WithToken_ForNullValue_ShouldFail()
-        {
-            // Arrange.
-            const IAsyncEnumerable<int>? nullValue = null;
-            Func<int, Task> discard = DiscardFunction<int>.FuncAsync;
-            var cancellationToken = CancellationToken.None;
-
-            // Act & Assert.
-            await Assert.ThrowsAsync<ArgumentNullException>(
-                "source", () => nullValue!.ForEachAsync(discard, cancellationToken)
-            );
-        }
-
-        [Fact]
-        public async Task ForEachAsync_AsyncEnumerable_ForNullValue_ShouldFail()
+        public async Task ParallelForEachAwaitAsync_AsyncEnumerable_ForNullValue_ShouldFail()
         {
             // Arrange.
             const IAsyncEnumerable<int>? nullValue = null;
@@ -98,26 +80,25 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
 
             // Act & Assert.
             await Assert.ThrowsAsync<ArgumentNullException>(
-                "source", () => nullValue!.ForEachAsync(discard)
+                "source", () => nullValue!.ParallelForEachAwaitAsync(discard)
             );
         }
 
         [Fact]
-        public async Task ForEachAsync_AsyncEnumerable_WithSelectorAndToken_ForNullValue_ShouldFail()
+        public async Task ParallelForEachAwaitAsync_AsyncEnumerable_WithIndex_ForNullValue_ShouldFail()
         {
             // Arrange.
             const IAsyncEnumerable<int>? nullValue = null;
-            Func<int, Task<bool>> discard = DiscardFunction<int, bool>.FuncAsync;
-            var cancellationToken = CancellationToken.None;
+            Func<int, int, Task> discard = DiscardFunction<int>.FuncWithIndexAsync;
 
             // Act & Assert.
             await Assert.ThrowsAsync<ArgumentNullException>(
-                "source", () => nullValue!.ForEachAsync(discard, cancellationToken)
+                "source", () => nullValue!.ParallelForEachAwaitAsync(discard)
             );
         }
 
         [Fact]
-        public async Task ForEachAsync_AsyncEnumerable_WithSelector_ForNullValue_ShouldFail()
+        public async Task ParallelForEachAwaitAsync_AsyncEnumerable_WithSelector_ForNullValue_ShouldFail()
         {
             // Arrange.
             const IAsyncEnumerable<int>? nullValue = null;
@@ -125,7 +106,20 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
 
             // Act & Assert.
             await Assert.ThrowsAsync<ArgumentNullException>(
-                "source", () => nullValue!.ForEachAsync(discard)
+                "source", () => nullValue!.ParallelForEachAwaitAsync(discard)
+            );
+        }
+
+        [Fact]
+        public async Task ParallelForEachAwaitAsync_AsyncEnumerable_WithSelectorAndIndex_ForNullValue_ShouldFail()
+        {
+            // Arrange.
+            const IAsyncEnumerable<int>? nullValue = null;
+            Func<int, int, Task<bool>> discard = DiscardFunction<int, bool>.FuncWithIndexAsync;
+
+            // Act & Assert.
+            await Assert.ThrowsAsync<ArgumentNullException>(
+                "source", () => nullValue!.ParallelForEachAwaitAsync(discard)
             );
         }
 
@@ -136,76 +130,84 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         #region Empty Values
 
         [Fact]
-        public async Task ForEachAsync_Enumerable_WithToken_ForEmptyCollection_ShouldDoNothing()
+        public async Task ParallelForEachAwaitAsync_Enumerable_ForEmptyCollection_ShouldDoNothing()
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
-            IReadOnlyList<int> expectedCollection = emptyCollection.ToList();
-            var actualCollection = new List<int>();
-            Func<int, Task> action = i =>
+            Func<int, int> select = item => item;
+            int expectedValue = emptyCollection.Select(select).Sum();
+
+            var actual = new CounterInt32();
+            Func<int, Task> action = item =>
             {
-                actualCollection.Add(i);
-                return Task.CompletedTask;
-            };
-            var cancellationToken = CancellationToken.None;
-
-            // Act.
-            await emptyCollection.ForEachAsync(action, cancellationToken);
-
-            // Assert.
-            Assert.Equal(expectedCollection, actualCollection);
-        }
-
-        [Fact]
-        public async Task ForEachAsync_Enumerable_ForEmptyCollection_ShouldDoNothing()
-        {
-            // Arrange.
-            IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
-            IReadOnlyList<int> expectedCollection = emptyCollection.ToList();
-            var actualCollection = new List<int>();
-            Func<int, Task> action = i =>
-            {
-                actualCollection.Add(i);
+                actual.Advance(item);
                 return Task.CompletedTask;
             };
 
             // Act.
-            await emptyCollection.ForEachAsync(action);
+            await emptyCollection.ParallelForEachAwaitAsync(action);
+
+            // Assert.
+            Assert.Equal(expectedValue, actual.Value);
+        }
+
+        [Fact]
+        public async Task ParallelForEachAwaitAsync_Enumerable_WithIndex_ForEmptyCollection_ShouldDoNothing()
+        {
+            // Arrange.
+            IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
+            Func<int, int, int> select = (item, index) => item * (index + 1);
+            int expectedValue = emptyCollection.Select(select).Sum();
+
+            var actual = new CounterInt32();
+            Func<int, int, Task> action = (item, index) =>
+            {
+                actual.Advance(select(item, index));
+                return Task.CompletedTask;
+            };
+
+            // Act.
+            await emptyCollection.ParallelForEachAwaitAsync(action);
+
+            // Assert.
+            Assert.Equal(expectedValue, actual.Value);
+        }
+
+        [Fact]
+        public async Task ParallelForEachAwaitAsync_Enumerable_WithSelector_ForEmptyCollection_ShouldDoNothing()
+        {
+            // Arrange.
+            IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
+            Func<int, bool> transform = item => NumberParityFunction.IsEven(item);
+            IReadOnlyList<bool> expectedCollection = emptyCollection
+                .Select(transform)
+                .ToList();
+            Func<int, Task<bool>> action = item => Task.FromResult(transform(item));
+
+            // Act.
+            IReadOnlyList<bool> actualCollection =
+                await emptyCollection.ParallelForEachAwaitAsync(action);
 
             // Assert.
             Assert.Equal(expectedCollection, actualCollection);
         }
 
         [Fact]
-        public async Task ForEachAsync_Enumerable_WithSelectorAndToken_ForEmptyCollection_ShouldDoNothing()
+        public async Task ParallelForEachAwaitAsync_Enumerable_WithSelectorAndIndex_ForEmptyCollection_ShouldDoNothing()
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
-            Func<int, bool> transform = i => NumberParityFunction.IsEven(i);
-            IReadOnlyList<bool> expectedCollection = emptyCollection.Select(transform).ToList();
-            Func<int, Task<bool>> action = i => Task.FromResult(transform(i));
-            var cancellationToken = CancellationToken.None;
+            Func<int, int, bool> transform =
+                (item, index) => NumberParityFunction.IsEven(item + index);
+            IReadOnlyList<bool> expectedCollection = emptyCollection
+                .Select(transform)
+                .ToList();
+            Func<int, int, Task<bool>> action =
+                (item, index) => Task.FromResult(transform(item, index));
 
             // Act.
-            IReadOnlyList<bool> actualCollection = await emptyCollection.ForEachAsync(
-                action, cancellationToken
-            );
-
-            // Assert.
-            Assert.Equal(expectedCollection, actualCollection);
-        }
-
-        [Fact]
-        public async Task ForEachAsync_Enumerable_WithSelector_ForEmptyCollection_ShouldDoNothing()
-        {
-            // Arrange.
-            IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
-            Func<int, bool> transform = i => NumberParityFunction.IsEven(i);
-            IReadOnlyList<bool> expectedCollection = emptyCollection.Select(transform).ToList();
-            Func<int, Task<bool>> action = i => Task.FromResult(transform(i));
-
-            // Act.
-            IReadOnlyList<bool> actualCollection = await emptyCollection.ForEachAsync(action);
+            IReadOnlyList<bool> actualCollection =
+                await emptyCollection.ParallelForEachAwaitAsync(action);
 
             // Assert.
             Assert.Equal(expectedCollection, actualCollection);
@@ -214,80 +216,83 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
 #if NETSTANDARD2_1
 
         [Fact]
-        public async Task ForEachAsync_AsyncEnumerable_WithToken_ForEmptyCollection_ShouldDoNothing()
+        public async Task ParallelForEachAwaitAsync_AsyncEnumerable_ForEmptyCollection_ShouldDoNothing()
         {
             // Arrange.
             IAsyncEnumerable<int> emptyCollection = AsyncEnumerable.Empty<int>();
-            IReadOnlyList<int> expectedCollection = await emptyCollection.ToListAsync();
-            var actualCollection = new List<int>();
-            Func<int, Task> action = i =>
+            Func<int, int, int> select = (item, index) => item * (index + 1);
+            int expectedValue = await emptyCollection.Select(select).SumAsync();
+
+            var actual = new CounterInt32();
+            Func<int, int, Task> action = (item, index) =>
             {
-                actualCollection.Add(i);
-                return Task.CompletedTask;
-            };
-            var cancellationToken = CancellationToken.None;
-
-            // Act.
-            await emptyCollection.ForEachAsync(action, cancellationToken);
-
-            // Assert.
-            Assert.Equal(expectedCollection, actualCollection);
-        }
-
-        [Fact]
-        public async Task ForEachAsync_AsyncEnumerable_ForEmptyCollection_ShouldDoNothing()
-        {
-            // Arrange.
-            IAsyncEnumerable<int> emptyCollection = AsyncEnumerable.Empty<int>();
-            IReadOnlyList<int> expectedCollection = await emptyCollection.ToListAsync();
-            var actualCollection = new List<int>();
-            Func<int, Task> action = i =>
-            {
-                actualCollection.Add(i);
+                actual.Advance(select(item, index));
                 return Task.CompletedTask;
             };
 
             // Act.
-            await emptyCollection.ForEachAsync(action);
+            await emptyCollection.ParallelForEachAwaitAsync(action);
+
+            // Assert.
+            Assert.Equal(expectedValue, actual.Value);
+        }
+
+        [Fact]
+        public async Task ParallelForEachAwaitAsync_AsyncEnumerable_WithIndex_ForEmptyCollection_ShouldDoNothing()
+        {
+            // Arrange.
+            IAsyncEnumerable<int> emptyCollection = AsyncEnumerable.Empty<int>();
+            Func<int, int, int> select = (item, index) => item * (index + 1);
+            int expectedValue = await emptyCollection.Select(select).SumAsync();
+
+            var actual = new CounterInt32();
+            Func<int, int, Task> action = (item, index) =>
+            {
+                actual.Advance(select(item, index));
+                return Task.CompletedTask;
+            };
+
+            // Act.
+            await emptyCollection.ParallelForEachAwaitAsync(action);
+
+            // Assert.
+            Assert.Equal(expectedValue, actual.Value);
+        }
+
+        [Fact]
+        public async Task ParallelForEachAwaitAsync_AsyncEnumerable_WithSelector_ForEmptyCollection_ShouldDoNothing()
+        {
+            // Arrange.
+            IAsyncEnumerable<int> emptyCollection = AsyncEnumerable.Empty<int>();
+            Func<int, bool> transform = item => NumberParityFunction.IsEven(item);
+            IReadOnlyList<bool> expectedCollection = await emptyCollection
+                .Select(transform)
+                .ToListAsync();
+            Func<int, Task<bool>> action = item => Task.FromResult(transform(item));
+
+            // Act.
+            IReadOnlyList<bool> actualCollection = await emptyCollection.ParallelForEachAwaitAsync(action);
 
             // Assert.
             Assert.Equal(expectedCollection, actualCollection);
         }
 
         [Fact]
-        public async Task ForEachAsync_AsyncEnumerable_WithSelectorAndToken_ForEmptyCollection_ShouldDoNothing()
+        public async Task ParallelForEachAwaitAsync_AsyncEnumerable_WithSelectorAndIndex_ForEmptyCollection_ShouldDoNothing()
         {
             // Arrange.
             IAsyncEnumerable<int> emptyCollection = AsyncEnumerable.Empty<int>();
-            Func<int, bool> transform = i => NumberParityFunction.IsEven(i);
+            Func<int, int, bool> transform =
+                (item, index) => NumberParityFunction.IsEven(item + index);
             IReadOnlyList<bool> expectedCollection = await emptyCollection
                 .Select(transform)
                 .ToListAsync();
-            Func<int, Task<bool>> action = i => Task.FromResult(transform(i));
-            var cancellationToken = CancellationToken.None;
+            Func<int, int, Task<bool>> action =
+                (item, index) => Task.FromResult(transform(item, index));
 
             // Act.
-            IReadOnlyList<bool> actualCollection = await emptyCollection.ForEachAsync(
-                action, cancellationToken
-            );
-
-            // Assert.
-            Assert.Equal(expectedCollection, actualCollection);
-        }
-
-        [Fact]
-        public async Task ForEachAsync_AsyncEnumerable_WithSelector_ForEmptyCollection_ShouldDoNothing()
-        {
-            // Arrange.
-            IAsyncEnumerable<int> emptyCollection = AsyncEnumerable.Empty<int>();
-            Func<int, bool> transform = i => NumberParityFunction.IsEven(i);
-            IReadOnlyList<bool> expectedCollection = await emptyCollection
-                .Select(transform)
-                .ToListAsync();
-            Func<int, Task<bool>> action = i => Task.FromResult(transform(i));
-
-            // Act.
-            IReadOnlyList<bool> actualCollection = await emptyCollection.ForEachAsync(action);
+            IReadOnlyList<bool> actualCollection =
+                await emptyCollection.ParallelForEachAwaitAsync(action);
 
             // Assert.
             Assert.Equal(expectedCollection, actualCollection);
