@@ -106,9 +106,15 @@ namespace Acolyte.Threading
             return Interlocked.Exchange(ref _counter, _counter - 1);
         }
 
-        public CounterInt32 Advance(int value)
+        public CounterInt32 Add(int value)
         {
             Interlocked.Exchange(ref _counter, _counter + value);
+            return this;
+        }
+
+        public CounterInt32 Subtract(int value)
+        {
+            Interlocked.Exchange(ref _counter, _counter - value);
             return this;
         }
 
@@ -136,6 +142,16 @@ namespace Acolyte.Threading
         public static CounterInt32 operator --(CounterInt32 counter)
         {
             return counter.Decrement();
+        }
+
+        public static CounterInt32 operator +(CounterInt32 counter, int value)
+        {
+            return counter.Add(value);
+        }
+
+        public static CounterInt32 operator -(CounterInt32 counter, int value)
+        {
+            return counter.Subtract(value);
         }
     }
 }

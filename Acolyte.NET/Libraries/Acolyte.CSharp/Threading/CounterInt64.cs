@@ -106,9 +106,15 @@ namespace Acolyte.Threading
             return Interlocked.Exchange(ref _counter, _counter - 1L);
         }
 
-        public CounterInt64 Advance(long value)
+        public CounterInt64 Add(long value)
         {
             Interlocked.Exchange(ref _counter, _counter + value);
+            return this;
+        }
+
+        public CounterInt64 Subtract(long value)
+        {
+            Interlocked.Exchange(ref _counter, _counter - value);
             return this;
         }
 
@@ -136,6 +142,16 @@ namespace Acolyte.Threading
         public static CounterInt64 operator --(CounterInt64 counter)
         {
             return counter.Decrement();
+        }
+
+        public static CounterInt64 operator +(CounterInt64 counter, long value)
+        {
+            return counter.Add(value);
+        }
+
+        public static CounterInt64 operator -(CounterInt64 counter, long value)
+        {
+            return counter.Subtract(value);
         }
     }
 }
