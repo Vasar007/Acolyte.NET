@@ -27,8 +27,8 @@ namespace Acolyte.Linq
         /// </param>
         /// <param name="cancellationToken">
         /// Optional cancellation token for canceling the sequence at any time.
-        /// <see cref="SafeParallelForEachAwaitAsync{TSource}(IEnumerable{TSource}, Func{TSource, Task}, CancellationToken)" />
-        /// does not pass <paramref name="cancellationToken" /> to <paramref name="function" />.
+        /// This method passes <paramref name="cancellationToken" /> to
+        /// <paramref name="function" />.
         /// </param>
         /// <returns>
         /// A task that represents the completion of work on each item of <paramref name="source" />
@@ -44,15 +44,17 @@ namespace Acolyte.Linq
         /// The <see cref="CancellationTokenSource" /> associated with
         /// <paramref name="cancellationToken" /> was disposed.
         /// </exception>
-        public static Task<Result<NoneResult, Exception>[]> SafeParallelForEachAwaitAsync<TSource>(
-            this IEnumerable<TSource> source, Func<TSource, Task> function,
+        public static Task<Result<NoneResult, Exception>[]> SafeParallelForEachAwaitWithCancellationAsync<TSource>(
+            this IEnumerable<TSource> source, Func<TSource, CancellationToken, Task> function,
             CancellationToken cancellationToken = default)
         {
             // Null check for "source" parameter is provided by "Enumerable.Select" method.
             function.ThrowIfNull(nameof(function));
 
             var results = source.Select(
-                item => PerformFuncWithCancellation(item, function, cancellationToken)
+                item => PerformFuncUsingCancellationAndWithCancellation(
+                    item, function, cancellationToken
+                )
             );
 
             return TaskHelper.WhenAllResultsOrExceptions(results);
@@ -76,8 +78,8 @@ namespace Acolyte.Linq
         /// </param>
         /// <param name="cancellationToken">
         /// Optional cancellation token for canceling the sequence at any time.
-        /// <see cref="SafeParallelForEachAwaitAsync{TSource}(IEnumerable{TSource}, Func{TSource, int, Task}, CancellationToken)" />
-        /// does not pass <paramref name="cancellationToken" /> to <paramref name="function" />.
+        /// This method passes <paramref name="cancellationToken" /> to
+        /// <paramref name="function" />.
         /// </param>
         /// <returns>
         /// A task that represents the completion of work on each item of <paramref name="source" />
@@ -93,15 +95,15 @@ namespace Acolyte.Linq
         /// The <see cref="CancellationTokenSource" /> associated with
         /// <paramref name="cancellationToken" /> was disposed.
         /// </exception>
-        public static Task<Result<NoneResult, Exception>[]> SafeParallelForEachAwaitAsync<TSource>(
-            this IEnumerable<TSource> source, Func<TSource, int, Task> function,
+        public static Task<Result<NoneResult, Exception>[]> SafeParallelForEachAwaitWithCancellationAsync<TSource>(
+            this IEnumerable<TSource> source, Func<TSource, int, CancellationToken, Task> function,
             CancellationToken cancellationToken = default)
         {
             // Null check for "source" parameter is provided by "Enumerable.Select" method.
             function.ThrowIfNull(nameof(function));
 
             var results = source.Select(
-                (item, index) => PerformFuncWithCancellation(
+                (item, index) => PerformFuncUsingCancellationAndWithCancellation(
                     item, index, function, cancellationToken
                 )
             );
@@ -128,8 +130,8 @@ namespace Acolyte.Linq
         /// </param>
         /// <param name="cancellationToken">
         /// Optional cancellation token for canceling the sequence at any time.
-        /// <see cref="SafeParallelForEachAwaitAsync{TSource, TResult}(IEnumerable{TSource}, Func{TSource, Task{TResult}}, CancellationToken)" />
-        /// does not pass <paramref name="cancellationToken" /> to <paramref name="function" />.
+        /// This method passes <paramref name="cancellationToken" /> to
+        /// <paramref name="function" />.
         /// </param>
         /// <returns>
         /// A task that represents the completion of work on each item of <paramref name="source" />
@@ -145,15 +147,17 @@ namespace Acolyte.Linq
         /// The <see cref="CancellationTokenSource" /> associated with
         /// <paramref name="cancellationToken" /> was disposed.
         /// </exception>
-        public static Task<Result<TResult, Exception>[]> SafeParallelForEachAwaitAsync<TSource, TResult>(
-            this IEnumerable<TSource> source, Func<TSource, Task<TResult>> function,
-            CancellationToken cancellationToken = default)
+        public static Task<Result<TResult, Exception>[]> SafeParallelForEachAwaitWithCancellationAsync<TSource, TResult>(
+            this IEnumerable<TSource> source, Func<TSource, CancellationToken,
+            Task<TResult>> function, CancellationToken cancellationToken = default)
         {
             // Null check for "source" parameter is provided by "Enumerable.Select" method.
             function.ThrowIfNull(nameof(function));
 
             var results = source.Select(
-                item => PerformFuncWithCancellation(item, function, cancellationToken)
+                item => PerformFuncUsingCancellationAndWithCancellation(
+                    item, function, cancellationToken
+                )
             );
 
             return TaskHelper.WhenAllResultsOrExceptions(results);
@@ -180,8 +184,8 @@ namespace Acolyte.Linq
         /// </param>
         /// <param name="cancellationToken">
         /// Optional cancellation token for canceling the sequence at any time.
-        /// <see cref="SafeParallelForEachAwaitAsync{TSource, TResult}(IEnumerable{TSource}, Func{TSource, int, Task{TResult}}, CancellationToken)" />
-        /// does not pass <paramref name="cancellationToken" /> to <paramref name="function" />.
+        /// This method passes <paramref name="cancellationToken" /> to
+        /// <paramref name="function" />.
         /// </param>
         /// <returns>
         /// A task that represents the completion of work on each item of <paramref name="source" />
@@ -197,15 +201,15 @@ namespace Acolyte.Linq
         /// The <see cref="CancellationTokenSource" /> associated with
         /// <paramref name="cancellationToken" /> was disposed.
         /// </exception>
-        public static Task<Result<TResult, Exception>[]> SafeParallelForEachAwaitAsync<TSource, TResult>(
-            this IEnumerable<TSource> source, Func<TSource, int, Task<TResult>> function,
-            CancellationToken cancellationToken = default)
+        public static Task<Result<TResult, Exception>[]> SafeParallelForEachAwaitWithCancellationAsync<TSource, TResult>(
+            this IEnumerable<TSource> source, Func<TSource, int, CancellationToken,
+            Task<TResult>> function, CancellationToken cancellationToken = default)
         {
             // Null check for "source" parameter is provided by "Enumerable.Select" method.
             function.ThrowIfNull(nameof(function));
 
             var results = source.Select(
-                (item, index) => PerformFuncWithCancellation(
+                (item, index) => PerformFuncUsingCancellationAndWithCancellation(
                     item, index, function, cancellationToken
                 )
             );
@@ -216,59 +220,7 @@ namespace Acolyte.Linq
 #if NETSTANDARD2_1
 
         /// <summary>
-        /// Performs the specified function on each element of the <paramref name="source" /> and
-        /// wraps execution in
-        /// <see cref="TaskHelper.WhenAllResultsOrExceptions(IEnumerable{Task})" /> to make task for
-        /// every item in <paramref name="source" /> safe. You can unwrap results and process it.
-        /// A cancellation token allows the work to be canceled.
-        /// </summary>
-        /// <typeparam name="TSource">
-        /// The type of the elements of <paramref name="source" />.
-        /// </typeparam>
-        /// <param name="source">An asynchronous sequence of values to perform function.</param>
-        ///  <param name="function">
-        /// A function to apply on each <paramref name="source" /> element.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional cancellation token for canceling the sequence at any time.
-        /// <see cref="SafeParallelForEachAwaitAsync{TSource}(IAsyncEnumerable{TSource}, Func{TSource, Task}, CancellationToken)" />
-        /// does not pass <paramref name="cancellationToken" /> to <paramref name="function" />.
-        /// </param>
-        /// <returns>
-        /// A task that represents the completion of work on each item of <paramref name="source" />
-        /// queued to execute in the thread pool. Task contains results from function invocation on
-        /// each item of <paramref name="source" />.
-        /// </returns>
-        /// <exception cref="ArgumentNullException">
-        /// <paramref name="source" /> is <see langword="null" />. -or-
-        /// <paramref name="function" /> is <see langword="null" />.
-        /// </exception>
-        /// <exception cref="TaskCanceledException">The task has been canceled.</exception>
-        /// <exception cref="ObjectDisposedException">
-        /// The <see cref="CancellationTokenSource" /> associated with
-        /// <paramref name="cancellationToken" /> was disposed.
-        /// </exception>
-        public static async Task<Result<NoneResult, Exception>[]> SafeParallelForEachAwaitAsync<TSource>(
-            this IAsyncEnumerable<TSource> source, Func<TSource, Task> function,
-            CancellationToken cancellationToken = default)
-        {
-            source.ThrowIfNull(nameof(source));
-            function.ThrowIfNull(nameof(function));
-
-            var results = new List<Task>();
-            await foreach (TSource item in source.WithCancellation(cancellationToken)
-                .ConfigureAwait(continueOnCapturedContext: false))
-            {
-                var task = PerformFuncWithCancellation(item, function, cancellationToken);
-                results.Add(task);
-            }
-
-            return await TaskHelper.WhenAllResultsOrExceptions(results)
-                .ConfigureAwait(continueOnCapturedContext: false);
-        }
-
-        /// <summary>
-        /// Performs the specified function on each element of the <paramref name="source" />  by
+        /// Performs the specified function on each element of the <paramref name="source" /> by
         /// incorporating element's index and wraps execution in
         /// <see cref="TaskHelper.WhenAllResultsOrExceptions(IEnumerable{Task})" /> to make task for
         /// every item in <paramref name="source" /> safe. You can unwrap results and process it.
@@ -278,15 +230,13 @@ namespace Acolyte.Linq
         /// The type of the elements of <paramref name="source" />.
         /// </typeparam>
         /// <param name="source">An asynchronous sequence of values to perform function.</param>
-        ///  <param name="function">
-        /// A function to apply on each <paramref name="source" /> element; the second parameter of
-        /// the <paramref name="function" /> represents the index of the <paramref name="source" />
-        /// element.
+        /// <param name="function">
+        /// A function to apply on each <paramref name="source" /> element.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional cancellation token for canceling the sequence at any time.
-        /// <see cref="SafeParallelForEachAwaitAsync{TSource}(IAsyncEnumerable{TSource}, Func{TSource, int, Task}, CancellationToken)" />
-        /// does not pass <paramref name="cancellationToken" /> to <paramref name="function" />.
+        /// This method passes <paramref name="cancellationToken" /> to
+        /// <paramref name="function" />.
         /// </param>
         /// <returns>
         /// A task that represents the completion of work on each item of <paramref name="source" />
@@ -302,8 +252,65 @@ namespace Acolyte.Linq
         /// The <see cref="CancellationTokenSource" /> associated with
         /// <paramref name="cancellationToken" /> was disposed.
         /// </exception>
-        public static async Task<Result<NoneResult, Exception>[]> SafeParallelForEachAwaitAsync<TSource>(
-            this IAsyncEnumerable<TSource> source, Func<TSource, int, Task> function,
+        public static async Task<Result<NoneResult, Exception>[]> SafeParallelForEachAwaitWithCancellationAsync<TSource>(
+            this IAsyncEnumerable<TSource> source, Func<TSource, CancellationToken, Task> function,
+            CancellationToken cancellationToken = default)
+        {
+            source.ThrowIfNull(nameof(source));
+            function.ThrowIfNull(nameof(function));
+
+            var results = new List<Task>();
+            await foreach (TSource item in source.WithCancellation(cancellationToken)
+                .ConfigureAwait(continueOnCapturedContext: false))
+            {
+                var task = PerformFuncUsingCancellationAndWithCancellation(
+                    item, function, cancellationToken
+                );
+                results.Add(task);
+            }
+
+            return await TaskHelper.WhenAllResultsOrExceptions(results)
+                .ConfigureAwait(continueOnCapturedContext: false);
+        }
+
+        /// <summary>
+        /// Performs the specified function on each element of the <paramref name="source" /> by
+        /// incorporating element's index and wraps execution in
+        /// <see cref="TaskHelper.WhenAllResultsOrExceptions(IEnumerable{Task})" /> to make task for
+        /// every item in <paramref name="source" /> safe. You can unwrap results and process it.
+        /// A cancellation token allows the work to be canceled.
+        /// </summary>
+        /// <typeparam name="TSource">
+        /// The type of the elements of <paramref name="source" />.
+        /// </typeparam>
+        /// <param name="source">An asynchronous sequence of values to perform function.</param>
+        /// <param name="function">
+        /// A transform function to apply on each <paramref name="source" /> element; the second
+        /// parameter of the <paramref name="function" /> represents the index of the
+        /// <paramref name="source" /> element.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional cancellation token for canceling the sequence at any time.
+        /// This method passes <paramref name="cancellationToken" /> to
+        /// <paramref name="function" />.
+        /// </param>
+        /// <returns>
+        /// A task that represents the completion of work on each item of <paramref name="source" />
+        /// queued to execute in the thread pool. Task contains results from function invocation on
+        /// each item of <paramref name="source" />.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="source" /> is <see langword="null" />. -or-
+        /// <paramref name="function" /> is <see langword="null" />.
+        /// </exception>
+        /// <exception cref="TaskCanceledException">The task has been canceled.</exception>
+        /// <exception cref="ObjectDisposedException">
+        /// The <see cref="CancellationTokenSource" /> associated with
+        /// <paramref name="cancellationToken" /> was disposed.
+        /// </exception>
+        public static async Task<Result<NoneResult, Exception>[]> SafeParallelForEachAwaitWithCancellationAsync<TSource>(
+            this IAsyncEnumerable<TSource> source,
+            Func<TSource, int, CancellationToken, Task> function,
             CancellationToken cancellationToken = default)
         {
             source.ThrowIfNull(nameof(source));
@@ -314,7 +321,9 @@ namespace Acolyte.Linq
             await foreach (TSource item in source.WithCancellation(cancellationToken)
                 .ConfigureAwait(continueOnCapturedContext: false))
             {
-                var task = PerformFuncWithCancellation(item, index, function, cancellationToken);
+                var task = PerformFuncUsingCancellationAndWithCancellation(
+                    item, index, function, cancellationToken
+                );
                 ++index;
                 results.Add(task);
             }
@@ -324,8 +333,8 @@ namespace Acolyte.Linq
         }
 
         /// <summary>
-        /// Performs the specified function on each element of the <paramref name="source" /> and
-        /// wraps execution in
+        /// Performs the specified function on each element of the <paramref name="source" /> by
+        /// incorporating element's index and wraps execution in
         /// <see cref="TaskHelper.WhenAllResultsOrExceptions(IEnumerable{Task})" /> to make task for
         /// every item in <paramref name="source" /> safe. You can unwrap results and process it.
         /// A cancellation token allows the work to be canceled.
@@ -342,8 +351,8 @@ namespace Acolyte.Linq
         /// </param>
         /// <param name="cancellationToken">
         /// Optional cancellation token for canceling the sequence at any time.
-        /// <see cref="SafeParallelForEachAwaitAsync{TSource, TResult}(IAsyncEnumerable{TSource}, Func{TSource, Task{TResult}}, CancellationToken)" />
-        /// does not pass <paramref name="cancellationToken" /> to <paramref name="function" />.
+        /// This method passes <paramref name="cancellationToken" /> to
+        /// <paramref name="function" />.
         /// </param>
         /// <returns>
         /// A task that represents the completion of work on each item of <paramref name="source" />
@@ -359,8 +368,9 @@ namespace Acolyte.Linq
         /// The <see cref="CancellationTokenSource" /> associated with
         /// <paramref name="cancellationToken" /> was disposed.
         /// </exception>
-        public static async Task<Result<TResult, Exception>[]> SafeParallelForEachAwaitAsync<TSource, TResult>(
-            this IAsyncEnumerable<TSource> source, Func<TSource, Task<TResult>> function,
+        public static async Task<Result<TResult, Exception>[]> SafeParallelForEachAwaitWithCancellationAsync<TSource, TResult>(
+            this IAsyncEnumerable<TSource> source,
+            Func<TSource, CancellationToken, Task<TResult>> function,
             CancellationToken cancellationToken = default)
         {
             source.ThrowIfNull(nameof(source));
@@ -370,7 +380,9 @@ namespace Acolyte.Linq
             await foreach (TSource item in source.WithCancellation(cancellationToken)
                 .ConfigureAwait(continueOnCapturedContext: false))
             {
-                var task = PerformFuncWithCancellation(item, function, cancellationToken);
+                var task = PerformFuncUsingCancellationAndWithCancellation(
+                    item, function, cancellationToken
+                );
                 results.Add(task);
             }
 
@@ -379,7 +391,7 @@ namespace Acolyte.Linq
         }
 
         /// <summary>
-        /// Performs the specified function on each element of the <paramref name="source" />  by
+        /// Performs the specified function on each element of the <paramref name="source" /> by
         /// incorporating element's index and wraps execution in
         /// <see cref="TaskHelper.WhenAllResultsOrExceptions(IEnumerable{Task})" /> to make task for
         /// every item in <paramref name="source" /> safe. You can unwrap results and process it.
@@ -392,15 +404,15 @@ namespace Acolyte.Linq
         /// The type of element that <paramref name="function" /> returns.
         /// </typeparam>
         /// <param name="source">An asynchronous sequence of values to perform function.</param>
-        ///  <param name="function">
+        /// <param name="function">
         /// A transform function to apply on each <paramref name="source" /> element; the second
         /// parameter of the <paramref name="function" /> represents the index of the
         /// <paramref name="source" /> element.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional cancellation token for canceling the sequence at any time.
-        /// <see cref="SafeParallelForEachAwaitAsync{TSource, TResult}(IAsyncEnumerable{TSource}, Func{TSource, int, Task{TResult}}, CancellationToken)" />
-        /// does not pass <paramref name="cancellationToken" /> to <paramref name="function" />.
+        /// This method passes <paramref name="cancellationToken" /> to
+        /// <paramref name="function" />.
         /// </param>
         /// <returns>
         /// A task that represents the completion of work on each item of <paramref name="source" />
@@ -416,8 +428,9 @@ namespace Acolyte.Linq
         /// The <see cref="CancellationTokenSource" /> associated with
         /// <paramref name="cancellationToken" /> was disposed.
         /// </exception>
-        public static async Task<Result<TResult, Exception>[]> SafeParallelForEachAwaitAsync<TSource, TResult>(
-            this IAsyncEnumerable<TSource> source, Func<TSource, int, Task<TResult>> function,
+        public static async Task<Result<TResult, Exception>[]> SafeParallelForEachAwaitWithCancellationAsync<TSource, TResult>(
+            this IAsyncEnumerable<TSource> source,
+            Func<TSource, int, CancellationToken, Task<TResult>> function,
             CancellationToken cancellationToken = default)
         {
             source.ThrowIfNull(nameof(source));
@@ -428,7 +441,9 @@ namespace Acolyte.Linq
             await foreach (TSource item in source.WithCancellation(cancellationToken)
                 .ConfigureAwait(continueOnCapturedContext: false))
             {
-                var task = PerformFuncWithCancellation(item, index, function, cancellationToken);
+                var task = PerformFuncUsingCancellationAndWithCancellation(
+                    item, index, function, cancellationToken
+                );
                 ++index;
                 results.Add(task);
             }

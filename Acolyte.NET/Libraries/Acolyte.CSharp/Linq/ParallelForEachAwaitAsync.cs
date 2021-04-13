@@ -10,7 +10,7 @@ namespace Acolyte.Linq
 {
     public static partial class EnumerableExtensions
     {
-        #region Internals For Each Asynchronous
+        #region Internals For Each Await Asynchronous
 
         /// <summary>
         /// Helper method to perform function with cancellation token.
@@ -20,12 +20,12 @@ namespace Acolyte.Linq
         /// </typeparam>
         /// <param name="item">An item to perform function on.</param>
         /// <param name="function">
-        /// The <see cref="Func{T, TResult}" /> delegate to perform on the <paramref name="item" />.
+        /// A function to apply on <paramref name="item" /> element.
         /// </param>
         /// <param name="cancellationToken">
-        /// A cancellation token that can be used to cancel the work if it has not yet started.
-        /// <see cref="PerformFuncWithCancellation{TSource}(TSource, Func{TSource, Task}, CancellationToken)" />
-        /// does not pass <paramref name="cancellationToken" /> to <paramref name="function" />.
+        /// Optional cancellation token for canceling the sequence at any time.
+        /// This method does not pass <paramref name="cancellationToken" /> to
+        /// <paramref name="function" />.
         /// </param>
         /// <returns>
         /// A task that represents the work on an <paramref name="item" /> queued to execute in the
@@ -56,12 +56,14 @@ namespace Acolyte.Linq
         /// <param name="item">An item to perform function on.</param>
         /// <param name="index">An index of item to perform function on.</param>
         /// <param name="function">
-        /// The <see cref="Func{T, TResult}" /> delegate to perform on the <paramref name="item" />.
+        /// A function to apply on <paramref name="item" /> element; the second
+        /// parameter of the <paramref name="function" /> represents the index of the
+        /// <paramref name="item" /> element.
         /// </param>
         /// <param name="cancellationToken">
-        /// A cancellation token that can be used to cancel the work if it has not yet started.
-        /// <see cref="PerformFuncWithCancellation{TSource}(TSource, int, Func{TSource, int, Task}, CancellationToken)" />
-        /// does not pass <paramref name="cancellationToken" /> to <paramref name="function" />.
+        /// Optional cancellation token for canceling the sequence at any time.
+        /// This method does not pass <paramref name="cancellationToken" /> to
+        /// <paramref name="function" />.
         /// </param>
         /// <returns>
         /// A task that represents the work on an <paramref name="item" /> queued to execute in the
@@ -94,12 +96,12 @@ namespace Acolyte.Linq
         /// </typeparam>
         /// <param name="item">An item to perform function on.</param>
         /// <param name="function">
-        /// The <see cref="Func{T, TResult}" /> delegate to perform on the <paramref name="item" />.
+        /// A transform function to apply on <paramref name="item" /> element.
         /// </param>
         /// <param name="cancellationToken">
-        /// A cancellation token that can be used to cancel the work if it has not yet started.
-        /// <see cref="PerformFuncWithCancellation{TSource, TResult}(TSource, Func{TSource, Task{TResult}}, CancellationToken)" />
-        /// does not pass <paramref name="cancellationToken" /> to <paramref name="function" />.
+        /// Optional cancellation token for canceling the sequence at any time.
+        /// This method does not pass <paramref name="cancellationToken" /> to
+        /// <paramref name="function" />.
         /// </param>
         /// <returns>
         /// A task that represents the work on an <paramref name="item" /> queued to execute in the
@@ -133,12 +135,14 @@ namespace Acolyte.Linq
         /// <param name="item">An item to perform function on.</param>
         /// <param name="index">An index of item to perform function on.</param>
         /// <param name="function">
-        /// The <see cref="Func{T, TResult}" /> delegate to perform on the <paramref name="item" />.
+        /// A transform function to apply on <paramref name="item" /> element; the second
+        /// parameter of the <paramref name="function" /> represents the index of the
+        /// <paramref name="item" /> element.
         /// </param>
         /// <param name="cancellationToken">
-        /// A cancellation token that can be used to cancel the work if it has not yet started.
-        /// <see cref="PerformFuncWithCancellation{TSource, TResult}(TSource, int, Func{TSource, int, Task{TResult}}, CancellationToken)" />
-        /// does not pass <paramref name="cancellationToken" /> to <paramref name="function" />.
+        /// Optional cancellation token for canceling the sequence at any time.
+        /// This method does not pass <paramref name="cancellationToken" /> to
+        /// <paramref name="function" />.
         /// </param>
         /// <returns>
         /// A task that represents the work on an <paramref name="item" /> queued to execute in the
@@ -165,7 +169,7 @@ namespace Acolyte.Linq
 
         /// <summary>
         /// Performs the specified function on each element of the <paramref name="source" />.
-        /// A cancellation token allows the work to be canceled if it has not yet started.
+        /// A cancellation token allows the work to be canceled.
         /// </summary>
         /// <typeparam name="TSource">
         /// The type of the elements of <paramref name="source" />.
@@ -176,8 +180,8 @@ namespace Acolyte.Linq
         /// </param>
         /// <param name="cancellationToken">
         /// Optional cancellation token for canceling the sequence at any time.
-        /// <see cref="ParallelForEachAwaitAsync{TSource}(IEnumerable{TSource}, Func{TSource, Task}, CancellationToken)" />
-        /// does not pass <paramref name="cancellationToken" /> to <paramref name="function" />.
+        /// This method does not pass <paramref name="cancellationToken" /> to
+        /// <paramref name="function" />.
         /// </param>
         /// <returns>
         /// A task that represents the completion of work on each item of <paramref name="source" />
@@ -208,7 +212,7 @@ namespace Acolyte.Linq
         /// <summary>
         /// Performs the specified function on each element of the <paramref name="source" /> by
         /// incorporating element's index.
-        /// A cancellation token allows the work to be canceled if it has not yet started.
+        /// A cancellation token allows the work to be canceled.
         /// </summary>
         /// <typeparam name="TSource">
         /// The type of the elements of <paramref name="source" />.
@@ -221,8 +225,8 @@ namespace Acolyte.Linq
         /// </param>
         /// <param name="cancellationToken">
         /// Optional cancellation token for canceling the sequence at any time.
-        /// <see cref="ParallelForEachAwaitAsync{TSource}(IEnumerable{TSource}, Func{TSource, int, Task}, CancellationToken)" />
-        /// does not pass <paramref name="cancellationToken" /> to <paramref name="function" />.
+        /// This method does not pass <paramref name="cancellationToken" /> to
+        /// <paramref name="function" />.
         /// </param>
         /// <returns>
         /// A task that represents the completion of work on each item of <paramref name="source" />
@@ -254,7 +258,7 @@ namespace Acolyte.Linq
 
         /// <summary>
         /// Performs the specified function on each element of the <paramref name="source" />.
-        /// A cancellation token allows the work to be canceled if it has not yet started.
+        /// A cancellation token allows the work to be canceled.
         /// </summary>
         /// <typeparam name="TSource">
         /// The type of the elements of <paramref name="source" />.
@@ -268,8 +272,8 @@ namespace Acolyte.Linq
         /// </param>
         /// <param name="cancellationToken">
         /// Optional cancellation token for canceling the sequence at any time.
-        /// <see cref="ParallelForEachAwaitAsync{TSource, TResult}(IEnumerable{TSource}, Func{TSource, Task{TResult}}, CancellationToken)" />
-        /// does not pass <paramref name="cancellationToken" /> to <paramref name="function" />.
+        /// This method does not pass <paramref name="cancellationToken" /> to
+        /// <paramref name="function" />.
         /// </param>
         /// <returns>
         /// A task that represents the completion of work on each item of <paramref name="source" />
@@ -302,7 +306,7 @@ namespace Acolyte.Linq
         /// <summary>
         /// Performs the specified function on each element of the <paramref name="source" /> by
         /// incorporating element's index.
-        /// A cancellation token allows the work to be canceled if it has not yet started.
+        /// A cancellation token allows the work to be canceled.
         /// </summary>
         /// <typeparam name="TSource">
         /// The type of the elements of <paramref name="source" />.
@@ -318,8 +322,8 @@ namespace Acolyte.Linq
         /// </param>
         /// <param name="cancellationToken">
         /// Optional cancellation token for canceling the sequence at any time.
-        /// <see cref="ParallelForEachAwaitAsync{TSource, TResult}(IEnumerable{TSource}, Func{TSource, int, Task{TResult}}, CancellationToken)" />
-        /// does not pass <paramref name="cancellationToken" /> to <paramref name="function" />.
+        /// This method does not pass <paramref name="cancellationToken" /> to
+        /// <paramref name="function" />.
         /// </param>
         /// <returns>
         /// A task that represents the completion of work on each item of <paramref name="source" />
@@ -355,7 +359,7 @@ namespace Acolyte.Linq
 
         /// <summary>
         /// Performs the specified function on each element of the <paramref name="source" />.
-        /// A cancellation token allows the work to be canceled if it has not yet started.
+        /// A cancellation token allows the work to be canceled.
         /// </summary>
         /// <typeparam name="TSource">
         /// The type of the elements of <paramref name="source" />.
@@ -366,8 +370,8 @@ namespace Acolyte.Linq
         /// </param>
         /// <param name="cancellationToken">
         /// Optional cancellation token for canceling the sequence at any time.
-        /// <see cref="ParallelForEachAwaitAsync{TSource}(IAsyncEnumerable{TSource}, Func{TSource, Task}, CancellationToken)" />
-        /// does not pass <paramref name="cancellationToken" /> to <paramref name="function" />.
+        /// This method does not pass <paramref name="cancellationToken" /> to
+        /// <paramref name="function" />.
         /// </param>
         /// <returns>
         /// A task that represents the completion of work on each item of <paramref name="source" />
@@ -402,7 +406,7 @@ namespace Acolyte.Linq
         /// <summary>
         /// Performs the specified function on each element of the <paramref name="source" /> by
         /// incorporating element's index.
-        /// A cancellation token allows the work to be canceled if it has not yet started.
+        /// A cancellation token allows the work to be canceled.
         /// </summary>
         /// <typeparam name="TSource">
         /// The type of the elements of <paramref name="source" />.
@@ -415,8 +419,8 @@ namespace Acolyte.Linq
         /// </param>
         /// <param name="cancellationToken">
         /// Optional cancellation token for canceling the sequence at any time.
-        /// <see cref="ParallelForEachAwaitAsync{TSource}(IAsyncEnumerable{TSource}, Func{TSource, int, Task}, CancellationToken)" />
-        /// does not pass <paramref name="cancellationToken" /> to <paramref name="function" />.
+        ///This method does not pass <paramref name="cancellationToken" /> to
+        /// <paramref name="function" />.
         /// </param>
         /// <returns>
         /// A task that represents the completion of work on each item of <paramref name="source" />
@@ -452,7 +456,7 @@ namespace Acolyte.Linq
 
         /// <summary>
         /// Performs the specified function on each element of the <paramref name="source" />.
-        /// A cancellation token allows the work to be canceled if it has not yet started.
+        /// A cancellation token allows the work to be canceled.
         /// </summary>
         /// <typeparam name="TSource">
         /// The type of the elements of <paramref name="source" />.
@@ -466,8 +470,8 @@ namespace Acolyte.Linq
         /// </param>
         /// <param name="cancellationToken">
         /// Optional cancellation token for canceling the sequence at any time.
-        /// <see cref="ParallelForEachAwaitAsync{TSource, TResult}(IAsyncEnumerable{TSource}, Func{TSource, Task{TResult}}, CancellationToken)" />
-        /// does not pass <paramref name="cancellationToken" /> to <paramref name="function" />.
+        /// This method does not pass <paramref name="cancellationToken" /> to
+        /// <paramref name="function" />.
         /// </param>
         /// <returns>
         /// A task that represents the completion of work on each item of <paramref name="source" />
@@ -504,7 +508,7 @@ namespace Acolyte.Linq
         /// <summary>
         /// Performs the specified function on each element of the <paramref name="source" /> by
         /// incorporating element's index.
-        /// A cancellation token allows the work to be canceled if it has not yet started.
+        /// A cancellation token allows the work to be canceled.
         /// </summary>
         /// <typeparam name="TSource">
         /// The type of the elements of <paramref name="source" />.
@@ -520,8 +524,8 @@ namespace Acolyte.Linq
         /// </param>
         /// <param name="cancellationToken">
         /// Optional cancellation token for canceling the sequence at any time.
-        /// <see cref="ParallelForEachAwaitAsync{TSource, TResult}(IAsyncEnumerable{TSource}, Func{TSource, int, Task{TResult}}, CancellationToken)" />
-        /// does not pass <paramref name="cancellationToken" /> to <paramref name="function" />.
+        /// This method does not pass <paramref name="cancellationToken" /> to
+        /// <paramref name="function" />.
         /// </param>
         /// <returns>
         /// A task that represents the completion of work on each item of <paramref name="source" />
