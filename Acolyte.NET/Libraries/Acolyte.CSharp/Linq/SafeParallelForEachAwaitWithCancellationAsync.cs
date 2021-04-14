@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Acolyte.Assertions;
 using Acolyte.Common;
+using Acolyte.Linq.Operators;
 using Acolyte.Threading;
 
 namespace Acolyte.Linq
@@ -52,7 +53,7 @@ namespace Acolyte.Linq
             function.ThrowIfNull(nameof(function));
 
             var results = source.Select(
-                item => PerformFuncUsingCancellationAndWithCancellation(
+                item => ForEachAwaitWithCancallationAsyncOperator.PerformFuncWithCancellation(
                     item, function, cancellationToken
                 )
             );
@@ -103,7 +104,7 @@ namespace Acolyte.Linq
             function.ThrowIfNull(nameof(function));
 
             var results = source.Select(
-                (item, index) => PerformFuncUsingCancellationAndWithCancellation(
+                (item, index) => ForEachAwaitWithCancallationAsyncOperator.PerformFuncWithCancellation(
                     item, index, function, cancellationToken
                 )
             );
@@ -155,7 +156,7 @@ namespace Acolyte.Linq
             function.ThrowIfNull(nameof(function));
 
             var results = source.Select(
-                item => PerformFuncUsingCancellationAndWithCancellation(
+                item => ForEachAwaitWithCancallationAsyncOperator.PerformFuncWithCancellation(
                     item, function, cancellationToken
                 )
             );
@@ -209,16 +210,19 @@ namespace Acolyte.Linq
             function.ThrowIfNull(nameof(function));
 
             var results = source.Select(
-                (item, index) => PerformFuncUsingCancellationAndWithCancellation(
+                (item, index) => ForEachAwaitWithCancallationAsyncOperator.PerformFuncWithCancellation(
                     item, index, function, cancellationToken
                 )
             );
 
             return TaskHelper.WhenAllResultsOrExceptions(results);
         }
+    }
 
 #if NETSTANDARD2_1
 
+    public static partial class AsyncEnumerableExtensions
+    {
         /// <summary>
         /// Performs the specified function on each element of the <paramref name="source" /> by
         /// incorporating element's index and wraps execution in
@@ -263,7 +267,7 @@ namespace Acolyte.Linq
             await foreach (TSource item in source.WithCancellation(cancellationToken)
                 .ConfigureAwait(continueOnCapturedContext: false))
             {
-                var task = PerformFuncUsingCancellationAndWithCancellation(
+                var task = ForEachAwaitWithCancallationAsyncOperator.PerformFuncWithCancellation(
                     item, function, cancellationToken
                 );
                 results.Add(task);
@@ -321,7 +325,7 @@ namespace Acolyte.Linq
             await foreach (TSource item in source.WithCancellation(cancellationToken)
                 .ConfigureAwait(continueOnCapturedContext: false))
             {
-                var task = PerformFuncUsingCancellationAndWithCancellation(
+                var task = ForEachAwaitWithCancallationAsyncOperator.PerformFuncWithCancellation(
                     item, index, function, cancellationToken
                 );
                 ++index;
@@ -380,7 +384,7 @@ namespace Acolyte.Linq
             await foreach (TSource item in source.WithCancellation(cancellationToken)
                 .ConfigureAwait(continueOnCapturedContext: false))
             {
-                var task = PerformFuncUsingCancellationAndWithCancellation(
+                var task = ForEachAwaitWithCancallationAsyncOperator.PerformFuncWithCancellation(
                     item, function, cancellationToken
                 );
                 results.Add(task);
@@ -441,7 +445,7 @@ namespace Acolyte.Linq
             await foreach (TSource item in source.WithCancellation(cancellationToken)
                 .ConfigureAwait(continueOnCapturedContext: false))
             {
-                var task = PerformFuncUsingCancellationAndWithCancellation(
+                var task = ForEachAwaitWithCancallationAsyncOperator.PerformFuncWithCancellation(
                     item, index, function, cancellationToken
                 );
                 ++index;
@@ -451,7 +455,7 @@ namespace Acolyte.Linq
             return await TaskHelper.WhenAllResultsOrExceptions(results)
                 .ConfigureAwait(continueOnCapturedContext: false);
         }
+    }
 
 #endif
-    }
 }

@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Acolyte.Assertions;
 using Acolyte.Common;
+using Acolyte.Linq.Operators;
 using Acolyte.Threading;
 
 namespace Acolyte.Linq
@@ -52,7 +53,9 @@ namespace Acolyte.Linq
             action.ThrowIfNull(nameof(action));
 
             var results = source.Select(
-                item => PerformActionWithCancellation(item, action, cancellationToken)
+                item => ForEachAsyncOperator.PerformActionWithCancellation(
+                    item, action, cancellationToken
+                )
             );
 
             return TaskHelper.WhenAllResultsOrExceptions(results);
@@ -101,16 +104,19 @@ namespace Acolyte.Linq
             action.ThrowIfNull(nameof(action));
 
             var results = source.Select(
-                (item, index) => PerformActionWithCancellation(
+                (item, index) => ForEachAsyncOperator.PerformActionWithCancellation(
                     item, index, action, cancellationToken
                 )
             );
 
             return TaskHelper.WhenAllResultsOrExceptions(results);
         }
+    }
 
 #if NETSTANDARD2_1
 
+    public static partial class AsyncEnumerableExtensions
+    {
         /// <summary>
         /// Performs the specified action on each element of the <paramref name="source" /> and
         /// wraps execution in
@@ -155,7 +161,9 @@ namespace Acolyte.Linq
             await foreach (TSource item in source.WithCancellation(cancellationToken)
                 .ConfigureAwait(continueOnCapturedContext: false))
             {
-                var task = PerformActionWithCancellation(item, action, cancellationToken);
+                var task = ForEachAsyncOperator.PerformActionWithCancellation(
+                    item, action, cancellationToken
+                );
                 results.Add(task);
             }
 
@@ -210,7 +218,9 @@ namespace Acolyte.Linq
             await foreach (TSource item in source.WithCancellation(cancellationToken)
                 .ConfigureAwait(continueOnCapturedContext: false))
             {
-                var task = PerformActionWithCancellation(item, index, action, cancellationToken);
+                var task = ForEachAsyncOperator.PerformActionWithCancellation(
+                    item, index, action, cancellationToken
+                );
                 ++index;
                 results.Add(task);
             }
@@ -218,7 +228,7 @@ namespace Acolyte.Linq
             return await TaskHelper.WhenAllResultsOrExceptions(results)
                 .ConfigureAwait(continueOnCapturedContext: false);
         }
+    }
 
 #endif
-    }
 }

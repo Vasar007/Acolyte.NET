@@ -670,71 +670,71 @@ namespace Acolyte.Collections
 
 #if NETSTANDARD2_1
 
-        /// <inheritdoc cref="Linq.EnumerableExtensions.ParallelForEachAwaitAsync{TSource}(IAsyncEnumerable{TSource}, Func{TSource, Task}, CancellationToken)" />
+        /// <inheritdoc cref="Linq.AsyncEnumerableExtensions.ParallelForEachAwaitAsync{TSource}(IAsyncEnumerable{TSource}, Func{TSource, Task}, CancellationToken)" />
         [Obsolete("Use \"Linq.EnumerableExtensions.ParallelForEachAwaitAsync\" instead. This method will be removed in next major version.", error: false)]
         public static Task ForEachAsync<TSource>(this IAsyncEnumerable<TSource> source,
             Func<TSource, Task> action, CancellationToken cancellationToken)
         {
-            return Linq.EnumerableExtensions.ParallelForEachAwaitAsync(source, action, cancellationToken);
+            return Linq.AsyncEnumerableExtensions.ParallelForEachAwaitAsync(source, action, cancellationToken);
         }
 
-        /// <inheritdoc cref="Linq.EnumerableExtensions.ParallelForEachAwaitAsync{TSource}(IAsyncEnumerable{TSource}, Func{TSource, Task}, CancellationToken)" />
+        /// <inheritdoc cref="Linq.AsyncEnumerableExtensions.ParallelForEachAwaitAsync{TSource}(IAsyncEnumerable{TSource}, Func{TSource, Task}, CancellationToken)" />
         [Obsolete("Use \"Linq.EnumerableExtensions.ParallelForEachAwaitAsync\" instead. This method will be removed in next major version.", error: false)]
         public static Task ForEachAsync<TSource>(this IAsyncEnumerable<TSource> source,
             Func<TSource, Task> action)
         {
-            return Linq.EnumerableExtensions.ParallelForEachAwaitAsync(source, action);
+            return Linq.AsyncEnumerableExtensions.ParallelForEachAwaitAsync(source, action);
         }
 
-        /// <inheritdoc cref="Linq.EnumerableExtensions.ParallelForEachAwaitAsync{TSource, TResult}(IAsyncEnumerable{TSource}, Func{TSource, Task{TResult}}, CancellationToken)" />
+        /// <inheritdoc cref="Linq.AsyncEnumerableExtensions.ParallelForEachAwaitAsync{TSource, TResult}(IAsyncEnumerable{TSource}, Func{TSource, Task{TResult}}, CancellationToken)" />
         [Obsolete("Use \"Linq.EnumerableExtensions.ParallelForEachAwaitAsync\" instead. This method will be removed in next major version.", error: false)]
         public static Task<TResult[]> ForEachAsync<TSource, TResult>(
             this IAsyncEnumerable<TSource> source, Func<TSource, Task<TResult>> function,
             CancellationToken cancellationToken)
         {
-            return Linq.EnumerableExtensions.ParallelForEachAwaitAsync(source, function, cancellationToken);
+            return Linq.AsyncEnumerableExtensions.ParallelForEachAwaitAsync(source, function, cancellationToken);
         }
 
-        /// <inheritdoc cref="Linq.EnumerableExtensions.ParallelForEachAwaitAsync{TSource, TResult}(IAsyncEnumerable{TSource}, Func{TSource, Task{TResult}}, CancellationToken)" />
+        /// <inheritdoc cref="Linq.AsyncEnumerableExtensions.ParallelForEachAwaitAsync{TSource, TResult}(IAsyncEnumerable{TSource}, Func{TSource, Task{TResult}}, CancellationToken)" />
         [Obsolete("Use \"Linq.EnumerableExtensions.ParallelForEachAwaitAsync\" instead. This method will be removed in next major version.", error: false)]
         public static Task<TResult[]> ForEachAsync<TSource, TResult>(
             this IAsyncEnumerable<TSource> source, Func<TSource, Task<TResult>> function)
         {
-            return Linq.EnumerableExtensions.ParallelForEachAwaitAsync(source, function);
+            return Linq.AsyncEnumerableExtensions.ParallelForEachAwaitAsync(source, function);
         }
 
-        /// <inheritdoc cref="Linq.EnumerableExtensions.SafeParallelForEachAwaitAsync{TSource}(IAsyncEnumerable{TSource}, Func{TSource, Task}, CancellationToken)" />
+        /// <inheritdoc cref="Linq.AsyncEnumerableExtensions.SafeParallelForEachAwaitAsync{TSource}(IAsyncEnumerable{TSource}, Func{TSource, Task}, CancellationToken)" />
         [Obsolete("Use \"Acolyte.Linq.EnumerableExtensions.SafeParallelForEachAwaitAsync\" instead. This method will be removed in next major version.", error: false)]
         public static Task<Result<NoneResult, Exception>[]> ForEachSafeAsync<TSource>(
             this IAsyncEnumerable<TSource> source, Func<TSource, Task> action,
             CancellationToken cancellationToken)
         {
-            return Linq.EnumerableExtensions.SafeParallelForEachAwaitAsync(source, action, cancellationToken);
+            return Linq.AsyncEnumerableExtensions.SafeParallelForEachAwaitAsync(source, action, cancellationToken);
         }
 
-        /// <inheritdoc cref="Linq.EnumerableExtensions.SafeParallelForEachAwaitAsync{TSource}(IAsyncEnumerable{TSource}, Func{TSource, Task}, CancellationToken)" />
+        /// <inheritdoc cref="Linq.AsyncEnumerableExtensions.SafeParallelForEachAwaitAsync{TSource}(IAsyncEnumerable{TSource}, Func{TSource, Task}, CancellationToken)" />
         [Obsolete("Use \"Acolyte.Linq.EnumerableExtensions.SafeParallelForEachAwaitAsync\" instead. This method will be removed in next major version.", error: false)]
         public static Task<Result<NoneResult, Exception>[]> ForEachSafeAsync<TSource>(
             this IAsyncEnumerable<TSource> source, Func<TSource, Task> action)
         {
-            return Linq.EnumerableExtensions.SafeParallelForEachAwaitAsync(source, action);
+            return Linq.AsyncEnumerableExtensions.SafeParallelForEachAwaitAsync(source, action);
         }
 
-        /// <inheritdoc cref="Linq.EnumerableExtensions.SafeParallelForEachAwaitAsync{TSource, TResult}(IAsyncEnumerable{TSource}, Func{TSource, Task{TResult}}, CancellationToken)" />
+        /// <inheritdoc cref="Linq.AsyncEnumerableExtensions.SafeParallelForEachAwaitAsync{TSource, TResult}(IAsyncEnumerable{TSource}, Func{TSource, Task{TResult}}, CancellationToken)" />
         [Obsolete("Use \"Acolyte.Linq.EnumerableExtensions.SafeParallelForEachAwaitAsync\" instead. This method will be removed in next major version.", error: false)]
         public static Task<Result<TResult, Exception>[]> ForEachSafeAsync<TSource, TResult>(
             this IAsyncEnumerable<TSource> source, Func<TSource, Task<TResult>> function,
             CancellationToken cancellationToken)
         {
-            return Linq.EnumerableExtensions.SafeParallelForEachAwaitAsync(source, function, cancellationToken);
+            return Linq.AsyncEnumerableExtensions.SafeParallelForEachAwaitAsync(source, function, cancellationToken);
         }
 
-        /// <inheritdoc cref="Linq.EnumerableExtensions.SafeParallelForEachAwaitAsync{TSource, TResult}(IAsyncEnumerable{TSource}, Func{TSource, Task{TResult}}, CancellationToken)" />
+        /// <inheritdoc cref="Linq.AsyncEnumerableExtensions.SafeParallelForEachAwaitAsync{TSource, TResult}(IAsyncEnumerable{TSource}, Func{TSource, Task{TResult}}, CancellationToken)" />
         [Obsolete("Use \"Acolyte.Linq.EnumerableExtensions.SafeParallelForEachAwaitAsync\" instead. This method will be removed in next major version.", error: false)]
         public static Task<Result<TResult, Exception>[]> ForEachSafeAsync<TSource, TResult>(
             this IAsyncEnumerable<TSource> source, Func<TSource, Task<TResult>> function)
         {
-            return Linq.EnumerableExtensions.SafeParallelForEachAwaitAsync(source, function);
+            return Linq.AsyncEnumerableExtensions.SafeParallelForEachAwaitAsync(source, function);
         }
 
 #endif

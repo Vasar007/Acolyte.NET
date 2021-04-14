@@ -1,7 +1,9 @@
-﻿namespace Acolyte.Linq
+﻿using System.Collections.Generic;
+
+namespace Acolyte.Linq
 {
     /// <summary>
-    /// Contains useful methods to work with enumerable items.
+    /// Provides a set of additional extension methods for <see cref="IEnumerable{T}" />.
     /// </summary>
     public static partial class EnumerableExtensions
     {
