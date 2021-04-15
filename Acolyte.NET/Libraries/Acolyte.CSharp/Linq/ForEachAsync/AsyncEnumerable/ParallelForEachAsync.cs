@@ -1,4 +1,6 @@
-﻿using System;
+﻿#if NETSTANDARD2_1
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -8,7 +10,7 @@ using Acolyte.Linq.Operators;
 
 namespace Acolyte.Linq
 {
-    public static partial class EnumerableExtensions
+    public static partial class AsyncEnumerableExtensions
     {
         /// <summary>
         /// Performs the specified action on each element of the <paramref name="source" />.
@@ -17,7 +19,7 @@ namespace Acolyte.Linq
         /// <typeparam name="TSource">
         /// The type of the elements of <paramref name="source" />.
         /// </typeparam>
-        /// <param name="source">A sequence of values to perform action.</param>
+        /// <param name="source">An asynchronous sequence of values to perform action.</param>
         /// <param name="action">
         /// An action to apply on each <paramref name="source" /> element.
         /// </param>
@@ -39,19 +41,24 @@ namespace Acolyte.Linq
         /// The <see cref="CancellationTokenSource" /> associated with
         /// <paramref name="cancellationToken" /> was disposed.
         /// </exception>
-        public static Task ParallelForEachAsync<TSource>(this IEnumerable<TSource> source,
-            Action<TSource> action, CancellationToken cancellationToken = default)
+        public static async Task ParallelForEachAsync<TSource>(
+            this IAsyncEnumerable<TSource> source, Action<TSource> action,
+            CancellationToken cancellationToken = default)
         {
-            // Null check for "source" parameter is provided by "Enumerable.Select" method.
+            source.ThrowIfNull(nameof(source));
             action.ThrowIfNull(nameof(action));
 
-            var results = source.Select(
-                item => ForEachAsyncOperator.PerformActionWithCancellation(
+            var results = new List<Task>();
+            await foreach (TSource item in source.WithCancellation(cancellationToken)
+                .ConfigureAwait(continueOnCapturedContext: false))
+            {
+                var task = ForEachAsyncOperator.PerformActionWithCancellation(
                     item, action, cancellationToken
-                )
-            );
+                );
+                results.Add(task);
+            }
 
-            return Task.WhenAll(results);
+            await Task.WhenAll(results).ConfigureAwait(continueOnCapturedContext: false);
         }
 
         /// <summary>
@@ -62,11 +69,11 @@ namespace Acolyte.Linq
         /// <typeparam name="TSource">
         /// The type of the elements of <paramref name="source" />.
         /// </typeparam>
-        /// <param name="source">A sequence of values to perform action.</param>
+        /// <param name="source">An asynchronous sequence of values to perform action.</param>
         /// <param name="action">
-        /// An action to apply on each <paramref name="source" /> element; the second parameter of
-        /// the <paramref name="action" /> represents the index of the <paramref name="source" />
-        /// element.
+        /// A transform action to apply on each <paramref name="source" /> element; the second
+        /// parameter of the <paramref name="action" /> represents the index of the
+        /// <paramref name="source" /> element.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional cancellation token for canceling the sequence at any time.
@@ -86,19 +93,28 @@ namespace Acolyte.Linq
         /// The <see cref="CancellationTokenSource" /> associated with
         /// <paramref name="cancellationToken" /> was disposed.
         /// </exception>
-        public static Task ParallelForEachAsync<TSource>(this IEnumerable<TSource> source,
-            Action<TSource, int> action, CancellationToken cancellationToken = default)
+        public static async Task ParallelForEachAsync<TSource>(
+            this IAsyncEnumerable<TSource> source, Action<TSource, int> action,
+            CancellationToken cancellationToken = default)
         {
-            // Null check for "source" parameter is provided by "Enumerable.Select" method.
+            source.ThrowIfNull(nameof(source));
             action.ThrowIfNull(nameof(action));
 
-            var results = source.Select(
-                (item, index) => ForEachAsyncOperator.PerformActionWithCancellation(
+            var results = new List<Task>();
+            int index = 0;
+            await foreach (TSource item in source.WithCancellation(cancellationToken)
+                .ConfigureAwait(continueOnCapturedContext: false))
+            {
+                var task = ForEachAsyncOperator.PerformActionWithCancellation(
                     item, index, action, cancellationToken
-                )
-            );
+                );
+                ++index;
+                results.Add(task);
+            }
 
-            return Task.WhenAll(results);
+            await Task.WhenAll(results).ConfigureAwait(continueOnCapturedContext: false);
         }
     }
 }
+
+#endif

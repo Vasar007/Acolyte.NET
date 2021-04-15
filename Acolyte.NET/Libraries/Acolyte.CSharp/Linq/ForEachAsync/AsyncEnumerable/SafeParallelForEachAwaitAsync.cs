@@ -1,24 +1,31 @@
-﻿using System;
+﻿#if NETSTANDARD2_1
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Acolyte.Assertions;
+using Acolyte.Common;
 using Acolyte.Linq.Operators;
+using Acolyte.Threading;
 
 namespace Acolyte.Linq
 {
-    public static partial class EnumerableExtensions
+    public static partial class AsyncEnumerableExtensions
     {
         /// <summary>
-        /// Performs the specified function on each element of the <paramref name="source" />.
+        /// Performs the specified function on each element of the <paramref name="source" /> and
+        /// wraps execution in
+        /// <see cref="TaskHelper.WhenAllResultsOrExceptions(IEnumerable{Task})" /> to make task for
+        /// every item in <paramref name="source" /> safe. You can unwrap results and process it.
         /// A cancellation token allows the work to be canceled.
         /// </summary>
         /// <typeparam name="TSource">
         /// The type of the elements of <paramref name="source" />.
         /// </typeparam>
-        /// <param name="source">A sequence of values to perform function.</param>
-        /// <param name="function">
+        /// <param name="source">An asynchronous sequence of values to perform function.</param>
+        ///  <param name="function">
         /// A function to apply on each <paramref name="source" /> element.
         /// </param>
         /// <param name="cancellationToken">
@@ -28,7 +35,8 @@ namespace Acolyte.Linq
         /// </param>
         /// <returns>
         /// A task that represents the completion of work on each item of <paramref name="source" />
-        /// queued to execute in the thread pool.
+        /// queued to execute in the thread pool. Task contains results from function invocation on
+        /// each item of <paramref name="source" />.
         /// </returns>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="source" /> is <see langword="null" />. -or-
@@ -39,31 +47,39 @@ namespace Acolyte.Linq
         /// The <see cref="CancellationTokenSource" /> associated with
         /// <paramref name="cancellationToken" /> was disposed.
         /// </exception>
-        public static Task ParallelForEachAwaitAsync<TSource>(this IEnumerable<TSource> source,
-            Func<TSource, Task> function, CancellationToken cancellationToken = default)
+        public static async Task<Result<NoneResult, Exception>[]> SafeParallelForEachAwaitAsync<TSource>(
+            this IAsyncEnumerable<TSource> source, Func<TSource, Task> function,
+            CancellationToken cancellationToken = default)
         {
-            // Null check for "source" parameter is provided by "Enumerable.Select" method.
+            source.ThrowIfNull(nameof(source));
             function.ThrowIfNull(nameof(function));
 
-            var results = source.Select(
-                item => ForEachAwaitAsyncOperator.PerformFuncWithCancellation(
+            var results = new List<Task>();
+            await foreach (TSource item in source.WithCancellation(cancellationToken)
+                .ConfigureAwait(continueOnCapturedContext: false))
+            {
+                var task = ForEachAwaitAsyncOperator.PerformFuncWithCancellation(
                     item, function, cancellationToken
-                )
-            );
+                );
+                results.Add(task);
+            }
 
-            return Task.WhenAll(results);
+            return await TaskHelper.WhenAllResultsOrExceptions(results)
+                .ConfigureAwait(continueOnCapturedContext: false);
         }
 
         /// <summary>
-        /// Performs the specified function on each element of the <paramref name="source" /> by
-        /// incorporating element's index.
+        /// Performs the specified function on each element of the <paramref name="source" />  by
+        /// incorporating element's index and wraps execution in
+        /// <see cref="TaskHelper.WhenAllResultsOrExceptions(IEnumerable{Task})" /> to make task for
+        /// every item in <paramref name="source" /> safe. You can unwrap results and process it.
         /// A cancellation token allows the work to be canceled.
         /// </summary>
         /// <typeparam name="TSource">
         /// The type of the elements of <paramref name="source" />.
         /// </typeparam>
-        /// <param name="source">A sequence of values to perform function.</param>
-        /// <param name="function">
+        /// <param name="source">An asynchronous sequence of values to perform function.</param>
+        ///  <param name="function">
         /// A function to apply on each <paramref name="source" /> element; the second parameter of
         /// the <paramref name="function" /> represents the index of the <paramref name="source" />
         /// element.
@@ -75,7 +91,8 @@ namespace Acolyte.Linq
         /// </param>
         /// <returns>
         /// A task that represents the completion of work on each item of <paramref name="source" />
-        /// queued to execute in the thread pool.
+        /// queued to execute in the thread pool. Task contains results from function invocation on
+        /// each item of <paramref name="source" />.
         /// </returns>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="source" /> is <see langword="null" />. -or-
@@ -86,23 +103,34 @@ namespace Acolyte.Linq
         /// The <see cref="CancellationTokenSource" /> associated with
         /// <paramref name="cancellationToken" /> was disposed.
         /// </exception>
-        public static Task ParallelForEachAwaitAsync<TSource>(this IEnumerable<TSource> source,
-            Func<TSource, int, Task> function, CancellationToken cancellationToken = default)
+        public static async Task<Result<NoneResult, Exception>[]> SafeParallelForEachAwaitAsync<TSource>(
+            this IAsyncEnumerable<TSource> source, Func<TSource, int, Task> function,
+            CancellationToken cancellationToken = default)
         {
-            // Null check for "source" parameter is provided by "Enumerable.Select" method.
+            source.ThrowIfNull(nameof(source));
             function.ThrowIfNull(nameof(function));
 
-            var results = source.Select(
-                (item, index) => ForEachAwaitAsyncOperator.PerformFuncWithCancellation(
+            var results = new List<Task>();
+            int index = 0;
+            await foreach (TSource item in source.WithCancellation(cancellationToken)
+                .ConfigureAwait(continueOnCapturedContext: false))
+            {
+                var task = ForEachAwaitAsyncOperator.PerformFuncWithCancellation(
                     item, index, function, cancellationToken
-                )
-            );
+                );
+                ++index;
+                results.Add(task);
+            }
 
-            return Task.WhenAll(results);
+            return await TaskHelper.WhenAllResultsOrExceptions(results)
+                .ConfigureAwait(continueOnCapturedContext: false);
         }
 
         /// <summary>
-        /// Performs the specified function on each element of the <paramref name="source" />.
+        /// Performs the specified function on each element of the <paramref name="source" /> and
+        /// wraps execution in
+        /// <see cref="TaskHelper.WhenAllResultsOrExceptions(IEnumerable{Task})" /> to make task for
+        /// every item in <paramref name="source" /> safe. You can unwrap results and process it.
         /// A cancellation token allows the work to be canceled.
         /// </summary>
         /// <typeparam name="TSource">
@@ -111,7 +139,7 @@ namespace Acolyte.Linq
         /// <typeparam name="TResult">
         /// The type of element that <paramref name="function" /> returns.
         /// </typeparam>
-        /// <param name="source">A sequence of values to perform function.</param>
+        /// <param name="source">An asynchronous sequence of values to perform function.</param>
         /// <param name="function">
         /// A transform function to apply on each <paramref name="source" /> element.
         /// </param>
@@ -134,25 +162,32 @@ namespace Acolyte.Linq
         /// The <see cref="CancellationTokenSource" /> associated with
         /// <paramref name="cancellationToken" /> was disposed.
         /// </exception>
-        public static Task<TResult[]> ParallelForEachAwaitAsync<TSource, TResult>(
-            this IEnumerable<TSource> source, Func<TSource, Task<TResult>> function,
+        public static async Task<Result<TResult, Exception>[]> SafeParallelForEachAwaitAsync<TSource, TResult>(
+            this IAsyncEnumerable<TSource> source, Func<TSource, Task<TResult>> function,
             CancellationToken cancellationToken = default)
         {
-            // Null check for "source" parameter is provided by "Enumerable.Select" method.
+            source.ThrowIfNull(nameof(source));
             function.ThrowIfNull(nameof(function));
 
-            var results = source.Select(
-                item => ForEachAwaitAsyncOperator.PerformFuncWithCancellation(
+            var results = new List<Task<TResult>>();
+            await foreach (TSource item in source.WithCancellation(cancellationToken)
+                .ConfigureAwait(continueOnCapturedContext: false))
+            {
+                var task = ForEachAwaitAsyncOperator.PerformFuncWithCancellation(
                     item, function, cancellationToken
-                )
-            );
+                );
+                results.Add(task);
+            }
 
-            return Task.WhenAll(results);
+            return await TaskHelper.WhenAllResultsOrExceptions(results)
+                .ConfigureAwait(continueOnCapturedContext: false);
         }
 
         /// <summary>
-        /// Performs the specified function on each element of the <paramref name="source" /> by
-        /// incorporating element's index.
+        /// Performs the specified function on each element of the <paramref name="source" />  by
+        /// incorporating element's index and wraps execution in
+        /// <see cref="TaskHelper.WhenAllResultsOrExceptions(IEnumerable{Task})" /> to make task for
+        /// every item in <paramref name="source" /> safe. You can unwrap results and process it.
         /// A cancellation token allows the work to be canceled.
         /// </summary>
         /// <typeparam name="TSource">
@@ -161,8 +196,8 @@ namespace Acolyte.Linq
         /// <typeparam name="TResult">
         /// The type of element that <paramref name="function" /> returns.
         /// </typeparam>
-        /// <param name="source">A sequence of values to perform function.</param>
-        /// <param name="function">
+        /// <param name="source">An asynchronous sequence of values to perform function.</param>
+        ///  <param name="function">
         /// A transform function to apply on each <paramref name="source" /> element; the second
         /// parameter of the <paramref name="function" /> represents the index of the
         /// <paramref name="source" /> element.
@@ -186,20 +221,29 @@ namespace Acolyte.Linq
         /// The <see cref="CancellationTokenSource" /> associated with
         /// <paramref name="cancellationToken" /> was disposed.
         /// </exception>
-        public static Task<TResult[]> ParallelForEachAwaitAsync<TSource, TResult>(
-            this IEnumerable<TSource> source, Func<TSource, int, Task<TResult>> function,
+        public static async Task<Result<TResult, Exception>[]> SafeParallelForEachAwaitAsync<TSource, TResult>(
+            this IAsyncEnumerable<TSource> source, Func<TSource, int, Task<TResult>> function,
             CancellationToken cancellationToken = default)
         {
-            // Null check for "source" parameter is provided by "Enumerable.Select" method.
+            source.ThrowIfNull(nameof(source));
             function.ThrowIfNull(nameof(function));
 
-            var results = source.Select(
-                (item, index) => ForEachAwaitAsyncOperator.PerformFuncWithCancellation(
+            var results = new List<Task<TResult>>();
+            int index = 0;
+            await foreach (TSource item in source.WithCancellation(cancellationToken)
+                .ConfigureAwait(continueOnCapturedContext: false))
+            {
+                var task = ForEachAwaitAsyncOperator.PerformFuncWithCancellation(
                     item, index, function, cancellationToken
-                )
-            );
+                );
+                ++index;
+                results.Add(task);
+            }
 
-            return Task.WhenAll(results);
+            return await TaskHelper.WhenAllResultsOrExceptions(results)
+                .ConfigureAwait(continueOnCapturedContext: false);
         }
     }
 }
+
+#endif
