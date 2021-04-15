@@ -9,9 +9,9 @@ using Xunit;
 
 namespace Acolyte.Tests.Collections.EnumerableExtensions
 {
-    public sealed class EnumerableParallelForEachAwaitWithCancellationAsyncTests
+    public sealed class ParallelForEachAwaitWithCancellationAsyncTests
     {
-        public EnumerableParallelForEachAwaitWithCancellationAsyncTests()
+        public ParallelForEachAwaitWithCancellationAsyncTests()
         {
         }
 
