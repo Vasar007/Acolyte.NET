@@ -15,7 +15,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         {
         }
 
-        #region Null Values
+#region Null Values
 
         [Fact]
         public void SafeParallelForEachAwaitAsync_AsyncEnumerable_ForNullValue_ShouldFail()
@@ -70,27 +70,27 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
 
-        #endregion
+#endregion
 
-        #region Empty Values
+#region Empty Values
 
-        #endregion
+#endregion
 
-        #region Predefined Values
+#region Predefined Values
 
-        #endregion
+#endregion
 
-        #region Some Values
+#region Some Values
 
-        #endregion
+#endregion
 
-        #region Random Values
+#region Random Values
 
-        #endregion
+#endregion
 
-        #region Extended Logical Coverage
+#region Extended Logical Coverage
 
-        #endregion
+#endregion
     }
 }
 
