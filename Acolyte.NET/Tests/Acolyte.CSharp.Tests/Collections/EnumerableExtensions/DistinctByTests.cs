@@ -311,8 +311,11 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             IEnumerable<TSource> source, Func<TSource, TKey> keySelector,
              IEqualityComparer<TKey>? keyComparer = null)
         {
-            var hashSet = new HashSet<TKey>(keyComparer);
-            return source.Where(item => hashSet.Add(keySelector(item)));
+            var seenKeys = new HashSet<TKey>(keyComparer);
+            foreach (TSource element in source)
+            {
+                if (seenKeys.Add(keySelector(element))) yield return element;
+            }
         }
 
         private static IReadOnlyList<long> CreateRange()

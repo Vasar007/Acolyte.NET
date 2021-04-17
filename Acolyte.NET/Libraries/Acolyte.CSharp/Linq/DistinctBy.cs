@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Acolyte.Assertions;
 
 namespace Acolyte.Linq
@@ -36,14 +37,11 @@ namespace Acolyte.Linq
             this IEnumerable<TSource> source, Func<TSource, TKey> keySelector,
              IEqualityComparer<TKey>? keyComparer)
         {
-            source.ThrowIfNull(nameof(source));
+            // Null check for "source" parameter is provided by "Enumerable.Where" method.
             keySelector.ThrowIfNull(nameof(keySelector));
 
             var seenKeys = new HashSet<TKey>(keyComparer);
-            foreach (TSource element in source)
-            {
-                if (seenKeys.Add(keySelector(element))) yield return element;
-            }
+            return source.Where(item => seenKeys.Add(keySelector(item)));
         }
 
         /// <summary>
