@@ -390,9 +390,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             int expectedValue = InverseFunction.ForInt32(minValue);
 
             // Act.
-            int actualValue = explosive.MinBy(
-                InverseFunction.ForInt32, Comparer<int>.Default
-            );
+            int actualValue = explosive.MinBy(InverseFunction.ForInt32, Comparer<int>.Default);
 
             // Assert.
             Assert.Equal(expected: collection.Count, explosive.VisitedItemsNumber);

@@ -409,9 +409,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
                 (InverseFunction.ForInt32(minValue), InverseFunction.ForInt32(maxValue));
 
             // Act.
-            var actualValue = explosive.MinMaxBy(
-                InverseFunction.ForInt32, Comparer<int>.Default
-            );
+            var actualValue = explosive.MinMaxBy(InverseFunction.ForInt32, Comparer<int>.Default);
 
             // Assert.
             Assert.Equal(expected: collection.Count, explosive.VisitedItemsNumber);

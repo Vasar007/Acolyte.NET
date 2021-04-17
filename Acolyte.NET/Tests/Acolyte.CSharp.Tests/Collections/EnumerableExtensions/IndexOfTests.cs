@@ -524,9 +524,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             const int expectedIndex = 1;
 
             // Act.
-            int actualIndex = explosive.IndexOf(
-                value, EqualityComparer<int>.Default
-            );
+            int actualIndex = explosive.IndexOf(value, EqualityComparer<int>.Default);
 
             // Assert.
             Assert.Equal(expected: 2, explosive.VisitedItemsNumber);

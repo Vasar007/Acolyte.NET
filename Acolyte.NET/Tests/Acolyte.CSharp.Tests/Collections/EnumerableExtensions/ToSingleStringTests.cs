@@ -761,9 +761,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             string emptyCollectionMessage = Strings.DefaultEmptyCollectionMessage;
 
             // Act.
-            string actualValue = explosive.ToSingleString(
-                emptyCollectionMessage, separator
-            );
+            string actualValue = explosive.ToSingleString(emptyCollectionMessage, separator);
 
             // Assert.
             Assert.Equal(expected: collection.Count, explosive.VisitedItemsNumber);
@@ -800,9 +798,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             string emptyCollectionMessage = Strings.DefaultEmptyCollectionMessage;
 
             // Act.
-            string actualValue = explosive.ToSingleString(
-                emptyCollectionMessage, selector
-            );
+            string actualValue = explosive.ToSingleString(emptyCollectionMessage, selector);
 
             // Assert.
             Assert.Equal(expected: collection.Count, explosive.VisitedItemsNumber);

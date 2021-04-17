@@ -209,8 +209,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             // Arrange.
             IReadOnlyList<int> collection = new[] { 1, 2, 3, 4 };
             var explosive = ExplosiveEnumerable.CreateNotExplosive(collection);
-            (int minValue, int maxValue) expectedValue =
-                (explosive.Min(), explosive.Max());
+            (int minValue, int maxValue) expectedValue = (explosive.Min(), explosive.Max());
 
             // Act.
             var actualValue = explosive.MinMax();
@@ -226,8 +225,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             // Arrange.
             IReadOnlyList<int?> collection = new int?[] { 1, 2, 3, 4 };
             var explosive = ExplosiveEnumerable.CreateNotExplosive(collection);
-            (int? minValue, int? maxValue) expectedValue =
-                (explosive.Min(), explosive.Max());
+            (int? minValue, int? maxValue) expectedValue = (explosive.Min(), explosive.Max());
 
             // Act.
             var actualValue = explosive.MinMax();
@@ -435,8 +433,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             // Arrange.
             IReadOnlyList<long> collection = new[] { 1L, 2L, 3L, 4L };
             var explosive = ExplosiveEnumerable.CreateNotExplosive(collection);
-            (long minValue, long maxValue) expectedValue =
-                (explosive.Min(), explosive.Max());
+            (long minValue, long maxValue) expectedValue = (explosive.Min(), explosive.Max());
 
             // Act.
             var actualValue = explosive.MinMax();
@@ -452,8 +449,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             // Arrange.
             IReadOnlyList<long?> collection = new long?[] { 1L, 2L, 3L, 4L };
             var explosive = ExplosiveEnumerable.CreateNotExplosive(collection);
-            (long? minValue, long? maxValue) expectedValue =
-                (explosive.Min(), explosive.Max());
+            (long? minValue, long? maxValue) expectedValue = (explosive.Min(), explosive.Max());
 
             // Act.
             var actualValue = explosive.MinMax();
@@ -661,8 +657,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             // Arrange.
             IReadOnlyList<float> collection = new[] { 1.0F, 2.0F, 3.0F, 4.0F };
             var explosive = ExplosiveEnumerable.CreateNotExplosive(collection);
-            (float minValue, float maxValue) expectedValue =
-                (explosive.Min(), explosive.Max());
+            (float minValue, float maxValue) expectedValue = (explosive.Min(), explosive.Max());
 
             // Act.
             var actualValue = explosive.MinMax();
@@ -678,8 +673,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             // Arrange.
             IReadOnlyList<float?> collection = new float?[] { 1.0F, 2.0F, 3.0F, 4.0F };
             var explosive = ExplosiveEnumerable.CreateNotExplosive(collection);
-            (float? minValue, float? maxValue) expectedValue =
-                (explosive.Min(), explosive.Max());
+            (float? minValue, float? maxValue) expectedValue = (explosive.Min(), explosive.Max());
 
             // Act.
             var actualValue = explosive.MinMax();
@@ -887,8 +881,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             // Arrange.
             IReadOnlyList<double> collection = new[] { 1.0D, 2.0D, 3.0D, 4.0D };
             var explosive = ExplosiveEnumerable.CreateNotExplosive(collection);
-            (double minValue, double maxValue) expectedValue =
-                (explosive.Min(), explosive.Max());
+            (double minValue, double maxValue) expectedValue = (explosive.Min(), explosive.Max());
 
             // Act.
             var actualValue = explosive.MinMax();
@@ -904,8 +897,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             // Arrange.
             IReadOnlyList<double?> collection = new double?[] { 1.0D, 2.0D, 3.0D, 4.0D };
             var explosive = ExplosiveEnumerable.CreateNotExplosive(collection);
-            (double? minValue, double? maxValue) expectedValue =
-                (explosive.Min(), explosive.Max());
+            (double? minValue, double? maxValue) expectedValue = (explosive.Min(), explosive.Max());
 
             // Act.
             var actualValue = explosive.MinMax();
@@ -1113,8 +1105,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             // Arrange.
             IReadOnlyList<decimal> collection = new[] { 1.0M, 2.0M, 3.0M, 4.0M };
             var explosive = ExplosiveEnumerable.CreateNotExplosive(collection);
-            (decimal minValue, decimal maxValue) expectedValue =
-                (explosive.Min(), explosive.Max());
+            (decimal minValue, decimal maxValue) expectedValue = (explosive.Min(), explosive.Max());
 
             // Act.
             var actualValue = explosive.MinMax();
@@ -1406,8 +1397,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             // Arrange.
             IReadOnlyList<string> collection = new[] { "1", "2", "3", "4" };
             var explosive = ExplosiveEnumerable.CreateNotExplosive(collection);
-            (string? minValue, string? maxValue) expectedValue =
-                (explosive.Min(), explosive.Max());
+            (string? minValue, string? maxValue) expectedValue = (explosive.Min(), explosive.Max());
 
             // Act.
             var actualValue = explosive.MinMax();
@@ -1423,8 +1413,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             // Arrange.
             IReadOnlyList<string> collection = new[] { "1", "2", "3", "4" };
             var explosive = ExplosiveEnumerable.CreateNotExplosive(collection);
-            (string? minValue, string? maxValue) expectedValue =
-                (explosive.Min(), explosive.Max());
+            (string? minValue, string? maxValue) expectedValue = (explosive.Min(), explosive.Max());
 
             // Act.
             // Do not know why compiler decides that "explosive" should have "string?"

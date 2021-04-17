@@ -1764,8 +1764,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             // Arrange.
             IReadOnlyList<string> collection = new[] { "1", "2", "3", "4" };
             var explosive = ExplosiveEnumerable.CreateNotExplosive(collection);
-            (string? minValue, string? maxValue) expectedValue =
-                (explosive.Min(), explosive.Max());
+            (string? minValue, string? maxValue) expectedValue = (explosive.Min(), explosive.Max());
 
             // Act.
             // Do not know why compiler decides that "explosive" should have "string?"
