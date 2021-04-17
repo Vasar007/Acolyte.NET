@@ -5,7 +5,7 @@ using Acolyte.Functions;
 using Acolyte.Linq;
 using Xunit;
 
-namespace Acolyte.Tests.Collections.EnumerableExtensions
+namespace Acolyte.Tests.Linq
 {
     public sealed class Enumerable_SafeParallelForEachAwaitAsyncTests
     {

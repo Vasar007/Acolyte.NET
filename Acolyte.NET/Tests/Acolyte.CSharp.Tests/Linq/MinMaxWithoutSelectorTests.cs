@@ -1,15 +1,14 @@
-﻿#pragma warning disable CS0618 // Type or member is obsolete
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Acolyte.Collections;
 using Acolyte.Common;
+using Acolyte.Linq;
+using Acolyte.Tests.Collections;
 using Acolyte.Tests.Creators;
 using Acolyte.Tests.Objects;
 using Xunit;
 
-namespace Acolyte.Tests.Collections.EnumerableExtensions
+namespace Acolyte.Tests.Linq
 {
     public sealed class MinMaxWithoutSelectorTests
     {

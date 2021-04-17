@@ -1,12 +1,11 @@
-﻿#pragma warning disable CS0618 // Type or member is obsolete
-
-using System;
+﻿using System;
 using System.Collections.Generic;
-using Acolyte.Collections;
 using Acolyte.Functions;
+using Acolyte.Linq;
+using Acolyte.Tests.Collections;
 using Xunit;
 
-namespace Acolyte.Tests.Collections.EnumerableExtensions
+namespace Acolyte.Tests.Linq
 {
     public sealed class OrderBySequenceTests
     {
