@@ -48,6 +48,7 @@ namespace Acolyte.Tests.Collections
 
         public void Reset()
         {
+            _visitedItemsNumber.Reset();
             _originalEnumerator.Reset();
         }
 

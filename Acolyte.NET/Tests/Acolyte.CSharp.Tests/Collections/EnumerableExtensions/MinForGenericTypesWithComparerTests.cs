@@ -183,7 +183,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         public void Min_WithComparer_ShouldLookWholeCollectionToFindItem()
         {
             // Arrange.
-            var collection = new[] { 1, 2, 3, 4 };
+            IReadOnlyList<int> collection = new[] { 1, 2, 3, 4 };
             var explosiveCollection = ExplosiveCollection.CreateNotExplosive(collection);
             int expectedValue = explosiveCollection.Min();
 
@@ -191,7 +191,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             int actualValue = explosiveCollection.Min(Comparer<int>.Default);
 
             // Assert.
-            Assert.Equal(expected: collection.Length, explosiveCollection.VisitedItemsNumber);
+            Assert.Equal(expected: collection.Count, explosiveCollection.VisitedItemsNumber);
             Assert.Equal(expectedValue, actualValue);
         }
 

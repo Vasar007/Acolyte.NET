@@ -71,7 +71,6 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
 
         #endregion
 
-
         #region Some Values
 
         [Theory]
@@ -84,7 +83,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         public void ForEach_ForCollectionWithSomeItems_ShouldDoActionForEachItem(int count)
         {
             // Arrange.
-            IEnumerable<int> collectionWithSomeItems =
+            IReadOnlyList<int> collectionWithSomeItems =
                 TestDataCreator.CreateRandomInt32List(count);
             IReadOnlyList<int> expectedCollection = collectionWithSomeItems.ToList();
             var actualCollection = new List<int>();
@@ -106,7 +105,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         {
             // Arrange.
             int count = TestDataCreator.GetRandomCountNumber();
-            IEnumerable<int> collectionWithRandomSize =
+            IReadOnlyList<int> collectionWithRandomSize =
                 TestDataCreator.CreateRandomInt32List(count);
             IReadOnlyList<int> expectedCollection = collectionWithRandomSize.ToList();
             var actualCollection = new List<int>();
@@ -124,7 +123,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         {
             // Arrange.
             int count = TestDataCreator.GetRandomCountNumber();
-            IEnumerable<int?> collectionWithRandomSize =
+            IReadOnlyList<int?> collectionWithRandomSize =
                 TestDataCreator.CreateRandomNullableInt32List(count);
             IReadOnlyList<int?> expectedCollection = collectionWithRandomSize.ToList();
             var actualCollection = new List<int?>();
@@ -145,7 +144,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         public void ForEach_ShouldLookWholeCollectionToDoActionForEachItem()
         {
             // Arrange.
-            var collection = new[] { 1, 2, 3, 4 };
+            IReadOnlyList<int> collection = new[] { 1, 2, 3, 4 };
             var explosiveCollection = ExplosiveCollection.CreateNotExplosive(collection);
             IReadOnlyList<int> expectedCollection = explosiveCollection.ToList();
             var actualCollection = new List<int>();
@@ -155,7 +154,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             explosiveCollection.ForEach(action);
 
             // Assert.
-            Assert.Equal(expected: collection.Length, explosiveCollection.VisitedItemsNumber);
+            Assert.Equal(expected: collection.Count, explosiveCollection.VisitedItemsNumber);
             Assert.Equal(expectedCollection, actualCollection);
         }
 

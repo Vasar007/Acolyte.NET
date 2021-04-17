@@ -20,7 +20,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
 #region Null Values
 
         [Fact]
-        public async Task ParallelForEachAwaitAsync_AsyncEnumerable_ForNullValue_ShouldFail()
+        public async Task ParallelForEachAwaitAsync_ForNullValue_ShouldFail()
         {
             // Arrange.
             const IAsyncEnumerable<int>? nullValue = null;
@@ -33,7 +33,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public async Task ParallelForEachAwaitAsync_AsyncEnumerable_WithIndex_ForNullValue_ShouldFail()
+        public async Task ParallelForEachAwaitAsync_WithIndex_ForNullValue_ShouldFail()
         {
             // Arrange.
             const IAsyncEnumerable<int>? nullValue = null;
@@ -46,7 +46,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public async Task ParallelForEachAwaitAsync_AsyncEnumerable_WithSelector_ForNullValue_ShouldFail()
+        public async Task ParallelForEachAwaitAsync_WithSelector_ForNullValue_ShouldFail()
         {
             // Arrange.
             const IAsyncEnumerable<int>? nullValue = null;
@@ -59,7 +59,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public async Task ParallelForEachAwaitAsync_AsyncEnumerable_WithSelectorAndIndex_ForNullValue_ShouldFail()
+        public async Task ParallelForEachAwaitAsync_WithSelectorAndIndex_ForNullValue_ShouldFail()
         {
             // Arrange.
             const IAsyncEnumerable<int>? nullValue = null;
@@ -76,7 +76,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
 #region Empty Values
 
         [Fact]
-        public async Task ParallelForEachAwaitAsync_AsyncEnumerable_ForEmptyCollection_ShouldDoNothing()
+        public async Task ParallelForEachAwaitAsync_ForEmptyCollection_ShouldDoNothing()
         {
             // Arrange.
             IAsyncEnumerable<int> emptyCollection = AsyncEnumerable.Empty<int>();
@@ -97,7 +97,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public async Task ParallelForEachAwaitAsync_AsyncEnumerable_WithIndex_ForEmptyCollection_ShouldDoNothing()
+        public async Task ParallelForEachAwaitAsync_WithIndex_ForEmptyCollection_ShouldDoNothing()
         {
             // Arrange.
             IAsyncEnumerable<int> emptyCollection = AsyncEnumerable.Empty<int>();
@@ -121,7 +121,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public async Task ParallelForEachAwaitAsync_AsyncEnumerable_WithSelector_ForEmptyCollection_ShouldDoNothing()
+        public async Task ParallelForEachAwaitAsync_WithSelector_ForEmptyCollection_ShouldDoNothing()
         {
             // Arrange.
             IAsyncEnumerable<int> emptyCollection = AsyncEnumerable.Empty<int>();
@@ -140,7 +140,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         }
 
         [Fact]
-        public async Task ParallelForEachAwaitAsync_AsyncEnumerable_WithSelectorAndIndex_ForEmptyCollection_ShouldDoNothing()
+        public async Task ParallelForEachAwaitAsync_WithSelectorAndIndex_ForEmptyCollection_ShouldDoNothing()
         {
             // Arrange.
             IAsyncEnumerable<int> emptyCollection = AsyncEnumerable.Empty<int>();

@@ -366,7 +366,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         public void MaxBy_WithoutComparer_ShouldLookWholeCollectionToFindItem()
         {
             // Arrange.
-            var collection = new[] { 1, 2, 3, 4 };
+            IReadOnlyList<int> collection = new[] { 1, 2, 3, 4 };
             var explosiveCollection = ExplosiveCollection.CreateNotExplosive(collection);
             // Max with selector returns transformed value. Need to transform it back.
             int maxValue = explosiveCollection.Max(InverseFunction.ForInt32);
@@ -376,7 +376,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             int actualValue = explosiveCollection.MaxBy(InverseFunction.ForInt32);
 
             // Assert.
-            Assert.Equal(expected: collection.Length, explosiveCollection.VisitedItemsNumber);
+            Assert.Equal(expected: collection.Count, explosiveCollection.VisitedItemsNumber);
             Assert.Equal(expectedValue, actualValue);
         }
 
@@ -384,7 +384,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         public void MaxBy_WithComparer_ShouldLookWholeCollectionToFindItem()
         {
             // Arrange.
-            var collection = new[] { 1, 2, 3, 4 };
+            IReadOnlyList<int> collection = new[] { 1, 2, 3, 4 };
             var explosiveCollection = ExplosiveCollection.CreateNotExplosive(collection);
             // Max with selector returns transformed value. Need to transform it back.
             int maxValue = explosiveCollection.Max(InverseFunction.ForInt32);
@@ -396,7 +396,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             );
 
             // Assert.
-            Assert.Equal(expected: collection.Length, explosiveCollection.VisitedItemsNumber);
+            Assert.Equal(expected: collection.Count, explosiveCollection.VisitedItemsNumber);
             Assert.Equal(expectedValue, actualValue);
         }
 

@@ -182,7 +182,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         public void Max_WithComparer_ShouldLookWholeCollectionToFindItem()
         {
             // Arrange.
-            var collection = new[] { 4, 3, 2, 1 };
+            IReadOnlyList<int> collection = new[] { 4, 3, 2, 1 };
             var explosiveCollection = ExplosiveCollection.CreateNotExplosive(collection);
             int expectedValue = explosiveCollection.Max();
 
@@ -190,7 +190,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             int actualValue = explosiveCollection.Max(Comparer<int>.Default);
 
             // Assert.
-            Assert.Equal(expected: collection.Length, explosiveCollection.VisitedItemsNumber);
+            Assert.Equal(expected: collection.Count, explosiveCollection.VisitedItemsNumber);
             Assert.Equal(expectedValue, actualValue);
         }
 
