@@ -274,15 +274,15 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         {
             // Arrange.
             IReadOnlyList<int> collection = new[] { 1, 2, 3, 4, 4 };
-            var explosiveCollection = ExplosiveCollection.CreateNotExplosive(collection);
+            var explosive = ExplosiveEnumerable.CreateNotExplosive(collection);
             Func<int, bool> keySelector = item => NumberParityFunction.IsEven(item);
-            var expectedResult = GetExpectedResult(explosiveCollection, keySelector).ToList();
+            var expectedResult = GetExpectedResult(explosive, keySelector).ToList();
 
             // Act.
-            var actualResult = explosiveCollection.DistinctBy(keySelector).ToList();
+            var actualResult = explosive.DistinctBy(keySelector).ToList();
 
             // Assert.
-            Assert.Equal(expected: collection.Count, explosiveCollection.VisitedItemsNumber);
+            Assert.Equal(expected: collection.Count, explosive.VisitedItemsNumber);
             Assert.Equal(expectedResult, actualResult);
         }
 
@@ -291,17 +291,17 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         {
             // Arrange.
             IReadOnlyList<int> collection = new[] { 1, 2, 3, 4, 4 };
-            var explosiveCollection = ExplosiveCollection.CreateNotExplosive(collection);
+            var explosive = ExplosiveEnumerable.CreateNotExplosive(collection);
             Func<int, bool> keySelector = item => NumberParityFunction.IsEven(item);
             var keyComparer = EqualityComparer<bool>.Default;
             var expectedResult =
-                GetExpectedResult(explosiveCollection, keySelector, keyComparer).ToList();
+                GetExpectedResult(explosive, keySelector, keyComparer).ToList();
 
             // Act.
-            var actualResult = explosiveCollection.DistinctBy(keySelector, keyComparer).ToList();
+            var actualResult = explosive.DistinctBy(keySelector, keyComparer).ToList();
 
             // Assert.
-            Assert.Equal(expected: collection.Count, explosiveCollection.VisitedItemsNumber);
+            Assert.Equal(expected: collection.Count, explosive.VisitedItemsNumber);
             Assert.Equal(expectedResult, actualResult);
         }
 

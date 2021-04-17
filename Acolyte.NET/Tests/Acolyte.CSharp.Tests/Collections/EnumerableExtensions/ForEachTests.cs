@@ -145,16 +145,16 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         {
             // Arrange.
             IReadOnlyList<int> collection = new[] { 1, 2, 3, 4 };
-            var explosiveCollection = ExplosiveCollection.CreateNotExplosive(collection);
-            IReadOnlyList<int> expectedCollection = explosiveCollection.ToList();
+            var explosive = ExplosiveEnumerable.CreateNotExplosive(collection);
+            IReadOnlyList<int> expectedCollection = explosive.ToList();
             var actualCollection = new List<int>();
             Action<int> action = i => actualCollection.Add(i);
 
             // Act.
-            explosiveCollection.ForEach(action);
+            explosive.ForEach(action);
 
             // Assert.
-            Assert.Equal(expected: collection.Count, explosiveCollection.VisitedItemsNumber);
+            Assert.Equal(expected: collection.Count, explosive.VisitedItemsNumber);
             Assert.Equal(expectedCollection, actualCollection);
         }
 

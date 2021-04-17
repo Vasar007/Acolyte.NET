@@ -717,16 +717,16 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         {
             // Arrange.
             IReadOnlyList<int> collection = new[] { 1, 2, 3, 4 };
-            var explosiveCollection = ExplosiveCollection.CreateNotExplosive(collection);
+            var explosive = ExplosiveEnumerable.CreateNotExplosive(collection);
             Func<int, string> selector = ToStingFunction<int>.WithSingleQuotes;
             string separator = Strings.DefaultItemSeparator;
             string expectedValue = string.Join(separator, collection.Select(selector));
 
             // Act.
-            string actualValue = explosiveCollection.ToSingleString();
+            string actualValue = explosive.ToSingleString();
 
             // Assert.
-            Assert.Equal(expected: collection.Count, explosiveCollection.VisitedItemsNumber);
+            Assert.Equal(expected: collection.Count, explosive.VisitedItemsNumber);
             Assert.Equal(expectedValue, actualValue);
         }
 
@@ -735,17 +735,17 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         {
             // Arrange.
             IReadOnlyList<int> collection = new[] { 1, 2, 3, 4 };
-            var explosiveCollection = ExplosiveCollection.CreateNotExplosive(collection);
+            var explosive = ExplosiveEnumerable.CreateNotExplosive(collection);
             Func<int, string> selector = ToStingFunction<int>.WithSingleQuotes;
             string separator = Strings.DefaultItemSeparator;
             string expectedValue = string.Join(separator, collection.Select(selector));
             string emptyCollectionMessage = Strings.DefaultEmptyCollectionMessage;
 
             // Act.
-            string actualValue = explosiveCollection.ToSingleString(emptyCollectionMessage);
+            string actualValue = explosive.ToSingleString(emptyCollectionMessage);
 
             // Assert.
-            Assert.Equal(expected: collection.Count, explosiveCollection.VisitedItemsNumber);
+            Assert.Equal(expected: collection.Count, explosive.VisitedItemsNumber);
             Assert.Equal(expectedValue, actualValue);
         }
 
@@ -754,19 +754,19 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         {
             // Arrange.
             IReadOnlyList<int> collection = new[] { 1, 2, 3, 4 };
-            var explosiveCollection = ExplosiveCollection.CreateNotExplosive(collection);
+            var explosive = ExplosiveEnumerable.CreateNotExplosive(collection);
             Func<int, string> selector = ToStingFunction<int>.WithSingleQuotes;
             const string separator = " ";
             string expectedValue = string.Join(separator, collection.Select(selector));
             string emptyCollectionMessage = Strings.DefaultEmptyCollectionMessage;
 
             // Act.
-            string actualValue = explosiveCollection.ToSingleString(
+            string actualValue = explosive.ToSingleString(
                 emptyCollectionMessage, separator
             );
 
             // Assert.
-            Assert.Equal(expected: collection.Count, explosiveCollection.VisitedItemsNumber);
+            Assert.Equal(expected: collection.Count, explosive.VisitedItemsNumber);
             Assert.Equal(expectedValue, actualValue);
         }
 
@@ -775,16 +775,16 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         {
             // Arrange.
             IReadOnlyList<int> collection = new[] { 1, 2, 3, 4 };
-            var explosiveCollection = ExplosiveCollection.CreateNotExplosive(collection);
+            var explosive = ExplosiveEnumerable.CreateNotExplosive(collection);
             Func<int, string> selector = ToStingFunction<int>.Simple;
             string separator = Strings.DefaultItemSeparator;
             string expectedValue = string.Join(separator, collection.Select(selector));
 
             // Act.
-            string actualValue = explosiveCollection.ToSingleString(selector);
+            string actualValue = explosive.ToSingleString(selector);
 
             // Assert.
-            Assert.Equal(expected: collection.Count, explosiveCollection.VisitedItemsNumber);
+            Assert.Equal(expected: collection.Count, explosive.VisitedItemsNumber);
             Assert.Equal(expectedValue, actualValue);
         }
 
@@ -793,19 +793,19 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         {
             // Arrange.
             IReadOnlyList<int> collection = new[] { 1, 2, 3, 4 };
-            var explosiveCollection = ExplosiveCollection.CreateNotExplosive(collection);
+            var explosive = ExplosiveEnumerable.CreateNotExplosive(collection);
             string separator = Strings.DefaultItemSeparator;
             Func<int, string> selector = ToStingFunction<int>.Simple;
             string expectedValue = string.Join(separator, collection.Select(selector));
             string emptyCollectionMessage = Strings.DefaultEmptyCollectionMessage;
 
             // Act.
-            string actualValue = explosiveCollection.ToSingleString(
+            string actualValue = explosive.ToSingleString(
                 emptyCollectionMessage, selector
             );
 
             // Assert.
-            Assert.Equal(expected: collection.Count, explosiveCollection.VisitedItemsNumber);
+            Assert.Equal(expected: collection.Count, explosive.VisitedItemsNumber);
             Assert.Equal(expectedValue, actualValue);
         }
 
@@ -814,19 +814,19 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         {
             // Arrange.
             IReadOnlyList<int> collection = new[] { 1, 2, 3, 4 };
-            var explosiveCollection = ExplosiveCollection.CreateNotExplosive(collection);
+            var explosive = ExplosiveEnumerable.CreateNotExplosive(collection);
             const string separator = " ";
             Func<int, string> selector = ToStingFunction<int>.Simple;
             string expectedValue = string.Join(separator, collection.Select(selector));
             string emptyCollectionMessage = Strings.DefaultEmptyCollectionMessage;
 
             // Act.
-            string actualValue = explosiveCollection.ToSingleString(
+            string actualValue = explosive.ToSingleString(
                 emptyCollectionMessage, separator, selector
             );
 
             // Assert.
-            Assert.Equal(expected: collection.Count, explosiveCollection.VisitedItemsNumber);
+            Assert.Equal(expected: collection.Count, explosive.VisitedItemsNumber);
             Assert.Equal(expectedValue, actualValue);
         }
 

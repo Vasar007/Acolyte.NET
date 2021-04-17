@@ -367,16 +367,16 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         {
             // Arrange.
             IReadOnlyList<int> collection = new[] { 1, 2, 3, 4 };
-            var explosiveCollection = ExplosiveCollection.CreateNotExplosive(collection);
+            var explosive = ExplosiveEnumerable.CreateNotExplosive(collection);
             // Max with selector returns transformed value. Need to transform it back.
-            int maxValue = explosiveCollection.Max(InverseFunction.ForInt32);
+            int maxValue = explosive.Max(InverseFunction.ForInt32);
             int expectedValue = InverseFunction.ForInt32(maxValue);
 
             // Act.
-            int actualValue = explosiveCollection.MaxBy(InverseFunction.ForInt32);
+            int actualValue = explosive.MaxBy(InverseFunction.ForInt32);
 
             // Assert.
-            Assert.Equal(expected: collection.Count, explosiveCollection.VisitedItemsNumber);
+            Assert.Equal(expected: collection.Count, explosive.VisitedItemsNumber);
             Assert.Equal(expectedValue, actualValue);
         }
 
@@ -385,18 +385,18 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         {
             // Arrange.
             IReadOnlyList<int> collection = new[] { 1, 2, 3, 4 };
-            var explosiveCollection = ExplosiveCollection.CreateNotExplosive(collection);
+            var explosive = ExplosiveEnumerable.CreateNotExplosive(collection);
             // Max with selector returns transformed value. Need to transform it back.
-            int maxValue = explosiveCollection.Max(InverseFunction.ForInt32);
+            int maxValue = explosive.Max(InverseFunction.ForInt32);
             int expectedValue = InverseFunction.ForInt32(maxValue);
 
             // Act.
-            int actualValue = explosiveCollection.MaxBy(
+            int actualValue = explosive.MaxBy(
                 InverseFunction.ForInt32, Comparer<int>.Default
             );
 
             // Assert.
-            Assert.Equal(expected: collection.Count, explosiveCollection.VisitedItemsNumber);
+            Assert.Equal(expected: collection.Count, explosive.VisitedItemsNumber);
             Assert.Equal(expectedValue, actualValue);
         }
 

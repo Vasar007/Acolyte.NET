@@ -208,15 +208,15 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         {
             // Arrange.
             IReadOnlyList<int> collection = new[] { 1, 2, 3, 4 };
-            var explosiveCollection = ExplosiveCollection.CreateNotExplosive(collection);
+            var explosive = ExplosiveEnumerable.CreateNotExplosive(collection);
             (int minValue, int maxValue) expectedValue =
-                (explosiveCollection.Min(), explosiveCollection.Max());
+                (explosive.Min(), explosive.Max());
 
             // Act.
-            var actualValue = explosiveCollection.MinMax();
+            var actualValue = explosive.MinMax();
 
             // Assert.
-            Assert.Equal(expected: collection.Count, explosiveCollection.VisitedItemsNumber);
+            Assert.Equal(expected: collection.Count, explosive.VisitedItemsNumber);
             Assert.Equal(expectedValue, actualValue);
         }
 
@@ -225,15 +225,15 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         {
             // Arrange.
             IReadOnlyList<int?> collection = new int?[] { 1, 2, 3, 4 };
-            var explosiveCollection = ExplosiveCollection.CreateNotExplosive(collection);
+            var explosive = ExplosiveEnumerable.CreateNotExplosive(collection);
             (int? minValue, int? maxValue) expectedValue =
-                (explosiveCollection.Min(), explosiveCollection.Max());
+                (explosive.Min(), explosive.Max());
 
             // Act.
-            var actualValue = explosiveCollection.MinMax();
+            var actualValue = explosive.MinMax();
 
             // Assert.
-            Assert.Equal(expected: collection.Count, explosiveCollection.VisitedItemsNumber);
+            Assert.Equal(expected: collection.Count, explosive.VisitedItemsNumber);
             Assert.Equal(expectedValue, actualValue);
         }
 
@@ -434,15 +434,15 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         {
             // Arrange.
             IReadOnlyList<long> collection = new[] { 1L, 2L, 3L, 4L };
-            var explosiveCollection = ExplosiveCollection.CreateNotExplosive(collection);
+            var explosive = ExplosiveEnumerable.CreateNotExplosive(collection);
             (long minValue, long maxValue) expectedValue =
-                (explosiveCollection.Min(), explosiveCollection.Max());
+                (explosive.Min(), explosive.Max());
 
             // Act.
-            var actualValue = explosiveCollection.MinMax();
+            var actualValue = explosive.MinMax();
 
             // Assert.
-            Assert.Equal(expected: collection.Count, explosiveCollection.VisitedItemsNumber);
+            Assert.Equal(expected: collection.Count, explosive.VisitedItemsNumber);
             Assert.Equal(expectedValue, actualValue);
         }
 
@@ -451,15 +451,15 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         {
             // Arrange.
             IReadOnlyList<long?> collection = new long?[] { 1L, 2L, 3L, 4L };
-            var explosiveCollection = ExplosiveCollection.CreateNotExplosive(collection);
+            var explosive = ExplosiveEnumerable.CreateNotExplosive(collection);
             (long? minValue, long? maxValue) expectedValue =
-                (explosiveCollection.Min(), explosiveCollection.Max());
+                (explosive.Min(), explosive.Max());
 
             // Act.
-            var actualValue = explosiveCollection.MinMax();
+            var actualValue = explosive.MinMax();
 
             // Assert.
-            Assert.Equal(expected: collection.Count, explosiveCollection.VisitedItemsNumber);
+            Assert.Equal(expected: collection.Count, explosive.VisitedItemsNumber);
             Assert.Equal(expectedValue, actualValue);
         }
 
@@ -660,15 +660,15 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         {
             // Arrange.
             IReadOnlyList<float> collection = new[] { 1.0F, 2.0F, 3.0F, 4.0F };
-            var explosiveCollection = ExplosiveCollection.CreateNotExplosive(collection);
+            var explosive = ExplosiveEnumerable.CreateNotExplosive(collection);
             (float minValue, float maxValue) expectedValue =
-                (explosiveCollection.Min(), explosiveCollection.Max());
+                (explosive.Min(), explosive.Max());
 
             // Act.
-            var actualValue = explosiveCollection.MinMax();
+            var actualValue = explosive.MinMax();
 
             // Assert.
-            Assert.Equal(expected: collection.Count, explosiveCollection.VisitedItemsNumber);
+            Assert.Equal(expected: collection.Count, explosive.VisitedItemsNumber);
             Assert.Equal(expectedValue, actualValue);
         }
 
@@ -677,15 +677,15 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         {
             // Arrange.
             IReadOnlyList<float?> collection = new float?[] { 1.0F, 2.0F, 3.0F, 4.0F };
-            var explosiveCollection = ExplosiveCollection.CreateNotExplosive(collection);
+            var explosive = ExplosiveEnumerable.CreateNotExplosive(collection);
             (float? minValue, float? maxValue) expectedValue =
-                (explosiveCollection.Min(), explosiveCollection.Max());
+                (explosive.Min(), explosive.Max());
 
             // Act.
-            var actualValue = explosiveCollection.MinMax();
+            var actualValue = explosive.MinMax();
 
             // Assert.
-            Assert.Equal(expected: collection.Count, explosiveCollection.VisitedItemsNumber);
+            Assert.Equal(expected: collection.Count, explosive.VisitedItemsNumber);
             Assert.Equal(expectedValue, actualValue);
         }
 
@@ -886,15 +886,15 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         {
             // Arrange.
             IReadOnlyList<double> collection = new[] { 1.0D, 2.0D, 3.0D, 4.0D };
-            var explosiveCollection = ExplosiveCollection.CreateNotExplosive(collection);
+            var explosive = ExplosiveEnumerable.CreateNotExplosive(collection);
             (double minValue, double maxValue) expectedValue =
-                (explosiveCollection.Min(), explosiveCollection.Max());
+                (explosive.Min(), explosive.Max());
 
             // Act.
-            var actualValue = explosiveCollection.MinMax();
+            var actualValue = explosive.MinMax();
 
             // Assert.
-            Assert.Equal(expected: collection.Count, explosiveCollection.VisitedItemsNumber);
+            Assert.Equal(expected: collection.Count, explosive.VisitedItemsNumber);
             Assert.Equal(expectedValue, actualValue);
         }
 
@@ -903,15 +903,15 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         {
             // Arrange.
             IReadOnlyList<double?> collection = new double?[] { 1.0D, 2.0D, 3.0D, 4.0D };
-            var explosiveCollection = ExplosiveCollection.CreateNotExplosive(collection);
+            var explosive = ExplosiveEnumerable.CreateNotExplosive(collection);
             (double? minValue, double? maxValue) expectedValue =
-                (explosiveCollection.Min(), explosiveCollection.Max());
+                (explosive.Min(), explosive.Max());
 
             // Act.
-            var actualValue = explosiveCollection.MinMax();
+            var actualValue = explosive.MinMax();
 
             // Assert.
-            Assert.Equal(expected: collection.Count, explosiveCollection.VisitedItemsNumber);
+            Assert.Equal(expected: collection.Count, explosive.VisitedItemsNumber);
             Assert.Equal(expectedValue, actualValue);
         }
 
@@ -1112,15 +1112,15 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         {
             // Arrange.
             IReadOnlyList<decimal> collection = new[] { 1.0M, 2.0M, 3.0M, 4.0M };
-            var explosiveCollection = ExplosiveCollection.CreateNotExplosive(collection);
+            var explosive = ExplosiveEnumerable.CreateNotExplosive(collection);
             (decimal minValue, decimal maxValue) expectedValue =
-                (explosiveCollection.Min(), explosiveCollection.Max());
+                (explosive.Min(), explosive.Max());
 
             // Act.
-            var actualValue = explosiveCollection.MinMax();
+            var actualValue = explosive.MinMax();
 
             // Assert.
-            Assert.Equal(expected: collection.Count, explosiveCollection.VisitedItemsNumber);
+            Assert.Equal(expected: collection.Count, explosive.VisitedItemsNumber);
             Assert.Equal(expectedValue, actualValue);
         }
 
@@ -1129,15 +1129,15 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         {
             // Arrange.
             IReadOnlyList<decimal?> collection = new decimal?[] { 1.0M, 2.0M, 3.0M, 4.0M };
-            var explosiveCollection = ExplosiveCollection.CreateNotExplosive(collection);
+            var explosive = ExplosiveEnumerable.CreateNotExplosive(collection);
             (decimal? minValue, decimal? maxValue) expectedValue =
-                (explosiveCollection.Min(), explosiveCollection.Max());
+                (explosive.Min(), explosive.Max());
 
             // Act.
-            var actualValue = explosiveCollection.MinMax();
+            var actualValue = explosive.MinMax();
 
             // Assert.
-            Assert.Equal(expected: collection.Count, explosiveCollection.VisitedItemsNumber);
+            Assert.Equal(expected: collection.Count, explosive.VisitedItemsNumber);
             Assert.Equal(expectedValue, actualValue);
         }
 
@@ -1405,15 +1405,15 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         {
             // Arrange.
             IReadOnlyList<string> collection = new[] { "1", "2", "3", "4" };
-            var explosiveCollection = ExplosiveCollection.CreateNotExplosive(collection);
+            var explosive = ExplosiveEnumerable.CreateNotExplosive(collection);
             (string? minValue, string? maxValue) expectedValue =
-                (explosiveCollection.Min(), explosiveCollection.Max());
+                (explosive.Min(), explosive.Max());
 
             // Act.
-            var actualValue = explosiveCollection.MinMax();
+            var actualValue = explosive.MinMax();
 
             // Assert.
-            Assert.Equal(expected: collection.Count, explosiveCollection.VisitedItemsNumber);
+            Assert.Equal(expected: collection.Count, explosive.VisitedItemsNumber);
             Assert.Equal(expectedValue, actualValue);
         }
 
@@ -1422,17 +1422,17 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         {
             // Arrange.
             IReadOnlyList<string> collection = new[] { "1", "2", "3", "4" };
-            var explosiveCollection = ExplosiveCollection.CreateNotExplosive(collection);
+            var explosive = ExplosiveEnumerable.CreateNotExplosive(collection);
             (string? minValue, string? maxValue) expectedValue =
-                (explosiveCollection.Min(), explosiveCollection.Max());
+                (explosive.Min(), explosive.Max());
 
             // Act.
-            // Do not know why compiler decides that "explosiveCollection" should have "string?"
+            // Do not know why compiler decides that "explosive" should have "string?"
             // I think that's because of the nullable return type.
-            var actualValue = explosiveCollection.MinMax(Comparer<string?>.Default);
+            var actualValue = explosive.MinMax(Comparer<string?>.Default);
 
             // Assert.
-            Assert.Equal(expected: collection.Count, explosiveCollection.VisitedItemsNumber);
+            Assert.Equal(expected: collection.Count, explosive.VisitedItemsNumber);
             Assert.Equal(expectedValue, actualValue);
         }
 

@@ -445,17 +445,17 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             // Arrange.
             // Do not use random because we should find exactly second item (2).
             IReadOnlyList<int> collection = new[] { 1, 2, 2, 2 };
-            var explosiveCollection = ExplosiveCollection.Create(
+            var explosive = ExplosiveEnumerable.Create(
                 collection, explosiveIndex: Constants.FirstIndex + 2
             );
-            int expectedValue = explosiveCollection.Skip(1).First();
+            int expectedValue = explosive.Skip(1).First();
             const int expectedIndex = 1;
 
             // Act.
-            int actualIndex = explosiveCollection.IndexOf(i => i.Equals(expectedValue));
+            int actualIndex = explosive.IndexOf(i => i.Equals(expectedValue));
 
             // Assert.
-            Assert.Equal(expected: 2, explosiveCollection.VisitedItemsNumber);
+            Assert.Equal(expected: 2, explosive.VisitedItemsNumber);
             Assert.Equal(expectedIndex, actualIndex);
         }
 
@@ -464,14 +464,14 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         {
             // Arrange.
             IReadOnlyList<int> collection = new[] { 1, 2, 3, 4 };
-            var explosiveCollection = ExplosiveCollection.CreateNotExplosive(collection);
+            var explosive = ExplosiveEnumerable.CreateNotExplosive(collection);
             int expectedValue = Constants.NotFoundIndex;
 
             // Act.
-            int actualIndex = explosiveCollection.IndexOf(_ => false);
+            int actualIndex = explosive.IndexOf(_ => false);
 
             // Assert.
-            Assert.Equal(expected: collection.Count, explosiveCollection.VisitedItemsNumber);
+            Assert.Equal(expected: collection.Count, explosive.VisitedItemsNumber);
             Assert.Equal(expectedValue, actualIndex);
         }
 
@@ -481,17 +481,17 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             // Arrange.
             // Do not use random because we should find exactly second item (2).
             IReadOnlyList<int> collection = new[] { 1, 2, 2, 2 };
-            var explosiveCollection = ExplosiveCollection.Create(
+            var explosive = ExplosiveEnumerable.Create(
                 collection, explosiveIndex: Constants.FirstIndex + 2
             );
-            int value = explosiveCollection.Skip(1).First();
+            int value = explosive.Skip(1).First();
             const int expectedIndex = 1;
 
             // Act.
-            int actualIndex = explosiveCollection.IndexOf(value);
+            int actualIndex = explosive.IndexOf(value);
 
             // Assert.
-            Assert.Equal(expected: 2, explosiveCollection.VisitedItemsNumber);
+            Assert.Equal(expected: 2, explosive.VisitedItemsNumber);
             Assert.Equal(expectedIndex, actualIndex);
         }
 
@@ -500,14 +500,14 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         {
             // Arrange.
             IReadOnlyList<int> collection = new[] { 1, 2, 3, 4 };
-            var explosiveCollection = ExplosiveCollection.CreateNotExplosive(collection);
+            var explosive = ExplosiveEnumerable.CreateNotExplosive(collection);
             int expectedValue = Constants.NotFoundIndex;
 
             // Act.
-            int actualIndex = explosiveCollection.IndexOf(value: 0);
+            int actualIndex = explosive.IndexOf(value: 0);
 
             // Assert.
-            Assert.Equal(expected: collection.Count, explosiveCollection.VisitedItemsNumber);
+            Assert.Equal(expected: collection.Count, explosive.VisitedItemsNumber);
             Assert.Equal(expectedValue, actualIndex);
         }
 
@@ -517,19 +517,19 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             // Arrange.
             // Do not use random because we should find exactly second item (2).
             IReadOnlyList<int> collection = new[] { 1, 2, 2, 2 };
-            var explosiveCollection = ExplosiveCollection.Create(
+            var explosive = ExplosiveEnumerable.Create(
                 collection, explosiveIndex: Constants.FirstIndex + 2
             );
-            int value = explosiveCollection.Skip(1).First();
+            int value = explosive.Skip(1).First();
             const int expectedIndex = 1;
 
             // Act.
-            int actualIndex = explosiveCollection.IndexOf(
+            int actualIndex = explosive.IndexOf(
                 value, EqualityComparer<int>.Default
             );
 
             // Assert.
-            Assert.Equal(expected: 2, explosiveCollection.VisitedItemsNumber);
+            Assert.Equal(expected: 2, explosive.VisitedItemsNumber);
             Assert.Equal(expectedIndex, actualIndex);
         }
 
@@ -538,14 +538,14 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         {
             // Arrange.
             IReadOnlyList<int> collection = new[] { 1, 2, 3, 4 };
-            var explosiveCollection = ExplosiveCollection.CreateNotExplosive(collection);
+            var explosive = ExplosiveEnumerable.CreateNotExplosive(collection);
             int expectedValue = Constants.NotFoundIndex;
 
             // Act.
-            int actualIndex = explosiveCollection.IndexOf(value: 0, EqualityComparer<int>.Default);
+            int actualIndex = explosive.IndexOf(value: 0, EqualityComparer<int>.Default);
 
             // Assert.
-            Assert.Equal(expected: collection.Count, explosiveCollection.VisitedItemsNumber);
+            Assert.Equal(expected: collection.Count, explosive.VisitedItemsNumber);
             Assert.Equal(expectedValue, actualIndex);
         }
 

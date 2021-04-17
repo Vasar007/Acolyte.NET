@@ -381,18 +381,18 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         {
             // Arrange.
             IReadOnlyList<int> collection = new[] { 1, 2, 3, 4 };
-            var explosiveCollection = ExplosiveCollection.CreateNotExplosive(collection);
+            var explosive = ExplosiveEnumerable.CreateNotExplosive(collection);
             // Min/max with selector returns transformed value. Need to transform it back.
-            int minValue = explosiveCollection.Min(InverseFunction.ForInt32);
-            int maxValue = explosiveCollection.Max(InverseFunction.ForInt32);
+            int minValue = explosive.Min(InverseFunction.ForInt32);
+            int maxValue = explosive.Max(InverseFunction.ForInt32);
             (int minValue, int maxValue) expectedValue =
                 (InverseFunction.ForInt32(minValue), InverseFunction.ForInt32(maxValue));
 
             // Act.
-            var actualValue = explosiveCollection.MinMaxBy(InverseFunction.ForInt32);
+            var actualValue = explosive.MinMaxBy(InverseFunction.ForInt32);
 
             // Assert.
-            Assert.Equal(expected: collection.Count, explosiveCollection.VisitedItemsNumber);
+            Assert.Equal(expected: collection.Count, explosive.VisitedItemsNumber);
             Assert.Equal(expectedValue, actualValue);
         }
 
@@ -401,20 +401,20 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         {
             // Arrange.
             IReadOnlyList<int> collection = new[] { 1, 2, 3, 4 };
-            var explosiveCollection = ExplosiveCollection.CreateNotExplosive(collection);
+            var explosive = ExplosiveEnumerable.CreateNotExplosive(collection);
             // Min/max with selector returns transformed value. Need to transform it back.
-            int minValue = explosiveCollection.Min(InverseFunction.ForInt32);
-            int maxValue = explosiveCollection.Max(InverseFunction.ForInt32);
+            int minValue = explosive.Min(InverseFunction.ForInt32);
+            int maxValue = explosive.Max(InverseFunction.ForInt32);
             (int minValue, int maxValue) expectedValue =
                 (InverseFunction.ForInt32(minValue), InverseFunction.ForInt32(maxValue));
 
             // Act.
-            var actualValue = explosiveCollection.MinMaxBy(
+            var actualValue = explosive.MinMaxBy(
                 InverseFunction.ForInt32, Comparer<int>.Default
             );
 
             // Assert.
-            Assert.Equal(expected: collection.Count, explosiveCollection.VisitedItemsNumber);
+            Assert.Equal(expected: collection.Count, explosive.VisitedItemsNumber);
             Assert.Equal(expectedValue, actualValue);
         }
 

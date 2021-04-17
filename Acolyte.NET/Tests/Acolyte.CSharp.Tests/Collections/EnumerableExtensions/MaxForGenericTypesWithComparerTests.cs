@@ -183,14 +183,14 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         {
             // Arrange.
             IReadOnlyList<int> collection = new[] { 4, 3, 2, 1 };
-            var explosiveCollection = ExplosiveCollection.CreateNotExplosive(collection);
-            int expectedValue = explosiveCollection.Max();
+            var explosive = ExplosiveEnumerable.CreateNotExplosive(collection);
+            int expectedValue = explosive.Max();
 
             // Act.
-            int actualValue = explosiveCollection.Max(Comparer<int>.Default);
+            int actualValue = explosive.Max(Comparer<int>.Default);
 
             // Assert.
-            Assert.Equal(expected: collection.Count, explosiveCollection.VisitedItemsNumber);
+            Assert.Equal(expected: collection.Count, explosive.VisitedItemsNumber);
             Assert.Equal(expectedValue, actualValue);
         }
 

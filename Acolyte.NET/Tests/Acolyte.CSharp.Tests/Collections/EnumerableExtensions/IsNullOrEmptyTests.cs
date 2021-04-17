@@ -119,17 +119,17 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         {
             // Arrange.
             const int count = 2;
-            var explosiveCollection = ExplosiveCollection.Create(
+            var explosive = ExplosiveEnumerable.Create(
                 TestDataCreator.CreateRandomInt32List(count),
                 explosiveIndex: Constants.FirstIndex + 1
             );
-            bool expectedResult = !explosiveCollection.Any();
+            bool expectedResult = !explosive.Any();
 
             // Act.
-            bool actualResult = explosiveCollection.IsNullOrEmpty();
+            bool actualResult = explosive.IsNullOrEmpty();
 
             // Assert.
-            Assert.Equal(expected: 1, explosiveCollection.VisitedItemsNumber);
+            Assert.Equal(expected: 1, explosive.VisitedItemsNumber);
             Assert.Equal(expectedResult, actualResult);
         }
 

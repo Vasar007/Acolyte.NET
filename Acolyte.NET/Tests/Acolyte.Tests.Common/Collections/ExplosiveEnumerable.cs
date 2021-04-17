@@ -6,9 +6,9 @@ using Acolyte.Threading;
 
 namespace Acolyte.Tests.Collections
 {
-    public sealed class ExplosiveCollection<T> : IEnumerable<T?>, IEnumerable
+    public sealed class ExplosiveEnumerable<T> : IEnumerable<T?>, IEnumerable
     {
-        private readonly IEnumerable<T> _originalCollection;
+        private readonly IEnumerable<T> _originalEnumerable;
 
         private readonly int _explosiveIndex;
 
@@ -16,11 +16,11 @@ namespace Acolyte.Tests.Collections
         public int VisitedItemsNumber => _visitedItemsNumber.Value;
 
 
-        public ExplosiveCollection(
-            IEnumerable<T> originalCollection,
+        public ExplosiveEnumerable(
+            IEnumerable<T> originalEnumerable,
             int explosiveIndex)
         {
-            _originalCollection = originalCollection.ThrowIfNull(nameof(originalCollection));
+            _originalEnumerable = originalEnumerable.ThrowIfNull(nameof(originalEnumerable));
             _explosiveIndex = explosiveIndex.ThrowIfValueIsOutOfRange(
                 nameof(explosiveIndex), Constants.NotFoundIndex, int.MaxValue
             );
@@ -33,7 +33,7 @@ namespace Acolyte.Tests.Collections
         public IEnumerator<T?> GetEnumerator()
         {
             return ExplosiveEnumerator.Create(
-                _originalCollection.GetEnumerator(),
+                _originalEnumerable.GetEnumerator(),
                 _explosiveIndex,
                 _visitedItemsNumber.Reset()
             );
@@ -51,23 +51,23 @@ namespace Acolyte.Tests.Collections
         #endregion
     }
 
-    public static class ExplosiveCollection
+    public static class ExplosiveEnumerable
     {
-        public static ExplosiveCollection<T> Create<T>(
-            IEnumerable<T> originalCollection,
+        public static ExplosiveEnumerable<T> Create<T>(
+            IEnumerable<T> originalEnumerable,
             int explosiveIndex)
         {
-            return new ExplosiveCollection<T>(
-                originalCollection: originalCollection,
+            return new ExplosiveEnumerable<T>(
+                originalEnumerable: originalEnumerable,
                 explosiveIndex: explosiveIndex
             );
         }
 
-        public static ExplosiveCollection<T> CreateNotExplosive<T>(
-           IEnumerable<T> originalCollection)
+        public static ExplosiveEnumerable<T> CreateNotExplosive<T>(
+           IEnumerable<T> originalEnumerable)
         {
-            return new ExplosiveCollection<T>(
-                originalCollection: originalCollection,
+            return new ExplosiveEnumerable<T>(
+                originalEnumerable: originalEnumerable,
                 explosiveIndex: Constants.NotFoundIndex
             );
         }

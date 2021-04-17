@@ -184,14 +184,14 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         {
             // Arrange.
             IReadOnlyList<int> collection = new[] { 1, 2, 3, 4 };
-            var explosiveCollection = ExplosiveCollection.CreateNotExplosive(collection);
-            int expectedValue = explosiveCollection.Min();
+            var explosive = ExplosiveEnumerable.CreateNotExplosive(collection);
+            int expectedValue = explosive.Min();
 
             // Act.
-            int actualValue = explosiveCollection.Min(Comparer<int>.Default);
+            int actualValue = explosive.Min(Comparer<int>.Default);
 
             // Assert.
-            Assert.Equal(expected: collection.Count, explosiveCollection.VisitedItemsNumber);
+            Assert.Equal(expected: collection.Count, explosive.VisitedItemsNumber);
             Assert.Equal(expectedValue, actualValue);
         }
 
