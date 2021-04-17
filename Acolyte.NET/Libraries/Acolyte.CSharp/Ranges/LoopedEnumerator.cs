@@ -1,16 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Acolyte.Assertions;
 
 namespace Acolyte.Ranges
 {
     public sealed class LoopedEnumerator<T> : IEnumerator<T?>, IEnumerator
     {
-        private readonly IEnumerable<T> _originalRange;
-
-        private readonly bool _isInfinite;
-
-        private IEnumerator<T> _originalEnumerator;
+        private readonly RangeEnumerator<T> _rangeEnumerator;
 
         public T? Current { get; private set; }
 
@@ -18,39 +13,25 @@ namespace Acolyte.Ranges
 
 
         public LoopedEnumerator(
-            IEnumerable<T> originalRange,
-            bool isInfinite)
+            IEnumerable<T> originalRange)
         {
-            _originalRange = originalRange.ThrowIfNull(nameof(originalRange));
-            _isInfinite = isInfinite;
-
-            _originalEnumerator = _originalRange.GetEnumerator();
+            _rangeEnumerator = RangeEnumerator.Create(originalRange, isInfinite: true);
             Current = default;
         }
 
         public bool MoveNext()
         {
-            if (!_originalEnumerator.MoveNext())
-            {
-                // If loop is infinite, recreate enumerator and start enumeration again.
-                if (ShouldContinue())
-                {
-                    _originalEnumerator.Dispose();
-                    _originalEnumerator = _originalRange.GetEnumerator();
-                    return MoveNext();
-                }
+            // "MoveNext" method will always be true.
+            if (!_rangeEnumerator.MoveNext()) return false;
 
-                return false;
-            }
-
-            Current = _originalEnumerator.Current;
+            Current = _rangeEnumerator.Current;
 
             return true;
         }
 
         public void Reset()
         {
-            _originalEnumerator.Reset();
+            _rangeEnumerator.Reset();
         }
 
         #region IDisposable Implementation
@@ -64,29 +45,21 @@ namespace Acolyte.Ranges
         {
             if (_disposed) return;
 
-            _originalEnumerator.Dispose();
+            _rangeEnumerator.Dispose();
 
             _disposed = true;
         }
 
         #endregion
-
-        private bool ShouldContinue()
-        {
-            return _isInfinite;
-        }
     }
-
 
     public static class LoopedEnumerator
     {
         public static LoopedEnumerator<T> Create<T>(
-            IEnumerable<T> originalRange,
-            bool isInfinite)
+            IEnumerable<T> originalRange)
         {
             return new LoopedEnumerator<T>(
-                originalRange: originalRange,
-                isInfinite: isInfinite
+                originalRange: originalRange
             );
         }
     }

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Acolyte.Collections;
 using Acolyte.Functions;
+using Acolyte.Ranges;
 using Acolyte.Tests.Creators;
 using Xunit;
 
@@ -132,7 +133,9 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         {
             // Arrange.
             IReadOnlyList<int> predefinedCollection = new[] { 1, 2, 3 };
-            Func<int, bool> keySelector = item => NumberParityFunction.IsEven(item);
+
+            var range = CreateRange();
+            Func<int, long> keySelector = item => MapToValueInRange(item, range);
             var expectedResult = GetExpectedResult(predefinedCollection, keySelector);
 
             // Act.
@@ -147,8 +150,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         {
             // Arrange.
             IReadOnlyList<int> predefinedCollection = new[] { 1, 2, 3 };
-            Func<int, bool> keySelector = item => NumberParityFunction.IsEven(item);
-            var keyComparer = EqualityComparer<bool>.Default;
+
+            var range = CreateRange();
+            Func<int, long> keySelector = item => MapToValueInRange(item, range);
+            var keyComparer = EqualityComparer<long>.Default;
             var expectedResult = GetExpectedResult(predefinedCollection, keySelector, keyComparer);
 
             // Act.
@@ -175,7 +180,9 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             // Arrange.
             IReadOnlyList<int> collectionWithSomeItems =
                 TestDataCreator.CreateRandomInt32List(count);
-            Func<int, bool> keySelector = item => NumberParityFunction.IsEven(item);
+
+            var range = CreateRange();
+            Func<int, long> keySelector = item => MapToValueInRange(item, range);
             var expectedResult = GetExpectedResult(collectionWithSomeItems, keySelector);
 
             // Act.
@@ -197,9 +204,11 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         {
             // Arrange.
             IReadOnlyList<int> collectionWithSomeItems =
-                TestDataCreator.CreateRandomInt32List(count);
-            Func<int, bool> keySelector = item => NumberParityFunction.IsEven(item);
-            var keyComparer = EqualityComparer<bool>.Default;
+               TestDataCreator.CreateRandomInt32List(count);
+
+            var range = CreateRange();
+            Func<int, long> keySelector = item => MapToValueInRange(item, range);
+            var keyComparer = EqualityComparer<long>.Default;
             var expectedResult = GetExpectedResult(
                 collectionWithSomeItems, keySelector, keyComparer
             );
@@ -222,7 +231,9 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             int count = TestDataCreator.GetRandomCountNumber();
             IReadOnlyList<int> collectionWithRandomSize =
                 TestDataCreator.CreateRandomInt32List(count);
-            Func<int, bool> keySelector = item => NumberParityFunction.IsEven(item);
+
+            var range = CreateRange();
+            Func<int, long> keySelector = item => MapToValueInRange(item, range);
             var expectedResult = GetExpectedResult(collectionWithRandomSize, keySelector);
 
             // Act.
@@ -239,8 +250,10 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
             int count = TestDataCreator.GetRandomCountNumber();
             IReadOnlyList<int> collectionWithRandomSize =
                 TestDataCreator.CreateRandomInt32List(count);
-            Func<int, bool> keySelector = item => NumberParityFunction.IsEven(item);
-            var keyComparer = EqualityComparer<bool>.Default;
+
+            var range = CreateRange();
+            Func<int, long> keySelector = item => MapToValueInRange(item, range);
+            var keyComparer = EqualityComparer<long>.Default;
             var expectedResult = GetExpectedResult(
                 collectionWithRandomSize, keySelector, keyComparer
             );
@@ -300,6 +313,23 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
         {
             var hashSet = new HashSet<TKey>(keyComparer);
             return source.Where(item => hashSet.Add(keySelector(item)));
+        }
+
+        private static IReadOnlyList<long> CreateRange()
+        {
+            const int rangeCount = 50;
+            IEnumerable<long> range = RangeFactory.StartsWith(1L, rangeCount);
+            return range.ToList();
+        }
+
+        private static long MapToValueInRange(int sourceItem, IReadOnlyList<long> range)
+        {
+            if (sourceItem < 0)
+            {
+                sourceItem = -sourceItem;
+            }
+
+            return range[sourceItem % range.Count];
         }
     }
 }

@@ -4,7 +4,7 @@ using Acolyte.Assertions;
 
 namespace Acolyte.Ranges
 {
-    public static partial class Range
+    public static partial class RangeFactory
 
     {
         #region For Int32
