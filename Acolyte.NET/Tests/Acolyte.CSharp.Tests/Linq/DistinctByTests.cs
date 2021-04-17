@@ -281,7 +281,7 @@ namespace Acolyte.Tests.Linq
             var actualResult = explosive.DistinctBy(keySelector).ToList();
 
             // Assert.
-            Assert.Equal(expected: collection.Count, explosive.VisitedItemsNumber);
+            CustomAssert.True(explosive.VerifyTwiceEnumerateWholeCollection(collection));
             Assert.Equal(expectedResult, actualResult);
         }
 
@@ -300,7 +300,7 @@ namespace Acolyte.Tests.Linq
             var actualResult = explosive.DistinctBy(keySelector, keyComparer).ToList();
 
             // Assert.
-            Assert.Equal(expected: collection.Count, explosive.VisitedItemsNumber);
+            CustomAssert.True(explosive.VerifyTwiceEnumerateWholeCollection(collection));
             Assert.Equal(expectedResult, actualResult);
         }
 

@@ -725,7 +725,7 @@ namespace Acolyte.Tests.Linq
             string actualValue = explosive.ToSingleString();
 
             // Assert.
-            Assert.Equal(expected: collection.Count, explosive.VisitedItemsNumber);
+            CustomAssert.True(explosive.VerifyTwiceEnumerateWholeCollection(collection));
             Assert.Equal(expectedValue, actualValue);
         }
 
@@ -744,7 +744,7 @@ namespace Acolyte.Tests.Linq
             string actualValue = explosive.ToSingleString(emptyCollectionMessage);
 
             // Assert.
-            Assert.Equal(expected: collection.Count, explosive.VisitedItemsNumber);
+            CustomAssert.True(explosive.VerifyTwiceEnumerateWholeCollection(collection));
             Assert.Equal(expectedValue, actualValue);
         }
 
@@ -763,7 +763,7 @@ namespace Acolyte.Tests.Linq
             string actualValue = explosive.ToSingleString(emptyCollectionMessage, separator);
 
             // Assert.
-            Assert.Equal(expected: collection.Count, explosive.VisitedItemsNumber);
+            CustomAssert.True(explosive.VerifyTwiceEnumerateWholeCollection(collection));
             Assert.Equal(expectedValue, actualValue);
         }
 
@@ -781,7 +781,7 @@ namespace Acolyte.Tests.Linq
             string actualValue = explosive.ToSingleString(selector);
 
             // Assert.
-            Assert.Equal(expected: collection.Count, explosive.VisitedItemsNumber);
+            CustomAssert.True(explosive.VerifyTwiceEnumerateWholeCollection(collection));
             Assert.Equal(expectedValue, actualValue);
         }
 
@@ -800,7 +800,7 @@ namespace Acolyte.Tests.Linq
             string actualValue = explosive.ToSingleString(emptyCollectionMessage, selector);
 
             // Assert.
-            Assert.Equal(expected: collection.Count, explosive.VisitedItemsNumber);
+            CustomAssert.True(explosive.VerifyTwiceEnumerateWholeCollection(collection));
             Assert.Equal(expectedValue, actualValue);
         }
 
@@ -821,7 +821,7 @@ namespace Acolyte.Tests.Linq
             );
 
             // Assert.
-            Assert.Equal(expected: collection.Count, explosive.VisitedItemsNumber);
+            CustomAssert.True(explosive.VerifyTwiceEnumerateWholeCollection(collection));
             Assert.Equal(expectedValue, actualValue);
         }
 

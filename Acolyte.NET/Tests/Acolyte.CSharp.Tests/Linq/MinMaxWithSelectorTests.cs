@@ -272,7 +272,7 @@ namespace Acolyte.Tests.Linq
             var actualValue = explosive.MinMax(MultiplyFunction.RedoubleInt32);
 
             // Assert.
-            Assert.Equal(expected: collection.Count, explosive.VisitedItemsNumber);
+            CustomAssert.True(explosive.VerifyThriceEnumerateWholeCollection(collection));
             Assert.Equal(expectedValue, actualValue);
         }
 
@@ -292,7 +292,7 @@ namespace Acolyte.Tests.Linq
             var actualValue = explosive.MinMax(MultiplyFunction.RedoubleNullableInt32);
 
             // Assert.
-            Assert.Equal(expected: collection.Count, explosive.VisitedItemsNumber);
+            CustomAssert.True(explosive.VerifyThriceEnumerateWholeCollection(collection));
             Assert.Equal(expectedValue, actualValue);
         }
 
@@ -557,7 +557,7 @@ namespace Acolyte.Tests.Linq
             var actualValue = explosive.MinMax(MultiplyFunction.RedoubleInt64);
 
             // Assert.
-            Assert.Equal(expected: collection.Count, explosive.VisitedItemsNumber);
+            CustomAssert.True(explosive.VerifyThriceEnumerateWholeCollection(collection));
             Assert.Equal(expectedValue, actualValue);
         }
 
@@ -577,7 +577,7 @@ namespace Acolyte.Tests.Linq
             var actualValue = explosive.MinMax(MultiplyFunction.RedoubleNullableInt64);
 
             // Assert.
-            Assert.Equal(expected: collection.Count, explosive.VisitedItemsNumber);
+            CustomAssert.True(explosive.VerifyThriceEnumerateWholeCollection(collection));
             Assert.Equal(expectedValue, actualValue);
         }
 
@@ -842,7 +842,7 @@ namespace Acolyte.Tests.Linq
             var actualValue = explosive.MinMax(MultiplyFunction.RedoubleSingle);
 
             // Assert.
-            Assert.Equal(expected: collection.Count, explosive.VisitedItemsNumber);
+            CustomAssert.True(explosive.VerifyThriceEnumerateWholeCollection(collection));
             Assert.Equal(expectedValue, actualValue);
         }
 
@@ -862,7 +862,7 @@ namespace Acolyte.Tests.Linq
             var actualValue = explosive.MinMax(MultiplyFunction.RedoubleNullableSingle);
 
             // Assert.
-            Assert.Equal(expected: collection.Count, explosive.VisitedItemsNumber);
+            CustomAssert.True(explosive.VerifyThriceEnumerateWholeCollection(collection));
             Assert.Equal(expectedValue, actualValue);
         }
 
@@ -1127,7 +1127,7 @@ namespace Acolyte.Tests.Linq
             var actualValue = explosive.MinMax(MultiplyFunction.RedoubleDouble);
 
             // Assert.
-            Assert.Equal(expected: collection.Count, explosive.VisitedItemsNumber);
+            CustomAssert.True(explosive.VerifyThriceEnumerateWholeCollection(collection));
             Assert.Equal(expectedValue, actualValue);
         }
 
@@ -1147,7 +1147,7 @@ namespace Acolyte.Tests.Linq
             var actualValue = explosive.MinMax(MultiplyFunction.RedoubleNullableDouble);
 
             // Assert.
-            Assert.Equal(expected: collection.Count, explosive.VisitedItemsNumber);
+            CustomAssert.True(explosive.VerifyThriceEnumerateWholeCollection(collection));
             Assert.Equal(expectedValue, actualValue);
         }
 
@@ -1412,7 +1412,7 @@ namespace Acolyte.Tests.Linq
             var actualValue = explosive.MinMax(MultiplyFunction.RedoubleDecimal);
 
             // Assert.
-            Assert.Equal(expected: collection.Count, explosive.VisitedItemsNumber);
+            CustomAssert.True(explosive.VerifyThriceEnumerateWholeCollection(collection));
             Assert.Equal(expectedValue, actualValue);
         }
 
@@ -1432,7 +1432,7 @@ namespace Acolyte.Tests.Linq
             var actualValue = explosive.MinMax(MultiplyFunction.RedoubleNullableDecimal);
 
             // Assert.
-            Assert.Equal(expected: collection.Count, explosive.VisitedItemsNumber);
+            CustomAssert.True(explosive.VerifyThriceEnumerateWholeCollection(collection));
             Assert.Equal(expectedValue, actualValue);
         }
 
@@ -1753,7 +1753,7 @@ namespace Acolyte.Tests.Linq
             var actualValue = explosive.MinMax(IdentityFunction<string?>.Instance);
 
             // Assert.
-            Assert.Equal(expected: collection.Count, explosive.VisitedItemsNumber);
+            CustomAssert.True(explosive.VerifyThriceEnumerateWholeCollection(collection));
             Assert.Equal(expectedValue, actualValue);
         }
 
@@ -1773,7 +1773,7 @@ namespace Acolyte.Tests.Linq
             );
 
             // Assert.
-            Assert.Equal(expected: collection.Count, explosive.VisitedItemsNumber);
+            CustomAssert.True(explosive.VerifyThriceEnumerateWholeCollection(collection));
             Assert.Equal(expectedValue, actualValue);
         }
 

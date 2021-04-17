@@ -128,7 +128,7 @@ namespace Acolyte.Tests.Linq
             bool actualResult = explosive.IsNullOrEmpty();
 
             // Assert.
-            Assert.Equal(expected: 1, explosive.VisitedItemsNumber);
+            CustomAssert.True(explosive.VerifyTwice(expectedVisitedItemsNumber: 1));
             Assert.Equal(expectedResult, actualResult);
         }
 

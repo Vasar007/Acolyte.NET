@@ -190,7 +190,7 @@ namespace Acolyte.Tests.Linq
             int actualValue = explosive.Min(Comparer<int>.Default);
 
             // Assert.
-            Assert.Equal(expected: collection.Count, explosive.VisitedItemsNumber);
+            CustomAssert.True(explosive.VerifyTwiceEnumerateWholeCollection(collection));
             Assert.Equal(expectedValue, actualValue);
         }
 

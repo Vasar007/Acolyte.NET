@@ -153,7 +153,7 @@ namespace Acolyte.Tests.Linq
             explosive.ForEach(action);
 
             // Assert.
-            Assert.Equal(expected: collection.Count, explosive.VisitedItemsNumber);
+            CustomAssert.True(explosive.VerifyTwiceEnumerateWholeCollection(collection));
             Assert.Equal(expectedCollection, actualCollection);
         }
 

@@ -1,4 +1,5 @@
-﻿using Xunit.Sdk;
+﻿using Acolyte.Common;
+using Xunit.Sdk;
 
 namespace Xunit
 {
@@ -7,6 +8,13 @@ namespace Xunit
         public static void Fail(string message)
         {
             throw new XunitException(message);
+        }
+
+        public static void True(Reasonable<bool> value)
+        {
+            if (value) return;
+
+            Fail(value.ReasonString);
         }
     }
 }

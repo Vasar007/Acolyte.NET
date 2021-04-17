@@ -375,7 +375,7 @@ namespace Acolyte.Tests.Linq
             int actualValue = explosive.MaxBy(InverseFunction.ForInt32);
 
             // Assert.
-            Assert.Equal(expected: collection.Count, explosive.VisitedItemsNumber);
+            CustomAssert.True(explosive.VerifyTwiceEnumerateWholeCollection(collection));
             Assert.Equal(expectedValue, actualValue);
         }
 
@@ -393,7 +393,7 @@ namespace Acolyte.Tests.Linq
             int actualValue = explosive.MaxBy(InverseFunction.ForInt32, Comparer<int>.Default);
 
             // Assert.
-            Assert.Equal(expected: collection.Count, explosive.VisitedItemsNumber);
+            CustomAssert.True(explosive.VerifyTwiceEnumerateWholeCollection(collection));
             Assert.Equal(expectedValue, actualValue);
         }
 

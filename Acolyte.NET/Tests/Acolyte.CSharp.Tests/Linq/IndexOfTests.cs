@@ -454,7 +454,7 @@ namespace Acolyte.Tests.Linq
             int actualIndex = explosive.IndexOf(i => i.Equals(expectedValue));
 
             // Assert.
-            Assert.Equal(expected: 2, explosive.VisitedItemsNumber);
+            CustomAssert.True(explosive.VerifyTwice(expectedVisitedItemsNumber: 2));
             Assert.Equal(expectedIndex, actualIndex);
         }
 
@@ -470,7 +470,7 @@ namespace Acolyte.Tests.Linq
             int actualIndex = explosive.IndexOf(_ => false);
 
             // Assert.
-            Assert.Equal(expected: collection.Count, explosive.VisitedItemsNumber);
+            CustomAssert.True(explosive.VerifySingleEnumerateWholeCollection(collection));
             Assert.Equal(expectedValue, actualIndex);
         }
 
@@ -490,7 +490,7 @@ namespace Acolyte.Tests.Linq
             int actualIndex = explosive.IndexOf(value);
 
             // Assert.
-            Assert.Equal(expected: 2, explosive.VisitedItemsNumber);
+            CustomAssert.True(explosive.VerifyTwice(expectedVisitedItemsNumber: 2));
             Assert.Equal(expectedIndex, actualIndex);
         }
 
@@ -506,7 +506,7 @@ namespace Acolyte.Tests.Linq
             int actualIndex = explosive.IndexOf(value: 0);
 
             // Assert.
-            Assert.Equal(expected: collection.Count, explosive.VisitedItemsNumber);
+            CustomAssert.True(explosive.VerifySingleEnumerateWholeCollection(collection));
             Assert.Equal(expectedValue, actualIndex);
         }
 
@@ -526,7 +526,7 @@ namespace Acolyte.Tests.Linq
             int actualIndex = explosive.IndexOf(value, EqualityComparer<int>.Default);
 
             // Assert.
-            Assert.Equal(expected: 2, explosive.VisitedItemsNumber);
+            CustomAssert.True(explosive.VerifyTwice(expectedVisitedItemsNumber: 2));
             Assert.Equal(expectedIndex, actualIndex);
         }
 
@@ -542,7 +542,7 @@ namespace Acolyte.Tests.Linq
             int actualIndex = explosive.IndexOf(value: 0, EqualityComparer<int>.Default);
 
             // Assert.
-            Assert.Equal(expected: collection.Count, explosive.VisitedItemsNumber);
+            CustomAssert.True(explosive.VerifySingleEnumerateWholeCollection(collection));
             Assert.Equal(expectedValue, actualIndex);
         }
 
