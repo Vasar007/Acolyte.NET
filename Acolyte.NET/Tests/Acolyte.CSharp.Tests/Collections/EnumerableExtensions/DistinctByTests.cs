@@ -309,7 +309,7 @@ namespace Acolyte.Tests.Collections.EnumerableExtensions
 
         private static IEnumerable<TSource> GetExpectedResult<TSource, TKey>(
             IEnumerable<TSource> source, Func<TSource, TKey> keySelector,
-             IEqualityComparer<TKey>? keyComparer = null)
+            IEqualityComparer<TKey>? keyComparer = null)
         {
             var seenKeys = new HashSet<TKey>(keyComparer);
             foreach (TSource element in source)
