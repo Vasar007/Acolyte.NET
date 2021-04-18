@@ -5,6 +5,7 @@ using Acolyte.Common;
 using Acolyte.Linq;
 using Acolyte.Tests.Collections;
 using Acolyte.Tests.Creators;
+using Acolyte.Tests.Mocked;
 using Acolyte.Tests.Objects;
 using Xunit;
 
@@ -1156,11 +1157,11 @@ namespace Acolyte.Tests.Linq
         {
             // Arrange.
             const IEnumerable<DummyClass>? nullValue = null;
+            var comparer = MockComparer<DummyClass>.Default;
 
             // Act & Assert.
-            Assert.Throws<ArgumentNullException>(
-                "source", () => nullValue!.MinMax(comparer: null)
-            );
+            Assert.Throws<ArgumentNullException>("source", () => nullValue!.MinMax(comparer));
+            comparer.VerifyNoCalls();
         }
 
         [Fact]
@@ -1168,8 +1169,8 @@ namespace Acolyte.Tests.Linq
         {
             // Arrange.
             int count = TestDataCreator.GetRandomSmallCountNumber();
-            IEnumerable<string> collectionWithRandomSize = TestDataCreator
-                .CreateRandomStringList(count);
+            IReadOnlyList<string> collectionWithRandomSize =
+                TestDataCreator.CreateRandomStringList(count);
             (string? minValue, string? maxValue) expectedValue =
                 (collectionWithRandomSize.Min(), collectionWithRandomSize.Max());
 
@@ -1227,12 +1228,11 @@ namespace Acolyte.Tests.Linq
         {
             // Arrange.
             IEnumerable<DummyStruct> emptyCollection = Enumerable.Empty<DummyStruct>();
+            var comparer = MockComparer<DummyStruct>.Default;
 
             // Act & Assert.
-            Assert.Throws(
-                Error.NoElements().GetType(),
-                () => emptyCollection.MinMax(Comparer<DummyStruct>.Default)
-            );
+            Assert.Throws(Error.NoElements().GetType(), () => emptyCollection.MinMax(comparer));
+            comparer.VerifyNoCalls();
         }
 
         [Fact]
@@ -1241,12 +1241,14 @@ namespace Acolyte.Tests.Linq
             // Arrange.
             IEnumerable<DummyStruct?> emptyCollection = Enumerable.Empty<DummyStruct?>();
             (DummyStruct? minValue, DummyStruct? maxValue) expectedValue = (null, null);
+            var comparer = MockComparer<DummyStruct?>.Default;
 
             // Act.
-            var actualValue = emptyCollection.MinMax(Comparer<DummyStruct?>.Default);
+            var actualValue = emptyCollection.MinMax(comparer);
 
             // Assert.
             Assert.Equal(expectedValue, actualValue);
+            comparer.VerifyNoCalls();
         }
 
         [Fact]
@@ -1255,12 +1257,14 @@ namespace Acolyte.Tests.Linq
             // Arrange.
             IEnumerable<DummyClass> emptyCollection = Enumerable.Empty<DummyClass>();
             (DummyClass? minValue, DummyClass? maxValue) expectedValue = (null, null);
+            var comparer = MockComparer<DummyClass>.Default;
 
             // Act.
-            var actualValue = emptyCollection.MinMax(Comparer<DummyClass>.Default);
+            var actualValue = emptyCollection.MinMax(comparer);
 
             // Assert.
             Assert.Equal(expectedValue, actualValue);
+            comparer.VerifyNoCalls();
         }
 
         #endregion
@@ -1273,7 +1277,7 @@ namespace Acolyte.Tests.Linq
             // Arrange.
             IReadOnlyList<string> predefinedCollection = new[] { "aaa", "bbb", "ccc" };
             (string minValue, string maxValue) expectedValue =
-               (predefinedCollection[0], predefinedCollection[^1]);
+                (predefinedCollection[0], predefinedCollection[^1]);
 
             // Act.
             var actualValue = predefinedCollection.MinMax();
@@ -1287,15 +1291,19 @@ namespace Acolyte.Tests.Linq
         {
             // Arrange.
             IReadOnlyList<string?> predefinedCollection =
-                new string?[] { null, "aaa", null, "bbb", null, "ccc" };
+                new[] { null, "aaa", null, "bbb", null, "ccc" };
             (string? minValue, string? maxValue) expectedValue =
-                  (predefinedCollection[1], predefinedCollection[^1]);
+                (predefinedCollection[1], predefinedCollection[^1]);
+            var comparer = MockComparer.SetupDefaultFor(predefinedCollection);
 
             // Act.
-            var actualValue = predefinedCollection.MinMax(Comparer<string?>.Default);
+            var actualValue = predefinedCollection.MinMax(comparer);
 
             // Assert.
             Assert.Equal(expectedValue, actualValue);
+            // "MinMax" method skips null value and do not call "Compare" method.
+            // Than we skip fist not null value.
+            comparer.VerifyCompareCalls(times: 2 * 2);
         }
 
         #endregion
@@ -1313,7 +1321,7 @@ namespace Acolyte.Tests.Linq
             int count)
         {
             // Arrange.
-            IEnumerable<string> collectionWithSomeItems =
+            IReadOnlyList<string> collectionWithSomeItems =
                 TestDataCreator.CreateRandomStringList(count);
             (string? minValue, string? maxValue) expectedValue =
                 (collectionWithSomeItems.Min(), collectionWithSomeItems.Max());
@@ -1336,16 +1344,18 @@ namespace Acolyte.Tests.Linq
             int count)
         {
             // Arrange.
-            IEnumerable<string> collectionWithSomeItems =
+            IReadOnlyList<string> collectionWithSomeItems =
                 TestDataCreator.CreateRandomStringList(count);
             (string? minValue, string? maxValue) expectedValue =
                 (collectionWithSomeItems.Min(), collectionWithSomeItems.Max());
+            var comparer = MockComparer.SetupDefaultFor(collectionWithSomeItems);
 
             // Act.
-            var actualValue = collectionWithSomeItems.MinMax(Comparer<string>.Default);
+            var actualValue = collectionWithSomeItems.MinMax(comparer);
 
             // Assert.
             Assert.Equal(expectedValue, actualValue);
+            VerifyCompareCallsForMinMax(comparer, collectionWithSomeItems);
         }
 
         #endregion
@@ -1357,8 +1367,8 @@ namespace Acolyte.Tests.Linq
         {
             // Arrange.
             int count = TestDataCreator.GetRandomSmallCountNumber();
-            IEnumerable<string> collectionWithRandomSize = TestDataCreator
-                .CreateRandomStringList(count);
+            IReadOnlyList<string> collectionWithRandomSize =
+                TestDataCreator.CreateRandomStringList(count);
             (string? minValue, string? maxValue) expectedValue =
                 (collectionWithRandomSize.Min(), collectionWithRandomSize.Max());
 
@@ -1374,16 +1384,18 @@ namespace Acolyte.Tests.Linq
         {
             // Arrange.
             int count = TestDataCreator.GetRandomSmallCountNumber();
-            IEnumerable<string> collectionWithRandomSize = TestDataCreator
-                .CreateRandomStringList(count);
+            IReadOnlyList<string> collectionWithRandomSize =
+                TestDataCreator.CreateRandomStringList(count);
             (string? minValue, string? maxValue) expectedValue =
                 (collectionWithRandomSize.Min(), collectionWithRandomSize.Max());
+            var comparer = MockComparer<string>.Default;
 
             // Act.
-            var actualValue = collectionWithRandomSize.MinMax(Comparer<string>.Default);
+            var actualValue = collectionWithRandomSize.MinMax(comparer);
 
             // Assert.
             Assert.Equal(expectedValue, actualValue);
+            VerifyCompareCallsForMinMax(comparer, collectionWithRandomSize);
         }
 
         #endregion
@@ -1413,15 +1425,27 @@ namespace Acolyte.Tests.Linq
             IReadOnlyList<string> collection = new[] { "1", "2", "3", "4" };
             var explosive = ExplosiveEnumerable.CreateNotExplosive(collection);
             (string? minValue, string? maxValue) expectedValue = (explosive.Min(), explosive.Max());
+            var comparer = MockComparer.SetupDefaultFor<string?>(collection);
 
             // Act.
             // Do not know why compiler decides that "explosive" should have "string?"
             // I think that's because of the nullable return type.
-            var actualValue = explosive.MinMax(Comparer<string?>.Default);
+            var actualValue = explosive.MinMax(comparer);
 
             // Assert.
             CustomAssert.True(explosive.VerifyThriceEnumerateWholeCollection(collection));
             Assert.Equal(expectedValue, actualValue);
+            VerifyCompareCallsForMinMax(comparer, collection);
+        }
+
+        #endregion
+
+        #region Private Methods
+
+        private static void VerifyCompareCallsForMinMax<T>(MockComparer<T> comparer,
+            IReadOnlyList<T> collection)
+        {
+            comparer.VerifyCompareCalls(times: (collection.Count - 1) * 2);
         }
 
         #endregion

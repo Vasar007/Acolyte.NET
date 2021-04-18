@@ -5,6 +5,7 @@ using Acolyte.Common;
 using Acolyte.Linq;
 using Acolyte.Tests.Collections;
 using Acolyte.Tests.Creators;
+using Acolyte.Tests.Mocked;
 using Xunit;
 
 namespace Acolyte.Tests.Linq
@@ -22,11 +23,11 @@ namespace Acolyte.Tests.Linq
         {
             // Arrange.
             const IEnumerable<int>? nullValue = null;
+            var comparer = MockComparer<int>.Default;
 
             // Act & Assert.
-            Assert.Throws<ArgumentNullException>(
-                "source", () => nullValue!.Min(Comparer<int>.Default)
-            );
+            Assert.Throws<ArgumentNullException>("source", () => nullValue!.Min(comparer));
+            comparer.VerifyNoCalls();
         }
 
         [Fact]
@@ -34,7 +35,7 @@ namespace Acolyte.Tests.Linq
         {
             // Arrange.
             int count = TestDataCreator.GetRandomPositiveCountNumber();
-            IEnumerable<int> collectionWithRandomSize =
+            IReadOnlyList<int> collectionWithRandomSize =
                 TestDataCreator.CreateRandomInt32List(count);
             int expectedValue = collectionWithRandomSize.Min();
 
@@ -54,11 +55,11 @@ namespace Acolyte.Tests.Linq
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
+            var comparer = MockComparer<int>.Default;
 
             // Act & Assert.
-            Assert.Throws(
-                Error.NoElements().GetType(), () => emptyCollection.Min(Comparer<int>.Default)
-            );
+            Assert.Throws(Error.NoElements().GetType(), () => emptyCollection.Min(comparer));
+            comparer.VerifyNoCalls();
         }
 
         [Fact]
@@ -67,12 +68,14 @@ namespace Acolyte.Tests.Linq
             // Arrange.
             IEnumerable<int?> emptyCollection = Enumerable.Empty<int?>();
             int? expectedValue = null;
+            var comparer = MockComparer<int?>.Default;
 
             // Act.
-            int? actualValue = emptyCollection.Min(Comparer<int?>.Default);
+            int? actualValue = emptyCollection.Min(comparer);
 
             // Assert.
             Assert.Equal(expectedValue, actualValue);
+            comparer.VerifyNoCalls();
         }
 
         [Fact]
@@ -81,12 +84,14 @@ namespace Acolyte.Tests.Linq
             // Arrange.
             IEnumerable<string> emptyCollection = Enumerable.Empty<string>();
             const string? expectedValue = null;
+            var comparer = MockComparer<string>.Default;
 
             // Act.
-            string? actualValue = emptyCollection.Min(Comparer<string>.Default);
+            string? actualValue = emptyCollection.Min(comparer);
 
             // Assert.
             Assert.Equal(expectedValue, actualValue);
+            comparer.VerifyNoCalls();
         }
 
         #endregion
@@ -99,12 +104,14 @@ namespace Acolyte.Tests.Linq
             // Arrange.
             IReadOnlyList<int> predefinedCollection = new[] { 1, 2, 3 };
             int expectedValue = predefinedCollection[0];
+            var comparer = MockComparer.SetupDefaultFor(predefinedCollection);
 
             // Act.
-            int actualValue = predefinedCollection.Min(Comparer<int>.Default);
+            int actualValue = predefinedCollection.Min(comparer);
 
             // Assert.
             Assert.Equal(expectedValue, actualValue);
+            VerifyCompareCallsForMin(comparer, predefinedCollection);
         }
 
         #endregion
@@ -121,14 +128,17 @@ namespace Acolyte.Tests.Linq
         public void Min_WithComparer_ForCollectionWithSomeItems_ShouldReturnMin(int count)
         {
             // Arrange.
-            IEnumerable<int> collectionWithSomeItems = TestDataCreator.CreateRandomInt32List(count);
+            IReadOnlyList<int> collectionWithSomeItems =
+                TestDataCreator.CreateRandomInt32List(count);
             int expectedValue = collectionWithSomeItems.Min();
+            var comparer = MockComparer.SetupDefaultFor(collectionWithSomeItems);
 
             // Act.
-            int actualValue = collectionWithSomeItems.Min(Comparer<int>.Default);
+            int actualValue = collectionWithSomeItems.Min(comparer);
 
             // Assert.
             Assert.Equal(expectedValue, actualValue);
+            VerifyCompareCallsForMin(comparer, collectionWithSomeItems);
         }
 
         [Theory]
@@ -142,16 +152,18 @@ namespace Acolyte.Tests.Linq
             int count)
         {
             // Arrange.
-            IEnumerable<int> collectionWithTheSameItems = Enumerable
-                .Range(1, count)
-                .Select(_ => count);
+            IReadOnlyList<int> collectionWithTheSameItems = Enumerable
+                .Repeat(count, count)
+                .ToList();
             int expectedValue = count;
+            var comparer = MockComparer.SetupDefaultFor(collectionWithTheSameItems);
 
             // Act.
-            int actualValue = collectionWithTheSameItems.Min(Comparer<int>.Default);
+            int actualValue = collectionWithTheSameItems.Min(comparer);
 
             // Assert.
             Assert.Equal(expectedValue, actualValue);
+            VerifyCompareCallsForMin(comparer, collectionWithTheSameItems);
         }
 
         #endregion
@@ -163,15 +175,17 @@ namespace Acolyte.Tests.Linq
         {
             // Arrange.
             int count = TestDataCreator.GetRandomPositiveCountNumber();
-            IEnumerable<int> collectionWithRandomSize =
+            IReadOnlyList<int> collectionWithRandomSize =
                 TestDataCreator.CreateRandomInt32List(count);
             int expectedValue = collectionWithRandomSize.Min();
+            var comparer = MockComparer<int>.Default;
 
             // Act.
-            int actualValue = collectionWithRandomSize.Min(Comparer<int>.Default);
+            int actualValue = collectionWithRandomSize.Min(comparer);
 
             // Assert.
             Assert.Equal(expectedValue, actualValue);
+            VerifyCompareCallsForMin(comparer, collectionWithRandomSize);
         }
 
         #endregion
@@ -185,13 +199,25 @@ namespace Acolyte.Tests.Linq
             IReadOnlyList<int> collection = new[] { 1, 2, 3, 4 };
             var explosive = ExplosiveEnumerable.CreateNotExplosive(collection);
             int expectedValue = explosive.Min();
+            var comparer = MockComparer.SetupDefaultFor(collection);
 
             // Act.
-            int actualValue = explosive.Min(Comparer<int>.Default);
+            int actualValue = explosive.Min(comparer);
 
             // Assert.
             CustomAssert.True(explosive.VerifyTwiceEnumerateWholeCollection(collection));
             Assert.Equal(expectedValue, actualValue);
+            VerifyCompareCallsForMin(comparer, collection);
+        }
+
+        #endregion
+
+        #region Private Methods
+
+        private static void VerifyCompareCallsForMin<T>(MockComparer<T> comparer,
+            IReadOnlyList<T> collection)
+        {
+            comparer.VerifyCompareCalls(times: collection.Count - 1);
         }
 
         #endregion

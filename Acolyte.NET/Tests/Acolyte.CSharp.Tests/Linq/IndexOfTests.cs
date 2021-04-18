@@ -6,6 +6,7 @@ using Acolyte.Functions;
 using Acolyte.Linq;
 using Acolyte.Tests.Collections;
 using Acolyte.Tests.Creators;
+using Acolyte.Tests.Mocked;
 using Xunit;
 
 namespace Acolyte.Tests.Linq
@@ -58,11 +59,13 @@ namespace Acolyte.Tests.Linq
         {
             // Arrange.
             const IEnumerable<int>? nullValue = null;
+            var comparer = MockEqualityComparer<int>.Default;
 
             // Act & Assert.
             Assert.Throws<ArgumentNullException>(
-                "source", () => nullValue!.IndexOf(value: default, EqualityComparer<int>.Default)
+                "source", () => nullValue!.IndexOf(value: default, comparer)
             );
+            comparer.VerifyNoCalls();
         }
 
         [Fact]
@@ -121,14 +124,14 @@ namespace Acolyte.Tests.Linq
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
             int expectedIndex = Constants.NotFoundIndex;
+            var comparer = MockEqualityComparer<int>.Default;
 
             // Act.
-            int actualIndex = emptyCollection.IndexOf(
-                value: default, EqualityComparer<int>.Default
-            );
+            int actualIndex = emptyCollection.IndexOf(value: default, comparer);
 
             // Assert.
             Assert.Equal(expectedIndex, actualIndex);
+            comparer.VerifyNoCalls();
         }
 
         #endregion
@@ -172,14 +175,15 @@ namespace Acolyte.Tests.Linq
             IReadOnlyList<int> predefinedCollection = new[] { 1, 2, 3 };
             int expectedIndex = Constants.FirstIndex + 1;
             int expectedItem = predefinedCollection[expectedIndex];
+            var comparer = MockEqualityComparer.SetupDefaultFor(predefinedCollection);
 
             // Act.
-            int actualIndex = predefinedCollection.IndexOf(
-                expectedItem, EqualityComparer<int>.Default
-            );
+            int actualIndex = predefinedCollection.IndexOf(expectedItem, comparer);
 
             // Assert.
             Assert.Equal(expectedIndex, actualIndex);
+            comparer.VerifyEqualsCalls(times: expectedIndex + 1);
+            comparer.VerifyGetHashCodeNoCalls();
         }
 
         #endregion
@@ -247,14 +251,15 @@ namespace Acolyte.Tests.Linq
                 TestDataCreator.CreateRandomInt32List(count);
             (int randomItem, int expectedIndex) =
                  TestDataCreator.ChoiceWithIndex(collectionWithSomeItems);
+            var comparer = MockEqualityComparer.SetupDefaultFor(collectionWithSomeItems);
 
             // Act.
-            int actualIndex = collectionWithSomeItems.IndexOf(
-                randomItem, EqualityComparer<int>.Default
-            );
+            int actualIndex = collectionWithSomeItems.IndexOf(randomItem, comparer);
 
             // Assert.
             Assert.Equal(expectedIndex, actualIndex);
+            comparer.VerifyEqualsCalls(times: expectedIndex + 1);
+            comparer.VerifyGetHashCodeNoCalls();
         }
 
         [Theory]
@@ -267,7 +272,8 @@ namespace Acolyte.Tests.Linq
         public void IndexOf_ForCollectionWithSomeItems_ShouldReturnNotFoundIndex(int count)
         {
             // Arrange.
-            IEnumerable<int> collectionWithSomeItems = TestDataCreator.CreateRandomInt32List(count);
+            IReadOnlyList<int> collectionWithSomeItems =
+                TestDataCreator.CreateRandomInt32List(count);
             int expectedIndex = Constants.NotFoundIndex;
 
             // Act.
@@ -288,7 +294,7 @@ namespace Acolyte.Tests.Linq
             int count)
         {
             // Arrange.
-            IEnumerable<int?> collectionWithSomeItems = TestDataCreator
+            IReadOnlyList<int?> collectionWithSomeItems = TestDataCreator
                 .CreateRandomInt32List(count)
                 .ToNullable();
             int expectedIndex = Constants.NotFoundIndex;
@@ -311,18 +317,19 @@ namespace Acolyte.Tests.Linq
             int count)
         {
             // Arrange.
-            IEnumerable<int?> collectionWithSomeItems = TestDataCreator
+            IReadOnlyList<int?> collectionWithSomeItems = TestDataCreator
                  .CreateRandomInt32List(count)
                  .ToNullable();
             int expectedIndex = Constants.NotFoundIndex;
+            var comparer = MockEqualityComparer<int?>.Default;
 
             // Act.
-            int actualIndex = collectionWithSomeItems.IndexOf(
-                value: null, EqualityComparer<int?>.Default
-            );
+            int actualIndex = collectionWithSomeItems.IndexOf(value: null, comparer);
 
             // Assert.
             Assert.Equal(expectedIndex, actualIndex);
+            comparer.VerifyEqualsCallsForEach(collectionWithSomeItems);
+            comparer.VerifyGetHashCodeNoCalls();
         }
 
         #endregion
@@ -372,11 +379,10 @@ namespace Acolyte.Tests.Linq
                 TestDataCreator.CreateRandomInt32List(count);
             (int randomItem, int expectedIndex) =
                 TestDataCreator.ChoiceWithIndex(collectionWithRandomSize);
+            var comparer = EqualityComparer<int>.Default;
 
             // Act.
-            int actualIndex = collectionWithRandomSize.IndexOf(
-                randomItem, EqualityComparer<int>.Default
-            );
+            int actualIndex = collectionWithRandomSize.IndexOf(randomItem, comparer);
 
             // Assert.
             Assert.Equal(expectedIndex, actualIndex);
@@ -387,7 +393,7 @@ namespace Acolyte.Tests.Linq
         {
             // Arrange.
             int count = TestDataCreator.GetRandomCountNumber();
-            IEnumerable<int> collectionWithRandomSize =
+            IReadOnlyList<int> collectionWithRandomSize =
                 TestDataCreator.CreateRandomInt32List(count);
             int expectedIndex = Constants.NotFoundIndex;
 
@@ -403,7 +409,7 @@ namespace Acolyte.Tests.Linq
         {
             // Arrange.
             int count = TestDataCreator.GetRandomCountNumber();
-            IEnumerable<int?> collectionWithRandomSize = TestDataCreator
+            IReadOnlyList<int?> collectionWithRandomSize = TestDataCreator
                .CreateRandomInt32List(count)
                .ToNullable();
             int expectedIndex = Constants.NotFoundIndex;
@@ -420,15 +426,15 @@ namespace Acolyte.Tests.Linq
         {
             // Arrange.
             int count = TestDataCreator.GetRandomCountNumber();
-            IEnumerable<int?> collectionWithRandomSize = TestDataCreator
+            IReadOnlyList<int?> collectionWithRandomSize = TestDataCreator
                 .CreateRandomInt32List(count)
                 .ToNullable();
             int expectedIndex = Constants.NotFoundIndex;
+            // Use default comparer to avoid long running tests.
+            var comparer = EqualityComparer<int?>.Default;
 
             // Act.
-            int actualIndex = collectionWithRandomSize.IndexOf(
-                value: null, EqualityComparer<int?>.Default
-            );
+            int actualIndex = collectionWithRandomSize.IndexOf(value: null, comparer);
 
             // Assert.
             Assert.Equal(expectedIndex, actualIndex);
@@ -521,13 +527,16 @@ namespace Acolyte.Tests.Linq
             );
             int value = explosive.Skip(1).First();
             const int expectedIndex = 1;
+            var comparer = MockEqualityComparer.SetupDefaultFor(collection);
 
             // Act.
-            int actualIndex = explosive.IndexOf(value, EqualityComparer<int>.Default);
+            int actualIndex = explosive.IndexOf(value, comparer);
 
             // Assert.
             CustomAssert.True(explosive.VerifyTwice(expectedVisitedItemsNumber: 2));
             Assert.Equal(expectedIndex, actualIndex);
+            comparer.VerifyEqualsCalls(times: explosive.ExplosiveIndex);
+            comparer.VerifyGetHashCodeNoCalls();
         }
 
         [Fact]
@@ -537,13 +546,16 @@ namespace Acolyte.Tests.Linq
             IReadOnlyList<int> collection = new[] { 1, 2, 3, 4 };
             var explosive = ExplosiveEnumerable.CreateNotExplosive(collection);
             int expectedValue = Constants.NotFoundIndex;
+            var comparer = MockEqualityComparer<int>.Default;
 
             // Act.
-            int actualIndex = explosive.IndexOf(value: 0, EqualityComparer<int>.Default);
+            int actualIndex = explosive.IndexOf(value: 0, comparer);
 
             // Assert.
             CustomAssert.True(explosive.VerifySingleEnumerateWholeCollection(collection));
             Assert.Equal(expectedValue, actualIndex);
+            comparer.VerifyEqualsCallsForEach(collection);
+            comparer.VerifyGetHashCodeNoCalls();
         }
 
         #endregion

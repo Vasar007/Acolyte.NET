@@ -11,9 +11,9 @@ namespace Acolyte.Tests.Collections
     {
         private readonly IEnumerator<T> _originalEnumerator;
 
-        private readonly int _explosiveIndex;
-
         private readonly CounterInt32 _visitedItemsNumber;
+
+        public int ExplosiveIndex { get; }
 
         public T? Current { get; private set; }
 
@@ -26,7 +26,7 @@ namespace Acolyte.Tests.Collections
             CounterInt32 visitedItemsNumber)
         {
             _originalEnumerator = originalEnumerator.ThrowIfNull(nameof(originalEnumerator));
-            _explosiveIndex = explosiveIndex.ThrowIfValueIsOutOfRange(
+            ExplosiveIndex = explosiveIndex.ThrowIfValueIsOutOfRange(
                 nameof(explosiveIndex), Constants.NotFoundIndex, int.MaxValue
             );
             _visitedItemsNumber = visitedItemsNumber.ThrowIfNull(nameof(visitedItemsNumber));
@@ -41,7 +41,7 @@ namespace Acolyte.Tests.Collections
             _visitedItemsNumber.Increment();
             Current = _originalEnumerator.Current;
 
-            if (ShouldExplode()) throw new ExplosiveException(_explosiveIndex);
+            if (ShouldExplode()) throw new ExplosiveException(ExplosiveIndex);
 
             return true;
         }
@@ -72,7 +72,7 @@ namespace Acolyte.Tests.Collections
 
         private bool ShouldExplode()
         {
-            return _visitedItemsNumber.Value == _explosiveIndex + 1;
+            return _visitedItemsNumber.Value == ExplosiveIndex + 1;
         }
     }
 

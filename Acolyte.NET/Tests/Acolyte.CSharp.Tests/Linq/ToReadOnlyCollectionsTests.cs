@@ -4,6 +4,7 @@ using System.Linq;
 using Acolyte.Functions;
 using Acolyte.Linq;
 using Acolyte.Tests.Creators;
+using Acolyte.Tests.Mocked;
 using Xunit;
 
 namespace Acolyte.Tests.Linq
@@ -50,11 +51,13 @@ namespace Acolyte.Tests.Linq
             // Arrange.
             const IEnumerable<int>? nullValue = null;
             Func<int, Guid> discardKeySelector = DiscardFunction<int, Guid>.Func;
+            var comparer = MockEqualityComparer<Guid>.Default;
 
             // Act & Assert.
             Assert.Throws<ArgumentNullException>(
-                "source", () => nullValue!.ToReadOnlyDictionary(discardKeySelector, comparer: null)
+                "source", () => nullValue!.ToReadOnlyDictionary(discardKeySelector, comparer)
             );
+            comparer.VerifyNoCalls();
         }
 
         [Fact]
@@ -63,12 +66,14 @@ namespace Acolyte.Tests.Linq
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
             const Func<int, Guid>? nullKeySelector = null;
+            var comparer = MockEqualityComparer<Guid>.Default;
 
             // Act & Assert.
             Assert.Throws<ArgumentNullException>(
                 "keySelector",
-                () => emptyCollection.ToReadOnlyDictionary(nullKeySelector!, comparer: null)
+                () => emptyCollection.ToReadOnlyDictionary(nullKeySelector!, comparer)
             );
+            comparer.VerifyNoCalls();
         }
 
         [Fact]
@@ -76,13 +81,12 @@ namespace Acolyte.Tests.Linq
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
-            var expectedDictionary = emptyCollection.ToDictionary(
-                KeyFunction<int>.Simple, comparer: null
-            );
+            Func<int, Guid> keySelector = KeyFunction<int>.Simple;
+            var expectedDictionary = emptyCollection.ToDictionary(keySelector, comparer: null);
 
             // Act.
             var actualDictionary = emptyCollection.ToReadOnlyDictionary(
-                KeyFunction<int>.Simple, comparer: null
+                keySelector, comparer: null
             );
 
             // Assert.
@@ -126,14 +130,13 @@ namespace Acolyte.Tests.Linq
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
+            Func<int, Guid> discardKeySelector = DiscardFunction<int, Guid>.Func;
             const Func<int, int>? nullElementSelector = null;
 
             // Act & Assert.
             Assert.Throws<ArgumentNullException>(
                 "elementSelector",
-                () => emptyCollection.ToReadOnlyDictionary(
-                    KeyFunction<int>.Simple, nullElementSelector!
-                )
+                () => emptyCollection.ToReadOnlyDictionary(discardKeySelector, nullElementSelector!)
             );
         }
 
@@ -144,14 +147,16 @@ namespace Acolyte.Tests.Linq
             const IEnumerable<int>? nullValue = null;
             Func<int, Guid> discardKeySelector = DiscardFunction<int, Guid>.Func;
             Func<int, int> discardElementSelector = DiscardFunction<int, int>.Func;
+            var comparer = MockEqualityComparer<Guid>.Default;
 
             // Act & Assert.
             Assert.Throws<ArgumentNullException>(
                 "source",
                 () => nullValue!.ToReadOnlyDictionary(
-                    discardKeySelector, discardElementSelector, comparer: null
+                    discardKeySelector, discardElementSelector, comparer
                 )
             );
+            comparer.VerifyNoCalls();
         }
 
         [Fact]
@@ -161,14 +166,16 @@ namespace Acolyte.Tests.Linq
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
             const Func<int, Guid>? nullKeySelector = null;
             Func<int, int> discardElementSelector = DiscardFunction<int, int>.Func;
+            var comparer = MockEqualityComparer<Guid>.Default;
 
             // Act & Assert.
             Assert.Throws<ArgumentNullException>(
                 "keySelector",
                 () => emptyCollection.ToReadOnlyDictionary(
-                    nullKeySelector!, discardElementSelector, comparer: null
+                    nullKeySelector!, discardElementSelector, comparer
                 )
             );
+            comparer.VerifyNoCalls();
         }
 
         [Fact]
@@ -176,15 +183,18 @@ namespace Acolyte.Tests.Linq
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
+            Func<int, Guid> discardKeySelector = DiscardFunction<int, Guid>.Func;
             const Func<int, int>? nullElementSelector = null;
+            var comparer = MockEqualityComparer<Guid>.Default;
 
             // Act & Assert.
             Assert.Throws<ArgumentNullException>(
                 "elementSelector",
                 () => emptyCollection.ToReadOnlyDictionary(
-                    KeyFunction<int>.Simple, nullElementSelector!, comparer: null
+                    discardKeySelector, nullElementSelector!, comparer
                 )
             );
+            comparer.VerifyNoCalls();
         }
 
         [Fact]
@@ -192,13 +202,15 @@ namespace Acolyte.Tests.Linq
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
+            Func<int, Guid> discardKeySelector = DiscardFunction<int, Guid>.Func;
+            Func<int, int> discardElementSelector = DiscardFunction<int, int>.Func;
             var expectedDictionary = emptyCollection.ToDictionary(
-                KeyFunction<int>.Simple, IdentityFunction<int>.Instance, comparer: null
+                discardKeySelector, discardElementSelector, comparer: null
             );
 
             // Act.
             var actualDictionary = emptyCollection.ToReadOnlyDictionary(
-                KeyFunction<int>.Simple, IdentityFunction<int>.Instance, comparer: null
+                discardKeySelector, discardElementSelector, comparer: null
             );
 
             // Assert.
@@ -216,10 +228,11 @@ namespace Acolyte.Tests.Linq
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
-            var expectedDictionary = emptyCollection.ToDictionary(KeyFunction<int>.Simple);
+            Func<int, Guid> keySelector = KeyFunction<int>.Simple;
+            var expectedDictionary = emptyCollection.ToDictionary(keySelector);
 
             // Act.
-            var actualDictionary = emptyCollection.ToReadOnlyDictionary(KeyFunction<int>.Simple);
+            var actualDictionary = emptyCollection.ToReadOnlyDictionary(keySelector);
 
             // Assert.
             Assert.NotNull(actualDictionary);
@@ -232,19 +245,18 @@ namespace Acolyte.Tests.Linq
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
-            var expectedDictionary = emptyCollection.ToDictionary(
-                KeyFunction<int>.Simple, EqualityComparer<Guid>.Default
-            );
+            Func<int, Guid> keySelector = KeyFunction<int>.Simple;
+            var comparer = MockEqualityComparer<Guid>.Default;
+            var expectedDictionary = emptyCollection.ToDictionary(keySelector, comparer);
 
             // Act.
-            var actualDictionary = emptyCollection.ToReadOnlyDictionary(
-                KeyFunction<int>.Simple, EqualityComparer<Guid>.Default
-            );
+            var actualDictionary = emptyCollection.ToReadOnlyDictionary(keySelector, comparer);
 
             // Assert.
             Assert.NotNull(actualDictionary);
             Assert.Empty(actualDictionary);
             Assert.Equal(expectedDictionary, actualDictionary);
+            comparer.VerifyNoCalls();
         }
 
         [Fact]
@@ -252,13 +264,13 @@ namespace Acolyte.Tests.Linq
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
-            var expectedDictionary = emptyCollection.ToDictionary(
-                KeyFunction<int>.Simple, IdentityFunction<int>.Instance
-            );
+            Func<int, Guid> keySelector = KeyFunction<int>.Simple;
+            Func<int, int> elementSelector = IdentityFunction<int>.Instance;
+            var expectedDictionary = emptyCollection.ToDictionary(keySelector, elementSelector);
 
             // Act.
             var actualDictionary = emptyCollection.ToReadOnlyDictionary(
-                KeyFunction<int>.Simple, IdentityFunction<int>.Instance
+                keySelector, elementSelector
             );
 
             // Assert.
@@ -272,23 +284,23 @@ namespace Acolyte.Tests.Linq
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
+            Func<int, Guid> keySelector = KeyFunction<int>.Simple;
+            Func<int, int> elementSelector = IdentityFunction<int>.Instance;
+            var comparer = MockEqualityComparer<Guid>.Default;
             var expectedDictionary = emptyCollection.ToDictionary(
-                KeyFunction<int>.Simple,
-                IdentityFunction<int>.Instance,
-                EqualityComparer<Guid>.Default
+                keySelector, elementSelector, comparer
             );
 
             // Act.
             var actualDictionary = emptyCollection.ToReadOnlyDictionary(
-                KeyFunction<int>.Simple,
-                IdentityFunction<int>.Instance,
-                EqualityComparer<Guid>.Default
+                keySelector, elementSelector, comparer
             );
 
             // Assert.
             Assert.NotNull(actualDictionary);
             Assert.Empty(actualDictionary);
             Assert.Equal(expectedDictionary, actualDictionary);
+            comparer.VerifyNoCalls();
         }
 
         #endregion
@@ -299,8 +311,8 @@ namespace Acolyte.Tests.Linq
         public void ToReadOnlyDictionary_WithKeySelector_ForPredefinedCollection_ShouldReturnFilledDictionary()
         {
             // Arrange.
-            IReadOnlyList<int> predefinedCollection = new[] { 1, 2, 3 };
-            var keyGenerator = new IncrementalKeyGenerator<int>();
+            IReadOnlyList<long> predefinedCollection = new[] { 1L, 2L, 3L };
+            var keyGenerator = new IncrementalKeyGenerator<long>();
             var expectedDictionary = predefinedCollection.ToDictionary(keyGenerator.GetKey);
 
             // Act.
@@ -319,19 +331,23 @@ namespace Acolyte.Tests.Linq
         public void ToReadOnlyDictionary_WithKeySelectorAndComparer_ForPredefinedCollection_ShouldReturnFilledDictionary()
         {
             // Arrange.
-            IReadOnlyList<int> predefinedCollection = new[] { 1, 2, 3 };
-            var keyGenerator = new IncrementalKeyGenerator<int>();
+            IReadOnlyList<long> predefinedCollection = new[] { 1L, 2L, 3L };
+            var keyGenerator = new IncrementalKeyGenerator<long>();
+            var comparer = MockEqualityComparer<long>.Default;
             var expectedDictionary = predefinedCollection.ToDictionary(
-                keyGenerator.GetKey, EqualityComparer<long>.Default
+                keyGenerator.GetKey, comparer
             );
 
             // Act.
             keyGenerator.Reset();
             var actualDictionary = predefinedCollection.ToReadOnlyDictionary(
-                keyGenerator.GetKey, EqualityComparer<long>.Default
+                keyGenerator.GetKey, comparer
             );
 
             // Assert.
+            // Fist check mock, than collections on equality.
+            // Otherwise, comparer will be called during equality check.
+            VerifyMethodsCallsForToReadOnlyDictionary(comparer, predefinedCollection);
             Assert.NotNull(actualDictionary);
             Assert.NotEmpty(actualDictionary);
             Assert.Equal(expectedDictionary, actualDictionary);
@@ -341,16 +357,18 @@ namespace Acolyte.Tests.Linq
         public void ToReadOnlyDictionary_WithKeyElementSelectors_ForPredefinedCollection_ShouldReturnFilledDictionary()
         {
             // Arrange.
-            IReadOnlyList<int> predefinedCollection = new[] { 1, 2, 3 };
-            var keyGenerator = new IncrementalKeyGenerator<int>();
+            IReadOnlyList<long> predefinedCollection = new[] { 1L, 2L, 3L };
+            var keyGenerator = new IncrementalKeyGenerator<long>();
+            Func<long, long> elementSelector = IdentityFunction<long>.Instance;
+            var comparer = MockEqualityComparer<Guid>.Default;
             var expectedDictionary = predefinedCollection.ToDictionary(
-                keyGenerator.GetKey, IdentityFunction<int>.Instance
+                keyGenerator.GetKey, elementSelector
             );
 
             // Act.
             keyGenerator.Reset();
             var actualDictionary = predefinedCollection.ToReadOnlyDictionary(
-                keyGenerator.GetKey, IdentityFunction<int>.Instance
+                keyGenerator.GetKey, elementSelector
             );
 
             // Assert.
@@ -363,23 +381,24 @@ namespace Acolyte.Tests.Linq
         public void ToReadOnlyDictionary_WithKeyElementSelectorsAndComparer_ForPredefinedCollection_ShouldReturnFilledDictionary()
         {
             // Arrange.
-            IReadOnlyList<int> predefinedCollection = new[] { 1, 2, 3 };
-            var keyGenerator = new IncrementalKeyGenerator<int>();
+            IReadOnlyList<long> predefinedCollection = new[] { 1L, 2L, 3L };
+            var keyGenerator = new IncrementalKeyGenerator<long>();
+            Func<long, long> elementSelector = IdentityFunction<long>.Instance;
+            var comparer = MockEqualityComparer<long>.Default;
             var expectedDictionary = predefinedCollection.ToDictionary(
-                keyGenerator.GetKey,
-                IdentityFunction<int>.Instance,
-                EqualityComparer<long>.Default
+                keyGenerator.GetKey, elementSelector, comparer
             );
 
             // Act.
             keyGenerator.Reset();
             var actualDictionary = predefinedCollection.ToReadOnlyDictionary(
-                keyGenerator.GetKey,
-                IdentityFunction<int>.Instance,
-                EqualityComparer<long>.Default
+                keyGenerator.GetKey, elementSelector, comparer
             );
 
             // Assert.
+            // Fist check mock, than collections on equality.
+            // Otherwise, comparer will be called during equality check.
+            VerifyMethodsCallsForToReadOnlyDictionary(comparer, predefinedCollection);
             Assert.NotNull(actualDictionary);
             Assert.NotEmpty(actualDictionary);
             Assert.Equal(expectedDictionary, actualDictionary);
@@ -400,8 +419,9 @@ namespace Acolyte.Tests.Linq
             int count)
         {
             // Arrange.
-            IEnumerable<int> collectionWithSomeItems = TestDataCreator.CreateRandomInt32List(count);
-            var keyGenerator = new IncrementalKeyGenerator<int>();
+            IReadOnlyList<long> collectionWithSomeItems =
+                TestDataCreator.CreateRandomInt64List(count);
+            var keyGenerator = new IncrementalKeyGenerator<long>();
             var expectedDictionary = collectionWithSomeItems.ToDictionary(keyGenerator.GetKey);
 
             // Act.
@@ -427,19 +447,24 @@ namespace Acolyte.Tests.Linq
             int count)
         {
             // Arrange.
-            IEnumerable<int> collectionWithSomeItems = TestDataCreator.CreateRandomInt32List(count);
-            var keyGenerator = new IncrementalKeyGenerator<int>();
+            IReadOnlyList<long> collectionWithSomeItems =
+                TestDataCreator.CreateRandomInt64List(count);
+            var keyGenerator = new IncrementalKeyGenerator<long>();
+            var comparer = MockEqualityComparer<long>.Default;
             var expectedDictionary = collectionWithSomeItems.ToDictionary(
-                keyGenerator.GetKey, EqualityComparer<long>.Default
+                keyGenerator.GetKey, comparer
             );
 
             // Act.
             keyGenerator.Reset();
             var actualDictionary = collectionWithSomeItems.ToReadOnlyDictionary(
-                keyGenerator.GetKey, EqualityComparer<long>.Default
+                keyGenerator.GetKey, comparer
             );
 
             // Assert.
+            // Fist check mock, than collections on equality.
+            // Otherwise, comparer will be called during equality check.
+            VerifyMethodsCallsForToReadOnlyDictionary(comparer, collectionWithSomeItems);
             Assert.NotNull(actualDictionary);
             Assert.NotEmpty(actualDictionary);
             Assert.Equal(expectedDictionary, actualDictionary);
@@ -456,16 +481,18 @@ namespace Acolyte.Tests.Linq
             int count)
         {
             // Arrange.
-            IEnumerable<int> collectionWithSomeItems = TestDataCreator.CreateRandomInt32List(count);
-            var keyGenerator = new IncrementalKeyGenerator<int>();
+            IReadOnlyList<long> collectionWithSomeItems =
+                TestDataCreator.CreateRandomInt64List(count);
+            var keyGenerator = new IncrementalKeyGenerator<long>();
+            Func<long, long> elementSelector = IdentityFunction<long>.Instance;
             var expectedDictionary = collectionWithSomeItems.ToDictionary(
-                keyGenerator.GetKey, IdentityFunction<int>.Instance
+                keyGenerator.GetKey, elementSelector
             );
 
             // Act.
             keyGenerator.Reset();
             var actualDictionary = collectionWithSomeItems.ToReadOnlyDictionary(
-                keyGenerator.GetKey, IdentityFunction<int>.Instance
+                keyGenerator.GetKey, elementSelector
             );
 
             // Assert.
@@ -485,23 +512,25 @@ namespace Acolyte.Tests.Linq
             int count)
         {
             // Arrange.
-            IEnumerable<int> collectionWithSomeItems = TestDataCreator.CreateRandomInt32List(count);
-            var keyGenerator = new IncrementalKeyGenerator<int>();
+            IReadOnlyList<long> collectionWithSomeItems =
+                TestDataCreator.CreateRandomInt64List(count);
+            var keyGenerator = new IncrementalKeyGenerator<long>();
+            Func<long, long> elementSelector = IdentityFunction<long>.Instance;
+            var comparer = MockEqualityComparer<long>.Default;
             var expectedDictionary = collectionWithSomeItems.ToDictionary(
-                keyGenerator.GetKey,
-                IdentityFunction<int>.Instance,
-                EqualityComparer<long>.Default
+                keyGenerator.GetKey, elementSelector, comparer
             );
 
             // Act.
             keyGenerator.Reset();
             var actualDictionary = collectionWithSomeItems.ToReadOnlyDictionary(
-                keyGenerator.GetKey,
-                IdentityFunction<int>.Instance,
-                EqualityComparer<long>.Default
+                keyGenerator.GetKey, elementSelector, comparer
             );
 
             // Assert.
+            // Fist check mock, than collections on equality.
+            // Otherwise, comparer will be called during equality check.
+            VerifyMethodsCallsForToReadOnlyDictionary(comparer, collectionWithSomeItems);
             Assert.NotNull(actualDictionary);
             Assert.NotEmpty(actualDictionary);
             Assert.Equal(expectedDictionary, actualDictionary);
@@ -516,9 +545,9 @@ namespace Acolyte.Tests.Linq
         {
             // Arrange.
             int count = TestDataCreator.GetRandomCountNumber();
-            IEnumerable<int> collectionWithRandomSize =
-                TestDataCreator.CreateRandomInt32List(count);
-            var keyGenerator = new IncrementalKeyGenerator<int>();
+            IReadOnlyList<long> collectionWithRandomSize =
+                TestDataCreator.CreateRandomInt64List(count);
+            var keyGenerator = new IncrementalKeyGenerator<long>();
             var expectedDictionary = collectionWithRandomSize.ToDictionary(keyGenerator.GetKey);
 
             // Act.
@@ -545,17 +574,19 @@ namespace Acolyte.Tests.Linq
         {
             // Arrange.
             int count = TestDataCreator.GetRandomCountNumber();
-            IEnumerable<int> collectionWithRandomSize =
-                TestDataCreator.CreateRandomInt32List(count);
-            var keyGenerator = new IncrementalKeyGenerator<int>();
+            IReadOnlyList<long> collectionWithRandomSize =
+                TestDataCreator.CreateRandomInt64List(count);
+            var keyGenerator = new IncrementalKeyGenerator<long>();
+            // Use default comparer to avoid long running tests.
+            var comparer = EqualityComparer<long>.Default;
             var expectedDictionary = collectionWithRandomSize.ToDictionary(
-                keyGenerator.GetKey, EqualityComparer<long>.Default
+                keyGenerator.GetKey, comparer
             );
 
             // Act.
             keyGenerator.Reset();
             var actualDictionary = collectionWithRandomSize.ToReadOnlyDictionary(
-                keyGenerator.GetKey, EqualityComparer<long>.Default
+                keyGenerator.GetKey, comparer
             );
 
             // Assert.
@@ -576,17 +607,18 @@ namespace Acolyte.Tests.Linq
         {
             // Arrange.
             int count = TestDataCreator.GetRandomCountNumber();
-            IEnumerable<int> collectionWithRandomSize =
-                TestDataCreator.CreateRandomInt32List(count);
-            var keyGenerator = new IncrementalKeyGenerator<int>();
+            IReadOnlyList<long> collectionWithRandomSize =
+                TestDataCreator.CreateRandomInt64List(count);
+            var keyGenerator = new IncrementalKeyGenerator<long>();
+            Func<long, long> elementSelector = IdentityFunction<long>.Instance;
             var expectedDictionary = collectionWithRandomSize.ToDictionary(
-                keyGenerator.GetKey, IdentityFunction<int>.Instance
+                keyGenerator.GetKey, elementSelector
             );
 
             // Act.
             keyGenerator.Reset();
             var actualDictionary = collectionWithRandomSize.ToReadOnlyDictionary(
-                keyGenerator.GetKey, IdentityFunction<int>.Instance
+                keyGenerator.GetKey, elementSelector
             );
 
             // Assert.
@@ -607,21 +639,20 @@ namespace Acolyte.Tests.Linq
         {
             // Arrange.
             int count = TestDataCreator.GetRandomCountNumber();
-            IEnumerable<int> collectionWithRandomSize =
-                TestDataCreator.CreateRandomInt32List(count);
-            var keyGenerator = new IncrementalKeyGenerator<int>();
+            IReadOnlyList<long> collectionWithRandomSize =
+                TestDataCreator.CreateRandomInt64List(count);
+            var keyGenerator = new IncrementalKeyGenerator<long>();
+            Func<long, long> elementSelector = IdentityFunction<long>.Instance;
+            // Use default comparer to avoid long running tests.
+            var comparer = EqualityComparer<long>.Default;
             var expectedDictionary = collectionWithRandomSize.ToDictionary(
-                keyGenerator.GetKey,
-                IdentityFunction<int>.Instance,
-                EqualityComparer<long>.Default
+                keyGenerator.GetKey, elementSelector, comparer
             );
 
             // Act.
             keyGenerator.Reset();
             var actualDictionary = collectionWithRandomSize.ToReadOnlyDictionary(
-                keyGenerator.GetKey,
-                IdentityFunction<int>.Instance,
-                EqualityComparer<long>.Default
+                keyGenerator.GetKey, elementSelector, comparer
             );
 
             // Assert.
@@ -646,27 +677,27 @@ namespace Acolyte.Tests.Linq
         {
             // Arrange.
             const int count = 5;
-            IEnumerable<int> collectionWithRandomSize =
-                TestDataCreator.CreateRandomInt32List(count);
-            var keyGenerator = new IncrementalKeyGenerator<int>();
-            var expectedDictionary = collectionWithRandomSize.ToDictionary(keyGenerator.GetKey);
+            IReadOnlyList<long> collectionWithSomeItems =
+                TestDataCreator.CreateRandomInt64List(count);
+            var keyGenerator = new IncrementalKeyGenerator<long>();
+            var expectedDictionary = collectionWithSomeItems.ToDictionary(keyGenerator.GetKey);
 
             // Act.
             keyGenerator.Reset();
-            var actualDictionary = collectionWithRandomSize.ToReadOnlyDictionary(
+            var actualDictionary = collectionWithSomeItems.ToReadOnlyDictionary(
                 keyGenerator.GetKey
             );
 
             // Assert.
-            Assert.IsAssignableFrom<IDictionary<long, int>>(actualDictionary);
-            if (actualDictionary is IDictionary<long, int> dictionary)
+            Assert.IsAssignableFrom<IDictionary<long, long>>(actualDictionary);
+            if (actualDictionary is IDictionary<long, long> dictionary)
             {
                 Assert.True(dictionary.IsReadOnly);
                 Assert.Throws<NotSupportedException>(() => dictionary.Add(default));
                 Assert.Throws<NotSupportedException>(() => dictionary.Add(default, default));
                 Assert.Throws<NotSupportedException>(() => dictionary.Clear());
                 Assert.Throws<NotSupportedException>(
-                    () => dictionary.Remove(default(KeyValuePair<long, int>))
+                    () => dictionary.Remove(default(KeyValuePair<long, long>))
                 );
                 Assert.Throws<NotSupportedException>(() => dictionary.Remove(default));
                 Assert.Throws<NotSupportedException>(() => dictionary[default] = default);
@@ -674,9 +705,9 @@ namespace Acolyte.Tests.Linq
             else
             {
                 string message =
-                    "Method 'ToReadOnlyDictionary' " +
+                     "Method 'ToReadOnlyDictionary' " +
                     $"returns collection with invalid type '{actualDictionary.GetType().Name}'. " +
-                    $"Return type should be inherit from '{nameof(IDictionary<long, int>)}'.";
+                    $"Return type should be inherit from '{nameof(IDictionary<long, long>)}'.";
                 CustomAssert.Fail(message);
             }
         }
@@ -686,29 +717,33 @@ namespace Acolyte.Tests.Linq
         {
             // Arrange.
             const int count = 5;
-            IEnumerable<int> collectionWithRandomSize =
-                TestDataCreator.CreateRandomInt32List(count);
-            var keyGenerator = new IncrementalKeyGenerator<int>();
-            var expectedDictionary = collectionWithRandomSize.ToDictionary(
-                keyGenerator.GetKey, EqualityComparer<long>.Default
+            IReadOnlyList<long> collectionWithSomeItems =
+                TestDataCreator.CreateRandomInt64List(count);
+            var keyGenerator = new IncrementalKeyGenerator<long>();
+            var comparer = MockEqualityComparer<long>.Default;
+            var expectedDictionary = collectionWithSomeItems.ToDictionary(
+                keyGenerator.GetKey, comparer
             );
 
             // Act.
             keyGenerator.Reset();
-            var actualDictionary = collectionWithRandomSize.ToReadOnlyDictionary(
-                keyGenerator.GetKey, EqualityComparer<long>.Default
+            var actualDictionary = collectionWithSomeItems.ToReadOnlyDictionary(
+                keyGenerator.GetKey, comparer
             );
 
             // Assert.
-            Assert.IsAssignableFrom<IDictionary<long, int>>(actualDictionary);
-            if (actualDictionary is IDictionary<long, int> dictionary)
+            // Fist check mock, than collections on equality.
+            // Otherwise, comparer will be called during equality check.
+            VerifyMethodsCallsForToReadOnlyDictionary(comparer, collectionWithSomeItems);
+            Assert.IsAssignableFrom<IDictionary<long, long>>(actualDictionary);
+            if (actualDictionary is IDictionary<long, long> dictionary)
             {
                 Assert.True(dictionary.IsReadOnly);
                 Assert.Throws<NotSupportedException>(() => dictionary.Add(default));
                 Assert.Throws<NotSupportedException>(() => dictionary.Add(default, default));
                 Assert.Throws<NotSupportedException>(() => dictionary.Clear());
                 Assert.Throws<NotSupportedException>(
-                    () => dictionary.Remove(default(KeyValuePair<long, int>))
+                    () => dictionary.Remove(default(KeyValuePair<long, long>))
                 );
                 Assert.Throws<NotSupportedException>(() => dictionary.Remove(default));
                 Assert.Throws<NotSupportedException>(() => dictionary[default] = default);
@@ -716,11 +751,40 @@ namespace Acolyte.Tests.Linq
             else
             {
                 string message =
-                    "Method 'ToReadOnlyDictionary' " +
+                     "Method 'ToReadOnlyDictionary' " +
                     $"returns collection with invalid type '{actualDictionary.GetType().Name}'. " +
-                    $"Return type should be inherit from '{nameof(IDictionary<long, int>)}'.";
+                    $"Return type should be inherit from '{nameof(IDictionary<long, long>)}'.";
                 CustomAssert.Fail(message);
             }
+        }
+
+        [Fact]
+        public void ToReadOnlyDictionary_WithKeySelectorAndComparer_ShouldUseEqualityComparerDuringEqualityCheck()
+        {
+            // Arrange.
+            const int count = 5;
+            IReadOnlyList<long> collectionWithSomeItems =
+                TestDataCreator.CreateRandomInt64List(count);
+            var keyGenerator = new IncrementalKeyGenerator<long>();
+            var comparer = MockEqualityComparer<long>.Default;
+            var expectedDictionary = collectionWithSomeItems.ToDictionary(
+                keyGenerator.GetKey, comparer
+            );
+
+            // Act.
+            keyGenerator.Reset();
+            var actualDictionary = collectionWithSomeItems.ToReadOnlyDictionary(
+                keyGenerator.GetKey, comparer
+            );
+
+            // Assert.
+            // Fist check mock, than collections on equality.
+            // Otherwise, comparer will be called during equality check.
+            VerifyMethodsCallsForToReadOnlyDictionary(comparer, collectionWithSomeItems);
+            Assert.NotNull(actualDictionary);
+            Assert.NotEmpty(actualDictionary);
+            Assert.Equal(expectedDictionary, actualDictionary);
+            comparer.VerifyEqualsCallsTwiceForEach(collectionWithSomeItems);
         }
 
         [Fact]
@@ -728,29 +792,30 @@ namespace Acolyte.Tests.Linq
         {
             // Arrange.
             const int count = 5;
-            IEnumerable<int> collectionWithRandomSize =
-                TestDataCreator.CreateRandomInt32List(count);
-            var keyGenerator = new IncrementalKeyGenerator<int>();
-            var expectedDictionary = collectionWithRandomSize.ToDictionary(
-                keyGenerator.GetKey, IdentityFunction<int>.Instance
+            IReadOnlyList<long> collectionWithSomeItems =
+                TestDataCreator.CreateRandomInt64List(count);
+            var keyGenerator = new IncrementalKeyGenerator<long>();
+            Func<long, long> elementSelector = IdentityFunction<long>.Instance;
+            var expectedDictionary = collectionWithSomeItems.ToDictionary(
+                keyGenerator.GetKey, elementSelector
             );
 
             // Act.
             keyGenerator.Reset();
-            var actualDictionary = collectionWithRandomSize.ToReadOnlyDictionary(
-                keyGenerator.GetKey, IdentityFunction<int>.Instance
+            var actualDictionary = collectionWithSomeItems.ToReadOnlyDictionary(
+                keyGenerator.GetKey, elementSelector
             );
 
             // Assert.
-            Assert.IsAssignableFrom<IDictionary<long, int>>(actualDictionary);
-            if (actualDictionary is IDictionary<long, int> dictionary)
+            Assert.IsAssignableFrom<IDictionary<long, long>>(actualDictionary);
+            if (actualDictionary is IDictionary<long, long> dictionary)
             {
                 Assert.True(dictionary.IsReadOnly);
                 Assert.Throws<NotSupportedException>(() => dictionary.Add(default));
                 Assert.Throws<NotSupportedException>(() => dictionary.Add(default, default));
                 Assert.Throws<NotSupportedException>(() => dictionary.Clear());
                 Assert.Throws<NotSupportedException>(
-                    () => dictionary.Remove(default(KeyValuePair<long, int>))
+                    () => dictionary.Remove(default(KeyValuePair<long, long>))
                 );
                 Assert.Throws<NotSupportedException>(() => dictionary.Remove(default));
                 Assert.Throws<NotSupportedException>(() => dictionary[default] = default);
@@ -758,9 +823,9 @@ namespace Acolyte.Tests.Linq
             else
             {
                 string message =
-                    "Method 'ToReadOnlyDictionary' " +
+                     "Method 'ToReadOnlyDictionary' " +
                     $"returns collection with invalid type '{actualDictionary.GetType().Name}'. " +
-                    $"Return type should be inherit from '{nameof(IDictionary<long, int>)}'.";
+                    $"Return type should be inherit from '{nameof(IDictionary<long, long>)}'.";
                 CustomAssert.Fail(message);
             }
         }
@@ -770,33 +835,35 @@ namespace Acolyte.Tests.Linq
         {
             // Arrange.
             const int count = 5;
-            IEnumerable<int> collectionWithRandomSize =
-                TestDataCreator.CreateRandomInt32List(count);
-            var keyGenerator = new IncrementalKeyGenerator<int>();
-            var expectedDictionary = collectionWithRandomSize.ToDictionary(
-                keyGenerator.GetKey,
-                IdentityFunction<int>.Instance,
-                EqualityComparer<long>.Default
+            IReadOnlyList<long> collectionWithSomeItems =
+                TestDataCreator.CreateRandomInt64List(count);
+            var keyGenerator = new IncrementalKeyGenerator<long>();
+            Func<long, long> elementSelector = IdentityFunction<long>.Instance;
+            var comparer = MockEqualityComparer<long>.Default;
+            var expectedDictionary = collectionWithSomeItems.ToDictionary(
+                keyGenerator.GetKey, elementSelector, comparer
             );
 
             // Act.
             keyGenerator.Reset();
-            var actualDictionary = collectionWithRandomSize.ToReadOnlyDictionary(
-                keyGenerator.GetKey,
-                IdentityFunction<int>.Instance,
-                EqualityComparer<long>.Default
+            var actualDictionary = collectionWithSomeItems.ToReadOnlyDictionary(
+                keyGenerator.GetKey, elementSelector, comparer
             );
 
             // Assert.
-            Assert.IsAssignableFrom<IDictionary<long, int>>(actualDictionary);
-            if (actualDictionary is IDictionary<long, int> dictionary)
+            // Fist check mock, than collections on equality.
+            // Otherwise, comparer will be called during equality check.
+            VerifyMethodsCallsForToReadOnlyDictionary(comparer, collectionWithSomeItems);
+            Assert.IsAssignableFrom<IDictionary<long, long>>(actualDictionary);
+            if (actualDictionary is IDictionary<long, long> dictionary)
             {
+                Assert.Equal(expectedDictionary, actualDictionary);
                 Assert.True(dictionary.IsReadOnly);
                 Assert.Throws<NotSupportedException>(() => dictionary.Add(default));
                 Assert.Throws<NotSupportedException>(() => dictionary.Add(default, default));
                 Assert.Throws<NotSupportedException>(() => dictionary.Clear());
                 Assert.Throws<NotSupportedException>(
-                    () => dictionary.Remove(default(KeyValuePair<long, int>))
+                    () => dictionary.Remove(default(KeyValuePair<long, long>))
                 );
                 Assert.Throws<NotSupportedException>(() => dictionary.Remove(default));
                 Assert.Throws<NotSupportedException>(() => dictionary[default] = default);
@@ -804,11 +871,52 @@ namespace Acolyte.Tests.Linq
             else
             {
                 string message =
-                    "Method 'ToReadOnlyDictionary' " +
+                     "Method 'ToReadOnlyDictionary' " +
                     $"returns collection with invalid type '{actualDictionary.GetType().Name}'. " +
-                    $"Return type should be inherit from '{nameof(IDictionary<long, int>)}'.";
+                    $"Return type should be inherit from '{nameof(IDictionary<long, long>)}'.";
                 CustomAssert.Fail(message);
             }
+        }
+
+        [Fact]
+        public void ToReadOnlyDictionary_WithKeyElementSelectorsAndComparer_ShouldUseEqualityComparerDuringEqualityCheck()
+        {
+            // Arrange.
+            const int count = 5;
+            IReadOnlyList<long> collectionWithSomeItems =
+                TestDataCreator.CreateRandomInt64List(count);
+            var keyGenerator = new IncrementalKeyGenerator<long>();
+            Func<long, long> elementSelector = IdentityFunction<long>.Instance;
+            var comparer = MockEqualityComparer<long>.Default;
+            var expectedDictionary = collectionWithSomeItems.ToDictionary(
+                keyGenerator.GetKey, elementSelector, comparer
+            );
+
+            // Act.
+            keyGenerator.Reset();
+            var actualDictionary = collectionWithSomeItems.ToReadOnlyDictionary(
+                keyGenerator.GetKey, elementSelector, comparer
+            );
+
+            // Assert.
+            // Fist check mock, than collections on equality.
+            // Otherwise, comparer will be called during equality check.
+            VerifyMethodsCallsForToReadOnlyDictionary(comparer, collectionWithSomeItems);
+            Assert.NotNull(actualDictionary);
+            Assert.NotEmpty(actualDictionary);
+            Assert.Equal(expectedDictionary, actualDictionary);
+            comparer.VerifyEqualsCallsTwiceForEach(collectionWithSomeItems);
+        }
+
+        #endregion
+
+        #region Private Methods
+
+        private static void VerifyMethodsCallsForToReadOnlyDictionary<T>(
+            MockEqualityComparer<T> comparer, IReadOnlyList<T> collection)
+        {
+            comparer.VerifyEqualsNoCalls();
+            comparer.VerifyGetHashCodeCallsTwiceForEach(collection);
         }
 
         #endregion
@@ -883,7 +991,8 @@ namespace Acolyte.Tests.Linq
         public void ToReadOnlyList_ForCollectionWithSomeItems_ShouldReturnFilledList(int count)
         {
             // Arrange.
-            IEnumerable<int> collectionWithSomeItems = TestDataCreator.CreateRandomInt32List(count);
+            IReadOnlyCollection<int> collectionWithSomeItems =
+                TestDataCreator.CreateRandomInt32List(count);
             var expectedList = collectionWithSomeItems.ToList();
 
             // Act.
@@ -904,7 +1013,7 @@ namespace Acolyte.Tests.Linq
         {
             // Arrange.
             int count = TestDataCreator.GetRandomCountNumber();
-            IEnumerable<int> collectionWithRandomSize =
+            IReadOnlyCollection<int> collectionWithRandomSize =
                 TestDataCreator.CreateRandomInt32List(count);
             var expectedList = collectionWithRandomSize.ToList();
 
@@ -933,7 +1042,7 @@ namespace Acolyte.Tests.Linq
         {
             // Arrange.
             const int count = 5;
-            IEnumerable<int> collectionWithRandomSize =
+            IReadOnlyCollection<int> collectionWithRandomSize =
                 TestDataCreator.CreateRandomInt32List(count);
             var expectedList = collectionWithRandomSize.ToList();
 
@@ -955,7 +1064,7 @@ namespace Acolyte.Tests.Linq
             else
             {
                 string message =
-                    "Method 'ToReadOnlyList' " +
+                     "Method 'ToReadOnlyList' " +
                     $"returns collection with invalid type '{actualList.GetType().Name}'. " +
                     $"Return type should be inherit from '{nameof(IList<int>)}'.";
                 CustomAssert.Fail(message);
@@ -1035,7 +1144,8 @@ namespace Acolyte.Tests.Linq
             int count)
         {
             // Arrange.
-            IEnumerable<int> collectionWithSomeItems = TestDataCreator.CreateRandomInt32List(count);
+            IReadOnlyCollection<int> collectionWithSomeItems =
+                TestDataCreator.CreateRandomInt32List(count);
             IReadOnlyCollection<int> expectedCollection = collectionWithSomeItems.ToList();
 
             // Act.
@@ -1056,7 +1166,7 @@ namespace Acolyte.Tests.Linq
         {
             // Arrange.
             int count = TestDataCreator.GetRandomCountNumber();
-            IEnumerable<int> collectionWithRandomSize =
+            IReadOnlyCollection<int> collectionWithRandomSize =
                 TestDataCreator.CreateRandomInt32List(count);
             IReadOnlyCollection<int> expectedCollection = collectionWithRandomSize.ToList();
 
@@ -1085,7 +1195,7 @@ namespace Acolyte.Tests.Linq
         {
             // Arrange.
             const int count = 5;
-            IEnumerable<int> collectionWithRandomSize =
+            IReadOnlyCollection<int> collectionWithRandomSize =
                 TestDataCreator.CreateRandomInt32List(count);
             IReadOnlyCollection<int> expectedCollection = collectionWithRandomSize.ToList();
 
@@ -1104,7 +1214,7 @@ namespace Acolyte.Tests.Linq
             else
             {
                 string message =
-                    "Method 'ToReadOnlyCollection' " +
+                     "Method 'ToReadOnlyCollection' " +
                     $"returns collection with invalid type '{actualCollection.GetType().Name}'. " +
                     $"Return type should be inherit from '{nameof(ICollection<int>)}'.";
                 CustomAssert.Fail(message);

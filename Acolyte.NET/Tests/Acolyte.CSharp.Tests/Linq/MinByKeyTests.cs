@@ -6,6 +6,7 @@ using Acolyte.Functions;
 using Acolyte.Linq;
 using Acolyte.Tests.Collections;
 using Acolyte.Tests.Creators;
+using Acolyte.Tests.Mocked;
 using Xunit;
 
 namespace Acolyte.Tests.Linq
@@ -23,10 +24,11 @@ namespace Acolyte.Tests.Linq
         {
             // Arrange.
             const IEnumerable<int>? nullValue = null;
+            Func<int, int> discardKeySelector = DiscardFunction<int>.Func;
 
             // Act & Assert.
             Assert.Throws<ArgumentNullException>(
-                "source", () => nullValue!.MinBy(DiscardFunction<int>.Func)
+                "source", () => nullValue!.MinBy(discardKeySelector)
             );
         }
 
@@ -35,9 +37,9 @@ namespace Acolyte.Tests.Linq
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
+            const Func<int, int>? keySelector = null;
 
             // Act & Assert.
-            const Func<int, int>? keySelector = null;
             Assert.Throws<ArgumentNullException>(
                 "keySelector", () => emptyCollection.MinBy(keySelector!)
             );
@@ -48,11 +50,14 @@ namespace Acolyte.Tests.Linq
         {
             // Arrange.
             const IEnumerable<int>? nullValue = null;
+            Func<int, int> discardKeySelector = DiscardFunction<int>.Func;
+            var keyComparer = MockComparer<int>.Default;
 
             // Act & Assert.
             Assert.Throws<ArgumentNullException>(
-                "source", () => nullValue!.MinBy(DiscardFunction<int>.Func, Comparer<int>.Default)
+                "source", () => nullValue!.MinBy(discardKeySelector, keyComparer)
             );
+            keyComparer.VerifyNoCalls();
         }
 
         [Fact]
@@ -60,12 +65,13 @@ namespace Acolyte.Tests.Linq
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
+            var keyComparer = MockComparer<int>.Default;
 
             // Act & Assert.
             Assert.Throws<ArgumentNullException>(
-                "keySelector",
-                () => emptyCollection.MinBy(keySelector: null!, Comparer<int>.Default)
+                "keySelector", () => emptyCollection.MinBy(keySelector: null!, keyComparer)
             );
+            keyComparer.VerifyNoCalls();
         }
 
         [Fact]
@@ -76,10 +82,10 @@ namespace Acolyte.Tests.Linq
             IReadOnlyList<int> collectionWithRandomSize =
                 TestDataCreator.CreateRandomInt32List(count);
             int expectedValue = collectionWithRandomSize.Min();
+            Func<int, int> keySelector = IdentityFunction<int>.Instance;
 
             // Act.
-            int actualValue =
-                collectionWithRandomSize.MinBy(IdentityFunction<int>.Instance, comparer: null);
+            int actualValue = collectionWithRandomSize.MinBy(keySelector, comparer: null);
 
             // Assert.
             Assert.Equal(expectedValue, actualValue);
@@ -94,12 +100,10 @@ namespace Acolyte.Tests.Linq
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
+            Func<int, int> keySelector = IdentityFunction<int>.Instance;
 
             // Act & Assert.
-            Assert.Throws(
-                Error.NoElements().GetType(),
-                () => emptyCollection.MinBy(IdentityFunction<int>.Instance)
-            );
+            Assert.Throws(Error.NoElements().GetType(), () => emptyCollection.MinBy(keySelector));
         }
 
         [Fact]
@@ -108,9 +112,10 @@ namespace Acolyte.Tests.Linq
             // Arrange.
             IEnumerable<int?> emptyCollection = Enumerable.Empty<int?>();
             int? expectedValue = null;
+            Func<int?, int?> keySelector = IdentityFunction<int?>.Instance;
 
             // Act.
-            int? actualValue = emptyCollection.MinBy(IdentityFunction<int?>.Instance);
+            int? actualValue = emptyCollection.MinBy(keySelector);
 
             // Assert.
             Assert.Equal(expectedValue, actualValue);
@@ -122,9 +127,10 @@ namespace Acolyte.Tests.Linq
             // Arrange.
             IEnumerable<string> emptyCollection = Enumerable.Empty<string>();
             const string? expectedValue = null;
+            Func<string, string> keySelector = IdentityFunction<string>.Instance;
 
             // Act.
-            string? actualValue = emptyCollection.MinBy(IdentityFunction<string>.Instance);
+            string? actualValue = emptyCollection.MinBy(keySelector);
 
             // Assert.
             Assert.Equal(expectedValue, actualValue);
@@ -135,12 +141,14 @@ namespace Acolyte.Tests.Linq
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
+            Func<int, int> keySelector = IdentityFunction<int>.Instance;
+            var keyComparer = MockComparer<int>.Default;
 
             // Act & Assert.
             Assert.Throws(
-                Error.NoElements().GetType(),
-                () => emptyCollection.MinBy(IdentityFunction<int>.Instance, Comparer<int>.Default)
+                Error.NoElements().GetType(), () => emptyCollection.MinBy(keySelector, keyComparer)
             );
+            keyComparer.VerifyNoCalls();
         }
 
         [Fact]
@@ -149,14 +157,15 @@ namespace Acolyte.Tests.Linq
             // Arrange.
             IEnumerable<int?> emptyCollection = Enumerable.Empty<int?>();
             int? expectedValue = null;
+            Func<int?, int?> keySelector = IdentityFunction<int?>.Instance;
+            var keyComparer = MockComparer<int?>.Default;
 
             // Act.
-            int? actualValue = emptyCollection.MinBy(
-                IdentityFunction<int?>.Instance, Comparer<int?>.Default
-            );
+            int? actualValue = emptyCollection.MinBy(keySelector, keyComparer);
 
             // Assert.
             Assert.Equal(expectedValue, actualValue);
+            keyComparer.VerifyNoCalls();
         }
 
         [Fact]
@@ -165,14 +174,15 @@ namespace Acolyte.Tests.Linq
             // Arrange.
             IEnumerable<string> emptyCollection = Enumerable.Empty<string>();
             const string? expectedValue = null;
+            Func<string, string> keySelector = IdentityFunction<string>.Instance;
+            var keyComparer = MockComparer<string>.Default;
 
             // Act.
-            string? actualValue = emptyCollection.MinBy(
-                IdentityFunction<string>.Instance, Comparer<string>.Default
-            );
+            string? actualValue = emptyCollection.MinBy(keySelector, keyComparer);
 
             // Assert.
             Assert.Equal(expectedValue, actualValue);
+            keyComparer.VerifyNoCalls();
         }
 
         #endregion
@@ -180,38 +190,40 @@ namespace Acolyte.Tests.Linq
         #region Predefined Values
 
         [Fact]
-        public void MinBy_WithComparer_ForPredefinedCollection_ShouldReturnProperMin()
+
+        public void MinBy_WithoutComparer_ForPredefinedCollection_ShouldReturnProperMin()
         {
             // Arrange.
             IReadOnlyList<int> predefinedCollection = new[] { 1, 2, 3 };
+            Func<int, int> keySelector = InverseFunction.ForInt32;
             // Min with selector returns transformed value. Need to transform it back.
-            int minValue = predefinedCollection.Min(InverseFunction.ForInt32);
-            int expectedValue = InverseFunction.ForInt32(minValue);
+            int minValue = predefinedCollection.Min(keySelector);
+            int expectedValue = keySelector(minValue);
 
             // Act.
-            int actualValue = predefinedCollection.MinBy(
-                InverseFunction.ForInt32, Comparer<int>.Default
-            );
+            int actualValue = predefinedCollection.MinBy(keySelector);
 
             // Assert.
             Assert.Equal(expectedValue, actualValue);
         }
 
         [Fact]
-
-        public void MinBy_WithoutComparer_ForPredefinedCollection_ShouldReturnProperMin()
+        public void MinBy_WithComparer_ForPredefinedCollection_ShouldReturnProperMin()
         {
             // Arrange.
             IReadOnlyList<int> predefinedCollection = new[] { 1, 2, 3 };
+            Func<int, int> keySelector = InverseFunction.ForInt32;
             // Min with selector returns transformed value. Need to transform it back.
-            int minValue = predefinedCollection.Min(InverseFunction.ForInt32);
-            int expectedValue = InverseFunction.ForInt32(minValue);
+            int minValue = predefinedCollection.Min(keySelector);
+            int expectedValue = keySelector(minValue);
+            var keyComparer = MockComparer<int>.Default;
 
             // Act.
-            int actualValue = predefinedCollection.MinBy(InverseFunction.ForInt32);
+            int actualValue = predefinedCollection.MinBy(keySelector, keyComparer);
 
             // Assert.
             Assert.Equal(expectedValue, actualValue);
+            VerifyCompareCallsForMin(keyComparer, predefinedCollection);
         }
 
         #endregion
@@ -229,13 +241,15 @@ namespace Acolyte.Tests.Linq
             int count)
         {
             // Arrange.
-            IEnumerable<int> collectionWithSomeItems = TestDataCreator.CreateRandomInt32List(count);
+            IReadOnlyList<int> collectionWithSomeItems =
+                TestDataCreator.CreateRandomInt32List(count);
+            Func<int, int> keySelector = InverseFunction.ForInt32;
             // Min with selector returns transformed value. Need to transform it back.
-            int minValue = collectionWithSomeItems.Min(InverseFunction.ForInt32);
-            int expectedValue = InverseFunction.ForInt32(minValue);
+            int minValue = collectionWithSomeItems.Min(keySelector);
+            int expectedValue = keySelector(minValue);
 
             // Act.
-            int actualValue = collectionWithSomeItems.MinBy(InverseFunction.ForInt32);
+            int actualValue = collectionWithSomeItems.MinBy(keySelector);
 
             // Assert.
             Assert.Equal(expectedValue, actualValue);
@@ -252,18 +266,20 @@ namespace Acolyte.Tests.Linq
             int count)
         {
             // Arrange.
-            IEnumerable<int> collectionWithSomeItems = TestDataCreator.CreateRandomInt32List(count);
+            IReadOnlyList<int> collectionWithSomeItems =
+                TestDataCreator.CreateRandomInt32List(count);
+            Func<int, int> keySelector = InverseFunction.ForInt32;
             // Min with selector returns transformed value. Need to transform it back.
-            int minValue = collectionWithSomeItems.Min(InverseFunction.ForInt32);
-            int expectedValue = InverseFunction.ForInt32(minValue);
+            int minValue = collectionWithSomeItems.Min(keySelector);
+            int expectedValue = keySelector(minValue);
+            var keyComparer = MockComparer<int>.Default;
 
             // Act.
-            int actualValue = collectionWithSomeItems.MinBy(
-                InverseFunction.ForInt32, Comparer<int>.Default
-            );
+            int actualValue = collectionWithSomeItems.MinBy(keySelector, keyComparer);
 
             // Assert.
             Assert.Equal(expectedValue, actualValue);
+            VerifyCompareCallsForMin(keyComparer, collectionWithSomeItems);
         }
 
         [Theory]
@@ -277,13 +293,14 @@ namespace Acolyte.Tests.Linq
             int count)
         {
             // Arrange.
-            IEnumerable<int> collectionWithTheSameItems = Enumerable
-                .Range(1, count)
-                .Select(_ => count);
+            IReadOnlyList<int> collectionWithTheSameItems = Enumerable
+                .Repeat(count, count)
+                .ToList();
             int expectedValue = count;
+            Func<int, int> keySelector = InverseFunction.ForInt32;
 
             // Act.
-            int actualValue = collectionWithTheSameItems.MinBy(InverseFunction.ForInt32);
+            int actualValue = collectionWithTheSameItems.MinBy(keySelector);
 
             // Assert.
             Assert.Equal(expectedValue, actualValue);
@@ -300,18 +317,19 @@ namespace Acolyte.Tests.Linq
             int count)
         {
             // Arrange.
-            IEnumerable<int> collectionWithTheSameItems = Enumerable
-                .Range(1, count)
-                .Select(_ => count);
+            IReadOnlyList<int> collectionWithTheSameItems = Enumerable
+               .Repeat(count, count)
+                .ToList();
             int expectedValue = count;
+            Func<int, int> keySelector = InverseFunction.ForInt32;
+            var keyComparer = MockComparer<int>.Default;
 
             // Act.
-            int actualValue = collectionWithTheSameItems.MinBy(
-                InverseFunction.ForInt32, Comparer<int>.Default
-            );
+            int actualValue = collectionWithTheSameItems.MinBy(keySelector, keyComparer);
 
             // Assert.
             Assert.Equal(expectedValue, actualValue);
+            VerifyCompareCallsForMin(keyComparer, collectionWithTheSameItems);
         }
 
         #endregion
@@ -323,14 +341,15 @@ namespace Acolyte.Tests.Linq
         {
             // Arrange.
             int count = TestDataCreator.GetRandomPositiveCountNumber();
-            IEnumerable<int> collectionWithRandomSize =
+            IReadOnlyList<int> collectionWithRandomSize =
                 TestDataCreator.CreateRandomInt32List(count);
+            Func<int, int> keySelector = InverseFunction.ForInt32;
             // Min with selector returns transformed value. Need to transform it back.
-            int minValue = collectionWithRandomSize.Min(InverseFunction.ForInt32);
-            int expectedValue = InverseFunction.ForInt32(minValue);
+            int minValue = collectionWithRandomSize.Min(keySelector);
+            int expectedValue = keySelector(minValue);
 
             // Act.
-            int actualValue = collectionWithRandomSize.MinBy(InverseFunction.ForInt32);
+            int actualValue = collectionWithRandomSize.MinBy(keySelector);
 
             // Assert.
             Assert.Equal(expectedValue, actualValue);
@@ -341,19 +360,20 @@ namespace Acolyte.Tests.Linq
         {
             // Arrange.
             int count = TestDataCreator.GetRandomPositiveCountNumber();
-            IEnumerable<int> collectionWithRandomSize =
+            IReadOnlyList<int> collectionWithRandomSize =
                 TestDataCreator.CreateRandomInt32List(count);
+            Func<int, int> keySelector = InverseFunction.ForInt32;
             // Min with selector returns transformed value. Need to transform it back.
-            int minValue = collectionWithRandomSize.Min(InverseFunction.ForInt32);
-            int expectedValue = InverseFunction.ForInt32(minValue);
+            int minValue = collectionWithRandomSize.Min(keySelector);
+            int expectedValue = keySelector(minValue);
+            var keyComparer = MockComparer<int>.Default;
 
             // Act.
-            int actualValue = collectionWithRandomSize.MinBy(
-                InverseFunction.ForInt32, Comparer<int>.Default
-            );
+            int actualValue = collectionWithRandomSize.MinBy(keySelector, keyComparer);
 
             // Assert.
             Assert.Equal(expectedValue, actualValue);
+            VerifyCompareCallsForMin(keyComparer, collectionWithRandomSize);
         }
 
         #endregion
@@ -366,12 +386,13 @@ namespace Acolyte.Tests.Linq
             // Arrange.
             IReadOnlyList<int> collection = new[] { 1, 2, 3, 4 };
             var explosive = ExplosiveEnumerable.CreateNotExplosive(collection);
+            Func<int, int> keySelector = InverseFunction.ForInt32;
             // Min with selector returns transformed value. Need to transform it back.
-            int minValue = explosive.Min(InverseFunction.ForInt32);
-            int expectedValue = InverseFunction.ForInt32(minValue);
+            int minValue = explosive.Min(keySelector);
+            int expectedValue = keySelector(minValue);
 
             // Act.
-            int actualValue = explosive.MinBy(InverseFunction.ForInt32);
+            int actualValue = explosive.MinBy(keySelector);
 
             // Assert.
             CustomAssert.True(explosive.VerifyTwiceEnumerateWholeCollection(collection));
@@ -384,16 +405,29 @@ namespace Acolyte.Tests.Linq
             // Arrange.
             IReadOnlyList<int> collection = new[] { 1, 2, 3, 4 };
             var explosive = ExplosiveEnumerable.CreateNotExplosive(collection);
+            Func<int, int> keySelector = InverseFunction.ForInt32;
             // Min with selector returns transformed value. Need to transform it back.
-            int minValue = explosive.Min(InverseFunction.ForInt32);
-            int expectedValue = InverseFunction.ForInt32(minValue);
+            int minValue = explosive.Min(keySelector);
+            int expectedValue = keySelector(minValue);
+            var keyComparer = MockComparer<int>.Default;
 
             // Act.
-            int actualValue = explosive.MinBy(InverseFunction.ForInt32, Comparer<int>.Default);
+            int actualValue = explosive.MinBy(keySelector, keyComparer);
 
             // Assert.
             CustomAssert.True(explosive.VerifyTwiceEnumerateWholeCollection(collection));
             Assert.Equal(expectedValue, actualValue);
+            VerifyCompareCallsForMin(keyComparer, collection);
+        }
+
+        #endregion
+
+        #region Private Methods
+
+        private static void VerifyCompareCallsForMin<T>(MockComparer<T> comparer,
+            IReadOnlyList<T> collection)
+        {
+            comparer.VerifyCompareCalls(times: collection.Count - 1);
         }
 
         #endregion

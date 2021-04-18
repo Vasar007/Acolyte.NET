@@ -5,6 +5,7 @@ using Acolyte.Common;
 using Acolyte.Linq;
 using Acolyte.Tests.Collections;
 using Acolyte.Tests.Creators;
+using Acolyte.Tests.Mocked;
 using Xunit;
 
 namespace Acolyte.Tests.Linq
@@ -22,11 +23,11 @@ namespace Acolyte.Tests.Linq
         {
             // Arrange.
             const IEnumerable<int>? nullValue = null;
+            var comparer = MockComparer<int>.Default;
 
             // Act & Assert.
-            Assert.Throws<ArgumentNullException>(
-                "source", () => nullValue!.Max(Comparer<int>.Default)
-            );
+            Assert.Throws<ArgumentNullException>("source", () => nullValue!.Max(comparer));
+            comparer.VerifyNoCalls();
         }
 
         [Fact]
@@ -34,7 +35,7 @@ namespace Acolyte.Tests.Linq
         {
             // Arrange.
             int count = TestDataCreator.GetRandomPositiveCountNumber();
-            IEnumerable<int> collectionWithRandomSize =
+            IReadOnlyList<int> collectionWithRandomSize =
                 TestDataCreator.CreateRandomInt32List(count);
             int expectedValue = collectionWithRandomSize.Max();
 
@@ -54,11 +55,11 @@ namespace Acolyte.Tests.Linq
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
+            var comparer = MockComparer<int>.Default;
 
             // Act & Assert.
-            Assert.Throws(
-                Error.NoElements().GetType(), () => emptyCollection.Max(Comparer<int>.Default)
-            );
+            Assert.Throws(Error.NoElements().GetType(), () => emptyCollection.Max(comparer));
+            comparer.VerifyNoCalls();
         }
 
         [Fact]
@@ -67,12 +68,14 @@ namespace Acolyte.Tests.Linq
             // Arrange.
             IEnumerable<int?> emptyCollection = Enumerable.Empty<int?>();
             int? expectedValue = null;
+            var comparer = MockComparer<int?>.Default;
 
             // Act.
-            int? actualValue = emptyCollection.Max(Comparer<int?>.Default);
+            int? actualValue = emptyCollection.Max(comparer);
 
             // Assert.
             Assert.Equal(expectedValue, actualValue);
+            comparer.VerifyNoCalls();
         }
 
         [Fact]
@@ -81,12 +84,14 @@ namespace Acolyte.Tests.Linq
             // Arrange.
             IEnumerable<string> emptyCollection = Enumerable.Empty<string>();
             const string? expectedValue = null;
+            var comparer = MockComparer<string>.Default;
 
             // Act.
-            string? actualValue = emptyCollection.Max(Comparer<string>.Default);
+            string? actualValue = emptyCollection.Max(comparer);
 
             // Assert.
             Assert.Equal(expectedValue, actualValue);
+            comparer.VerifyNoCalls();
         }
 
         #endregion
@@ -99,12 +104,14 @@ namespace Acolyte.Tests.Linq
             // Arrange.
             IReadOnlyList<int> predefinedCollection = new[] { 1, 2, 3 };
             int expectedValue = predefinedCollection[^1];
+            var comparer = MockComparer.SetupDefaultFor(predefinedCollection);
 
             // Act.
-            int actualValue = predefinedCollection.Max(Comparer<int>.Default);
+            int actualValue = predefinedCollection.Max(comparer);
 
             // Assert.
             Assert.Equal(expectedValue, actualValue);
+            VerifyCompareCallsForMax(comparer, predefinedCollection);
         }
 
         #endregion
@@ -121,14 +128,17 @@ namespace Acolyte.Tests.Linq
         public void Max_WithComparer_ForCollectionWithSomeItems_ShouldReturnMax(int count)
         {
             // Arrange.
-            IEnumerable<int> collectionWithSomeItems = TestDataCreator.CreateRandomInt32List(count);
+            IReadOnlyList<int> collectionWithSomeItems =
+                TestDataCreator.CreateRandomInt32List(count);
             int expectedValue = collectionWithSomeItems.Max();
+            var comparer = MockComparer.SetupDefaultFor(collectionWithSomeItems);
 
             // Act.
-            int actualValue = collectionWithSomeItems.Max(Comparer<int>.Default);
+            int actualValue = collectionWithSomeItems.Max(comparer);
 
             // Assert.
             Assert.Equal(expectedValue, actualValue);
+            VerifyCompareCallsForMax(comparer, collectionWithSomeItems);
         }
 
         [Theory]
@@ -141,16 +151,18 @@ namespace Acolyte.Tests.Linq
         public void Max_WithComparer_ForCollectionWithTheSameItems_ShouldReturnThatItem(int count)
         {
             // Arrange.
-            IEnumerable<int> collectionWithTheSameItems = Enumerable
-                .Range(1, count)
-                .Select(_ => count);
+            IReadOnlyList<int> collectionWithTheSameItems = Enumerable
+                .Repeat(count, count)
+                .ToList();
             int expectedValue = count;
+            var comparer = MockComparer.SetupDefaultFor(collectionWithTheSameItems);
 
             // Act.
-            int actualValue = collectionWithTheSameItems.Max(Comparer<int>.Default);
+            int actualValue = collectionWithTheSameItems.Max(comparer);
 
             // Assert.
             Assert.Equal(expectedValue, actualValue);
+            VerifyCompareCallsForMax(comparer, collectionWithTheSameItems);
         }
 
         #endregion
@@ -162,15 +174,17 @@ namespace Acolyte.Tests.Linq
         {
             // Arrange.
             int count = TestDataCreator.GetRandomPositiveCountNumber();
-            IEnumerable<int> collectionWithRandomSize =
+            IReadOnlyList<int> collectionWithRandomSize =
                 TestDataCreator.CreateRandomInt32List(count);
             int expectedValue = collectionWithRandomSize.Max();
+            var comparer = MockComparer<int>.Default;
 
             // Act.
-            int actualValue = collectionWithRandomSize.Max(Comparer<int>.Default);
+            int actualValue = collectionWithRandomSize.Max(comparer);
 
             // Assert.
             Assert.Equal(expectedValue, actualValue);
+            VerifyCompareCallsForMax(comparer, collectionWithRandomSize);
         }
 
         #endregion
@@ -184,13 +198,25 @@ namespace Acolyte.Tests.Linq
             IReadOnlyList<int> collection = new[] { 4, 3, 2, 1 };
             var explosive = ExplosiveEnumerable.CreateNotExplosive(collection);
             int expectedValue = explosive.Max();
+            var comparer = MockComparer.SetupDefaultFor(collection);
 
             // Act.
-            int actualValue = explosive.Max(Comparer<int>.Default);
+            int actualValue = explosive.Max(comparer);
 
             // Assert.
             CustomAssert.True(explosive.VerifyTwiceEnumerateWholeCollection(collection));
             Assert.Equal(expectedValue, actualValue);
+            VerifyCompareCallsForMax(comparer, collection);
+        }
+
+        #endregion
+
+        #region Private Methods
+
+        private static void VerifyCompareCallsForMax<T>(MockComparer<T> comparer,
+            IReadOnlyList<T> collection)
+        {
+            comparer.VerifyCompareCalls(times: collection.Count - 1);
         }
 
         #endregion

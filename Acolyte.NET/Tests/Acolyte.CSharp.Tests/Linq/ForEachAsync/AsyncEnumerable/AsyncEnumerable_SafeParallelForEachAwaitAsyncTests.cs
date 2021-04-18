@@ -69,7 +69,6 @@ namespace Acolyte.Tests.Linq
             );
         }
 
-
 #endregion
 
 #region Empty Values

@@ -11,7 +11,7 @@ namespace Acolyte.Tests.Collections
     {
         private readonly IEnumerable<T> _originalEnumerable;
 
-        private readonly int _explosiveIndex;
+        public int ExplosiveIndex { get; }
 
         private readonly CounterInt32 _visitedItemsNumber;
         public int VisitedItemsNumber => _visitedItemsNumber.Value;
@@ -25,7 +25,7 @@ namespace Acolyte.Tests.Collections
             int explosiveIndex)
         {
             _originalEnumerable = originalEnumerable.ThrowIfNull(nameof(originalEnumerable));
-            _explosiveIndex = explosiveIndex.ThrowIfValueIsOutOfRange(
+            ExplosiveIndex = explosiveIndex.ThrowIfValueIsOutOfRange(
                 nameof(explosiveIndex), Constants.NotFoundIndex, int.MaxValue
             );
 
@@ -40,7 +40,7 @@ namespace Acolyte.Tests.Collections
             _getEnumeratorCounter.Increment();
             return ExplosiveEnumerator.Create(
                 _originalEnumerable.GetEnumerator(),
-                _explosiveIndex,
+                ExplosiveIndex,
                 _visitedItemsNumber.Reset()
             );
         }

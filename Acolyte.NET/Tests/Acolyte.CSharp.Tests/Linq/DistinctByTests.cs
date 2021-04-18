@@ -6,6 +6,7 @@ using Acolyte.Linq;
 using Acolyte.Ranges;
 using Acolyte.Tests.Collections;
 using Acolyte.Tests.Creators;
+using Acolyte.Tests.Mocked;
 using Xunit;
 
 namespace Acolyte.Tests.Linq
@@ -50,12 +51,13 @@ namespace Acolyte.Tests.Linq
             // Arrange.
             const IEnumerable<int>? nullValue = null;
             Func<int, bool> discardKeySelector = DiscardFunction<int, bool>.Func;
-            var keyComparer = EqualityComparer<bool>.Default;
+            var keyComparer = MockEqualityComparer<bool>.Default;
 
             // Act & Assert.
             Assert.Throws<ArgumentNullException>(
                 "source", () => nullValue!.DistinctBy(discardKeySelector, keyComparer).ToList()
             );
+            keyComparer.VerifyNoCalls();
         }
 
         [Fact]
@@ -64,12 +66,13 @@ namespace Acolyte.Tests.Linq
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
             const Func<int, bool>? keySelector = null;
-            var keyComparer = EqualityComparer<bool>.Default;
+            var keyComparer = MockEqualityComparer<bool>.Default;
 
             // Act & Assert.
             Assert.Throws<ArgumentNullException>(
                 "keySelector", () => emptyCollection.DistinctBy(keySelector!, keyComparer).ToList()
             );
+            keyComparer.VerifyNoCalls();
         }
 
         [Fact]
@@ -114,13 +117,14 @@ namespace Acolyte.Tests.Linq
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
             Func<int, bool> keySelector = item => NumberParityFunction.IsEven(item);
             var expectedResult = Enumerable.Empty<int>();
-            var keyComparer = EqualityComparer<bool>.Default;
+            var keyComparer = MockEqualityComparer<bool>.Default;
 
             // Act.
             var actualResult = emptyCollection.DistinctBy(keySelector, keyComparer);
 
             // Assert.
             Assert.Equal(expectedResult, actualResult);
+            keyComparer.VerifyNoCalls();
         }
 
         #endregion
@@ -152,7 +156,7 @@ namespace Acolyte.Tests.Linq
 
             var range = CreateRange();
             Func<int, long> keySelector = item => MapToValueInRange(item, range);
-            var keyComparer = EqualityComparer<long>.Default;
+            var keyComparer = MockEqualityComparer.SetupDefaultFor(range);
             var expectedResult = GetExpectedResult(predefinedCollection, keySelector, keyComparer);
 
             // Act.
@@ -160,6 +164,7 @@ namespace Acolyte.Tests.Linq
 
             // Assert.
             Assert.Equal(expectedResult, actualResult);
+            keyComparer.VerifyGetHashCodeCallsTwiceForEach(predefinedCollection);
         }
 
         #endregion
@@ -207,7 +212,7 @@ namespace Acolyte.Tests.Linq
 
             var range = CreateRange();
             Func<int, long> keySelector = item => MapToValueInRange(item, range);
-            var keyComparer = EqualityComparer<long>.Default;
+            var keyComparer = MockEqualityComparer.SetupDefaultFor(range);
             var expectedResult = GetExpectedResult(
                 collectionWithSomeItems, keySelector, keyComparer
             );
@@ -217,6 +222,7 @@ namespace Acolyte.Tests.Linq
 
             // Assert.
             Assert.Equal(expectedResult, actualResult);
+            keyComparer.VerifyGetHashCodeCallsTwiceForEach(collectionWithSomeItems);
         }
 
         #endregion
@@ -252,6 +258,7 @@ namespace Acolyte.Tests.Linq
 
             var range = CreateRange();
             Func<int, long> keySelector = item => MapToValueInRange(item, range);
+            // Use default comparer to avoid long running tests.
             var keyComparer = EqualityComparer<long>.Default;
             var expectedResult = GetExpectedResult(
                 collectionWithRandomSize, keySelector, keyComparer
@@ -292,9 +299,8 @@ namespace Acolyte.Tests.Linq
             IReadOnlyList<int> collection = new[] { 1, 2, 3, 4, 4 };
             var explosive = ExplosiveEnumerable.CreateNotExplosive(collection);
             Func<int, bool> keySelector = item => NumberParityFunction.IsEven(item);
-            var keyComparer = EqualityComparer<bool>.Default;
-            var expectedResult =
-                GetExpectedResult(explosive, keySelector, keyComparer).ToList();
+            var keyComparer = MockEqualityComparer<bool>.Default;
+            var expectedResult = GetExpectedResult(explosive, keySelector, keyComparer).ToList();
 
             // Act.
             var actualResult = explosive.DistinctBy(keySelector, keyComparer).ToList();
@@ -302,9 +308,12 @@ namespace Acolyte.Tests.Linq
             // Assert.
             CustomAssert.True(explosive.VerifyTwiceEnumerateWholeCollection(collection));
             Assert.Equal(expectedResult, actualResult);
+            keyComparer.VerifyGetHashCodeCallsTwiceForEach(collection);
         }
 
         #endregion
+
+        #region Private Methods
 
         private static IEnumerable<TSource> GetExpectedResult<TSource, TKey>(
             IEnumerable<TSource> source, Func<TSource, TKey> keySelector,
@@ -333,5 +342,7 @@ namespace Acolyte.Tests.Linq
 
             return range[sourceItem % range.Count];
         }
+
+        #endregion
     }
 }

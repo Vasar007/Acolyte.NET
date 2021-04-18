@@ -16,5 +16,12 @@ namespace Xunit
 
             Fail(value.ReasonString);
         }
+
+        public static void False(Reasonable<bool> value)
+        {
+            if (!value) return;
+
+            Fail(value.ReasonString);
+        }
     }
 }
