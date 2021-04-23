@@ -1505,7 +1505,7 @@ namespace Acolyte.Tests.Linq
         public void MinMax_WithSelector_GenericTypes_WithComparer_ForNullComparer_ShouldUseDefaultComparer()
         {
             // Arrange.
-            int count = TestDataCreator.GetRandomSmallCountNumber();
+            int count = TestDataCreator.GetRandomPositiveSmallCountNumber();
             IReadOnlyList<string> collectionWithRandomSize =
                 TestDataCreator.CreateRandomStringList(count);
             Func<string?, string?> selector = IdentityFunction<string?>.Instance;

@@ -5,6 +5,7 @@ using Acolyte.Assertions;
 using Acolyte.Common;
 using Acolyte.Data.Randomness;
 using Acolyte.Functions;
+using Acolyte.Tests.Objects;
 
 namespace Acolyte.Tests.Creators
 {
@@ -198,10 +199,7 @@ namespace Acolyte.Tests.Creators
         {
             random ??= RandomInstance;
 
-            int randomCount = GetRandomSmallCountNumber(random);
-            int length = randomCount == 0
-                ? 1
-                : randomCount;
+            int length = GetRandomPositiveSmallCountNumber(random);
 
             return CreateRandomString(length, random);
         }
@@ -414,6 +412,28 @@ namespace Acolyte.Tests.Creators
             random ??= RandomInstance;
 
             return CreateRandomDecimal(decimal.MinValue, decimal.MaxValue, random);
+        }
+
+        #endregion
+
+        #region Create Dummy Objects
+
+        public static DummyStruct CreateRandomDummyStruct(Random? random = null)
+        {
+            random ??= RandomInstance;
+
+            int value = CreateRandomInt32(random);
+
+            return new DummyStruct(value);
+        }
+
+        public static DummyClass CreateRandomDummyClass(Random? random = null)
+        {
+            random ??= RandomInstance;
+
+            int value = CreateRandomInt32(random);
+
+            return new DummyClass(value);
         }
 
         #endregion
@@ -789,6 +809,54 @@ namespace Acolyte.Tests.Creators
             return CreateRandomNullableDecimalList(
                 count: count,
                 valueTransformer: d => NumberParityFunction.ReturnNullIfRandomInt32IsOdd(d),
+                random: random
+            );
+        }
+
+        #endregion
+
+        #region Create Dummy Objects List
+
+        public static IReadOnlyList<DummyStruct> CreateRandomDummyStructList(int count,
+            Random? random = null)
+        {
+            return CreateList(
+                count: count,
+                valueFactory: (i, rand) => CreateRandomDummyStruct(rand),
+                random: random
+            );
+        }
+
+        public static IReadOnlyList<DummyStruct> CreateRandomDummyStructList(Random? random = null)
+        {
+            random ??= RandomInstance;
+
+            int count = GetRandomCountNumber(random);
+            return CreateList(
+                count: count,
+                valueFactory: (i, rand) => CreateRandomDummyStruct(rand),
+                random: random
+            );
+        }
+
+        public static IReadOnlyList<DummyClass> CreateRandomDummyClassList(int count,
+          Random? random = null)
+        {
+            return CreateList(
+                count: count,
+                valueFactory: (i, rand) => CreateRandomDummyClass(rand),
+                random: random
+            );
+        }
+
+        public static IReadOnlyList<DummyClass> CreateRandomDummyClassList(Random? random = null)
+        {
+            random ??= RandomInstance;
+
+            int count = GetRandomCountNumber(random);
+            return CreateList(
+                count: count,
+                valueFactory: (i, rand) => CreateRandomDummyClass(rand),
                 random: random
             );
         }

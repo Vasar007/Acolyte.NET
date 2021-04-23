@@ -79,7 +79,7 @@ namespace Acolyte.Tests.Linq
         public void MinMaxBy_WithComparer_ForNullComparer_ShouldUseDefaultComparer()
         {
             // Arrange.
-            int count = TestDataCreator.GetRandomPositiveCountNumber();
+            int count = TestDataCreator.GetRandomPositiveSmallCountNumber();
             IReadOnlyList<int> collectionWithRandomSize =
                 TestDataCreator.CreateRandomInt32List(count);
             (int minValue, int maxValue) expectedValue =

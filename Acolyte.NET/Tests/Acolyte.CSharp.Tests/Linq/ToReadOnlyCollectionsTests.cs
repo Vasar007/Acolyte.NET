@@ -80,18 +80,21 @@ namespace Acolyte.Tests.Linq
         public void ToReadOnlyDictionary_WithKeySelectorAndComparer_ForNullComparer_ShouldUseDefaultComparer()
         {
             // Arrange.
-            IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
-            Func<int, Guid> keySelector = KeyFunction<int>.Simple;
-            var expectedDictionary = emptyCollection.ToDictionary(keySelector, comparer: null);
+            int count = TestDataCreator.GetRandomPositiveCountNumber();
+            IReadOnlyList<long> collectionWithRandomSize =
+                TestDataCreator.CreateRandomInt64List(count);
+            var keyGenerator = new IncrementalKeyGenerator<long>();
+            var expectedDictionary = collectionWithRandomSize.ToDictionary(
+                keyGenerator.GetKey, comparer: null
+            );
 
             // Act.
-            var actualDictionary = emptyCollection.ToReadOnlyDictionary(
-                keySelector, comparer: null
+            var actualDictionary = collectionWithRandomSize.ToReadOnlyDictionary(
+                keyGenerator.GetKey, comparer: null
             );
 
             // Assert.
             Assert.NotNull(actualDictionary);
-            Assert.Empty(actualDictionary);
             Assert.Equal(expectedDictionary, actualDictionary);
         }
 
@@ -201,21 +204,23 @@ namespace Acolyte.Tests.Linq
         public void ToReadOnlyDictionary_WithKeyElementSelectorsAndComparer_ForNullComparer_ShouldUseDefaultComparer()
         {
             // Arrange.
-            IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
-            Func<int, Guid> discardKeySelector = DiscardFunction<int, Guid>.Func;
-            Func<int, int> discardElementSelector = DiscardFunction<int, int>.Func;
-            var expectedDictionary = emptyCollection.ToDictionary(
-                discardKeySelector, discardElementSelector, comparer: null
+            int count = TestDataCreator.GetRandomPositiveCountNumber();
+            IReadOnlyList<long> collectionWithRandomSize =
+                TestDataCreator.CreateRandomInt64List(count);
+            var keyGenerator = new IncrementalKeyGenerator<long>();
+            Func<long, long> elementSelector = IdentityFunction<long>.Instance;
+            var expectedDictionary = collectionWithRandomSize.ToDictionary(
+                keyGenerator.GetKey, elementSelector, comparer: null
             );
 
             // Act.
-            var actualDictionary = emptyCollection.ToReadOnlyDictionary(
-                discardKeySelector, discardElementSelector, comparer: null
+            keyGenerator.Reset();
+            var actualDictionary = collectionWithRandomSize.ToReadOnlyDictionary(
+                keyGenerator.GetKey, elementSelector, comparer: null
             );
 
             // Assert.
             Assert.NotNull(actualDictionary);
-            Assert.Empty(actualDictionary);
             Assert.Equal(expectedDictionary, actualDictionary);
         }
 

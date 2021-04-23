@@ -1143,7 +1143,17 @@ namespace Acolyte.Tests.Linq
         #region Null Values
 
         [Fact]
-        public void MinMax_GenericTypes_ForNullValue_ShouldFail()
+        public void MinMax_GenericTypes_ForNullValue_ShouldFailForValueTypes()
+        {
+            // Arrange.
+            const IEnumerable<DummyStruct>? nullValue = null;
+
+            // Act & Assert.
+            Assert.Throws<ArgumentNullException>("source", () => nullValue!.MinMax());
+        }
+
+        [Fact]
+        public void MinMax_GenericTypes_ForNullValue_ShouldFailForReferenceTypes()
         {
             // Arrange.
             const IEnumerable<DummyClass>? nullValue = null;
@@ -1153,7 +1163,19 @@ namespace Acolyte.Tests.Linq
         }
 
         [Fact]
-        public void MinMax_GenericTypes_WithComparer_ForNullValue_ShouldFail()
+        public void MinMax_GenericTypes_WithComparer_ForNullValue_ShouldFailForValueTypes()
+        {
+            // Arrange.
+            const IEnumerable<DummyStruct>? nullValue = null;
+            var comparer = MockComparer<DummyStruct>.Default;
+
+            // Act & Assert.
+            Assert.Throws<ArgumentNullException>("source", () => nullValue!.MinMax(comparer));
+            comparer.VerifyNoCalls();
+        }
+
+        [Fact]
+        public void MinMax_GenericTypes_WithComparer_ForNullValue_ShouldFailForReferenceTypes()
         {
             // Arrange.
             const IEnumerable<DummyClass>? nullValue = null;
@@ -1165,10 +1187,27 @@ namespace Acolyte.Tests.Linq
         }
 
         [Fact]
-        public void MinMax_GenericTypes_WithComparer_ForNullComparer_ShouldUseDefaultComparer()
+        public void MinMax_GenericTypes_WithComparer_ForNullComparer_ShouldUseDefaultComparerForValueTypes()
         {
             // Arrange.
-            int count = TestDataCreator.GetRandomSmallCountNumber();
+            int count = TestDataCreator.GetRandomPositiveSmallCountNumber();
+            IReadOnlyList<DummyStruct> collectionWithRandomSize =
+                TestDataCreator.CreateRandomDummyStructList(count);
+            (DummyStruct minValue, DummyStruct maxValue) expectedValue =
+                (collectionWithRandomSize.Min(), collectionWithRandomSize.Max());
+
+            // Act.
+            var actualValue = collectionWithRandomSize.MinMax(comparer: null);
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Fact]
+        public void MinMax_GenericTypes_WithComparer_ForNullComparer_ShouldUseDefaultComparerForReferenceTypes()
+        {
+            // Arrange.
+            int count = TestDataCreator.GetRandomPositiveSmallCountNumber();
             IReadOnlyList<string> collectionWithRandomSize =
                 TestDataCreator.CreateRandomStringList(count);
             (string? minValue, string? maxValue) expectedValue =
@@ -1272,11 +1311,11 @@ namespace Acolyte.Tests.Linq
         #region Predefined Values
 
         [Fact]
-        public void MinMax_GenericTypes_ForPredefinedCollection_ShouldReturnMinMax()
+        public void MinMax_GenericTypes_ForPredefinedCollection_ShouldReturnMinMaxForValueTypes()
         {
             // Arrange.
-            IReadOnlyList<string> predefinedCollection = new[] { "aaa", "bbb", "ccc" };
-            (string minValue, string maxValue) expectedValue =
+            IReadOnlyList<DummyStruct> predefinedCollection = DummyStruct.DefaultList;
+            (DummyStruct minValue, DummyStruct maxValue) expectedValue =
                 (predefinedCollection[0], predefinedCollection[^1]);
 
             // Act.
@@ -1287,12 +1326,49 @@ namespace Acolyte.Tests.Linq
         }
 
         [Fact]
-        public void MinMax_GenericTypes_WithComparer_ForPredefinedCollection_ShouldReturnMinMax()
+        public void MinMax_GenericTypes_ForPredefinedCollection_ShouldReturnMinMaxForReferenceTypes()
         {
             // Arrange.
-            IReadOnlyList<string?> predefinedCollection =
-                new[] { null, "aaa", null, "bbb", null, "ccc" };
-            (string? minValue, string? maxValue) expectedValue =
+            IReadOnlyList<DummyClass> predefinedCollection = DummyClass.DefaultList;
+            (DummyClass minValue, DummyClass maxValue) expectedValue =
+                (predefinedCollection[0], predefinedCollection[^1]);
+
+            // Act.
+            var actualValue = predefinedCollection.MinMax();
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Fact]
+        public void MinMax_GenericTypes_WithComparer_ForPredefinedCollection_ShouldReturnMinMaxForNullableValueTypes()
+        {
+            // Arrange.
+            IReadOnlyList<DummyStruct?> predefinedCollection = new DummyStruct?[]
+            {
+                 null, new DummyStruct(1), null, new DummyStruct(2), null, new DummyStruct(3)
+            };
+            (DummyStruct? minValue, DummyStruct? maxValue) expectedValue =
+                (predefinedCollection[1], predefinedCollection[^1]);
+            var comparer = MockComparer.SetupDefaultFor(predefinedCollection);
+
+            // Act.
+            var actualValue = predefinedCollection.MinMax(comparer);
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+            // "MinMax" method skips null value and do not call "Compare" method.
+            // Than we skip fist not null value.
+            comparer.VerifyCompareCalls(times: 2 * 2);
+        }
+
+        [Fact]
+        public void MinMax_GenericTypes_WithComparer_ForPredefinedCollection_ShouldReturnMinMaxForReferenceTypes()
+        {
+            // Arrange.
+            IReadOnlyList<DummyClass?> predefinedCollection =
+                new[] { null, new DummyClass(1), null, new DummyClass(2), null, new DummyClass(3) };
+            (DummyClass? minValue, DummyClass? maxValue) expectedValue =
                 (predefinedCollection[1], predefinedCollection[^1]);
             var comparer = MockComparer.SetupDefaultFor(predefinedCollection);
 
@@ -1317,13 +1393,13 @@ namespace Acolyte.Tests.Linq
         [InlineData(TestConstants._10)]
         [InlineData(TestConstants._100)]
         [InlineData(TestConstants._10_000)]
-        public void MinMax_GenericTypes_ForCollectionWithSomeItems_ShouldReturnMinMax(
+        public void MinMax_GenericTypes_ForCollectionWithSomeItems_ShouldReturnMinMaxForValueTypes(
             int count)
         {
             // Arrange.
-            IReadOnlyList<string> collectionWithSomeItems =
-                TestDataCreator.CreateRandomStringList(count);
-            (string? minValue, string? maxValue) expectedValue =
+            IReadOnlyList<DummyStruct> collectionWithSomeItems =
+                TestDataCreator.CreateRandomDummyStructList(count);
+            (DummyStruct minValue, DummyStruct maxValue) expectedValue =
                 (collectionWithSomeItems.Min(), collectionWithSomeItems.Max());
 
             // Act.
@@ -1340,13 +1416,61 @@ namespace Acolyte.Tests.Linq
         [InlineData(TestConstants._10)]
         [InlineData(TestConstants._100)]
         [InlineData(TestConstants._10_000)]
-        public void MinMax_GenericTypes_WithComparer_ForCollectionWithSomeItems_ShouldReturnMinMax(
+        public void MinMax_GenericTypes_ForCollectionWithSomeItems_ShouldReturnMinMaxForReferenceTypes(
             int count)
         {
             // Arrange.
-            IReadOnlyList<string> collectionWithSomeItems =
-                TestDataCreator.CreateRandomStringList(count);
-            (string? minValue, string? maxValue) expectedValue =
+            IReadOnlyList<DummyClass> collectionWithSomeItems =
+                TestDataCreator.CreateRandomDummyClassList(count);
+            (DummyClass? minValue, DummyClass? maxValue) expectedValue =
+                (collectionWithSomeItems.Min(), collectionWithSomeItems.Max());
+
+            // Act.
+            var actualValue = collectionWithSomeItems.MinMax();
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Theory]
+        [InlineData(TestConstants._1)]
+        [InlineData(TestConstants._2)]
+        [InlineData(TestConstants._5)]
+        [InlineData(TestConstants._10)]
+        [InlineData(TestConstants._100)]
+        [InlineData(TestConstants._10_000)]
+        public void MinMax_GenericTypes_WithComparer_ForCollectionWithSomeItems_ShouldReturnMinMaxForValueTypes(
+            int count)
+        {
+            // Arrange.
+            IReadOnlyList<DummyStruct> collectionWithSomeItems =
+                TestDataCreator.CreateRandomDummyStructList(count);
+            (DummyStruct minValue, DummyStruct maxValue) expectedValue =
+                (collectionWithSomeItems.Min(), collectionWithSomeItems.Max());
+            var comparer = MockComparer.SetupDefaultFor(collectionWithSomeItems);
+
+            // Act.
+            var actualValue = collectionWithSomeItems.MinMax(comparer);
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+            VerifyCompareCallsForMinMax(comparer, collectionWithSomeItems);
+        }
+
+        [Theory]
+        [InlineData(TestConstants._1)]
+        [InlineData(TestConstants._2)]
+        [InlineData(TestConstants._5)]
+        [InlineData(TestConstants._10)]
+        [InlineData(TestConstants._100)]
+        [InlineData(TestConstants._10_000)]
+        public void MinMax_GenericTypes_WithComparer_ForCollectionWithSomeItems_ShouldReturnMinMaxForReferenceTypes(
+            int count)
+        {
+            // Arrange.
+            IReadOnlyList<DummyClass> collectionWithSomeItems =
+                TestDataCreator.CreateRandomDummyClassList(count);
+            (DummyClass? minValue, DummyClass? maxValue) expectedValue =
                 (collectionWithSomeItems.Min(), collectionWithSomeItems.Max());
             var comparer = MockComparer.SetupDefaultFor(collectionWithSomeItems);
 
@@ -1363,13 +1487,13 @@ namespace Acolyte.Tests.Linq
         #region Random Values
 
         [Fact]
-        public void MinMax_GenericTypes_ForCollectionWithRandomSize_ShouldReturnMinMaxOrNullIfNoItems()
+        public void MinMax_GenericTypes_ForCollectionWithRandomSize_ShouldReturnMinMaxOrNullIfNoItemsForValueTypes()
         {
             // Arrange.
             int count = TestDataCreator.GetRandomSmallCountNumber();
-            IReadOnlyList<string> collectionWithRandomSize =
-                TestDataCreator.CreateRandomStringList(count);
-            (string? minValue, string? maxValue) expectedValue =
+            IReadOnlyList<DummyStruct> collectionWithRandomSize =
+                TestDataCreator.CreateRandomDummyStructList(count);
+            (DummyStruct minValue, DummyStruct maxValue) expectedValue =
                 (collectionWithRandomSize.Min(), collectionWithRandomSize.Max());
 
             // Act.
@@ -1380,15 +1504,51 @@ namespace Acolyte.Tests.Linq
         }
 
         [Fact]
-        public void MinMax_GenericTypes_WithComparer_ForCollectionWithRandomSize_ShouldReturnMinMaxOrNullIfNoItems()
+        public void MinMax_GenericTypes_ForCollectionWithRandomSize_ShouldReturnMinMaxOrNullIfNoItemsForReferenceTypes()
         {
             // Arrange.
             int count = TestDataCreator.GetRandomSmallCountNumber();
-            IReadOnlyList<string> collectionWithRandomSize =
-                TestDataCreator.CreateRandomStringList(count);
-            (string? minValue, string? maxValue) expectedValue =
+            IReadOnlyList<DummyClass> collectionWithRandomSize =
+                TestDataCreator.CreateRandomDummyClassList(count);
+            (DummyClass? minValue, DummyClass? maxValue) expectedValue =
                 (collectionWithRandomSize.Min(), collectionWithRandomSize.Max());
-            var comparer = MockComparer<string>.Default;
+
+            // Act.
+            var actualValue = collectionWithRandomSize.MinMax();
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Fact]
+        public void MinMax_GenericTypes_WithComparer_ForCollectionWithRandomSize_ShouldReturnMinMaxOrNullIfNoItemsForValueTypes()
+        {
+            // Arrange.
+            int count = TestDataCreator.GetRandomSmallCountNumber();
+            IReadOnlyList<DummyStruct> collectionWithRandomSize =
+                TestDataCreator.CreateRandomDummyStructList(count);
+            (DummyStruct minValue, DummyStruct maxValue) expectedValue =
+                (collectionWithRandomSize.Min(), collectionWithRandomSize.Max());
+            var comparer = MockComparer<DummyStruct>.Default;
+
+            // Act.
+            var actualValue = collectionWithRandomSize.MinMax(comparer);
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+            VerifyCompareCallsForMinMax(comparer, collectionWithRandomSize);
+        }
+
+        [Fact]
+        public void MinMax_GenericTypes_WithComparer_ForCollectionWithRandomSize_ShouldReturnMinMaxOrNullIfNoItemsForReferenceTypes()
+        {
+            // Arrange.
+            int count = TestDataCreator.GetRandomSmallCountNumber();
+            IReadOnlyList<DummyClass> collectionWithRandomSize =
+                TestDataCreator.CreateRandomDummyClassList(count);
+            (DummyClass? minValue, DummyClass? maxValue) expectedValue =
+                (collectionWithRandomSize.Min(), collectionWithRandomSize.Max());
+            var comparer = MockComparer<DummyClass>.Default;
 
             // Act.
             var actualValue = collectionWithRandomSize.MinMax(comparer);
@@ -1403,12 +1563,13 @@ namespace Acolyte.Tests.Linq
         #region Extended Logical Coverage
 
         [Fact]
-        public void MinMax_GenericTypes_ShouldLookWholeCollectionToFindValues()
+        public void MinMax_GenericTypes_ShouldLookWholeCollectionToFindValuesForValueTypes()
         {
             // Arrange.
-            IReadOnlyList<string> collection = new[] { "1", "2", "3", "4" };
+            IReadOnlyList<DummyStruct> collection = DummyStruct.DefaultList;
             var explosive = ExplosiveEnumerable.CreateNotExplosive(collection);
-            (string? minValue, string? maxValue) expectedValue = (explosive.Min(), explosive.Max());
+            (DummyStruct minValue, DummyStruct maxValue) expectedValue =
+                (explosive.Min(), explosive.Max());
 
             // Act.
             var actualValue = explosive.MinMax();
@@ -1419,13 +1580,50 @@ namespace Acolyte.Tests.Linq
         }
 
         [Fact]
-        public void MinMax_GenericTypes_WithComparer_ShouldLookWholeCollectionToFindValues()
+        public void MinMax_GenericTypes_ShouldLookWholeCollectionToFindValuesForReferenceTypes()
         {
             // Arrange.
-            IReadOnlyList<string> collection = new[] { "1", "2", "3", "4" };
+            IReadOnlyList<DummyClass> collection = DummyClass.DefaultList;
             var explosive = ExplosiveEnumerable.CreateNotExplosive(collection);
-            (string? minValue, string? maxValue) expectedValue = (explosive.Min(), explosive.Max());
-            var comparer = MockComparer.SetupDefaultFor<string?>(collection);
+            (DummyClass? minValue, DummyClass? maxValue) expectedValue =
+                (explosive.Min(), explosive.Max());
+
+            // Act.
+            var actualValue = explosive.MinMax();
+
+            // Assert.
+            CustomAssert.True(explosive.VerifyThriceEnumerateWholeCollection(collection));
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Fact]
+        public void MinMax_GenericTypes_WithComparer_ShouldLookWholeCollectionToFindValuesForValueTypes()
+        {
+            // Arrange.
+            IReadOnlyList<DummyStruct> collection = DummyStruct.DefaultList;
+            var explosive = ExplosiveEnumerable.CreateNotExplosive(collection);
+            (DummyStruct minValue, DummyStruct maxValue) expectedValue =
+                (explosive.Min(), explosive.Max());
+            var comparer = MockComparer.SetupDefaultFor(collection);
+
+            // Act.
+            var actualValue = explosive.MinMax(comparer);
+
+            // Assert.
+            CustomAssert.True(explosive.VerifyThriceEnumerateWholeCollection(collection));
+            Assert.Equal(expectedValue, actualValue);
+            VerifyCompareCallsForMinMax(comparer, collection);
+        }
+
+        [Fact]
+        public void MinMax_GenericTypes_WithComparer_ShouldLookWholeCollectionToFindValuesForReferenceTypes()
+        {
+            // Arrange.
+            IReadOnlyList<DummyClass> collection = DummyClass.DefaultList;
+            var explosive = ExplosiveEnumerable.CreateNotExplosive(collection);
+            (DummyClass? minValue, DummyClass? maxValue) expectedValue =
+                (explosive.Min(), explosive.Max());
+            var comparer = MockComparer.SetupDefaultFor<DummyClass?>(collection);
 
             // Act.
             // Do not know why compiler decides that "explosive" should have "string?"

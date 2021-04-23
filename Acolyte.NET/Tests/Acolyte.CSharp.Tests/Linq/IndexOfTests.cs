@@ -72,7 +72,7 @@ namespace Acolyte.Tests.Linq
         public void IndexOf_ItemWithComparer_ForNullComparer_ShouldUseDefaultComparer()
         {
             // Arrange.
-            int count = TestDataCreator.GetRandomPositiveCountNumber();
+            int count = TestDataCreator.GetRandomPositiveSmallCountNumber();
             IReadOnlyList<int> collectionWithRandomSize =
                 TestDataCreator.CreateRandomInt32List(count);
             (int randomItem, int expectedIndex) =

@@ -79,12 +79,14 @@ namespace Acolyte.Tests.Linq
         public void DistinctBy_WithComparer_ForNullComparer_ShouldUseDefaultComparer()
         {
             // Arrange.
-            IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
-            Func<int, bool> discardKeySelector = DiscardFunction<int, bool>.Func;
-            var expectedResult = Enumerable.Empty<int>();
+            int count = TestDataCreator.GetRandomPositiveSmallCountNumber();
+            IReadOnlyList<int> collectionWithRandomSize =
+                TestDataCreator.CreateRandomInt32List(count);
+            Func<int, bool> keySelector = item => NumberParityFunction.IsEven(item);
+            var expectedResult = GetExpectedResult(collectionWithRandomSize, keySelector);
 
             // Act.
-            var actualResult = emptyCollection.DistinctBy(discardKeySelector, keyComparer: null);
+            var actualResult = collectionWithRandomSize.DistinctBy(keySelector, keyComparer: null);
 
             // Assert.
             Assert.NotNull(actualResult);
