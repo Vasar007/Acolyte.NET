@@ -1,0 +1,15 @@
+<Project>
+  <PropertyGroup>
+    <CoverletCollectorPackageVersion>3.0.3</CoverletCollectorPackageVersion>
+    <IndexRangePackageVersion>1.0.0</IndexRangePackageVersion>
+    <IsExternalInitPackageVersion>1.0.0</IsExternalInitPackageVersion>
+    <FSharpCorePackageVersion>5.0.1</FSharpCorePackageVersion>
+    <MicrosoftBclHashCodePackageVersion>1.1.1</MicrosoftBclHashCodePackageVersion>
+    <MicrosoftNETTestSdkPackageVersion>16.9.4</MicrosoftNETTestSdkPackageVersion>
+    <MoqPackageVersion>4.16.1</MoqPackageVersion>
+    <SystemLinqAsyncPackageVersion>5.0.0</SystemLinqAsyncPackageVersion>
+    <UnquotePackageVersion>5.0.0</UnquotePackageVersion>
+    <XunitPackageVersion>2.4.1</XunitPackageVersion>
+    <XunitRunnerVisualStudioPackageVersion>2.4.3</XunitRunnerVisualStudioPackageVersion>
+  </PropertyGroup>
+</Project>

@@ -37,12 +37,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Moq" Version="4.16.1" />
-    <PackageReference Include="IndexRange" Version="1.0.0" />
-    <PackageReference Include="IsExternalInit" Version="1.0.0">
+    <PackageReference Include="IndexRange" Version="$(IndexRangePackageVersion)" />
+    <PackageReference Include="IsExternalInit" Version="$(IsExternalInitPackageVersion)">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Moq" Version="$(MoqPackageVersion)" />
   </ItemGroup>
 
   <ItemGroup>
