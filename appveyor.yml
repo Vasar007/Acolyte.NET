@@ -55,7 +55,7 @@ after_test:
   # F# tests does not execute at all.
   - ps: dotnet test --configuration $env:configuration --no-build "Tests/Acolyte.FSharp.Tests/Acolyte.FSharp.Tests.fsproj"
   # Check code style.
-  - ps: dotnet format --check "Acolyte.NET.sln"
+  - ps: dotnet format "Acolyte.NET.sln" --fix-whitespace --fix-style warn --check
 
   # Upload all NuGet packages to release assets.
 artifacts:

@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Acolyte.Functions;
-using Acolyte.Linq;
-using Xunit;
-
-namespace Acolyte.Tests.Linq
+﻿namespace Acolyte.Tests.Linq
 {
     public sealed class AsyncEnumerable_ParallelForEachAwaitWithCancellationAsyncTests
     {
