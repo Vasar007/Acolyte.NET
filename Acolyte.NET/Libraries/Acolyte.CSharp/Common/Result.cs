@@ -97,15 +97,16 @@ namespace Acolyte.Common
         /// <param name="right">Right hand side object to compare.</param>
         /// <returns>
         /// <see langword="true" /> if values are memberwise equals,
-        /// <see langword="false" /> otherwise
-        /// .</returns>
+        /// <see langword="false" /> otherwise.
+        /// </returns>
         public static bool operator ==(Result<TOk, TError> left, Result<TOk, TError> right)
         {
             return left.Equals(right);
         }
 
         /// <summary>
-        /// Determines whether two specified instances of <see cref="Option{T}" /> are not equal.
+        /// Determines whether two specified instances of <see cref="Result{TValue, TError}" /> are
+        /// not equal.
         /// </summary>
         /// <param name="left">Left hand side object to compare.</param>
         /// <param name="right">Right hand side object to compare.</param>
