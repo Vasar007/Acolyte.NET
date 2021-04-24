@@ -1493,14 +1493,25 @@ namespace Acolyte.Tests.Linq
             int count = TestDataCreator.GetRandomSmallCountNumber();
             IReadOnlyList<DummyStruct> collectionWithRandomSize =
                 TestDataCreator.CreateRandomDummyStructList(count);
-            (DummyStruct minValue, DummyStruct maxValue) expectedValue =
-                (collectionWithRandomSize.Min(), collectionWithRandomSize.Max());
 
-            // Act.
-            var actualValue = collectionWithRandomSize.MinMax();
+            if (collectionWithRandomSize.Count > 0)
+            {
+                (DummyStruct minValue, DummyStruct maxValue) expectedValue =
+                    (collectionWithRandomSize.Min(), collectionWithRandomSize.Max());
 
-            // Assert.
-            Assert.Equal(expectedValue, actualValue);
+                // Act.
+                var actualValue = collectionWithRandomSize.MinMax();
+
+                // Assert.
+                Assert.Equal(expectedValue, actualValue);
+            }
+            else
+            {
+                // Act & Assert.
+                Assert.Throws(
+                    Error.NoElements().GetType(), () => collectionWithRandomSize.MinMax()
+                );
+            }
         }
 
         [Fact]
@@ -1527,16 +1538,28 @@ namespace Acolyte.Tests.Linq
             int count = TestDataCreator.GetRandomSmallCountNumber();
             IReadOnlyList<DummyStruct> collectionWithRandomSize =
                 TestDataCreator.CreateRandomDummyStructList(count);
-            (DummyStruct minValue, DummyStruct maxValue) expectedValue =
-                (collectionWithRandomSize.Min(), collectionWithRandomSize.Max());
             var comparer = MockComparer<DummyStruct>.Default;
 
-            // Act.
-            var actualValue = collectionWithRandomSize.MinMax(comparer);
+            if (collectionWithRandomSize.Count > 0)
+            {
+                (DummyStruct minValue, DummyStruct maxValue) expectedValue =
+                    (collectionWithRandomSize.Min(), collectionWithRandomSize.Max());
 
-            // Assert.
-            Assert.Equal(expectedValue, actualValue);
-            VerifyCompareCallsForMinMax(comparer, collectionWithRandomSize);
+                // Act.
+                var actualValue = collectionWithRandomSize.MinMax(comparer);
+
+                // Assert.
+                Assert.Equal(expectedValue, actualValue);
+                VerifyCompareCallsForMinMax(comparer, collectionWithRandomSize);
+            }
+            else
+            {
+                // Act & Assert.
+                Assert.Throws(
+                    Error.NoElements().GetType(), () => collectionWithRandomSize.MinMax(comparer)
+                );
+                comparer.VerifyNoCalls();
+            }
         }
 
         [Fact]
