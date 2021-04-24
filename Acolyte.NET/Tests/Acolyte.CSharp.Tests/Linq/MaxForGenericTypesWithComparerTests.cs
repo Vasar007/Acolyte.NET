@@ -6,6 +6,7 @@ using Acolyte.Linq;
 using Acolyte.Tests.Collections;
 using Acolyte.Tests.Creators;
 using Acolyte.Tests.Mocked;
+using Acolyte.Tests.Objects;
 using Xunit;
 
 namespace Acolyte.Tests.Linq
@@ -16,14 +17,16 @@ namespace Acolyte.Tests.Linq
         {
         }
 
+        // Using user-defined struct and class to test generic overload.
+
         #region Null Values
 
         [Fact]
-        public void Max_WithComparer_ForNullValue_ShouldFail()
+        public void Max_WithComparer_ForNullValue_ShouldFailForValueTypes()
         {
             // Arrange.
-            const IEnumerable<int>? nullValue = null;
-            var comparer = MockComparer<int>.Default;
+            const IEnumerable<DummyStruct>? nullValue = null;
+            var comparer = MockComparer<DummyStruct>.Default;
 
             // Act & Assert.
             Assert.Throws<ArgumentNullException>("source", () => nullValue!.Max(comparer));
@@ -31,16 +34,44 @@ namespace Acolyte.Tests.Linq
         }
 
         [Fact]
-        public void Max_WithComparer_ForNullComparer_ShouldUseDefaultComparer()
+        public void Max_WithComparer_ForNullValue_ShouldFailForReferenceTypes()
+        {
+            // Arrange.
+            const IEnumerable<DummyClass>? nullValue = null;
+            var comparer = MockComparer<DummyClass>.Default;
+
+            // Act & Assert.
+            Assert.Throws<ArgumentNullException>("source", () => nullValue!.Max(comparer));
+            comparer.VerifyNoCalls();
+        }
+
+        [Fact]
+        public void Max_WithComparer_ForNullComparer_ShouldUseDefaultComparerForValueTypes()
         {
             // Arrange.
             int count = TestDataCreator.GetRandomPositiveSmallCountNumber();
-            IReadOnlyList<int> collectionWithRandomSize =
-                TestDataCreator.CreateRandomInt32List(count);
-            int expectedValue = collectionWithRandomSize.Max();
+            IReadOnlyList<DummyStruct> collectionWithRandomSize =
+                TestDataCreator.CreateRandomDummyStructList(count);
+            DummyStruct expectedValue = collectionWithRandomSize.Max();
 
             // Act.
-            int actualValue = collectionWithRandomSize.Max(comparer: null);
+            DummyStruct actualValue = collectionWithRandomSize.Max(comparer: null);
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Fact]
+        public void Max_WithComparer_ForNullComparer_ShouldUseDefaultComparerForReferenceTypes()
+        {
+            // Arrange.
+            int count = TestDataCreator.GetRandomPositiveSmallCountNumber();
+            IReadOnlyList<DummyClass> collectionWithRandomSize =
+                TestDataCreator.CreateRandomDummyClassList(count);
+            DummyClass? expectedValue = collectionWithRandomSize.Max();
+
+            // Act.
+            DummyClass? actualValue = collectionWithRandomSize.Max(comparer: null);
 
             // Assert.
             Assert.Equal(expectedValue, actualValue);
@@ -54,8 +85,8 @@ namespace Acolyte.Tests.Linq
         public void Max_WithComparer_ForEmptyCollection_ShouldFailForValueTypes()
         {
             // Arrange.
-            IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
-            var comparer = MockComparer<int>.Default;
+            IEnumerable<DummyStruct> emptyCollection = Enumerable.Empty<DummyStruct>();
+            var comparer = MockComparer<DummyStruct>.Default;
 
             // Act & Assert.
             Assert.Throws(Error.NoElements().GetType(), () => emptyCollection.Max(comparer));
@@ -66,12 +97,12 @@ namespace Acolyte.Tests.Linq
         public void Max_WithComparer_ForEmptyCollection_ShouldReturnNullForNullableValueTypes()
         {
             // Arrange.
-            IEnumerable<int?> emptyCollection = Enumerable.Empty<int?>();
-            int? expectedValue = null;
-            var comparer = MockComparer<int?>.Default;
+            IEnumerable<DummyStruct?> emptyCollection = Enumerable.Empty<DummyStruct?>();
+            DummyStruct? expectedValue = null;
+            var comparer = MockComparer<DummyStruct?>.Default;
 
             // Act.
-            int? actualValue = emptyCollection.Max(comparer);
+            DummyStruct? actualValue = emptyCollection.Max(comparer);
 
             // Assert.
             Assert.Equal(expectedValue, actualValue);
@@ -82,12 +113,12 @@ namespace Acolyte.Tests.Linq
         public void Max_WithComparer_ForEmptyCollection_ShouldReturnNullForReferenceTypes()
         {
             // Arrange.
-            IEnumerable<string> emptyCollection = Enumerable.Empty<string>();
-            const string? expectedValue = null;
-            var comparer = MockComparer<string>.Default;
+            IEnumerable<DummyClass> emptyCollection = Enumerable.Empty<DummyClass>();
+            const DummyClass? expectedValue = null;
+            var comparer = MockComparer<DummyClass>.Default;
 
             // Act.
-            string? actualValue = emptyCollection.Max(comparer);
+            DummyClass? actualValue = emptyCollection.Max(comparer);
 
             // Assert.
             Assert.Equal(expectedValue, actualValue);
@@ -99,19 +130,75 @@ namespace Acolyte.Tests.Linq
         #region Predefined Values
 
         [Fact]
-        public void Max_WithComparer_ForPredefinedCollection_ShouldReturnMax()
+        public void Max_WithComparer_ForPredefinedCollection_ShouldReturnMaxForValueTypes()
         {
             // Arrange.
-            IReadOnlyList<int> predefinedCollection = new[] { 1, 2, 3 };
-            int expectedValue = predefinedCollection[^1];
+            IReadOnlyList<DummyStruct> predefinedCollection = DummyStruct.DefaultList;
+            DummyStruct expectedValue = predefinedCollection[^1];
             var comparer = MockComparer.SetupDefaultFor(predefinedCollection);
 
             // Act.
-            int actualValue = predefinedCollection.Max(comparer);
+            DummyStruct actualValue = predefinedCollection.Max(comparer);
 
             // Assert.
             Assert.Equal(expectedValue, actualValue);
             VerifyCompareCallsForMax(comparer, predefinedCollection);
+        }
+
+        [Fact]
+        public void Max_WithComparer_ForPredefinedCollection_ShouldReturnMaxForReferenceTypes()
+        {
+            // Arrange.
+            IReadOnlyList<DummyClass> predefinedCollection = DummyClass.DefaultList;
+            DummyClass expectedValue = predefinedCollection[^1];
+            var comparer = MockComparer.SetupDefaultFor(predefinedCollection);
+
+            // Act.
+            DummyClass? actualValue = predefinedCollection.Max(comparer);
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+            VerifyCompareCallsForMax(comparer, predefinedCollection);
+        }
+
+        [Fact]
+        public void Max_WithComparer_ForPredefinedCollection_ShouldReturnMinMaxForNullableValueTypes()
+        {
+            // Arrange.
+            IReadOnlyList<DummyStruct?> predefinedCollection = new DummyStruct?[]
+            {
+                 null, new DummyStruct(1), null, new DummyStruct(2), null, new DummyStruct(3)
+            };
+            DummyStruct? expectedValue = predefinedCollection[^1];
+            var comparer = MockComparer.SetupDefaultFor(predefinedCollection);
+
+            // Act.
+            DummyStruct? actualValue = predefinedCollection.Max(comparer);
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+            // "Max" method skips null value and do not call "Compare" method.
+            // Than we skip fist not null value.
+            comparer.VerifyCompareCalls(times: 2);
+        }
+
+        [Fact]
+        public void Max_WithComparer_ForPredefinedCollection_ShouldReturnMinMaxForReferenceTypes()
+        {
+            // Arrange.
+            IReadOnlyList<DummyClass?> predefinedCollection =
+                new[] { null, new DummyClass(1), null, new DummyClass(2), null, new DummyClass(3) };
+            DummyClass? expectedValue = predefinedCollection[^1];
+            var comparer = MockComparer.SetupDefaultFor(predefinedCollection);
+
+            // Act.
+            DummyClass? actualValue = predefinedCollection.Max(comparer);
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+            // "Max" method skips null value and do not call "Compare" method.
+            // Than we skip fist not null value.
+            comparer.VerifyCompareCalls(times: 2);
         }
 
         #endregion
@@ -125,16 +212,17 @@ namespace Acolyte.Tests.Linq
         [InlineData(TestConstants._10)]
         [InlineData(TestConstants._100)]
         [InlineData(TestConstants._10_000)]
-        public void Max_WithComparer_ForCollectionWithSomeItems_ShouldReturnMax(int count)
+        public void Max_WithComparer_ForCollectionWithSomeItems_ShouldReturnMaxForValueTypes(
+            int count)
         {
             // Arrange.
-            IReadOnlyList<int> collectionWithSomeItems =
-                TestDataCreator.CreateRandomInt32List(count);
-            int expectedValue = collectionWithSomeItems.Max();
+            IReadOnlyList<DummyStruct> collectionWithSomeItems =
+                TestDataCreator.CreateRandomDummyStructList(count);
+            DummyStruct expectedValue = collectionWithSomeItems.Max();
             var comparer = MockComparer.SetupDefaultFor(collectionWithSomeItems);
 
             // Act.
-            int actualValue = collectionWithSomeItems.Max(comparer);
+            DummyStruct actualValue = collectionWithSomeItems.Max(comparer);
 
             // Assert.
             Assert.Equal(expectedValue, actualValue);
@@ -148,17 +236,67 @@ namespace Acolyte.Tests.Linq
         [InlineData(TestConstants._10)]
         [InlineData(TestConstants._100)]
         [InlineData(TestConstants._10_000)]
-        public void Max_WithComparer_ForCollectionWithTheSameItems_ShouldReturnThatItem(int count)
+        public void Max_WithComparer_ForCollectionWithSomeItems_ShouldReturnMaxForReferenceTypes(
+            int count)
         {
             // Arrange.
-            IReadOnlyList<int> collectionWithTheSameItems = Enumerable
-                .Repeat(count, count)
+            IReadOnlyList<DummyClass> collectionWithSomeItems =
+                TestDataCreator.CreateRandomDummyClassList(count);
+            DummyClass? expectedValue = collectionWithSomeItems.Max();
+            var comparer = MockComparer.SetupDefaultFor(collectionWithSomeItems);
+
+            // Act.
+            DummyClass? actualValue = collectionWithSomeItems.Max(comparer);
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+            VerifyCompareCallsForMax(comparer, collectionWithSomeItems);
+        }
+
+        [Theory]
+        [InlineData(TestConstants._1)]
+        [InlineData(TestConstants._2)]
+        [InlineData(TestConstants._5)]
+        [InlineData(TestConstants._10)]
+        [InlineData(TestConstants._100)]
+        [InlineData(TestConstants._10_000)]
+        public void Max_WithComparer_ForCollectionWithTheSameItems_ShouldReturnThatItemForValueTypes(
+            int count)
+        {
+            // Arrange.
+            var expectedValue = DummyStruct.Item;
+            IReadOnlyList<DummyStruct> collectionWithTheSameItems = Enumerable
+                .Repeat(expectedValue, count)
                 .ToList();
-            int expectedValue = count;
             var comparer = MockComparer.SetupDefaultFor(collectionWithTheSameItems);
 
             // Act.
-            int actualValue = collectionWithTheSameItems.Max(comparer);
+            DummyStruct actualValue = collectionWithTheSameItems.Max(comparer);
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+            VerifyCompareCallsForMax(comparer, collectionWithTheSameItems);
+        }
+
+        [Theory]
+        [InlineData(TestConstants._1)]
+        [InlineData(TestConstants._2)]
+        [InlineData(TestConstants._5)]
+        [InlineData(TestConstants._10)]
+        [InlineData(TestConstants._100)]
+        [InlineData(TestConstants._10_000)]
+        public void Max_WithComparer_ForCollectionWithTheSameItems_ShouldReturnThatItemForReferenceTypes(
+            int count)
+        {
+            // Arrange.
+            var expectedValue = DummyClass.Item;
+            IReadOnlyList<DummyClass> collectionWithTheSameItems = Enumerable
+                .Repeat(expectedValue, count)
+                .ToList();
+            var comparer = MockComparer.SetupDefaultFor(collectionWithTheSameItems);
+
+            // Act.
+            DummyClass? actualValue = collectionWithTheSameItems.Max(comparer);
 
             // Assert.
             Assert.Equal(expectedValue, actualValue);
@@ -170,17 +308,44 @@ namespace Acolyte.Tests.Linq
         #region Random Values
 
         [Fact]
-        public void Max_WithComparer_ForCollectionWithRandomSize_ShouldReturnMax()
+        public void Max_WithComparer_ForCollectionWithRandomSize_ShouldReturnMaxForValueTypes()
         {
             // Arrange.
             int count = TestDataCreator.GetRandomPositiveCountNumber();
-            IReadOnlyList<int> collectionWithRandomSize =
-                TestDataCreator.CreateRandomInt32List(count);
-            int expectedValue = collectionWithRandomSize.Max();
-            var comparer = MockComparer<int>.Default;
+            IReadOnlyList<DummyStruct> collectionWithRandomSize =
+                TestDataCreator.CreateRandomDummyStructList(count);
+            var comparer = MockComparer<DummyStruct>.Default;
+
+            if (collectionWithRandomSize.Count > 0)
+            {
+                DummyStruct expectedValue = collectionWithRandomSize.Max();
+
+                // Act.
+                DummyStruct actualValue = collectionWithRandomSize.Max(comparer);
+
+                // Assert.
+                Assert.Equal(expectedValue, actualValue);
+                VerifyCompareCallsForMax(comparer, collectionWithRandomSize);
+            }
+            else
+            {
+                // Act & Assert.
+                Assert.Throws(Error.NoElements().GetType(), () => collectionWithRandomSize.Max());
+            }
+        }
+
+        [Fact]
+        public void Max_WithComparer_ForCollectionWithRandomSize_ShouldReturnMaxForReferenceTypes()
+        {
+            // Arrange.
+            int count = TestDataCreator.GetRandomPositiveCountNumber();
+            IReadOnlyList<DummyClass> collectionWithRandomSize =
+                TestDataCreator.CreateRandomDummyClassList(count);
+            DummyClass? expectedValue = collectionWithRandomSize.Max();
+            var comparer = MockComparer<DummyClass>.Default;
 
             // Act.
-            int actualValue = collectionWithRandomSize.Max(comparer);
+            DummyClass? actualValue = collectionWithRandomSize.Max(comparer);
 
             // Assert.
             Assert.Equal(expectedValue, actualValue);
@@ -192,16 +357,34 @@ namespace Acolyte.Tests.Linq
         #region Extended Logical Coverage
 
         [Fact]
-        public void Max_WithComparer_ShouldLookWholeCollectionToFindItem()
+        public void Max_WithComparer_ShouldLookWholeCollectionToFindItemForValueTypes()
         {
             // Arrange.
-            IReadOnlyList<int> collection = new[] { 4, 3, 2, 1 };
+            IReadOnlyList<DummyStruct> collection = DummyStruct.DefaultList.Reverse().ToList();
             var explosive = ExplosiveEnumerable.CreateNotExplosive(collection);
-            int expectedValue = explosive.Max();
+            DummyStruct expectedValue = explosive.Max();
             var comparer = MockComparer.SetupDefaultFor(collection);
 
             // Act.
-            int actualValue = explosive.Max(comparer);
+            DummyStruct actualValue = explosive.Max(comparer);
+
+            // Assert.
+            CustomAssert.True(explosive.VerifyTwiceEnumerateWholeCollection(collection));
+            Assert.Equal(expectedValue, actualValue);
+            VerifyCompareCallsForMax(comparer, collection);
+        }
+
+        [Fact]
+        public void Max_WithComparer_ShouldLookWholeCollectionToFindItemForReferenceTypes()
+        {
+            // Arrange.
+            IReadOnlyList<DummyClass> collection = DummyClass.DefaultList.Reverse().ToList();
+            var explosive = ExplosiveEnumerable.CreateNotExplosive(collection);
+            DummyClass? expectedValue = explosive.Max();
+            var comparer = MockComparer.SetupDefaultFor<DummyClass?>(collection);
+
+            // Act.
+            DummyClass? actualValue = explosive.Max(comparer);
 
             // Assert.
             CustomAssert.True(explosive.VerifyTwiceEnumerateWholeCollection(collection));

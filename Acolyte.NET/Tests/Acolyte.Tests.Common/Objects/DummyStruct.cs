@@ -6,7 +6,7 @@ namespace Acolyte.Tests.Objects
 {
     public readonly struct DummyStruct : IEquatable<DummyStruct>, IComparable<DummyStruct>
     {
-        public static IReadOnlyList<DummyStruct> DefaultList = new List<DummyStruct>
+        public static IReadOnlyList<DummyStruct> DefaultList { get; } = new List<DummyStruct>
         {
             new DummyStruct(1),
             new DummyStruct(2),
@@ -14,6 +14,8 @@ namespace Acolyte.Tests.Objects
             new DummyStruct(4),
             new DummyStruct(5)
         }.AsReadOnly();
+
+        public static DummyStruct Item { get; } = new(42);
 
         public int Value { get; init; }
 

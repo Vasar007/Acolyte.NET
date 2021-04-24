@@ -6,7 +6,7 @@ namespace Acolyte.Tests.Objects
     // Implicitly implements "IEquatable<DummyClass>" because it is record.
     public sealed record DummyClass(int Value) : IComparable<DummyClass>
     {
-        public static IReadOnlyList<DummyClass> DefaultList = new List<DummyClass>
+        public static IReadOnlyList<DummyClass> DefaultList { get; } = new List<DummyClass>
         {
             new DummyClass(1),
             new DummyClass(2),
@@ -14,6 +14,8 @@ namespace Acolyte.Tests.Objects
             new DummyClass(4),
             new DummyClass(5)
         }.AsReadOnly();
+
+        public static DummyClass Item { get; } = new(42);
 
         #region IComparable<DummyClass> Implementation
 

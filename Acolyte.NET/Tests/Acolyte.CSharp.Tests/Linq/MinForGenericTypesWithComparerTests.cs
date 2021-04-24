@@ -6,6 +6,7 @@ using Acolyte.Linq;
 using Acolyte.Tests.Collections;
 using Acolyte.Tests.Creators;
 using Acolyte.Tests.Mocked;
+using Acolyte.Tests.Objects;
 using Xunit;
 
 namespace Acolyte.Tests.Linq
@@ -16,14 +17,16 @@ namespace Acolyte.Tests.Linq
         {
         }
 
+        // Using user-defined struct and class to test generic overload.
+
         #region Null Values
 
         [Fact]
-        public void Min_WithComparer_ForNullValue_ShouldFail()
+        public void Min_WithComparer_ForNullValue_ShouldFailForValueTypes()
         {
             // Arrange.
-            const IEnumerable<int>? nullValue = null;
-            var comparer = MockComparer<int>.Default;
+            const IEnumerable<DummyStruct>? nullValue = null;
+            var comparer = MockComparer<DummyStruct>.Default;
 
             // Act & Assert.
             Assert.Throws<ArgumentNullException>("source", () => nullValue!.Min(comparer));
@@ -31,16 +34,44 @@ namespace Acolyte.Tests.Linq
         }
 
         [Fact]
-        public void Min_WithComparer_ForNullComparer_ShouldUseDefaultComparer()
+        public void Min_WithComparer_ForNullValue_ShouldFailForReferenceTypes()
+        {
+            // Arrange.
+            const IEnumerable<DummyClass>? nullValue = null;
+            var comparer = MockComparer<DummyClass>.Default;
+
+            // Act & Assert.
+            Assert.Throws<ArgumentNullException>("source", () => nullValue!.Min(comparer));
+            comparer.VerifyNoCalls();
+        }
+
+        [Fact]
+        public void Min_WithComparer_ForNullComparer_ShouldUseDefaultComparerForValueTypes()
         {
             // Arrange.
             int count = TestDataCreator.GetRandomPositiveSmallCountNumber();
-            IReadOnlyList<int> collectionWithRandomSize =
-                TestDataCreator.CreateRandomInt32List(count);
-            int expectedValue = collectionWithRandomSize.Min();
+            IReadOnlyList<DummyStruct> collectionWithRandomSize =
+                TestDataCreator.CreateRandomDummyStructList(count);
+            DummyStruct expectedValue = collectionWithRandomSize.Min();
 
             // Act.
-            int actualValue = collectionWithRandomSize.Min(comparer: null);
+            DummyStruct actualValue = collectionWithRandomSize.Min(comparer: null);
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Fact]
+        public void Min_WithComparer_ForNullComparer_ShouldUseDefaultComparerForReferenceTypes()
+        {
+            // Arrange.
+            int count = TestDataCreator.GetRandomPositiveSmallCountNumber();
+            IReadOnlyList<DummyClass> collectionWithRandomSize =
+                TestDataCreator.CreateRandomDummyClassList(count);
+            DummyClass? expectedValue = collectionWithRandomSize.Min();
+
+            // Act.
+            DummyClass? actualValue = collectionWithRandomSize.Min(comparer: null);
 
             // Assert.
             Assert.Equal(expectedValue, actualValue);
@@ -54,8 +85,8 @@ namespace Acolyte.Tests.Linq
         public void Min_WithComparer_ForEmptyCollection_ShouldFailForValueTypes()
         {
             // Arrange.
-            IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
-            var comparer = MockComparer<int>.Default;
+            IEnumerable<DummyStruct> emptyCollection = Enumerable.Empty<DummyStruct>();
+            var comparer = MockComparer<DummyStruct>.Default;
 
             // Act & Assert.
             Assert.Throws(Error.NoElements().GetType(), () => emptyCollection.Min(comparer));
@@ -66,12 +97,12 @@ namespace Acolyte.Tests.Linq
         public void Min_WithComparer_ForEmptyCollection_ShouldReturnNullForNullableValueTypes()
         {
             // Arrange.
-            IEnumerable<int?> emptyCollection = Enumerable.Empty<int?>();
-            int? expectedValue = null;
-            var comparer = MockComparer<int?>.Default;
+            IEnumerable<DummyStruct?> emptyCollection = Enumerable.Empty<DummyStruct?>();
+            DummyStruct? expectedValue = null;
+            var comparer = MockComparer<DummyStruct?>.Default;
 
             // Act.
-            int? actualValue = emptyCollection.Min(comparer);
+            DummyStruct? actualValue = emptyCollection.Min(comparer);
 
             // Assert.
             Assert.Equal(expectedValue, actualValue);
@@ -82,12 +113,12 @@ namespace Acolyte.Tests.Linq
         public void Min_WithComparer_ForEmptyCollection_ShouldReturnNullForReferenceTypes()
         {
             // Arrange.
-            IEnumerable<string> emptyCollection = Enumerable.Empty<string>();
-            const string? expectedValue = null;
-            var comparer = MockComparer<string>.Default;
+            IEnumerable<DummyClass> emptyCollection = Enumerable.Empty<DummyClass>();
+            const DummyClass? expectedValue = null;
+            var comparer = MockComparer<DummyClass>.Default;
 
             // Act.
-            string? actualValue = emptyCollection.Min(comparer);
+            DummyClass? actualValue = emptyCollection.Min(comparer);
 
             // Assert.
             Assert.Equal(expectedValue, actualValue);
@@ -99,19 +130,75 @@ namespace Acolyte.Tests.Linq
         #region Predefined Values
 
         [Fact]
-        public void Min_WithComparer_ForPredefinedCollection_ShouldReturnMin()
+        public void Min_WithComparer_ForPredefinedCollection_ShouldReturnMinForValueTypes()
         {
             // Arrange.
-            IReadOnlyList<int> predefinedCollection = new[] { 1, 2, 3 };
-            int expectedValue = predefinedCollection[0];
+            IReadOnlyList<DummyStruct> predefinedCollection = DummyStruct.DefaultList;
+            DummyStruct expectedValue = predefinedCollection[0];
             var comparer = MockComparer.SetupDefaultFor(predefinedCollection);
 
             // Act.
-            int actualValue = predefinedCollection.Min(comparer);
+            DummyStruct actualValue = predefinedCollection.Min(comparer);
 
             // Assert.
             Assert.Equal(expectedValue, actualValue);
             VerifyCompareCallsForMin(comparer, predefinedCollection);
+        }
+
+        [Fact]
+        public void Min_WithComparer_ForPredefinedCollection_ShouldReturnMinForReferenceTypes()
+        {
+            // Arrange.
+            IReadOnlyList<DummyClass> predefinedCollection = DummyClass.DefaultList;
+            DummyClass expectedValue = predefinedCollection[0];
+            var comparer = MockComparer.SetupDefaultFor(predefinedCollection);
+
+            // Act.
+            DummyClass? actualValue = predefinedCollection.Min(comparer);
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+            VerifyCompareCallsForMin(comparer, predefinedCollection);
+        }
+
+        [Fact]
+        public void Min_WithComparer_ForPredefinedCollection_ShouldReturnMinMinForNullableValueTypes()
+        {
+            // Arrange.
+            IReadOnlyList<DummyStruct?> predefinedCollection = new DummyStruct?[]
+            {
+                 null, new DummyStruct(1), null, new DummyStruct(2), null, new DummyStruct(3)
+            };
+            DummyStruct? expectedValue = predefinedCollection[1];
+            var comparer = MockComparer.SetupDefaultFor(predefinedCollection);
+
+            // Act.
+            DummyStruct? actualValue = predefinedCollection.Min(comparer);
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+            // "Min" method skips null value and do not call "Compare" method.
+            // Than we skip fist not null value.
+            comparer.VerifyCompareCalls(times: 2);
+        }
+
+        [Fact]
+        public void Min_WithComparer_ForPredefinedCollection_ShouldReturnMinMinForReferenceTypes()
+        {
+            // Arrange.
+            IReadOnlyList<DummyClass?> predefinedCollection =
+                new[] { null, new DummyClass(1), null, new DummyClass(2), null, new DummyClass(3) };
+            DummyClass? expectedValue = predefinedCollection[1];
+            var comparer = MockComparer.SetupDefaultFor(predefinedCollection);
+
+            // Act.
+            DummyClass? actualValue = predefinedCollection.Min(comparer);
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+            // "Min" method skips null value and do not call "Compare" method.
+            // Than we skip fist not null value.
+            comparer.VerifyCompareCalls(times: 2);
         }
 
         #endregion
@@ -125,16 +212,17 @@ namespace Acolyte.Tests.Linq
         [InlineData(TestConstants._10)]
         [InlineData(TestConstants._100)]
         [InlineData(TestConstants._10_000)]
-        public void Min_WithComparer_ForCollectionWithSomeItems_ShouldReturnMin(int count)
+        public void Min_WithComparer_ForCollectionWithSomeItems_ShouldReturnMinForValueTypes(
+            int count)
         {
             // Arrange.
-            IReadOnlyList<int> collectionWithSomeItems =
-                TestDataCreator.CreateRandomInt32List(count);
-            int expectedValue = collectionWithSomeItems.Min();
+            IReadOnlyList<DummyStruct> collectionWithSomeItems =
+                TestDataCreator.CreateRandomDummyStructList(count);
+            DummyStruct expectedValue = collectionWithSomeItems.Min();
             var comparer = MockComparer.SetupDefaultFor(collectionWithSomeItems);
 
             // Act.
-            int actualValue = collectionWithSomeItems.Min(comparer);
+            DummyStruct actualValue = collectionWithSomeItems.Min(comparer);
 
             // Assert.
             Assert.Equal(expectedValue, actualValue);
@@ -148,18 +236,67 @@ namespace Acolyte.Tests.Linq
         [InlineData(TestConstants._10)]
         [InlineData(TestConstants._100)]
         [InlineData(TestConstants._10_000)]
-        public void Min_WithComparer_ForCollectionWithTheSameItems_ShouldReturnThatItem(
+        public void Min_WithComparer_ForCollectionWithSomeItems_ShouldReturnMinForReferenceTypes(
             int count)
         {
             // Arrange.
-            IReadOnlyList<int> collectionWithTheSameItems = Enumerable
-                .Repeat(count, count)
+            IReadOnlyList<DummyClass> collectionWithSomeItems =
+                TestDataCreator.CreateRandomDummyClassList(count);
+            DummyClass? expectedValue = collectionWithSomeItems.Min();
+            var comparer = MockComparer.SetupDefaultFor(collectionWithSomeItems);
+
+            // Act.
+            DummyClass? actualValue = collectionWithSomeItems.Min(comparer);
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+            VerifyCompareCallsForMin(comparer, collectionWithSomeItems);
+        }
+
+        [Theory]
+        [InlineData(TestConstants._1)]
+        [InlineData(TestConstants._2)]
+        [InlineData(TestConstants._5)]
+        [InlineData(TestConstants._10)]
+        [InlineData(TestConstants._100)]
+        [InlineData(TestConstants._10_000)]
+        public void Min_WithComparer_ForCollectionWithTheSameItems_ShouldReturnThatItemForValueTypes(
+            int count)
+        {
+            // Arrange.
+            var expectedValue = DummyStruct.Item;
+            IReadOnlyList<DummyStruct> collectionWithTheSameItems = Enumerable
+                .Repeat(expectedValue, count)
                 .ToList();
-            int expectedValue = count;
             var comparer = MockComparer.SetupDefaultFor(collectionWithTheSameItems);
 
             // Act.
-            int actualValue = collectionWithTheSameItems.Min(comparer);
+            DummyStruct actualValue = collectionWithTheSameItems.Min(comparer);
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+            VerifyCompareCallsForMin(comparer, collectionWithTheSameItems);
+        }
+
+        [Theory]
+        [InlineData(TestConstants._1)]
+        [InlineData(TestConstants._2)]
+        [InlineData(TestConstants._5)]
+        [InlineData(TestConstants._10)]
+        [InlineData(TestConstants._100)]
+        [InlineData(TestConstants._10_000)]
+        public void Min_WithComparer_ForCollectionWithTheSameItems_ShouldReturnThatItemForReferenceTypes(
+            int count)
+        {
+            // Arrange.
+            var expectedValue = DummyClass.Item;
+            IReadOnlyList<DummyClass> collectionWithTheSameItems = Enumerable
+                .Repeat(expectedValue, count)
+                .ToList();
+            var comparer = MockComparer.SetupDefaultFor(collectionWithTheSameItems);
+
+            // Act.
+            DummyClass? actualValue = collectionWithTheSameItems.Min(comparer);
 
             // Assert.
             Assert.Equal(expectedValue, actualValue);
@@ -171,17 +308,44 @@ namespace Acolyte.Tests.Linq
         #region Random Values
 
         [Fact]
-        public void Min_WithComparer_ForCollectionWithRandomSize_ShouldReturnMin()
+        public void Min_WithComparer_ForCollectionWithRandomSize_ShouldReturnMinForValueTypes()
         {
             // Arrange.
             int count = TestDataCreator.GetRandomPositiveCountNumber();
-            IReadOnlyList<int> collectionWithRandomSize =
-                TestDataCreator.CreateRandomInt32List(count);
-            int expectedValue = collectionWithRandomSize.Min();
-            var comparer = MockComparer<int>.Default;
+            IReadOnlyList<DummyStruct> collectionWithRandomSize =
+                TestDataCreator.CreateRandomDummyStructList(count);
+            var comparer = MockComparer<DummyStruct>.Default;
+
+            if (collectionWithRandomSize.Count > 0)
+            {
+                DummyStruct expectedValue = collectionWithRandomSize.Min();
+
+                // Act.
+                DummyStruct actualValue = collectionWithRandomSize.Min(comparer);
+
+                // Assert.
+                Assert.Equal(expectedValue, actualValue);
+                VerifyCompareCallsForMin(comparer, collectionWithRandomSize);
+            }
+            else
+            {
+                // Act & Assert.
+                Assert.Throws(Error.NoElements().GetType(), () => collectionWithRandomSize.Min());
+            }
+        }
+
+        [Fact]
+        public void Min_WithComparer_ForCollectionWithRandomSize_ShouldReturnMinForReferenceTypes()
+        {
+            // Arrange.
+            int count = TestDataCreator.GetRandomPositiveCountNumber();
+            IReadOnlyList<DummyClass> collectionWithRandomSize =
+                TestDataCreator.CreateRandomDummyClassList(count);
+            DummyClass? expectedValue = collectionWithRandomSize.Min();
+            var comparer = MockComparer<DummyClass>.Default;
 
             // Act.
-            int actualValue = collectionWithRandomSize.Min(comparer);
+            DummyClass? actualValue = collectionWithRandomSize.Min(comparer);
 
             // Assert.
             Assert.Equal(expectedValue, actualValue);
@@ -193,16 +357,34 @@ namespace Acolyte.Tests.Linq
         #region Extended Logical Coverage
 
         [Fact]
-        public void Min_WithComparer_ShouldLookWholeCollectionToFindItem()
+        public void Min_WithComparer_ShouldLookWholeCollectionToFindItemForValueTypes()
         {
             // Arrange.
-            IReadOnlyList<int> collection = new[] { 1, 2, 3, 4 };
+            IReadOnlyList<DummyStruct> collection = DummyStruct.DefaultList;
             var explosive = ExplosiveEnumerable.CreateNotExplosive(collection);
-            int expectedValue = explosive.Min();
+            DummyStruct expectedValue = explosive.Min();
             var comparer = MockComparer.SetupDefaultFor(collection);
 
             // Act.
-            int actualValue = explosive.Min(comparer);
+            DummyStruct actualValue = explosive.Min(comparer);
+
+            // Assert.
+            CustomAssert.True(explosive.VerifyTwiceEnumerateWholeCollection(collection));
+            Assert.Equal(expectedValue, actualValue);
+            VerifyCompareCallsForMin(comparer, collection);
+        }
+
+        [Fact]
+        public void Min_WithComparer_ShouldLookWholeCollectionToFindItemForReferenceTypes()
+        {
+            // Arrange.
+            IReadOnlyList<DummyClass> collection = DummyClass.DefaultList;
+            var explosive = ExplosiveEnumerable.CreateNotExplosive(collection);
+            DummyClass? expectedValue = explosive.Min();
+            var comparer = MockComparer.SetupDefaultFor<DummyClass?>(collection);
+
+            // Act.
+            DummyClass? actualValue = explosive.Min(comparer);
 
             // Assert.
             CustomAssert.True(explosive.VerifyTwiceEnumerateWholeCollection(collection));
