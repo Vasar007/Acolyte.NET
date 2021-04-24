@@ -1482,6 +1482,110 @@ namespace Acolyte.Tests.Linq
             VerifyCompareCallsForMinMax(comparer, collectionWithSomeItems);
         }
 
+        [Theory]
+        [InlineData(TestConstants._1)]
+        [InlineData(TestConstants._2)]
+        [InlineData(TestConstants._5)]
+        [InlineData(TestConstants._10)]
+        [InlineData(TestConstants._100)]
+        [InlineData(TestConstants._10_000)]
+        public void MinMax_GenericTypes_ForCollectionWithTheSameItems_ShouldReturnMinMaxForValueTypes(
+         int count)
+        {
+            // Arrange.
+            var expectedItem = DummyStruct.Item;
+            IReadOnlyList<DummyStruct> collectionWithTheSameItems = Enumerable
+                .Repeat(expectedItem, count)
+                .ToList();
+            (DummyStruct minValue, DummyStruct maxValue) expectedValue =
+                (expectedItem, expectedItem);
+
+            // Act.
+            var actualValue = collectionWithTheSameItems.MinMax();
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Theory]
+        [InlineData(TestConstants._1)]
+        [InlineData(TestConstants._2)]
+        [InlineData(TestConstants._5)]
+        [InlineData(TestConstants._10)]
+        [InlineData(TestConstants._100)]
+        [InlineData(TestConstants._10_000)]
+        public void MinMax_GenericTypes_ForCollectionWithTheSameItems_ShouldReturnMinMaxForReferenceTypes(
+            int count)
+        {
+            // Arrange.
+            var expectedItem = DummyClass.Item;
+            IReadOnlyList<DummyClass> collectionWithTheSameItems = Enumerable
+                .Repeat(expectedItem, count)
+                .ToList();
+            (DummyClass minValue, DummyClass maxValue) expectedValue =
+                (expectedItem, expectedItem);
+
+            // Act.
+            var actualValue = collectionWithTheSameItems.MinMax();
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+        }
+
+        [Theory]
+        [InlineData(TestConstants._1)]
+        [InlineData(TestConstants._2)]
+        [InlineData(TestConstants._5)]
+        [InlineData(TestConstants._10)]
+        [InlineData(TestConstants._100)]
+        [InlineData(TestConstants._10_000)]
+        public void MinMax_GenericTypes_WithComparer_ForCollectionWithTheSameItems_ShouldReturnMinMaxForValueTypes(
+            int count)
+        {
+            // Arrange.
+            var expectedItem = DummyStruct.Item;
+            IReadOnlyList<DummyStruct> collectionWithTheSameItems = Enumerable
+                .Repeat(expectedItem, count)
+                .ToList();
+            (DummyStruct minValue, DummyStruct maxValue) expectedValue =
+                (expectedItem, expectedItem);
+            var comparer = MockComparer.SetupDefaultFor(collectionWithTheSameItems);
+
+            // Act.
+            var actualValue = collectionWithTheSameItems.MinMax(comparer);
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+            VerifyCompareCallsForMinMax(comparer, collectionWithTheSameItems);
+        }
+
+        [Theory]
+        [InlineData(TestConstants._1)]
+        [InlineData(TestConstants._2)]
+        [InlineData(TestConstants._5)]
+        [InlineData(TestConstants._10)]
+        [InlineData(TestConstants._100)]
+        [InlineData(TestConstants._10_000)]
+        public void MinMax_GenericTypes_WithComparer_ForCollectionWithTheSameItems_ShouldReturnMinMaxForReferenceTypes(
+            int count)
+        {
+            // Arrange.
+            var expectedItem = DummyClass.Item;
+            IReadOnlyList<DummyClass> collectionWithTheSameItems = Enumerable
+                .Repeat(expectedItem, count)
+                .ToList();
+            (DummyClass minValue, DummyClass maxValue) expectedValue =
+                (expectedItem, expectedItem);
+            var comparer = MockComparer.SetupDefaultFor(collectionWithTheSameItems);
+
+            // Act.
+            var actualValue = collectionWithTheSameItems.MinMax(comparer);
+
+            // Assert.
+            Assert.Equal(expectedValue, actualValue);
+            VerifyCompareCallsForMinMax(comparer, collectionWithTheSameItems);
+        }
+
         #endregion
 
         #region Random Values

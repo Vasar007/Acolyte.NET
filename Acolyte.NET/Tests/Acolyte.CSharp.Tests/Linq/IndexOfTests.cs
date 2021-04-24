@@ -379,6 +379,7 @@ namespace Acolyte.Tests.Linq
                 TestDataCreator.CreateRandomInt32List(count);
             (int randomItem, int expectedIndex) =
                 TestDataCreator.ChoiceWithIndex(collectionWithRandomSize);
+            // Use default comparer to avoid long running tests.
             var comparer = EqualityComparer<int>.Default;
 
             // Act.
