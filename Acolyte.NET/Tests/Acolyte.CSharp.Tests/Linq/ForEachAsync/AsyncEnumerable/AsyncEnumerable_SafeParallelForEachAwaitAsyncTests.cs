@@ -1,4 +1,6 @@
-﻿#if NETSTANDARD2_1
+﻿#pragma warning disable format // dotnet format fails indentation for regions :(
+
+#if NETSTANDARD2_1
 
 using System;
 using System.Collections.Generic;
@@ -15,7 +17,7 @@ namespace Acolyte.Tests.Linq
         {
         }
 
-#region Null Values
+        #region Null Values
 
         [Fact]
         public void SafeParallelForEachAwaitAsync_AsyncEnumerable_ForNullValue_ShouldFail()
@@ -69,27 +71,27 @@ namespace Acolyte.Tests.Linq
             );
         }
 
-#endregion
+        #endregion
 
-#region Empty Values
+        #region Empty Values
 
-#endregion
+        #endregion
 
-#region Predefined Values
+        #region Predefined Values
 
-#endregion
+        #endregion
 
-#region Some Values
+        #region Some Values
 
-#endregion
+        #endregion
 
-#region Random Values
+        #region Random Values
 
-#endregion
+        #endregion
 
-#region Extended Logical Coverage
+        #region Extended Logical Coverage
 
-#endregion
+        #endregion
     }
 }
 
