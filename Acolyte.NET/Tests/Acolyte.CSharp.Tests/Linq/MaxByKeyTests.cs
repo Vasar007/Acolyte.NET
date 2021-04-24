@@ -427,7 +427,14 @@ namespace Acolyte.Tests.Linq
         private static void VerifyCompareCallsForMax<T>(MockComparer<T> comparer,
             IReadOnlyList<T> collection)
         {
-            comparer.VerifyCompareCalls(times: collection.Count - 1);
+            if (collection.Count > 0)
+            {
+                comparer.VerifyCompareCalls(times: collection.Count - 1);
+            }
+            else
+            {
+                comparer.VerifyNoCalls();
+            }
         }
 
         #endregion

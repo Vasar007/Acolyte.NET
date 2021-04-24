@@ -1666,7 +1666,14 @@ namespace Acolyte.Tests.Linq
         private static void VerifyCompareCallsForMinMax<T>(MockComparer<T> comparer,
             IReadOnlyList<T> collection)
         {
-            comparer.VerifyCompareCalls(times: (collection.Count - 1) * 2);
+            if (collection.Count > 0)
+            {
+                comparer.VerifyCompareCalls(times: (collection.Count - 1) * 2);
+            }
+            else
+            {
+                comparer.VerifyNoCalls();
+            }
         }
 
         #endregion
