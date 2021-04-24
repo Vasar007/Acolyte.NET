@@ -89,6 +89,7 @@ namespace Acolyte.Tests.Linq
             );
 
             // Act.
+            keyGenerator.Reset();
             var actualDictionary = collectionWithRandomSize.ToReadOnlyDictionary(
                 keyGenerator.GetKey, comparer: null
             );
