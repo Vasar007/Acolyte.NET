@@ -23,8 +23,8 @@ Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Acolyte.FSharp.Tests", "Tes
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9CD3F8B1-797A-415C-AA23-82E18E31290D}"
 	ProjectSection(SolutionItems) = preProject
-		.editorconfig = .editorconfig
-		Directory.Build.props = Directory.Build.props
+		Solution Items\.editorconfig = Solution Items\.editorconfig
+		Solution Items\Directory.Build.props = Solution Items\Directory.Build.props
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acolyte.Tests.Common", "Tests\Acolyte.Tests.Common\Acolyte.Tests.Common.csproj", "{27DF4E73-0016-4CFF-961B-392AF839352F}"
