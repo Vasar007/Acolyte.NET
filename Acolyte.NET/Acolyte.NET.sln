@@ -3,6 +3,12 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29613.14
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9CD3F8B1-797A-415C-AA23-82E18E31290D}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		Directory.Build.props = Directory.Build.props
+	EndProjectSection
+EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acolyte.CSharp", "Libraries\Acolyte.CSharp\Acolyte.CSharp.csproj", "{D8323029-9A0A-4EE1-8E6B-214CD5801B90}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{5EAF9D9D-C1F1-4857-B65B-9A4873FCC3AB}"
@@ -20,12 +26,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acolyte.CSharp.Tests", "Tests\Acolyte.CSharp.Tests\Acolyte.CSharp.Tests.csproj", "{B0D629FA-CCB7-483A-8F4C-26382B426051}"
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Acolyte.FSharp.Tests", "Tests\Acolyte.FSharp.Tests\Acolyte.FSharp.Tests.fsproj", "{A772A8E9-5AFB-4633-B618-DFD18AB202A5}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9CD3F8B1-797A-415C-AA23-82E18E31290D}"
-	ProjectSection(SolutionItems) = preProject
-		Solution Items\.editorconfig = Solution Items\.editorconfig
-		Solution Items\Directory.Build.props = Solution Items\Directory.Build.props
-	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acolyte.Tests.Common", "Tests\Acolyte.Tests.Common\Acolyte.Tests.Common.csproj", "{27DF4E73-0016-4CFF-961B-392AF839352F}"
 EndProject
