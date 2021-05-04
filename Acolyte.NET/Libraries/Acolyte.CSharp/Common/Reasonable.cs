@@ -160,11 +160,37 @@ namespace Acolyte.Common
             return new Reasonable<T1>(value, reasonable.Reason);
         }
 
+        public static Reasonable<bool> And(this Reasonable<bool> self, Reasonable<bool> other)
+        {
+            return self.Value
+                ? other
+                : self;
+        }
+
+        public static Reasonable<bool> And(this Reasonable<bool> self, Func<Reasonable<bool>> other)
+        {
+            return self.Value
+                ? other()
+                : self;
+        }
+
         public static Reasonable<bool> Or(this Reasonable<bool> self, Reasonable<bool> other)
         {
             return self.Value
                 ? self
                 : other;
+        }
+
+        public static Reasonable<bool> Or(this Reasonable<bool> self, Func<Reasonable<bool>> other)
+        {
+            return self.Value
+                ? self
+                : other();
+        }
+
+        public static Reasonable<bool> Not(Reasonable<bool> reasonable)
+        {
+            return new Reasonable<bool>(!reasonable.Value, reasonable.Reason);
         }
     }
 }
