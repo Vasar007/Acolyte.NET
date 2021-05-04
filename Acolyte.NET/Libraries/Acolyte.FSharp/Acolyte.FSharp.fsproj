@@ -65,6 +65,8 @@
     <Compile Include="Functional\Throw.fs" />
     <Compile Include="Functional\Utils.fs" />
     <Compile Include="Functional\SeqEx.fs" />
+    <Compile Include="Functional\ArrayEx.fs" />
+    <Compile Include="Functional\ListEx.fs" />
   </ItemGroup>
 
   <ItemGroup>
