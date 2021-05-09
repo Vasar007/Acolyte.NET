@@ -4,6 +4,7 @@ using System.Linq;
 using Acolyte.Common;
 using Acolyte.Functions;
 using Acolyte.Linq;
+using Acolyte.Tests.Cases;
 using Acolyte.Tests.Collections;
 using Acolyte.Tests.Creators;
 using Acolyte.Tests.Mocked;
@@ -363,12 +364,7 @@ namespace Acolyte.Tests.Linq
         #region Some Values
 
         [Theory]
-        [InlineData(TestConstants._1)]
-        [InlineData(TestConstants._2)]
-        [InlineData(TestConstants._5)]
-        [InlineData(TestConstants._10)]
-        [InlineData(TestConstants._100)]
-        [InlineData(TestConstants._10_000)]
+        [ClassData(typeof(PositiveTestConstants))]
         public void MinMaxBy_ForCollectionWithSomeItems_ShouldReturnProperMinMaxForValueTypes(
             int count)
         {
@@ -390,12 +386,7 @@ namespace Acolyte.Tests.Linq
         }
 
         [Theory]
-        [InlineData(TestConstants._1)]
-        [InlineData(TestConstants._2)]
-        [InlineData(TestConstants._5)]
-        [InlineData(TestConstants._10)]
-        [InlineData(TestConstants._100)]
-        [InlineData(TestConstants._10_000)]
+        [ClassData(typeof(PositiveTestConstants))]
         public void MinMaxBy_ForCollectionWithSomeItems_ShouldReturnProperMinMaxForReferenceTypes(
             int count)
         {
@@ -417,12 +408,7 @@ namespace Acolyte.Tests.Linq
         }
 
         [Theory]
-        [InlineData(TestConstants._1)]
-        [InlineData(TestConstants._2)]
-        [InlineData(TestConstants._5)]
-        [InlineData(TestConstants._10)]
-        [InlineData(TestConstants._100)]
-        [InlineData(TestConstants._10_000)]
+        [ClassData(typeof(PositiveTestConstants))]
         public void MinMaxBy_WithComparer_ForCollectionWithSomeItems_ShouldReturnProperMinMaxForValueTypes(
             int count)
         {
@@ -446,12 +432,7 @@ namespace Acolyte.Tests.Linq
         }
 
         [Theory]
-        [InlineData(TestConstants._1)]
-        [InlineData(TestConstants._2)]
-        [InlineData(TestConstants._5)]
-        [InlineData(TestConstants._10)]
-        [InlineData(TestConstants._100)]
-        [InlineData(TestConstants._10_000)]
+        [ClassData(typeof(PositiveTestConstants))]
         public void MinMaxBy_WithComparer_ForCollectionWithSomeItems_ShouldReturnProperMinMaxForReferenceTypes(
             int count)
         {
@@ -475,12 +456,7 @@ namespace Acolyte.Tests.Linq
         }
 
         [Theory]
-        [InlineData(TestConstants._1)]
-        [InlineData(TestConstants._2)]
-        [InlineData(TestConstants._5)]
-        [InlineData(TestConstants._10)]
-        [InlineData(TestConstants._100)]
-        [InlineData(TestConstants._10_000)]
+        [ClassData(typeof(PositiveTestConstants))]
         public void MinMaxBy_ForCollectionWithTheSameItems_ShouldReturnThatItemForValueTypes(
             int count)
         {
@@ -501,12 +477,7 @@ namespace Acolyte.Tests.Linq
         }
 
         [Theory]
-        [InlineData(TestConstants._1)]
-        [InlineData(TestConstants._2)]
-        [InlineData(TestConstants._5)]
-        [InlineData(TestConstants._10)]
-        [InlineData(TestConstants._100)]
-        [InlineData(TestConstants._10_000)]
+        [ClassData(typeof(PositiveTestConstants))]
         public void MinMaxBy_ForCollectionWithTheSameItems_ShouldReturnThatItemForReferenceTypes(
            int count)
         {
@@ -527,12 +498,7 @@ namespace Acolyte.Tests.Linq
         }
 
         [Theory]
-        [InlineData(TestConstants._1)]
-        [InlineData(TestConstants._2)]
-        [InlineData(TestConstants._5)]
-        [InlineData(TestConstants._10)]
-        [InlineData(TestConstants._100)]
-        [InlineData(TestConstants._10_000)]
+        [ClassData(typeof(PositiveTestConstants))]
         public void MinMaxBy_WithComparer_ForCollectionWithTheSameItems_ShouldReturnThatItemForValueTypes(
             int count)
         {
@@ -553,12 +519,7 @@ namespace Acolyte.Tests.Linq
         }
 
         [Theory]
-        [InlineData(TestConstants._1)]
-        [InlineData(TestConstants._2)]
-        [InlineData(TestConstants._5)]
-        [InlineData(TestConstants._10)]
-        [InlineData(TestConstants._100)]
-        [InlineData(TestConstants._10_000)]
+        [ClassData(typeof(PositiveTestConstants))]
         public void MinMaxBy_WithComparer_ForCollectionWithTheSameItems_ShouldReturnThatItemForReferenceTypes(
             int count)
         {

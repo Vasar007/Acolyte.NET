@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Acolyte.Functions;
 using Acolyte.Linq;
+using Acolyte.Tests.Cases;
 using Acolyte.Tests.Creators;
 using Acolyte.Tests.Mocked;
 using Xunit;
@@ -415,12 +416,7 @@ namespace Acolyte.Tests.Linq
         #region Some Values
 
         [Theory]
-        [InlineData(TestConstants._1)]
-        [InlineData(TestConstants._2)]
-        [InlineData(TestConstants._5)]
-        [InlineData(TestConstants._10)]
-        [InlineData(TestConstants._100)]
-        [InlineData(TestConstants._10_000)]
+        [ClassData(typeof(PositiveTestConstants))]
         public void ToReadOnlyDictionary_WithKeySelector_ForCollectionWithSomeItems_ShouldReturnFilledDictionary(
             int count)
         {
@@ -443,12 +439,7 @@ namespace Acolyte.Tests.Linq
         }
 
         [Theory]
-        [InlineData(TestConstants._1)]
-        [InlineData(TestConstants._2)]
-        [InlineData(TestConstants._5)]
-        [InlineData(TestConstants._10)]
-        [InlineData(TestConstants._100)]
-        [InlineData(TestConstants._10_000)]
+        [ClassData(typeof(PositiveTestConstants))]
         public void ToReadOnlyDictionary_WithKeySelectorAndComparer_ForCollectionWithSomeItems_ShouldReturnFilledDictionary(
             int count)
         {
@@ -477,12 +468,7 @@ namespace Acolyte.Tests.Linq
         }
 
         [Theory]
-        [InlineData(TestConstants._1)]
-        [InlineData(TestConstants._2)]
-        [InlineData(TestConstants._5)]
-        [InlineData(TestConstants._10)]
-        [InlineData(TestConstants._100)]
-        [InlineData(TestConstants._10_000)]
+        [ClassData(typeof(PositiveTestConstants))]
         public void ToReadOnlyDictionary_WithKeyElementSelectors_ForCollectionWithSomeItems_ShouldReturnFilledDictionary(
             int count)
         {
@@ -508,12 +494,7 @@ namespace Acolyte.Tests.Linq
         }
 
         [Theory]
-        [InlineData(TestConstants._1)]
-        [InlineData(TestConstants._2)]
-        [InlineData(TestConstants._5)]
-        [InlineData(TestConstants._10)]
-        [InlineData(TestConstants._100)]
-        [InlineData(TestConstants._10_000)]
+        [ClassData(typeof(PositiveTestConstants))]
         public void ToReadOnlyDictionary_WithKeyElementSelectorsAndComparer_ForCollectionWithSomeItems_ShouldReturnFilledDictionary(
             int count)
         {
@@ -988,12 +969,7 @@ namespace Acolyte.Tests.Linq
         #region Some Values
 
         [Theory]
-        [InlineData(TestConstants._1)]
-        [InlineData(TestConstants._2)]
-        [InlineData(TestConstants._5)]
-        [InlineData(TestConstants._10)]
-        [InlineData(TestConstants._100)]
-        [InlineData(TestConstants._10_000)]
+        [ClassData(typeof(PositiveTestConstants))]
         public void ToReadOnlyList_ForCollectionWithSomeItems_ShouldReturnFilledList(int count)
         {
             // Arrange.
@@ -1140,12 +1116,7 @@ namespace Acolyte.Tests.Linq
         #region Some Values
 
         [Theory]
-        [InlineData(TestConstants._1)]
-        [InlineData(TestConstants._2)]
-        [InlineData(TestConstants._5)]
-        [InlineData(TestConstants._10)]
-        [InlineData(TestConstants._100)]
-        [InlineData(TestConstants._10_000)]
+        [ClassData(typeof(PositiveTestConstants))]
         public void ToReadOnlyCollection_ForCollectionWithSomeItems_ShouldReturnFilledCollection(
             int count)
         {

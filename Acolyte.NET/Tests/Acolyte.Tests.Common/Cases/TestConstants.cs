@@ -1,7 +1,6 @@
-﻿namespace Acolyte.Tests
+﻿namespace Acolyte.Tests.Cases
 {
     public static class TestConstants
-
     {
         // Max collection size in C# is equal to 2_146_435_071 but we do not need such large values.
         public const int NegativeMaxCollectionSize = -MaxCollectionSize;

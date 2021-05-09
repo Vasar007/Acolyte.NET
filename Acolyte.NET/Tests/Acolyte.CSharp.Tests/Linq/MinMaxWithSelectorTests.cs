@@ -4,6 +4,7 @@ using System.Linq;
 using Acolyte.Common;
 using Acolyte.Functions;
 using Acolyte.Linq;
+using Acolyte.Tests.Cases;
 using Acolyte.Tests.Collections;
 using Acolyte.Tests.Creators;
 using Acolyte.Tests.Mocked;
@@ -146,12 +147,7 @@ namespace Acolyte.Tests.Linq
         #region Some Values
 
         [Theory]
-        [InlineData(TestConstants._1)]
-        [InlineData(TestConstants._2)]
-        [InlineData(TestConstants._5)]
-        [InlineData(TestConstants._10)]
-        [InlineData(TestConstants._100)]
-        [InlineData(TestConstants._10_000)]
+        [ClassData(typeof(PositiveTestConstants))]
         public void MinMax_WithSelector_Int32_ForCollectionWithSomeItems_ShouldReturnMinMax(
             int count)
         {
@@ -171,12 +167,7 @@ namespace Acolyte.Tests.Linq
         }
 
         [Theory]
-        [InlineData(TestConstants._1)]
-        [InlineData(TestConstants._2)]
-        [InlineData(TestConstants._5)]
-        [InlineData(TestConstants._10)]
-        [InlineData(TestConstants._100)]
-        [InlineData(TestConstants._10_000)]
+        [ClassData(typeof(PositiveTestConstants))]
         public void MinMax_WithSelector_NullableInt32_ForCollectionWithSomeItems_ShouldReturnMinMax(
             int count)
         {
@@ -430,12 +421,7 @@ namespace Acolyte.Tests.Linq
         #region Some Values
 
         [Theory]
-        [InlineData(TestConstants._1)]
-        [InlineData(TestConstants._2)]
-        [InlineData(TestConstants._5)]
-        [InlineData(TestConstants._10)]
-        [InlineData(TestConstants._100)]
-        [InlineData(TestConstants._10_000)]
+        [ClassData(typeof(PositiveTestConstants))]
         public void MinMax_WithSelector_Int64_ForCollectionWithSomeItems_ShouldReturnMinMax(
             int count)
         {
@@ -456,12 +442,7 @@ namespace Acolyte.Tests.Linq
         }
 
         [Theory]
-        [InlineData(TestConstants._1)]
-        [InlineData(TestConstants._2)]
-        [InlineData(TestConstants._5)]
-        [InlineData(TestConstants._10)]
-        [InlineData(TestConstants._100)]
-        [InlineData(TestConstants._10_000)]
+        [ClassData(typeof(PositiveTestConstants))]
         public void MinMax_WithSelector_NullableInt64_ForCollectionWithSomeItems_ShouldReturnMinMax(
             int count)
         {
@@ -715,12 +696,7 @@ namespace Acolyte.Tests.Linq
         #region Some Values
 
         [Theory]
-        [InlineData(TestConstants._1)]
-        [InlineData(TestConstants._2)]
-        [InlineData(TestConstants._5)]
-        [InlineData(TestConstants._10)]
-        [InlineData(TestConstants._100)]
-        [InlineData(TestConstants._10_000)]
+        [ClassData(typeof(PositiveTestConstants))]
         public void MinMax_WithSelector_Single_ForCollectionWithSomeItems_ShouldReturnMinMax(
             int count)
         {
@@ -741,12 +717,7 @@ namespace Acolyte.Tests.Linq
         }
 
         [Theory]
-        [InlineData(TestConstants._1)]
-        [InlineData(TestConstants._2)]
-        [InlineData(TestConstants._5)]
-        [InlineData(TestConstants._10)]
-        [InlineData(TestConstants._100)]
-        [InlineData(TestConstants._10_000)]
+        [ClassData(typeof(PositiveTestConstants))]
         public void MinMax_WithSelector_NullableSingle_ForCollectionWithSomeItems_ShouldReturnMinMax(
             int count)
         {
@@ -1000,12 +971,7 @@ namespace Acolyte.Tests.Linq
         #region Some Values
 
         [Theory]
-        [InlineData(TestConstants._1)]
-        [InlineData(TestConstants._2)]
-        [InlineData(TestConstants._5)]
-        [InlineData(TestConstants._10)]
-        [InlineData(TestConstants._100)]
-        [InlineData(TestConstants._10_000)]
+        [ClassData(typeof(PositiveTestConstants))]
         public void MinMax_WithSelector_Double_ForCollectionWithSomeItems_ShouldReturnMinMax(
             int count)
         {
@@ -1026,12 +992,7 @@ namespace Acolyte.Tests.Linq
         }
 
         [Theory]
-        [InlineData(TestConstants._1)]
-        [InlineData(TestConstants._2)]
-        [InlineData(TestConstants._5)]
-        [InlineData(TestConstants._10)]
-        [InlineData(TestConstants._100)]
-        [InlineData(TestConstants._10_000)]
+        [ClassData(typeof(PositiveTestConstants))]
         public void MinMax_WithSelector_NullableDouble_ForCollectionWithSomeItems_ShouldReturnMinMax(
             int count)
         {
@@ -1285,12 +1246,7 @@ namespace Acolyte.Tests.Linq
         #region Some Values
 
         [Theory]
-        [InlineData(TestConstants._1)]
-        [InlineData(TestConstants._2)]
-        [InlineData(TestConstants._5)]
-        [InlineData(TestConstants._10)]
-        [InlineData(TestConstants._100)]
-        [InlineData(TestConstants._10_000)]
+        [ClassData(typeof(PositiveTestConstants))]
         public void MinMax_WithSelector_Decimal_ForCollectionWithSomeItems_ShouldReturnMinMax(
             int count)
         {
@@ -1311,12 +1267,7 @@ namespace Acolyte.Tests.Linq
         }
 
         [Theory]
-        [InlineData(TestConstants._1)]
-        [InlineData(TestConstants._2)]
-        [InlineData(TestConstants._5)]
-        [InlineData(TestConstants._10)]
-        [InlineData(TestConstants._100)]
-        [InlineData(TestConstants._10_000)]
+        [ClassData(typeof(PositiveTestConstants))]
         public void MinMax_WithSelector_NullableDecimal_ForCollectionWithSomeItems_ShouldReturnMinMax(
             int count)
         {
@@ -1769,12 +1720,7 @@ namespace Acolyte.Tests.Linq
         #region Some Values
 
         [Theory]
-        [InlineData(TestConstants._1)]
-        [InlineData(TestConstants._2)]
-        [InlineData(TestConstants._5)]
-        [InlineData(TestConstants._10)]
-        [InlineData(TestConstants._100)]
-        [InlineData(TestConstants._10_000)]
+        [ClassData(typeof(PositiveTestConstants))]
         public void MinMax_WithSelector_GenericTypes_ForCollectionWithSomeItems_ShouldReturnMinMaxForValueTypes(
             int count)
         {
@@ -1793,12 +1739,7 @@ namespace Acolyte.Tests.Linq
         }
 
         [Theory]
-        [InlineData(TestConstants._1)]
-        [InlineData(TestConstants._2)]
-        [InlineData(TestConstants._5)]
-        [InlineData(TestConstants._10)]
-        [InlineData(TestConstants._100)]
-        [InlineData(TestConstants._10_000)]
+        [ClassData(typeof(PositiveTestConstants))]
         public void MinMax_WithSelector_GenericTypes_ForCollectionWithSomeItems_ShouldReturnMinMaxForReferenceTypes(
            int count)
         {
@@ -1817,12 +1758,7 @@ namespace Acolyte.Tests.Linq
         }
 
         [Theory]
-        [InlineData(TestConstants._1)]
-        [InlineData(TestConstants._2)]
-        [InlineData(TestConstants._5)]
-        [InlineData(TestConstants._10)]
-        [InlineData(TestConstants._100)]
-        [InlineData(TestConstants._10_000)]
+        [ClassData(typeof(PositiveTestConstants))]
         public void MinMax_WithSelector_GenericTypes_WithComparer_ForCollectionWithSomeItems_ShouldReturnMinMaxForValueTypes(
             int count)
         {
@@ -1843,12 +1779,7 @@ namespace Acolyte.Tests.Linq
         }
 
         [Theory]
-        [InlineData(TestConstants._1)]
-        [InlineData(TestConstants._2)]
-        [InlineData(TestConstants._5)]
-        [InlineData(TestConstants._10)]
-        [InlineData(TestConstants._100)]
-        [InlineData(TestConstants._10_000)]
+        [ClassData(typeof(PositiveTestConstants))]
         public void MinMax_WithSelector_GenericTypes_WithComparer_ForCollectionWithSomeItems_ShouldReturnMinMaxForReferenceTypes(
             int count)
         {

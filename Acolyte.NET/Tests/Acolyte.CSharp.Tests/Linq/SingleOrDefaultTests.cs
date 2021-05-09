@@ -4,6 +4,7 @@ using System.Linq;
 using Acolyte.Common;
 using Acolyte.Functions;
 using Acolyte.Linq;
+using Acolyte.Tests.Cases;
 using Acolyte.Tests.Collections;
 using Acolyte.Tests.Creators;
 using Xunit;
@@ -178,11 +179,7 @@ namespace Acolyte.Tests.Linq
         #region Some Values
 
         [Theory]
-        [InlineData(TestConstants._2)]
-        [InlineData(TestConstants._5)]
-        [InlineData(TestConstants._10)]
-        [InlineData(TestConstants._100)]
-        [InlineData(TestConstants._10_000)]
+        [ClassData(typeof(PositiveWithoutOneTestConstants))]
         public void SingleOrDefault_ForCollectionWithSomeItems_ShouldFail(int count)
         {
             // Arrange.
@@ -196,11 +193,7 @@ namespace Acolyte.Tests.Linq
         }
 
         [Theory]
-        [InlineData(TestConstants._2)]
-        [InlineData(TestConstants._5)]
-        [InlineData(TestConstants._10)]
-        [InlineData(TestConstants._100)]
-        [InlineData(TestConstants._10_000)]
+        [ClassData(typeof(PositiveWithoutOneTestConstants))]
         public void SingleOrDefault_WithPredicate_ForCollectionWithSomeItems_ShouldFailIfFoundTwoAndMoreItmsAccordingToPredicate(
             int count)
         {
@@ -215,12 +208,7 @@ namespace Acolyte.Tests.Linq
         }
 
         [Theory]
-        [InlineData(TestConstants._1)]
-        [InlineData(TestConstants._2)]
-        [InlineData(TestConstants._5)]
-        [InlineData(TestConstants._10)]
-        [InlineData(TestConstants._100)]
-        [InlineData(TestConstants._10_000)]
+        [ClassData(typeof(PositiveTestConstants))]
         public void SingleOrDefault_WithPredicate_ForCollectionWithSomeItems_ShouldReturnDefaultItemIfFoundNoItemsAccordingToPredicate(
             int count)
         {
