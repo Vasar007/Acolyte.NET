@@ -7,11 +7,13 @@ module Acolyte.Functional.ArraytEx
 let skipSafe count (source: 'T[]) =
     Throw.checkIfNull source (nameof source)
 
-    SeqEx.skipSafe count source
+    source
+        |> SeqEx.skipSafe count
         |> Seq.toArray
 
-let appendSingle (source: 'T[]) item =
+let appendSingle item (source: 'T[]) =
     Throw.checkIfNull source (nameof source)
 
-    SeqEx.appendSingle source item
+    source
+        |> SeqEx.appendSingle item
         |> Seq.toArray

@@ -17,10 +17,11 @@ let skipSafe count (source: seq<'T>) =
             index := !index + 1
 
         while enumerator.MoveNext() do
-            yield enumerator.Current 
+            yield enumerator.Current
     }
 
-let appendSingle source item =
+let appendSingle item source =
     Throw.checkIfNull source (nameof source)
 
-    Seq.append source (Seq.singleton item)
+    source
+        |> Seq.append (Seq.singleton item)

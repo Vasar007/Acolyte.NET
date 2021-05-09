@@ -7,11 +7,13 @@ module Acolyte.Functional.ListEx
 let skipSafe count (source: list<'T>) =
     Throw.checkIfNullValue source (nameof source)
 
-    SeqEx.skipSafe count source
+    source
+        |> SeqEx.skipSafe count
         |> Seq.toList
 
-let appendSingle (source: list<'T>) item =
+let appendSingle item (source: list<'T>) =
     Throw.checkIfNullValue source (nameof source)
 
-    SeqEx.appendSingle source item
+    source
+        |> SeqEx.appendSingle item
         |> Seq.toList
