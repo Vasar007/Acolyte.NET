@@ -17,10 +17,7 @@ dotnet_csproj:
   file_version: '$(packageVersion)'
   version: '$(packageVersion)'
 
-branches:
-  only:
-    - master
-    - develop
+# All branches are built by default.
 
 configuration:
   - Debug
