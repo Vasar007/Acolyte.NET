@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Acolyte.Assertions;
+using Acolyte.Reflection;
 
 namespace Acolyte.Common
 {
@@ -56,6 +59,48 @@ namespace Acolyte.Common
         }
 
         /// <summary>
+        /// Checks if the provided <paramref name="type"/> is <see cref="Tuple" /> (with any number
+        /// of generic arguments).
+        /// </summary>
+        /// <param name="type">Type value to check.</param>
+        /// <returns>
+        /// <see langword="true" /> if <paramref name="type"/> is kind of <see cref="Tuple" />;
+        /// otherwise, <see langword="false" />.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="type" /> is <see langword="null" />.
+        /// </exception>
+        public static bool IsTupleType(this Type type)
+        {
+            type.ThrowIfNull(nameof(type));
+
+            IEnumerable<Type> tupleTypes = TypesForReflection.GetTupleGenericDefenitions();
+
+            return IsOneOfGenericTypeDefinitions(type, tupleTypes);
+        }
+
+        /// <summary>
+        /// Checks if the provided <paramref name="type"/> is <see cref="ValueTuple" /> (with any
+        /// number of generic arguments).
+        /// </summary>
+        /// <param name="type">Type value to check.</param>
+        /// <returns>
+        /// <see langword="true" /> if <paramref name="type"/> is kind of <see cref="ValueTuple" />;
+        /// otherwise, <see langword="false" />.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="type" /> is <see langword="null" />.
+        /// </exception>
+        public static bool IsValueTupleType(this Type type)
+        {
+            type.ThrowIfNull(nameof(type));
+
+            IEnumerable<Type> tupleTypes = TypesForReflection.GetValueTupleGenericDefenitions();
+
+            return IsOneOfGenericTypeDefinitions(type, tupleTypes);
+        }
+
+        /// <summary>
         /// Checks if the provided <paramref name="type"/> is <see cref="Nullable{T}" />.
         /// </summary>
         /// <param name="type">Type value to check.</param>
@@ -71,6 +116,22 @@ namespace Acolyte.Common
             type.ThrowIfNull(nameof(type));
 
             return type.HasSameGenericTypeDefinition(typeof(Nullable<>));
+        }
+
+        /// <summary>
+        /// Checks if the provided <paramref name="type"/> has the same generic type definition with
+        /// any item from <paramref name="typesToCheck"/> array.
+        /// </summary>
+        /// <param name="type">Type value to check.</param>
+        /// <param name="typesToCheck">Array of types to compare with.</param>
+        /// <returns>
+        /// <see langword="true" /> if <paramref name="type"/> has the same generic type definition
+        /// with any item from <paramref name="typesToCheck"/> array; otherwise,
+        /// <see langword="false" />.
+        /// </returns>
+        private static bool IsOneOfGenericTypeDefinitions(Type type, IEnumerable<Type> typesToCheck)
+        {
+            return typesToCheck.Any(tupleType => type.HasSameGenericTypeDefinition(tupleType));
         }
 
         /// <summary>

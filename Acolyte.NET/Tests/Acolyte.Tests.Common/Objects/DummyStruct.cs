@@ -98,8 +98,8 @@ namespace Acolyte.Tests.Objects
         /// <param name="left">Left hand side object to compare.</param>
         /// <param name="right">Right hand side object to compare.</param>
         /// <returns>
-        /// <see langword="true" /> if values are memberwise equals,
-        /// <see langword="false" /> otherwise.
+        /// <see langword="true" /> if values are memberwise equals; otherwise,
+        /// <see langword="false" />.
         /// </returns>
         public static bool operator ==(DummyStruct left, DummyStruct right)
         {
@@ -112,8 +112,8 @@ namespace Acolyte.Tests.Objects
         /// <param name="left">Left hand side object to compare.</param>
         /// <param name="right">Right hand side object to compare.</param>
         /// <returns>
-        /// <see langword="true" /> if values are not memberwise equals, <see langword="false" />
-        /// otherwise.
+        /// <see langword="true" /> if values are not memberwise equals; otherwise,
+        /// <see langword="false" />.
         /// </returns>
         public static bool operator !=(DummyStruct left, DummyStruct right)
         {

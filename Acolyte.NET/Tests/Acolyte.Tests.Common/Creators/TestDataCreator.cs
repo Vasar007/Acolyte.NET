@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using Acolyte.Assertions;
-using Acolyte.Common;
 using Acolyte.Data.Randomness;
 using Acolyte.Functions;
+using Acolyte.Numeric;
 using Acolyte.Tests.Objects;
 
 namespace Acolyte.Tests.Creators
