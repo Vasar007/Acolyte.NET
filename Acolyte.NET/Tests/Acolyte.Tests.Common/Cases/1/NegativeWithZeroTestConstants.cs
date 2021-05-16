@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace Acolyte.Tests.Cases
+namespace Acolyte.Tests.Cases.One
 {
-    public sealed class NegativeWithZeroTestConstants : BaseSingleTestCaseEnumerable
+    public sealed class NegativeWithZeroTestConstants : BaseOneParameterTestCase<int>
     {
         private readonly WithZeroTestConstants _withZeroTestConstants;
 
@@ -12,9 +12,9 @@ namespace Acolyte.Tests.Cases
             _withZeroTestConstants = new WithZeroTestConstants(new NegativeTestConstants());
         }
 
-        #region BaseSingleTestCaseEnumerable Overridden Methods
+        #region BaseOneParameterTestCase<int> Overridden Methods
 
-        protected override IEnumerable<int> GetValues()
+        protected internal override IEnumerable<int> GetValues()
         {
             return _withZeroTestConstants.GetValues();
         }

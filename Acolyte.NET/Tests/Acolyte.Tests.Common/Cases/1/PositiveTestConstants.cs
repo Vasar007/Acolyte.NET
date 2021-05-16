@@ -1,16 +1,16 @@
 ﻿using System.Collections.Generic;
 
-namespace Acolyte.Tests.Cases
+namespace Acolyte.Tests.Cases.One
 {
-    public sealed class PositiveTestConstants : BaseSingleTestCaseEnumerable
+    public sealed class PositiveTestConstants : BaseOneParameterTestCase<int>
     {
         public PositiveTestConstants()
         {
         }
 
-        #region BaseSingleTestCaseEnumerable Overridden Methods
+        #region BaseOneParameterTestCase<int> Overridden Methods
 
-        protected override IEnumerable<int> GetValues()
+        protected internal override IEnumerable<int> GetValues()
         {
             yield return TestConstants._1;
             yield return TestConstants._2;

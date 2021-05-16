@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace Acolyte.Tests.Cases
+namespace Acolyte.Tests.Cases.One
 {
-    public sealed class PositiveWithoutOneTestConstants : BaseSingleTestCaseEnumerable
+    public sealed class PositiveWithoutOneTestConstants : BaseOneParameterTestCase<int>
     {
         private readonly PositiveTestConstants _positiveTestConstants;
 
@@ -13,9 +13,9 @@ namespace Acolyte.Tests.Cases
             _positiveTestConstants = new PositiveTestConstants();
         }
 
-        #region BaseSingleTestCaseEnumerable Overridden Methods
+        #region BaseOneParameterTestCase<int> Overridden Methods
 
-        protected override IEnumerable<int> GetValues()
+        protected internal override IEnumerable<int> GetValues()
         {
             return _positiveTestConstants
                 .GetValues()

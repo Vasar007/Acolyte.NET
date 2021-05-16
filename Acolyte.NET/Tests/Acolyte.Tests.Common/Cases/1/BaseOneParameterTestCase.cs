@@ -2,22 +2,22 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Acolyte.Tests.Cases
+namespace Acolyte.Tests.Cases.One
 {
-    public abstract class BaseSingleTestCaseEnumerable : IEnumerable<object[]>
+    public abstract class BaseOneParameterTestCase<TFirst> : IEnumerable<object?[]>
     {
-        protected BaseSingleTestCaseEnumerable()
+        protected BaseOneParameterTestCase()
         {
         }
 
-        protected abstract IEnumerable<int> GetValues();
+        protected internal abstract IEnumerable<TFirst> GetValues();
 
-        #region IEnumerable<object[]> Implementation
+        #region IEnumerable<object?[]> Implementation
 
-        public IEnumerator<object[]> GetEnumerator()
+        public IEnumerator<object?[]> GetEnumerator()
         {
             return GetValues()
-                .Select(item => new object[] { item })
+                .Select(item => new object?[] { item })
                 .GetEnumerator();
         }
 

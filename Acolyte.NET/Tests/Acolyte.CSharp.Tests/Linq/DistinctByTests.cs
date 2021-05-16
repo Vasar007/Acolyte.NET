@@ -4,7 +4,7 @@ using System.Linq;
 using Acolyte.Functions;
 using Acolyte.Linq;
 using Acolyte.Ranges;
-using Acolyte.Tests.Cases;
+using Acolyte.Tests.Cases.One;
 using Acolyte.Tests.Collections;
 using Acolyte.Tests.Creators;
 using Acolyte.Tests.Mocked;
