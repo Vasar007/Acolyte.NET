@@ -1,6 +1,7 @@
 environment:
   packageVersion: 2.1.0
   acolytePackageZip: 'Acolyte.NET.$(packageVersion).zip'
+  dotnetFormatVersion: 5.0.211103
 
 version: '$(packageVersion).{build}'
 image: Visual Studio 2019
@@ -27,7 +28,7 @@ matrix:
   fast_finish: true
 
 install:
-  - ps: dotnet tool update -g dotnet-format
+  - ps: dotnet tool update -g dotnet-format --version $env:dotnetFormatVersion
 
 before_build:
   - ps: cd Acolyte.NET
