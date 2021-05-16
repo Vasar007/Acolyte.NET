@@ -29,19 +29,13 @@ namespace Acolyte.Linq
         {
             source.ThrowIfNull(nameof(source));
 
-            if (!startIndex.HasValue && !count.HasValue) return source;
+            IEnumerable<TSource> result = source;
 
-            // TODO: write tests and ensure that this part of code is redundant.
-            if (startIndex.HasValue && count.HasValue)
+            if (startIndex.HasValue)
             {
-                return source
-                    .Skip(startIndex.Value)
-                    .Take(count.Value);
+                result = result.Skip(startIndex.Value);
             }
 
-            int startIndexValue = startIndex.GetValueOrDefault();
-
-            IEnumerable<TSource> result = source.Skip(startIndexValue);
             if (count.HasValue)
             {
                 result = result.Take(count.Value);
