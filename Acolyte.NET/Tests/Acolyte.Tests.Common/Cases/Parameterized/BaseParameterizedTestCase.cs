@@ -22,7 +22,7 @@ namespace Acolyte.Tests.Cases.Parameterized
         {
         }
 
-        protected internal abstract IEnumerable<TData> GetValues();
+        public abstract IEnumerable<TData> GetValues();
 
         #region IEnumerable<object?[]> Implementation
 

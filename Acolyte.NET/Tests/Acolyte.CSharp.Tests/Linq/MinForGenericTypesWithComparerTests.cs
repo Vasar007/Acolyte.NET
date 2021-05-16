@@ -207,7 +207,7 @@ namespace Acolyte.Tests.Linq
         #region Some Values
 
         [Theory]
-        [ClassData(typeof(PositiveTestConstants))]
+        [ClassData(typeof(PositiveTestCases))]
         public void Min_WithComparer_ForCollectionWithSomeItems_ShouldReturnMinForValueTypes(
             int count)
         {
@@ -226,7 +226,7 @@ namespace Acolyte.Tests.Linq
         }
 
         [Theory]
-        [ClassData(typeof(PositiveTestConstants))]
+        [ClassData(typeof(PositiveTestCases))]
         public void Min_WithComparer_ForCollectionWithSomeItems_ShouldReturnMinForReferenceTypes(
             int count)
         {
@@ -245,7 +245,7 @@ namespace Acolyte.Tests.Linq
         }
 
         [Theory]
-        [ClassData(typeof(PositiveTestConstants))]
+        [ClassData(typeof(PositiveTestCases))]
         public void Min_WithComparer_ForCollectionWithTheSameItems_ShouldReturnThatItemForValueTypes(
             int count)
         {
@@ -265,7 +265,7 @@ namespace Acolyte.Tests.Linq
         }
 
         [Theory]
-        [ClassData(typeof(PositiveTestConstants))]
+        [ClassData(typeof(PositiveTestCases))]
         public void Min_WithComparer_ForCollectionWithTheSameItems_ShouldReturnThatItemForReferenceTypes(
             int count)
         {

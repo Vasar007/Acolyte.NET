@@ -3,19 +3,19 @@ using System.Linq;
 
 namespace Acolyte.Tests.Cases.Parameterized
 {
-    public sealed class NegativeTestConstants : BaseParameterizedTestCase<int>
+    public sealed class NegativeTestCases : BaseParameterizedTestCase<int>
     {
-        private readonly PositiveTestConstants _positiveTestConstants;
+        private readonly PositiveTestCases _positiveTestConstants;
 
 
-        public NegativeTestConstants()
+        public NegativeTestCases()
         {
-            _positiveTestConstants = new PositiveTestConstants();
+            _positiveTestConstants = new PositiveTestCases();
         }
 
         #region BaseParameterizedTestCase<int> Overridden Methods
 
-        protected internal override IEnumerable<int> GetValues()
+        public override IEnumerable<int> GetValues()
         {
             return _positiveTestConstants
                  .GetValues()

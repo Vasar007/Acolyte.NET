@@ -180,7 +180,7 @@ namespace Acolyte.Tests.Linq
         #region Some Values
 
         [Theory]
-        [ClassData(typeof(PositiveWithoutOneTestConstants))]
+        [ClassData(typeof(PositiveWithoutOneTestCase))]
         public void SingleOrDefault_ForCollectionWithSomeItems_ShouldFail(int count)
         {
             // Arrange.
@@ -194,7 +194,7 @@ namespace Acolyte.Tests.Linq
         }
 
         [Theory]
-        [ClassData(typeof(PositiveWithoutOneTestConstants))]
+        [ClassData(typeof(PositiveWithoutOneTestCase))]
         public void SingleOrDefault_WithPredicate_ForCollectionWithSomeItems_ShouldFailIfFoundTwoAndMoreItmsAccordingToPredicate(
             int count)
         {
@@ -209,7 +209,7 @@ namespace Acolyte.Tests.Linq
         }
 
         [Theory]
-        [ClassData(typeof(PositiveTestConstants))]
+        [ClassData(typeof(PositiveTestCases))]
         public void SingleOrDefault_WithPredicate_ForCollectionWithSomeItems_ShouldReturnDefaultItemIfFoundNoItemsAccordingToPredicate(
             int count)
         {

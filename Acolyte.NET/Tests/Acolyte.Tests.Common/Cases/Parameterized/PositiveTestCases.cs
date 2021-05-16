@@ -2,15 +2,15 @@
 
 namespace Acolyte.Tests.Cases.Parameterized
 {
-    public sealed class PositiveTestConstants : BaseParameterizedTestCase<int>
+    public sealed class PositiveTestCases : BaseParameterizedTestCase<int>
     {
-        public PositiveTestConstants()
+        public PositiveTestCases()
         {
         }
 
         #region BaseParameterizedTestCase<int> Overridden Methods
 
-        protected internal override IEnumerable<int> GetValues()
+        public override IEnumerable<int> GetValues()
         {
             yield return TestConstants._1;
             yield return TestConstants._2;

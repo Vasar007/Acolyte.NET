@@ -60,7 +60,7 @@ namespace Acolyte.Tests.Linq
         #region Some Values
 
         [Theory]
-        [ClassData(typeof(PositiveTestConstants))]
+        [ClassData(typeof(PositiveTestCases))]
         public void IsNullOrEmpty_ForCollectionWithSomeItems_ShouldReturnFalse(int count)
         {
             // Arrange.

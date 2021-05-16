@@ -232,7 +232,7 @@ namespace Acolyte.Tests.Linq
         #region Some Values
 
         [Theory]
-        [ClassData(typeof(PositiveTestConstants))]
+        [ClassData(typeof(PositiveTestCases))]
         public void MaxBy_WithoutComparer_ForCollectionWithSomeItems_ShouldReturnProperMax(
             int count)
         {
@@ -252,7 +252,7 @@ namespace Acolyte.Tests.Linq
         }
 
         [Theory]
-        [ClassData(typeof(PositiveTestConstants))]
+        [ClassData(typeof(PositiveTestCases))]
         public void MaxBy_WithComparer_ForCollectionWithSomeItems_ShouldReturnProperMax(
             int count)
         {
@@ -274,7 +274,7 @@ namespace Acolyte.Tests.Linq
         }
 
         [Theory]
-        [ClassData(typeof(PositiveTestConstants))]
+        [ClassData(typeof(PositiveTestCases))]
         public void MaxBy_WithoutComparer_ForCollectionWithTheSameItems_ShouldReturnThatItem(
             int count)
         {
@@ -293,7 +293,7 @@ namespace Acolyte.Tests.Linq
         }
 
         [Theory]
-        [ClassData(typeof(PositiveTestConstants))]
+        [ClassData(typeof(PositiveTestCases))]
         public void MaxBy_WithComparer_ForCollectionWithTheSameItems_ShouldReturnThatItem(
             int count)
         {

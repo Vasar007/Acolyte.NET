@@ -232,7 +232,7 @@ namespace Acolyte.Tests.Linq
         #region Some Values
 
         [Theory]
-        [ClassData(typeof(PositiveTestConstants))]
+        [ClassData(typeof(PositiveTestCases))]
         public void MinBy_WithoutComparer_ForCollectionWithSomeItems_ShouldReturnProperMin(
             int count)
         {
@@ -252,7 +252,7 @@ namespace Acolyte.Tests.Linq
         }
 
         [Theory]
-        [ClassData(typeof(PositiveTestConstants))]
+        [ClassData(typeof(PositiveTestCases))]
         public void MinBy_WithComparer_ForCollectionWithSomeItems_ShouldReturnProperMin(
             int count)
         {
@@ -274,7 +274,7 @@ namespace Acolyte.Tests.Linq
         }
 
         [Theory]
-        [ClassData(typeof(PositiveTestConstants))]
+        [ClassData(typeof(PositiveTestCases))]
         public void MinBy_WithoutComparer_ForCollectionWithTheSameItems_ShouldReturnThatItem(
             int count)
         {
@@ -293,7 +293,7 @@ namespace Acolyte.Tests.Linq
         }
 
         [Theory]
-        [ClassData(typeof(PositiveTestConstants))]
+        [ClassData(typeof(PositiveTestCases))]
         public void MinBy_WithComparer_ForCollectionWithTheSameItems_ShouldReturnThatItem(
             int count)
         {

@@ -1,15 +1,15 @@
 ﻿using System.Collections.Generic;
 using Acolyte.Assertions;
-using Acolyte.Linq;
+using MoreLinq;
 
 namespace Acolyte.Tests.Cases.Parameterized
 {
-    internal sealed class WithZeroTestConstants : BaseParameterizedTestCase<int>
+    internal sealed class WithZeroTestCases : BaseParameterizedTestCase<int>
     {
         private readonly BaseParameterizedTestCase<int> _originalTestCases;
 
 
-        public WithZeroTestConstants(
+        public WithZeroTestCases(
             BaseParameterizedTestCase<int> originalTestCases)
         {
             _originalTestCases = originalTestCases.ThrowIfNull(nameof(originalTestCases));
@@ -17,11 +17,11 @@ namespace Acolyte.Tests.Cases.Parameterized
 
         #region BaseParameterizedTestCase<int> Overridden Methods
 
-        protected internal override IEnumerable<int> GetValues()
+        public override IEnumerable<int> GetValues()
         {
             return _originalTestCases
                  .GetValues()
-                .PrependElement(TestConstants._0);
+                .Prepend(TestConstants._0);
         }
 
         #endregion

@@ -74,7 +74,7 @@ namespace Acolyte.Tests.Linq
         #region Some Values
 
         [Theory]
-        [ClassData(typeof(PositiveTestConstants))]
+        [ClassData(typeof(PositiveTestCases))]
         public void ForEach_ForCollectionWithSomeItems_ShouldDoActionForEachItem(int count)
         {
             // Arrange.

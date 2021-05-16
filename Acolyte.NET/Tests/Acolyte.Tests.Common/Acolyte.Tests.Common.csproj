@@ -43,6 +43,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Moq" Version="$(MoqPackageVersion)" />
+    <PackageReference Include="morelinq" Version="$(MoreLinqPackageVersion)" />
   </ItemGroup>
 
   <ItemGroup>

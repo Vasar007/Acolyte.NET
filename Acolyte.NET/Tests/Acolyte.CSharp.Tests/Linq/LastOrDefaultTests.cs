@@ -128,7 +128,7 @@ namespace Acolyte.Tests.Linq
         #region Some Values
 
         [Theory]
-        [ClassData(typeof(PositiveTestConstants))]
+        [ClassData(typeof(PositiveTestCases))]
         public void LastOrDefault_ForCollectionWithSomeItems_ShouldReturnLastItem(int count)
         {
             // Arrange.
@@ -143,7 +143,7 @@ namespace Acolyte.Tests.Linq
         }
 
         [Theory]
-        [ClassData(typeof(PositiveTestConstants))]
+        [ClassData(typeof(PositiveTestCases))]
         public void LastOrDefault_WithPredicate_ForCollectionWithSomeItems_ShouldReturnLastItem(
             int count)
         {
@@ -161,7 +161,7 @@ namespace Acolyte.Tests.Linq
         }
 
         [Theory]
-        [ClassData(typeof(PositiveTestConstants))]
+        [ClassData(typeof(PositiveTestCases))]
         public void LastOrDefault_WithPredicate_ForCollectionWithSomeItems_ShouldReturnDefaultItem(
             int count)
         {

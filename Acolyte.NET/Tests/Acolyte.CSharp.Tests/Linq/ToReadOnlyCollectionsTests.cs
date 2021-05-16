@@ -416,7 +416,7 @@ namespace Acolyte.Tests.Linq
         #region Some Values
 
         [Theory]
-        [ClassData(typeof(PositiveTestConstants))]
+        [ClassData(typeof(PositiveTestCases))]
         public void ToReadOnlyDictionary_WithKeySelector_ForCollectionWithSomeItems_ShouldReturnFilledDictionary(
             int count)
         {
@@ -439,7 +439,7 @@ namespace Acolyte.Tests.Linq
         }
 
         [Theory]
-        [ClassData(typeof(PositiveTestConstants))]
+        [ClassData(typeof(PositiveTestCases))]
         public void ToReadOnlyDictionary_WithKeySelectorAndComparer_ForCollectionWithSomeItems_ShouldReturnFilledDictionary(
             int count)
         {
@@ -468,7 +468,7 @@ namespace Acolyte.Tests.Linq
         }
 
         [Theory]
-        [ClassData(typeof(PositiveTestConstants))]
+        [ClassData(typeof(PositiveTestCases))]
         public void ToReadOnlyDictionary_WithKeyElementSelectors_ForCollectionWithSomeItems_ShouldReturnFilledDictionary(
             int count)
         {
@@ -494,7 +494,7 @@ namespace Acolyte.Tests.Linq
         }
 
         [Theory]
-        [ClassData(typeof(PositiveTestConstants))]
+        [ClassData(typeof(PositiveTestCases))]
         public void ToReadOnlyDictionary_WithKeyElementSelectorsAndComparer_ForCollectionWithSomeItems_ShouldReturnFilledDictionary(
             int count)
         {
@@ -969,7 +969,7 @@ namespace Acolyte.Tests.Linq
         #region Some Values
 
         [Theory]
-        [ClassData(typeof(PositiveTestConstants))]
+        [ClassData(typeof(PositiveTestCases))]
         public void ToReadOnlyList_ForCollectionWithSomeItems_ShouldReturnFilledList(int count)
         {
             // Arrange.
@@ -1116,7 +1116,7 @@ namespace Acolyte.Tests.Linq
         #region Some Values
 
         [Theory]
-        [ClassData(typeof(PositiveTestConstants))]
+        [ClassData(typeof(PositiveTestCases))]
         public void ToReadOnlyCollection_ForCollectionWithSomeItems_ShouldReturnFilledCollection(
             int count)
         {

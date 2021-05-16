@@ -7,6 +7,7 @@
     <MicrosoftBclHashCodePackageVersion>1.1.1</MicrosoftBclHashCodePackageVersion>
     <MicrosoftNETTestSdkPackageVersion>16.9.4</MicrosoftNETTestSdkPackageVersion>
     <MoqPackageVersion>4.16.1</MoqPackageVersion>
+    <MoreLinqPackageVersion>3.3.2</MoreLinqPackageVersion>
     <SystemLinqAsyncPackageVersion>5.0.0</SystemLinqAsyncPackageVersion>
     <UnquotePackageVersion>5.0.0</UnquotePackageVersion>
     <XunitPackageVersion>2.4.1</XunitPackageVersion>

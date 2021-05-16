@@ -173,7 +173,7 @@ namespace Acolyte.Tests.Linq
         #region Some Values
 
         [Theory]
-        [ClassData(typeof(PositiveTestConstants))]
+        [ClassData(typeof(PositiveTestCases))]
         public void DistinctBy_ForCollectionWithSomeItems_ShouldSelectUniqueItemsByKeySelector(
             int count)
         {
@@ -193,7 +193,7 @@ namespace Acolyte.Tests.Linq
         }
 
         [Theory]
-        [ClassData(typeof(PositiveTestConstants))]
+        [ClassData(typeof(PositiveTestCases))]
         public void DistinctBy_WithComparer_ForCollectionWithSomeItems_ShouldSelectUniqueItemsByKeySelector(
             int count)
         {

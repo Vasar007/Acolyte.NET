@@ -433,7 +433,7 @@ namespace Acolyte.Tests.Linq
         #region Some Values
 
         [Theory]
-        [ClassData(typeof(PositiveTestConstants))]
+        [ClassData(typeof(PositiveTestCases))]
         public void ToSingleString_ForCollectionWithSomeItems_ShouldReturnPropperMessageWithItems(int count)
         {
             // Arrange.
@@ -450,7 +450,7 @@ namespace Acolyte.Tests.Linq
         }
 
         [Theory]
-        [ClassData(typeof(PositiveTestConstants))]
+        [ClassData(typeof(PositiveTestCases))]
         public void ToSingleString_WithEmptyCollectionMessage_ForCollectionWithSomeItems_ShouldReturnPropperMessageWithItems(int count)
         {
             // Arrange.
@@ -468,7 +468,7 @@ namespace Acolyte.Tests.Linq
         }
 
         [Theory]
-        [ClassData(typeof(PositiveTestConstants))]
+        [ClassData(typeof(PositiveTestCases))]
         public void ToSingleString_WithEmptyCollectionMessageAndSeparator_ForCollectionWithSomeItems_ShouldReturnPropperMessageWithItems(int count)
         {
             // Arrange.
@@ -488,7 +488,7 @@ namespace Acolyte.Tests.Linq
         }
 
         [Theory]
-        [ClassData(typeof(PositiveTestConstants))]
+        [ClassData(typeof(PositiveTestCases))]
         public void ToSingleString_WithSelector_ForCollectionWithSomeItems_ShouldReturnPropperMessageWithItems(int count)
         {
             // Arrange.
@@ -505,7 +505,7 @@ namespace Acolyte.Tests.Linq
         }
 
         [Theory]
-        [ClassData(typeof(PositiveTestConstants))]
+        [ClassData(typeof(PositiveTestCases))]
         public void ToSingleString_WithEmptyCollectionMessageAndSelector_ForCollectionWithSomeItems_ShouldReturnPropperMessageWithItems(int count)
         {
             // Arrange.
@@ -525,7 +525,7 @@ namespace Acolyte.Tests.Linq
         }
 
         [Theory]
-        [ClassData(typeof(PositiveTestConstants))]
+        [ClassData(typeof(PositiveTestCases))]
         public void ToSingleString_WithEmptyCollectionMessageAndSeparatorAndSelector_ForCollectionWithSomeItems_ShouldReturnPropperMessageWithItems(int count)
         {
             // Arrange.

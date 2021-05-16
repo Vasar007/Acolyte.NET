@@ -364,7 +364,7 @@ namespace Acolyte.Tests.Linq
         #region Some Values
 
         [Theory]
-        [ClassData(typeof(PositiveTestConstants))]
+        [ClassData(typeof(PositiveTestCases))]
         public void MinMaxBy_ForCollectionWithSomeItems_ShouldReturnProperMinMaxForValueTypes(
             int count)
         {
@@ -386,7 +386,7 @@ namespace Acolyte.Tests.Linq
         }
 
         [Theory]
-        [ClassData(typeof(PositiveTestConstants))]
+        [ClassData(typeof(PositiveTestCases))]
         public void MinMaxBy_ForCollectionWithSomeItems_ShouldReturnProperMinMaxForReferenceTypes(
             int count)
         {
@@ -408,7 +408,7 @@ namespace Acolyte.Tests.Linq
         }
 
         [Theory]
-        [ClassData(typeof(PositiveTestConstants))]
+        [ClassData(typeof(PositiveTestCases))]
         public void MinMaxBy_WithComparer_ForCollectionWithSomeItems_ShouldReturnProperMinMaxForValueTypes(
             int count)
         {
@@ -432,7 +432,7 @@ namespace Acolyte.Tests.Linq
         }
 
         [Theory]
-        [ClassData(typeof(PositiveTestConstants))]
+        [ClassData(typeof(PositiveTestCases))]
         public void MinMaxBy_WithComparer_ForCollectionWithSomeItems_ShouldReturnProperMinMaxForReferenceTypes(
             int count)
         {
@@ -456,7 +456,7 @@ namespace Acolyte.Tests.Linq
         }
 
         [Theory]
-        [ClassData(typeof(PositiveTestConstants))]
+        [ClassData(typeof(PositiveTestCases))]
         public void MinMaxBy_ForCollectionWithTheSameItems_ShouldReturnThatItemForValueTypes(
             int count)
         {
@@ -477,7 +477,7 @@ namespace Acolyte.Tests.Linq
         }
 
         [Theory]
-        [ClassData(typeof(PositiveTestConstants))]
+        [ClassData(typeof(PositiveTestCases))]
         public void MinMaxBy_ForCollectionWithTheSameItems_ShouldReturnThatItemForReferenceTypes(
            int count)
         {
@@ -498,7 +498,7 @@ namespace Acolyte.Tests.Linq
         }
 
         [Theory]
-        [ClassData(typeof(PositiveTestConstants))]
+        [ClassData(typeof(PositiveTestCases))]
         public void MinMaxBy_WithComparer_ForCollectionWithTheSameItems_ShouldReturnThatItemForValueTypes(
             int count)
         {
@@ -519,7 +519,7 @@ namespace Acolyte.Tests.Linq
         }
 
         [Theory]
-        [ClassData(typeof(PositiveTestConstants))]
+        [ClassData(typeof(PositiveTestCases))]
         public void MinMaxBy_WithComparer_ForCollectionWithTheSameItems_ShouldReturnThatItemForReferenceTypes(
             int count)
         {
