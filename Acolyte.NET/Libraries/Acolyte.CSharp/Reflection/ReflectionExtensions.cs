@@ -12,12 +12,14 @@ namespace Acolyte.Reflection
         {
             objectToInspect.ThrowIfNull(nameof(objectToInspect));
 
+            const BindingFlags bindingAttr =
+                BindingFlags.Instance |
+                BindingFlags.Public |
+                BindingFlags.FlattenHierarchy;
+
             return objectToInspect
                 .GetType()
-                .GetFields(BindingFlags.Instance |
-                           BindingFlags.Public |
-                           BindingFlags.FlattenHierarchy)
-                // "Cast" to "object?" because fields can be nullable.
+                .GetFields(bindingAttr)
                 .Select(field => field.GetValue(objectToInspect));
         }
     }
