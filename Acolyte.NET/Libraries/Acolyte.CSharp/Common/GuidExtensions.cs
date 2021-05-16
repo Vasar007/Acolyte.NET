@@ -12,8 +12,8 @@ namespace Acolyte.Common
         /// </summary>
         /// <param name="guid">Value to compare.</param>
         /// <returns>
-        /// <see langword="true" /> if <paramref name="guid" /> equals to <see cref="Guid.Empty" />,
-        /// <see langword="false" /> otherwise.
+        /// <see langword="true" /> if <paramref name="guid" /> equals to <see cref="Guid.Empty" />;
+        /// otherwise, <see langword="false" />.
         /// </returns>
         public static bool IsEmpty(this Guid guid)
         {

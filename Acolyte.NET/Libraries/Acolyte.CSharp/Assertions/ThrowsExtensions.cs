@@ -185,7 +185,7 @@ namespace Acolyte.Assertions
         /// </param>
         /// <returns>
         /// Returns <see langword="true" /> in case the enumerable is <see langword="null" /> or
-        /// empty, <see langword="false" /> otherwise.
+        /// empty; otherwise, <see langword="false" />.
         /// </returns>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="collection" /> is <see langword="null" />. -or-

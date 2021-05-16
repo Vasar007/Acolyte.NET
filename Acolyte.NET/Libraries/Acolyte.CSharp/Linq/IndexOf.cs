@@ -21,7 +21,7 @@ namespace Acolyte.Linq
         /// <param name="predicate">A function to test each element for a condition.</param>
         /// <returns>
         /// The zero-based index of the first occurrence of an element that satisfies 
-        /// <paramref name="predicate" />, if found; otherwise it will return
+        /// <paramref name="predicate" />, if found; otherwise, it will return
         /// <see cref="Constants.NotFoundIndex" /> (it's equal to -1).
         /// </returns>
         /// <exception cref="ArgumentNullException">
@@ -63,7 +63,7 @@ namespace Acolyte.Linq
         /// </param>
         /// <returns>
         /// The zero-based index of the first occurrence of an element that equals to the 
-        /// <paramref name="value" />, if found; otherwise it will return
+        /// <paramref name="value" />, if found; otherwise, it will return
         /// <see cref="Constants.NotFoundIndex" /> (it's equal to -1).
         /// </returns>
         /// <exception cref="ArgumentNullException">
@@ -91,7 +91,7 @@ namespace Acolyte.Linq
         /// <param name="value">Value to find index of.</param>
         /// <returns>
         /// The zero-based index of the first occurrence of an element that equals to the 
-        /// <paramref name="value" />, if found; otherwise it will return
+        /// <paramref name="value" />, if found; otherwise, it will return
         /// <see cref="Constants.NotFoundIndex" /> (it's equal to -1).
         /// </returns>
         /// <exception cref="ArgumentNullException">

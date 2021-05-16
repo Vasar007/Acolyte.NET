@@ -123,8 +123,8 @@ namespace Acolyte.Common
         /// <param name="left">Left hand side object to compare.</param>
         /// <param name="right">Right hand side object to compare.</param>
         /// <returns>
-        /// <see langword="true" /> if values are memberwise equals,
-        /// <see langword="false" /> otherwise.
+        /// <see langword="true" /> if values are memberwise equals; otherwise,
+        /// <see langword="false" />.
         /// </returns>
         public static bool operator ==(Option<T> left, Option<T> right)
         {
@@ -137,7 +137,7 @@ namespace Acolyte.Common
         /// <param name="left">Left hand side object to compare.</param>
         /// <param name="right">Right hand side object to compare.</param>
         /// <returns>
-        /// <see langword="true" /> if values are not memberwise equals,
+        /// <see langword="true" /> if values are not memberwise equals; otherwise,
         /// <see langword="false" /> otherwise.
         /// </returns>
         public static bool operator !=(Option<T> left, Option<T> right)

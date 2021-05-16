@@ -13,8 +13,8 @@ namespace Acolyte.Linq
         /// </typeparam>
         /// <param name="source">The <see cref="IEnumerable{TSource}" /> to check.</param>
         /// <returns>
-        /// Returns <see langword="true" /> in case the enumerable is <see langword="null" /> or empty, <see langword="false" /> 
-        /// otherwise.
+        /// Returns <see langword="true" /> in case the enumerable is <see langword="null" /> or
+        /// empty; otherwise, <see langword="false" />.
         /// </returns>
         public static bool IsNullOrEmpty<TSource>(this IEnumerable<TSource>? source)
         {
