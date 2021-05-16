@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Acolyte.Common;
 using Acolyte.Linq;
-using Acolyte.Tests.Cases.One;
+using Acolyte.Tests.Cases.Parameterized;
 using Acolyte.Tests.Collections;
 using Acolyte.Tests.Creators;
 using Acolyte.Tests.Mocked;

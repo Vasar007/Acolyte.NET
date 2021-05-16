@@ -2,20 +2,20 @@
 using Acolyte.Assertions;
 using Acolyte.Linq;
 
-namespace Acolyte.Tests.Cases.One
+namespace Acolyte.Tests.Cases.Parameterized
 {
-    internal sealed class WithZeroTestConstants : BaseOneParameterTestCase<int>
+    internal sealed class WithZeroTestConstants : BaseParameterizedTestCase<int>
     {
-        private readonly BaseOneParameterTestCase<int> _originalTestCases;
+        private readonly BaseParameterizedTestCase<int> _originalTestCases;
 
 
         public WithZeroTestConstants(
-            BaseOneParameterTestCase<int> originalTestCases)
+            BaseParameterizedTestCase<int> originalTestCases)
         {
             _originalTestCases = originalTestCases.ThrowIfNull(nameof(originalTestCases));
         }
 
-        #region BaseOneParameterTestCase<int> Overridden Methods
+        #region BaseParameterizedTestCase<int> Overridden Methods
 
         protected internal override IEnumerable<int> GetValues()
         {

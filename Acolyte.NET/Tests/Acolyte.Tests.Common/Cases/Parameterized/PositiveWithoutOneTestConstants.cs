@@ -1,25 +1,25 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace Acolyte.Tests.Cases.One
+namespace Acolyte.Tests.Cases.Parameterized
 {
-    public sealed class NegativeTestConstants : BaseOneParameterTestCase<int>
+    public sealed class PositiveWithoutOneTestConstants : BaseParameterizedTestCase<int>
     {
         private readonly PositiveTestConstants _positiveTestConstants;
 
 
-        public NegativeTestConstants()
+        public PositiveWithoutOneTestConstants()
         {
             _positiveTestConstants = new PositiveTestConstants();
         }
 
-        #region BaseOneParameterTestCase<int> Overridden Methods
+        #region BaseParameterizedTestCase<int> Overridden Methods
 
         protected internal override IEnumerable<int> GetValues()
         {
             return _positiveTestConstants
-                 .GetValues()
-                 .Select(item => -item);
+                .GetValues()
+                .Skip(1);
         }
 
         #endregion

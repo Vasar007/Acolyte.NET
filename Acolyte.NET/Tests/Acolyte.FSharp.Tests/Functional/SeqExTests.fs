@@ -4,7 +4,7 @@ module Acolyte.Functional.Tests.SeqExTests
 open System
 open Swensen.Unquote
 open Xunit
-open Acolyte.Tests.Cases.One
+open Acolyte.Tests.Cases.Parameterized
 open Acolyte.Functional
 
 /// region: Tests for "skipSafe" method.

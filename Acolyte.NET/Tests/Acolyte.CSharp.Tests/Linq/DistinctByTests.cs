@@ -4,7 +4,7 @@ using System.Linq;
 using Acolyte.Functions;
 using Acolyte.Linq;
 using Acolyte.Ranges;
-using Acolyte.Tests.Cases.One;
+using Acolyte.Tests.Cases.Parameterized;
 using Acolyte.Tests.Collections;
 using Acolyte.Tests.Creators;
 using Acolyte.Tests.Mocked;
@@ -104,13 +104,12 @@ namespace Acolyte.Tests.Linq
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
             Func<int, bool> keySelector = item => NumberParityFunction.IsEven(item);
-            var expectedResult = Enumerable.Empty<int>();
 
             // Act.
             var actualResult = emptyCollection.DistinctBy(keySelector);
 
             // Assert.
-            Assert.Equal(expectedResult, actualResult);
+            Assert.Equal(emptyCollection, actualResult);
         }
 
         [Fact]
@@ -119,14 +118,13 @@ namespace Acolyte.Tests.Linq
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
             Func<int, bool> keySelector = item => NumberParityFunction.IsEven(item);
-            var expectedResult = Enumerable.Empty<int>();
             var keyComparer = MockEqualityComparer<bool>.Default;
 
             // Act.
             var actualResult = emptyCollection.DistinctBy(keySelector, keyComparer);
 
             // Assert.
-            Assert.Equal(expectedResult, actualResult);
+            Assert.Equal(emptyCollection, actualResult);
             keyComparer.VerifyNoCalls();
         }
 

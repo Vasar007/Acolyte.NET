@@ -1,14 +1,14 @@
 ﻿using System.Collections.Generic;
 
-namespace Acolyte.Tests.Cases.One
+namespace Acolyte.Tests.Cases.Parameterized
 {
-    public sealed class PositiveTestConstants : BaseOneParameterTestCase<int>
+    public sealed class PositiveTestConstants : BaseParameterizedTestCase<int>
     {
         public PositiveTestConstants()
         {
         }
 
-        #region BaseOneParameterTestCase<int> Overridden Methods
+        #region BaseParameterizedTestCase<int> Overridden Methods
 
         protected internal override IEnumerable<int> GetValues()
         {
