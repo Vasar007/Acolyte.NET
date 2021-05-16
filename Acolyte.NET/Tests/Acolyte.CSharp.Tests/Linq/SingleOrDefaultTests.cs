@@ -324,7 +324,7 @@ namespace Acolyte.Tests.Linq
                 () => explosive.SingleOrDefault(defaultValue: default)
             );
 
-            CustomAssert.True(explosive.VerifySingle(expectedVisitedItemsNumber: 2));
+            CustomAssert.True(explosive.VerifyOnce(expectedVisitedItemsNumber: 2));
         }
 
         [Fact]
@@ -342,7 +342,7 @@ namespace Acolyte.Tests.Linq
             );
 
             // Assert.
-            CustomAssert.True(explosive.VerifySingleEnumerateWholeCollection(collection));
+            CustomAssert.True(explosive.VerifyOnceEnumerateWholeCollection(collection));
             Assert.Equal(expectedValue, actualValue);
         }
 
@@ -363,7 +363,7 @@ namespace Acolyte.Tests.Linq
                 )
             );
 
-            CustomAssert.True(explosive.VerifySingle(expectedVisitedItemsNumber: 4));
+            CustomAssert.True(explosive.VerifyOnce(expectedVisitedItemsNumber: 4));
         }
 
         [Fact]
@@ -380,7 +380,7 @@ namespace Acolyte.Tests.Linq
             int? actualValue = explosive.SingleOrDefault(defaultValue: 0);
 
             // Assert.
-            CustomAssert.True(explosive.VerifySingleEnumerateWholeCollection(collection));
+            CustomAssert.True(explosive.VerifyOnceEnumerateWholeCollection(collection));
             Assert.Equal(expectedValue, actualValue);
         }
 
@@ -400,7 +400,7 @@ namespace Acolyte.Tests.Linq
             );
 
             // Assert.
-            CustomAssert.True(explosive.VerifySingleEnumerateWholeCollection(collection));
+            CustomAssert.True(explosive.VerifyOnceEnumerateWholeCollection(collection));
             Assert.Equal(expectedValue, actualValue);
         }
 

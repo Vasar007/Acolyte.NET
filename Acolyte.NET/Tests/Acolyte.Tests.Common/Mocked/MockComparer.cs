@@ -63,7 +63,7 @@ namespace Acolyte.Tests.Mocked
             VerifyCompareCallsInternal(Times.Exactly(times));
         }
 
-        public void VerifyCompareCallsForEach<TItem>(IReadOnlyCollection<TItem> collection)
+        public void VerifyCompareCallsOnceForEach<TItem>(IReadOnlyCollection<TItem> collection)
         {
             VerifyCompareCallsInternal(Times.Exactly(collection.Count));
         }

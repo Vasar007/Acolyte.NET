@@ -299,7 +299,7 @@ namespace Acolyte.Tests.Linq
 
             // Assert.
             Assert.Equal(expectedIndex, actualIndex);
-            comparer.VerifyEqualsCallsForEach(collectionWithSomeItems);
+            comparer.VerifyEqualsCallsOnceForEach(collectionWithSomeItems);
             comparer.VerifyGetHashCodeNoCalls();
         }
 
@@ -448,7 +448,7 @@ namespace Acolyte.Tests.Linq
             int actualIndex = explosive.IndexOf(_ => false);
 
             // Assert.
-            CustomAssert.True(explosive.VerifySingleEnumerateWholeCollection(collection));
+            CustomAssert.True(explosive.VerifyOnceEnumerateWholeCollection(collection));
             Assert.Equal(expectedValue, actualIndex);
         }
 
@@ -484,7 +484,7 @@ namespace Acolyte.Tests.Linq
             int actualIndex = explosive.IndexOf(value: 0);
 
             // Assert.
-            CustomAssert.True(explosive.VerifySingleEnumerateWholeCollection(collection));
+            CustomAssert.True(explosive.VerifyOnceEnumerateWholeCollection(collection));
             Assert.Equal(expectedValue, actualIndex);
         }
 
@@ -524,9 +524,9 @@ namespace Acolyte.Tests.Linq
             int actualIndex = explosive.IndexOf(value: 0, comparer);
 
             // Assert.
-            CustomAssert.True(explosive.VerifySingleEnumerateWholeCollection(collection));
+            CustomAssert.True(explosive.VerifyOnceEnumerateWholeCollection(collection));
             Assert.Equal(expectedValue, actualIndex);
-            comparer.VerifyEqualsCallsForEach(collection);
+            comparer.VerifyEqualsCallsOnceForEach(collection);
             comparer.VerifyGetHashCodeNoCalls();
         }
 

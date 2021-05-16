@@ -70,7 +70,7 @@ namespace Acolyte.Tests.Mocked
             VerifyEqualsCallsInternal(Times.Exactly(times));
         }
 
-        public void VerifyEqualsCallsForEach<TItem>(IReadOnlyCollection<TItem> collection)
+        public void VerifyEqualsCallsOnceForEach<TItem>(IReadOnlyCollection<TItem> collection)
         {
             VerifyEqualsCallsInternal(Times.Exactly(collection.Count));
         }
@@ -101,7 +101,7 @@ namespace Acolyte.Tests.Mocked
             VerifyGetHashCodeCallsInternal(Times.Exactly(times));
         }
 
-        public void VerifyGetHashCodeCallsForEach<TItem>(IReadOnlyCollection<TItem> collection)
+        public void VerifyGetHashCodeCallsOnceForEach<TItem>(IReadOnlyCollection<TItem> collection)
         {
             VerifyGetHashCodeCallsInternal(Times.Exactly(collection.Count));
         }

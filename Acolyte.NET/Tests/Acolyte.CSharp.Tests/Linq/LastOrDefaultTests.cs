@@ -257,7 +257,7 @@ namespace Acolyte.Tests.Linq
             int actualValue = explosive.LastOrDefault(defaultValue: default);
 
             // Assert.
-            CustomAssert.True(explosive.VerifySingleEnumerateWholeCollection(collection));
+            CustomAssert.True(explosive.VerifyOnceEnumerateWholeCollection(collection));
             Assert.Equal(expectedValue, actualValue);
         }
 
@@ -274,7 +274,7 @@ namespace Acolyte.Tests.Linq
             int actualValue = explosive.LastOrDefault(discard, expectedValue);
 
             // Assert.
-            CustomAssert.True(explosive.VerifySingleEnumerateWholeCollection(collection));
+            CustomAssert.True(explosive.VerifyOnceEnumerateWholeCollection(collection));
             Assert.Equal(expectedValue, actualValue);
         }
 
@@ -293,7 +293,7 @@ namespace Acolyte.Tests.Linq
             );
 
             // Assert.
-            CustomAssert.True(explosive.VerifySingleEnumerateWholeCollection(collection));
+            CustomAssert.True(explosive.VerifyOnceEnumerateWholeCollection(collection));
             Assert.Equal(expectedValue, actualValue);
         }
 
@@ -310,7 +310,7 @@ namespace Acolyte.Tests.Linq
             int? actualValue = explosive.LastOrDefault(defaultValue: 0);
 
             // Assert.
-            CustomAssert.True(explosive.VerifySingleEnumerateWholeCollection(collection));
+            CustomAssert.True(explosive.VerifyOnceEnumerateWholeCollection(collection));
             Assert.Equal(expectedValue, actualValue);
         }
 
@@ -329,7 +329,7 @@ namespace Acolyte.Tests.Linq
             );
 
             // Assert.
-            CustomAssert.True(explosive.VerifySingleEnumerateWholeCollection(collection));
+            CustomAssert.True(explosive.VerifyOnceEnumerateWholeCollection(collection));
             Assert.Equal(expectedValue, actualValue);
         }
 

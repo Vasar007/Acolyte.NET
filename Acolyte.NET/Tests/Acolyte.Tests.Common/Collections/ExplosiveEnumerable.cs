@@ -39,9 +39,9 @@ namespace Acolyte.Tests.Collections
         {
             _getEnumeratorCounter.Increment();
             return ExplosiveEnumerator.Create(
-                _originalEnumerable.GetEnumerator(),
-                ExplosiveIndex,
-                _visitedItemsNumber.Reset()
+                originalEnumerator: _originalEnumerable.GetEnumerator(),
+                explosiveIndex: ExplosiveIndex,
+                visitedItemsNumber: _visitedItemsNumber.Reset()
             );
         }
 
@@ -73,7 +73,7 @@ namespace Acolyte.Tests.Collections
             return Reasonable.Wrap(false, message);
         }
 
-        public Reasonable<bool> VerifySingle(int expectedVisitedItemsNumber)
+        public Reasonable<bool> VerifyOnce(int expectedVisitedItemsNumber)
         {
             return Verify(expectedVisitedItemsNumber, expectedGetEnumeratorCalls: 1);
         }
@@ -88,10 +88,10 @@ namespace Acolyte.Tests.Collections
             return Verify(expectedVisitedItemsNumber, expectedGetEnumeratorCalls: 3);
         }
 
-        public Reasonable<bool> VerifySingleEnumerateWholeCollection<TItem>(
+        public Reasonable<bool> VerifyOnceEnumerateWholeCollection<TItem>(
            IReadOnlyCollection<TItem> collection)
         {
-            return VerifySingle(collection.Count);
+            return VerifyOnce(collection.Count);
         }
 
         public Reasonable<bool> VerifyTwiceEnumerateWholeCollection<TItem>(
