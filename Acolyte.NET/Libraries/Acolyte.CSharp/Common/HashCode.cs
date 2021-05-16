@@ -1,4 +1,6 @@
-﻿#if NETSTANDARD2_0
+﻿#pragma warning disable format // dotnet format fails indentation for regions :(
+
+#if NETSTANDARD2_0
 
 using System;
 using System.Collections.Generic;
