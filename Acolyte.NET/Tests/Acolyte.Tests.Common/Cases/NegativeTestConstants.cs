@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace Acolyte.Tests.Cases
 {
-    public sealed class NegativeTestConstants : BaseSingleTestCaseEnumerator
+    public sealed class NegativeTestConstants : BaseSingleTestCaseEnumerable
     {
         private readonly PositiveTestConstants _positiveTestConstants;
 
@@ -13,9 +13,9 @@ namespace Acolyte.Tests.Cases
             _positiveTestConstants = new PositiveTestConstants();
         }
 
-        #region BaseSingleTestCaseEnumerator Overridden Methods
+        #region BaseSingleTestCaseEnumerable Overridden Methods
 
-        internal override IEnumerable<int> GetValues()
+        protected override IEnumerable<int> GetValues()
         {
             return _positiveTestConstants
                  .GetValues()

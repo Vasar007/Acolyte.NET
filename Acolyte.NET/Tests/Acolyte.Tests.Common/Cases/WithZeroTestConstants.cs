@@ -4,20 +4,20 @@ using Acolyte.Linq;
 
 namespace Acolyte.Tests.Cases
 {
-    internal sealed class WithZeroTestConstants : BaseSingleTestCaseEnumerator
+    internal sealed class WithZeroTestConstants : BaseSingleTestCaseEnumerable
     {
-        private readonly BaseSingleTestCaseEnumerator _originalTestCases;
+        private readonly BaseSingleTestCaseEnumerable _originalTestCases;
 
 
         public WithZeroTestConstants(
-            BaseSingleTestCaseEnumerator originalTestCases)
+            BaseSingleTestCaseEnumerable originalTestCases)
         {
             _originalTestCases = originalTestCases.ThrowIfNull(nameof(originalTestCases));
         }
 
-        #region BaseSingleTestCaseEnumerator Overridden Methods
+        #region BaseSingleTestCaseEnumerable Overridden Methods
 
-        internal override IEnumerable<int> GetValues()
+        protected override IEnumerable<int> GetValues()
         {
             return _originalTestCases
                  .GetValues()

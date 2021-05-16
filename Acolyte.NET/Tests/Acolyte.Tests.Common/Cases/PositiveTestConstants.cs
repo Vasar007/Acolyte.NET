@@ -2,15 +2,15 @@
 
 namespace Acolyte.Tests.Cases
 {
-    public sealed class PositiveTestConstants : BaseSingleTestCaseEnumerator
+    public sealed class PositiveTestConstants : BaseSingleTestCaseEnumerable
     {
         public PositiveTestConstants()
         {
         }
 
-        #region BaseSingleTestCaseEnumerator Overridden Methods
+        #region BaseSingleTestCaseEnumerable Overridden Methods
 
-        internal override IEnumerable<int> GetValues()
+        protected override IEnumerable<int> GetValues()
         {
             yield return TestConstants._1;
             yield return TestConstants._2;

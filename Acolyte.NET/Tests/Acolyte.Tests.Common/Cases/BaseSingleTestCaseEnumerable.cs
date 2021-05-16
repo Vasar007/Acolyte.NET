@@ -4,13 +4,13 @@ using System.Linq;
 
 namespace Acolyte.Tests.Cases
 {
-    public abstract class BaseSingleTestCaseEnumerator : IEnumerable<object[]>
+    public abstract class BaseSingleTestCaseEnumerable : IEnumerable<object[]>
     {
-        public BaseSingleTestCaseEnumerator()
+        protected BaseSingleTestCaseEnumerable()
         {
         }
 
-        internal abstract IEnumerable<int> GetValues();
+        protected abstract IEnumerable<int> GetValues();
 
         #region IEnumerable<object[]> Implementation
 

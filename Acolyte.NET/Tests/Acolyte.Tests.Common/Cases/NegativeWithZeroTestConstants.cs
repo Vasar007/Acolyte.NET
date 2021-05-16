@@ -2,7 +2,7 @@
 
 namespace Acolyte.Tests.Cases
 {
-    public sealed class NegativeWithZeroTestConstants : BaseSingleTestCaseEnumerator
+    public sealed class NegativeWithZeroTestConstants : BaseSingleTestCaseEnumerable
     {
         private readonly WithZeroTestConstants _withZeroTestConstants;
 
@@ -12,9 +12,9 @@ namespace Acolyte.Tests.Cases
             _withZeroTestConstants = new WithZeroTestConstants(new NegativeTestConstants());
         }
 
-        #region BaseSingleTestCaseEnumerator Overridden Methods
+        #region BaseSingleTestCaseEnumerable Overridden Methods
 
-        internal override IEnumerable<int> GetValues()
+        protected override IEnumerable<int> GetValues()
         {
             return _withZeroTestConstants.GetValues();
         }
