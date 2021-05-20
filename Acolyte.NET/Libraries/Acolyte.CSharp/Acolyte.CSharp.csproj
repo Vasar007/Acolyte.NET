@@ -63,6 +63,7 @@
 
   <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
     <PackageReference Include="Microsoft.Bcl.HashCode" Version="$(MicrosoftBclHashCodePackageVersion)" />
+    <PackageReference Include="Nullable" Version="$(NullablePackageVersion)" />
   </ItemGroup>
 
 </Project>
