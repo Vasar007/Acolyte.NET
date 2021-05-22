@@ -1,10 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Platforms>AnyCPU</Platforms>
+    <Platforms>$(PackagePlatforms)</Platforms>
     <TargetFramework>net5.0</TargetFramework>
     <OutputType>Exe</OutputType>
-    <LangVersion>9.0</LangVersion>
+    <LangVersion>$(CSharpLangVersion)</LangVersion>
     <Nullable>enable</Nullable>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <RootNamespace>Acolyte.Examples</RootNamespace>

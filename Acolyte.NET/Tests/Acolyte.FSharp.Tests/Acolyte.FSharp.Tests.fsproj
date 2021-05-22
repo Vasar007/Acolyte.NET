@@ -1,11 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Platforms>AnyCPU</Platforms>
-    <Configurations>Debug;Release</Configurations>
-    <TargetFrameworks>net472;netcoreapp3.1;net5.0</TargetFrameworks>
+    <Platforms>$(PackagePlatforms)</Platforms>
+    <Configurations>$(PackageConfigurations)</Configurations>
+    <TargetFrameworks>$(TestTargetFrameworks)</TargetFrameworks>
     <OutputType>Library</OutputType>
-    <LangVersion>5.0</LangVersion>
+    <LangVersion>$(FSharpLangVersion)</LangVersion>
     <Nullable>enable</Nullable>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <GenerateProgramFile>false</GenerateProgramFile>
