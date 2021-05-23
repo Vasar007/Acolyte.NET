@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Acolyte.Common;
 
 namespace Acolyte.Examples
 {
@@ -51,7 +52,7 @@ namespace Acolyte.Examples
                     Task.Run(() => SomeAsyncStuff(2))
                 );
 
-                return 0;
+                return ExitCodes.Success;
             }
             catch (Exception ex)
             {
@@ -59,7 +60,7 @@ namespace Acolyte.Examples
                                           $"{Environment.NewLine}{ex}";
                 Console.WriteLine(exceptionMessage);
 
-                return -1;
+                return ExitCodes.Fail;
             }
             finally
             {

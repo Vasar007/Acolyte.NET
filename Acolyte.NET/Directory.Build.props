@@ -1,4 +1,5 @@
 <Project>
+
   <!-- Project properties -->
   <PropertyGroup>
     <PackagePlatforms>AnyCPU</PackagePlatforms>
@@ -8,6 +9,7 @@
     <CSharpLangVersion>9.0</CSharpLangVersion>
     <FSharpLangVersion>5.0</FSharpLangVersion>
   </PropertyGroup>
+
   <!-- NuGet packages -->
   <PropertyGroup>
     <CoverletCollectorPackageVersion>3.0.3</CoverletCollectorPackageVersion>
@@ -24,4 +26,5 @@
     <XunitPackageVersion>2.4.1</XunitPackageVersion>
     <XunitRunnerVisualStudioPackageVersion>2.4.3</XunitRunnerVisualStudioPackageVersion>
   </PropertyGroup>
+
 </Project>

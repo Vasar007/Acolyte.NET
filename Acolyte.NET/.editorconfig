@@ -1,8 +1,8 @@
 ﻿# Remove the line below if you want to inherit .editorconfig settings from higher directories
 root = true
 
-# C# files
-[*.cs]
+# C# and F# files
+[*.{cs,fs,fsi,fsx}]
 
 #### Core EditorConfig Options ####
 
