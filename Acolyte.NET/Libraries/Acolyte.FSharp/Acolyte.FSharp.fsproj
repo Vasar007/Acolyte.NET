@@ -62,6 +62,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Include="Functional\ExitCodes.fs" />
     <Compile Include="Functional\Throw.fs" />
     <Compile Include="Functional\Utils.fs" />
     <Compile Include="Functional\Option.fs" />
