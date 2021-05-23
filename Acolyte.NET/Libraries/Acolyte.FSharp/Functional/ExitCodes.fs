@@ -10,5 +10,5 @@ let public convertExitCode exitCode =
         | Success -> 0
         | Fail -> -1
 
-let public successExitCode = convertExitCode ExitCode.Fail
+let public successExitCode = convertExitCode ExitCode.Success
 let public failExitCode = convertExitCode ExitCode.Fail
