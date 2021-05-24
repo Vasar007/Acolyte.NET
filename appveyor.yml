@@ -34,6 +34,9 @@ matrix:
 install:
   - ps: dotnet tool update -g dotnet-format --version $env:dotnetFormatVersion
 
+before_build:
+  - ps: dotnet restore Acolyte.NET
+
 # Build only package solution. Samples solution will not be built by CI now.
 build:
   project: Acolyte.NET
