@@ -104,7 +104,7 @@ Library contains classes, helper static classes and many extension methods. Each
 
 ## Usage examples
 
-Check examples project [here](https://github.com/Vasar007/Acolyte.NET/blob/master/Examples/Acolyte.Examples).
+Check examples solution [here](https://github.com/Vasar007/Acolyte.NET/tree/develop/Acolyte.Examples).
 
 ```csharp
 using System;
