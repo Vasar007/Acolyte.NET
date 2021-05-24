@@ -1,13 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Platforms>AnyCPU</Platforms>
-    <TargetFramework>net5.0</TargetFramework>
+    <Platforms>$(SamplePlatforms)</Platforms>
+    <Configurations>$(SampleConfigurations)</Configurations>
+    <TargetFramework>$(SampleTargetFrameworks)</TargetFramework>
     <OutputType>Exe</OutputType>
     <LangVersion>$(CSharpLangVersion)</LangVersion>
     <Nullable>enable</Nullable>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <RootNamespace>Acolyte.Examples</RootNamespace>
+    <RootNamespace>Acolyte.ConsoleSample</RootNamespace>
+    <IncludeSymbols>false</IncludeSymbols>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
@@ -25,7 +27,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="$(SolutionDir)Libraries\Acolyte.NET\Acolyte.NET.csproj" />
+    <PackageReference Include="Acolyte.NET" Version="$(AcolyteNETPackageVersion)" />
   </ItemGroup>
 
 </Project>

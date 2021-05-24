@@ -55,7 +55,7 @@ after_test:
   # Check code style.
   - ps: dotnet format "Acolyte.NET.sln" --fix-whitespace --fix-style warn --check --verbosity diagnostic
 
-  # Upload all NuGet packages to release assets.
+# Upload all NuGet packages to release assets.
 artifacts:
   - path: '**\*.nupkg'
     name: AcolyteNuget

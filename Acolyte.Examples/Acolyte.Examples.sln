@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31313.79
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acolyte.ConsoleSample", "Acolyte.ConsoleSample\Acolyte.ConsoleSample.csproj", "{080D576A-961B-40B5-B980-9B0DF013EC39}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Console", "Console", "{4E270119-DC4C-43FF-988B-E68751DB8DE9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{15DE9E20-EFE1-4BC4-860A-EB1CBDC1C143}"
+	ProjectSection(SolutionItems) = preProject
+		..\Acolyte.NET\.editorconfig = ..\Acolyte.NET\.editorconfig
+		Directory.Build.props = Directory.Build.props
+		..\Acolyte.NET\NuGet.Config = ..\Acolyte.NET\NuGet.Config
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{080D576A-961B-40B5-B980-9B0DF013EC39}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{080D576A-961B-40B5-B980-9B0DF013EC39}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{080D576A-961B-40B5-B980-9B0DF013EC39}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{080D576A-961B-40B5-B980-9B0DF013EC39}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{080D576A-961B-40B5-B980-9B0DF013EC39} = {4E270119-DC4C-43FF-988B-E68751DB8DE9}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6708E2E1-CE3D-41B4-8E91-CD816512048A}
+	EndGlobalSection
+EndGlobal

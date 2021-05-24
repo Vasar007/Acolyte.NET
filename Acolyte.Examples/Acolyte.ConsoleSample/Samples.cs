@@ -5,10 +5,10 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Acolyte.Assertions;
 using Acolyte.Common;
-using Acolyte.Linq;
+using Acolyte.Collections;
 using Acolyte.Threading;
 
-namespace Acolyte.Examples
+namespace Acolyte.ConsoleSample
 {
     internal static class Samples
     {

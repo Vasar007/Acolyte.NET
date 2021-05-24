@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Acolyte.Common;
 
-namespace Acolyte.Examples
+namespace Acolyte.ConsoleSample
 {
     internal static class Program
     {
@@ -23,7 +23,10 @@ namespace Acolyte.Examples
 
             public string Generate()
             {
-                if (_counter < _data.Count) return _data[_counter++];
+                if (_counter < _data.Count)
+                {
+                    return _data[_counter++];
+                }
 
                 _counter = 0;
                 return _data[_counter++];
