@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Acolyte.Common;
 
-namespace Acolyte.ConsoleSample
+namespace Acolyte.Examples.ConsoleApp
 {
     internal static class Program
     {

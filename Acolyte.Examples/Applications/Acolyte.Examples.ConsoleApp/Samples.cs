@@ -8,7 +8,7 @@ using Acolyte.Common;
 using Acolyte.Collections;
 using Acolyte.Threading;
 
-namespace Acolyte.ConsoleSample
+namespace Acolyte.Examples.ConsoleApp
 {
     internal static class Samples
     {

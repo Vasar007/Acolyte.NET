@@ -1,14 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Platforms>$(SamplePlatforms)</Platforms>
-    <Configurations>$(SampleConfigurations)</Configurations>
-    <TargetFramework>$(SampleTargetFrameworks)</TargetFramework>
+    <Platforms>$(ExamplePlatforms)</Platforms>
+    <Configurations>$(ExampleConfigurations)</Configurations>
+    <TargetFramework>$(ExampleTargetFrameworks)</TargetFramework>
     <OutputType>Exe</OutputType>
     <LangVersion>$(CSharpLangVersion)</LangVersion>
     <Nullable>enable</Nullable>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <RootNamespace>Acolyte.ConsoleSample</RootNamespace>
+    <RootNamespace>Acolyte.Examples.ConsoleApp</RootNamespace>
     <IncludeSymbols>false</IncludeSymbols>
     <IsPackable>false</IsPackable>
   </PropertyGroup>

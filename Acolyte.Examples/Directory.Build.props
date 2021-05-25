@@ -2,9 +2,9 @@
 
   <!-- Project properties -->
   <PropertyGroup>
-    <SamplePlatforms>AnyCPU</SamplePlatforms>
-    <SampleConfigurations>Debug;Release</SampleConfigurations>
-    <SampleTargetFrameworks>net5.0</SampleTargetFrameworks>
+    <ExamplePlatforms>AnyCPU</ExamplePlatforms>
+    <ExampleConfigurations>Debug;Release</ExampleConfigurations>
+    <ExampleTargetFrameworks>net5.0</ExampleTargetFrameworks>
     <CSharpLangVersion>9.0</CSharpLangVersion>
     <FSharpLangVersion>5.0</FSharpLangVersion>
   </PropertyGroup>
