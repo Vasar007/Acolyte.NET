@@ -696,7 +696,7 @@ namespace Acolyte.Tests.Linq
             string actualValue = explosive.ToSingleString();
 
             // Assert.
-            CustomAssert.True(explosive.VerifyTwiceEnumerateWholeCollection(collection));
+            CustomAssert.True(explosive.VerifyOnceEnumerateWholeCollection(collection));
             Assert.Equal(expectedValue, actualValue);
         }
 
@@ -715,7 +715,7 @@ namespace Acolyte.Tests.Linq
             string actualValue = explosive.ToSingleString(emptyCollectionMessage);
 
             // Assert.
-            CustomAssert.True(explosive.VerifyTwiceEnumerateWholeCollection(collection));
+            CustomAssert.True(explosive.VerifyOnceEnumerateWholeCollection(collection));
             Assert.Equal(expectedValue, actualValue);
         }
 
@@ -734,7 +734,7 @@ namespace Acolyte.Tests.Linq
             string actualValue = explosive.ToSingleString(emptyCollectionMessage, separator);
 
             // Assert.
-            CustomAssert.True(explosive.VerifyTwiceEnumerateWholeCollection(collection));
+            CustomAssert.True(explosive.VerifyOnceEnumerateWholeCollection(collection));
             Assert.Equal(expectedValue, actualValue);
         }
 
@@ -752,7 +752,7 @@ namespace Acolyte.Tests.Linq
             string actualValue = explosive.ToSingleString(selector);
 
             // Assert.
-            CustomAssert.True(explosive.VerifyTwiceEnumerateWholeCollection(collection));
+            CustomAssert.True(explosive.VerifyOnceEnumerateWholeCollection(collection));
             Assert.Equal(expectedValue, actualValue);
         }
 
@@ -771,7 +771,7 @@ namespace Acolyte.Tests.Linq
             string actualValue = explosive.ToSingleString(emptyCollectionMessage, selector);
 
             // Assert.
-            CustomAssert.True(explosive.VerifyTwiceEnumerateWholeCollection(collection));
+            CustomAssert.True(explosive.VerifyOnceEnumerateWholeCollection(collection));
             Assert.Equal(expectedValue, actualValue);
         }
 
@@ -792,7 +792,7 @@ namespace Acolyte.Tests.Linq
             );
 
             // Assert.
-            CustomAssert.True(explosive.VerifyTwiceEnumerateWholeCollection(collection));
+            CustomAssert.True(explosive.VerifyOnceEnumerateWholeCollection(collection));
             Assert.Equal(expectedValue, actualValue);
         }
 

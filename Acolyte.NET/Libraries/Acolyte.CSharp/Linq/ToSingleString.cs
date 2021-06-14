@@ -169,13 +169,18 @@ namespace Acolyte.Linq
         {
             selector.ThrowIfNull(nameof(selector));
 
-            if (source.IsNullOrEmpty())
+            if (source is null)
             {
-                emptyCollectionMessage ??= Strings.DefaultEmptyCollectionMessage;
-                return emptyCollectionMessage;
+                return emptyCollectionMessage ?? Strings.DefaultEmptyCollectionMessage;
             }
 
-            IEnumerable<string> transformedSource = source.Select(selector);
+            IReadOnlyList<TSource> enumerated = source.ToArray();
+            if (enumerated.Count == 0)
+            {
+                return emptyCollectionMessage ?? Strings.DefaultEmptyCollectionMessage;
+            }
+
+            IEnumerable<string> transformedSource = enumerated.Select(selector);
 
             return string.Join(separator, transformedSource);
         }
