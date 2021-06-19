@@ -174,15 +174,16 @@ namespace Acolyte.Linq
                 return emptyCollectionMessage ?? Strings.DefaultEmptyCollectionMessage;
             }
 
-            IReadOnlyList<TSource> enumerated = source.ToArray();
-            if (enumerated.Count == 0)
+            IEnumerable<string> transformedSource = source.Select(selector);
+            string singleString = string.Join(separator, transformedSource);
+
+            // If "source" has no members, the "string.Join" method returns "string.Empty".
+            if (singleString.Length == 0)
             {
                 return emptyCollectionMessage ?? Strings.DefaultEmptyCollectionMessage;
             }
 
-            IEnumerable<string> transformedSource = enumerated.Select(selector);
-
-            return string.Join(separator, transformedSource);
+            return singleString;
         }
     }
 }
