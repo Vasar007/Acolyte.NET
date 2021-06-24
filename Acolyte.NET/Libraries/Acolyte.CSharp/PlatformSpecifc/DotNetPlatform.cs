@@ -23,13 +23,13 @@ namespace Acolyte.PlatformSpecifc
         NetFramework472 = NetFramework471 << 1,
         NetFramework48 = NetFramework472 << 1,
         NetFramework = NetFramework11 |
-                          NetFramework20 |
-                          NetFramework35 |
-                          NetFramework40 | NetFramework403 |
-                          NetFramework45 | NetFramework451 | NetFramework452 |
-                          NetFramework46 | NetFramework461 | NetFramework462 |
-                          NetFramework47 | NetFramework471 | NetFramework472 |
-                          NetFramework48,
+                       NetFramework20 |
+                       NetFramework35 |
+                       NetFramework40 | NetFramework403 |
+                       NetFramework45 | NetFramework451 | NetFramework452 |
+                       NetFramework46 | NetFramework461 | NetFramework462 |
+                       NetFramework47 | NetFramework471 | NetFramework472 |
+                       NetFramework48,
 
         NetStandard10 = NetFramework48 << 1,
         NetStandard11 = NetStandard10 << 1,
@@ -41,7 +41,7 @@ namespace Acolyte.PlatformSpecifc
         NetStandard20 = NetStandard16 << 1,
         NetStandard21 = NetStandard20 << 1,
         NetStandard = NetStandard10 | NetStandard11 | NetStandard12 | NetStandard13 | NetStandard14 | NetStandard15 | NetStandard16 |
-                          NetStandard20 | NetStandard21,
+                      NetStandard20 | NetStandard21,
 
         NetCore10 = NetStandard21 << 1,
         NetCore11 = NetCore10 << 1,
@@ -51,12 +51,12 @@ namespace Acolyte.PlatformSpecifc
         NetCore30 = NetCore22 << 1,
         NetCore31 = NetCore30 << 1,
         NetCore = NetCore10 | NetCore11 |
-                          NetCore20 | NetCore21 | NetCore22 |
-                          NetCore30 | NetCore31,
+                  NetCore20 | NetCore21 | NetCore22 |
+                  NetCore30 | NetCore31,
 
         Net5 = NetCore31 << 1,
         Net6 = Net5 << 1,
         NetX = Net5 |
-                          Net6,
+               Net6,
     }
 }
