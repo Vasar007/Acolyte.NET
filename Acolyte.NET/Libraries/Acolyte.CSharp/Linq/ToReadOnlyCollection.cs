@@ -250,6 +250,5 @@ namespace Acolyte.Linq
         }
 
         #endregion
-
     }
 }

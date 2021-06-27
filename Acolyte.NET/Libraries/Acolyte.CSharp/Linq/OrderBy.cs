@@ -241,8 +241,12 @@ namespace Acolyte.Linq
             Func<TSource, TKey> sourceKeySelector, Func<TOrder, TKey> orderKeySelector,
             Func<TSource, TOrder, TResult> resultSelector, IEqualityComparer<TKey>? comparer)
         {
-            // Null checks for "source", "order", "sourceKeySelector", "orderKeySelector",
-            // parameters are provided by "Enumerable.Join" method.
+            // Use own null checks because we should throw "ArgumentNullException with appropriate
+            // parameter name.
+            source.ThrowIfNull(nameof(source));
+            order.ThrowIfNull(nameof(order));
+            sourceKeySelector.ThrowIfNull(nameof(sourceKeySelector));
+            orderKeySelector.ThrowIfNull(nameof(orderKeySelector));
             resultSelector.ThrowIfNull(nameof(resultSelector));
 
             // Join method keeps order of the first collection, e.g. "order" in our case.
