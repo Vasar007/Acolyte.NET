@@ -4,6 +4,7 @@ using System.Linq;
 using Acolyte.Functions;
 using Acolyte.Linq;
 using Acolyte.Tests.Creators;
+using Acolyte.Tests.Internal;
 using Acolyte.Tests.Mocked;
 using Xunit;
 
@@ -250,6 +251,19 @@ namespace Acolyte.Tests.Linq.OrderBySeruence
         private static void VerifyCallsForOrderBySequence<T>(
             MockEqualityComparer<T> comparer, IReadOnlyList<T> source, IReadOnlyList<T> order)
         {
+            if (TestDotNetPlatformHelper.IsNetFramework())
+            {
+                VerifyCallsForOrderBySequenceForNetFramework(comparer, source, order);
+            }
+            else
+            {
+                VerifyCallsForOrderBySequenceForNetCore(comparer, source, order);
+            }
+        }
+
+        private static void VerifyCallsForOrderBySequenceForNetFramework<T>(
+            MockEqualityComparer<T> comparer, IReadOnlyList<T> source, IReadOnlyList<T> order)
+        {
             if (source.Count > 0 && order.Count > 0)
             {
                 int expectedNumberOfCalls = Math.Max(source.Count, order.Count);
@@ -261,6 +275,31 @@ namespace Acolyte.Tests.Linq.OrderBySeruence
             }
 
             if (source.Count > 0 || order.Count > 0)
+            {
+                int expectedNumberOfCalls = source.Count + order.Count;
+                comparer.VerifyGetHashCodeCalls(expectedNumberOfCalls);
+            }
+            else
+            {
+                comparer.VerifyGetHashCodeNoCalls();
+            }
+        }
+
+        private static void VerifyCallsForOrderBySequenceForNetCore<T>(
+            MockEqualityComparer<T> comparer, IReadOnlyList<T> source, IReadOnlyList<T> order)
+        {
+            if (source.Count > 0 && order.Count > 0)
+            {
+                int expectedNumberOfCalls = Math.Max(source.Count, order.Count);
+                comparer.VerifyEqualsCalls(expectedNumberOfCalls);
+            }
+            else
+            {
+                comparer.VerifyEqualsNoCalls();
+            }
+
+            // .NET Core optimize cases for empty collections.
+            if (source.Count > 0 && order.Count > 0)
             {
                 int expectedNumberOfCalls = source.Count + order.Count;
                 comparer.VerifyGetHashCodeCalls(expectedNumberOfCalls);
