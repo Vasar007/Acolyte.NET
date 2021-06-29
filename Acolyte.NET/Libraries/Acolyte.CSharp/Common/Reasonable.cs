@@ -18,7 +18,7 @@ namespace Acolyte.Common
     /// Result&lt;<typeparamref name="T" /> , <see cref="string" />&gt; without boolean flag
     /// IsSuccess. 
     /// </remarks>
-    public readonly struct Reasonable<T> : IEquatable<Reasonable<T>>
+    public readonly struct Reasonable<T> : IEquatable<Reasonable<T>>, IFormattable
     {
         /// <summary>
         /// Field that hold value.
@@ -118,6 +118,9 @@ namespace Acolyte.Common
             return !(left == right);
         }
 
+        #region IFormattable Implementation
+
+        /// <inheritdoc />
         public string ToString(string? format, IFormatProvider formatProvider)
         {
             switch (format)
@@ -137,6 +140,8 @@ namespace Acolyte.Common
                 }
             }
         }
+
+        #endregion
     }
 
     public static class Reasonable
