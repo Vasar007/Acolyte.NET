@@ -10,7 +10,7 @@ using Acolyte.Tests.Mocked;
 using Acolyte.Tests.Objects;
 using Xunit;
 
-namespace Acolyte.Tests.Linq
+namespace Acolyte.Tests.Linq.Max
 {
     public sealed class MaxForGenericTypesWithComparerTests
     {
