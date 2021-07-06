@@ -132,7 +132,7 @@ namespace Acolyte.Tests.Linq.OrderBySeruence
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
             int count = TestDataCreator.GetRandomPositiveSmallCountNumber();
-            IReadOnlyList<int> someOrder = TestDataCreator.CreateRandomInt32List(count);
+            IReadOnlyList<int> someOrder = PrepareCollectionToUseInTests(count);
             Func<int, int> sourceKeySelector = IdentityFunction<int>.Instance;
             Func<int, int> orderKeySelector = IdentityFunction<int>.Instance;
             Func<int, int, int> sourceResultSelector = GetSourceResultSelector<int, int>();
@@ -150,7 +150,7 @@ namespace Acolyte.Tests.Linq.OrderBySeruence
         {
             // Arrange.
             int count = TestDataCreator.GetRandomPositiveSmallCountNumber();
-            IReadOnlyList<int> someSource = TestDataCreator.CreateRandomInt32List(count);
+            IReadOnlyList<int> someSource = PrepareCollectionToUseInTests(count);
             IEnumerable<int> emptyOrder = Enumerable.Empty<int>();
             Func<int, int> sourceKeySelector = IdentityFunction<int>.Instance;
             Func<int, int> orderKeySelector = IdentityFunction<int>.Instance;
@@ -223,7 +223,7 @@ namespace Acolyte.Tests.Linq.OrderBySeruence
             Func<int, int> sourceKeySelector = IdentityFunction<int>.Instance;
             Func<int, int> orderKeySelector = IdentityFunction<int>.Instance;
             IReadOnlyList<int> collectionWithSomeItems =
-                TestDataCreator.CreateRandomInt32List(count)
+                PrepareCollectionToUseInTests(count)
                 .Select(sourceKeySelector)
                 .ToReadOnlyList();
             IReadOnlyList<int> randomOrder = collectionWithSomeItems
@@ -249,14 +249,12 @@ namespace Acolyte.Tests.Linq.OrderBySeruence
         public void OrderBySequence_WithSourceAndOrderAndResultKeySelectors_ForCollectionWithRandomSize_ShouldOrderSource()
         {
             // Arrange.
-            // "Enumerable.Join" has some issues when called for large collections.
-            // "Enumerable.Join" has some issues when called for large collections.
-            // See https://github.com/dotnet/runtime/issues/55219
             int count = TestDataCreator.GetRandomSmallCountNumber();
+            // Using identity function to avoid int overflowing.
             Func<int, int> sourceKeySelector = IdentityFunction<int>.Instance;
             Func<int, int> orderKeySelector = IdentityFunction<int>.Instance;
             IReadOnlyList<int> collectionWithSomeItems =
-                TestDataCreator.CreateRandomInt32List(count)
+                PrepareCollectionToUseInTests(count)
                 .Select(sourceKeySelector)
                 .ToReadOnlyList();
             IReadOnlyList<int> randomOrder = collectionWithSomeItems

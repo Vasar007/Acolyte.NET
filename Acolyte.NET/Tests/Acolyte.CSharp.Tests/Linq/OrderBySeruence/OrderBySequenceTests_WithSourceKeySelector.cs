@@ -67,7 +67,7 @@ namespace Acolyte.Tests.Linq.OrderBySeruence
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
             int count = TestDataCreator.GetRandomPositiveSmallCountNumber();
-            IReadOnlyList<int> someOrder = TestDataCreator.CreateRandomInt32List(count);
+            IReadOnlyList<int> someOrder = PrepareCollectionToUseInTests(count);
             Func<int, int> sourceKeySelector = IdentityFunction<int>.Instance;
 
             // Act & Assert.
@@ -81,7 +81,7 @@ namespace Acolyte.Tests.Linq.OrderBySeruence
         {
             // Arrange.
             int count = TestDataCreator.GetRandomPositiveSmallCountNumber();
-            IReadOnlyList<int> someSource = TestDataCreator.CreateRandomInt32List(count);
+            IReadOnlyList<int> someSource = PrepareCollectionToUseInTests(count);
             IEnumerable<int> emptyOrder = Enumerable.Empty<int>();
             Func<int, int> sourceKeySelector = IdentityFunction<int>.Instance;
 
@@ -143,7 +143,7 @@ namespace Acolyte.Tests.Linq.OrderBySeruence
             // Using identity function to avoid int overflowing.
             Func<int, int> sourceKeySelector = IdentityFunction<int>.Instance;
             IReadOnlyList<int> collectionWithSomeItems =
-                TestDataCreator.CreateRandomInt32List(count);
+                PrepareCollectionToUseInTests(count);
             IReadOnlyList<int> randomOrder = collectionWithSomeItems
                 .Shuffle()
                 .ToReadOnlyList();
@@ -166,13 +166,11 @@ namespace Acolyte.Tests.Linq.OrderBySeruence
         public void OrderBySequence_WithSourceKeySelector_ForCollectionWithRandomSize_ShouldOrderSource()
         {
             // Arrange.
-            // "Enumerable.Join" has some issues when called for large collections.
-            // See https://github.com/dotnet/runtime/issues/55219
             int count = TestDataCreator.GetRandomSmallCountNumber();
             // Using identity function to avoid int overflowing.
             Func<int, int> sourceKeySelector = IdentityFunction<int>.Instance;
             IReadOnlyList<int> collectionWithSomeItems =
-                TestDataCreator.CreateRandomInt32List(count);
+                PrepareCollectionToUseInTests(count);
             IReadOnlyList<int> randomOrder = collectionWithSomeItems
                 .Shuffle()
                 .ToReadOnlyList();

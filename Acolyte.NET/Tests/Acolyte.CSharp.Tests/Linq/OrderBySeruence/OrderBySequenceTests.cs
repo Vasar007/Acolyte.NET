@@ -53,7 +53,7 @@ namespace Acolyte.Tests.Linq.OrderBySeruence
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
             int count = TestDataCreator.GetRandomPositiveSmallCountNumber();
-            IReadOnlyList<int> someOrder = TestDataCreator.CreateRandomInt32List(count);
+            IReadOnlyList<int> someOrder = PrepareCollectionToUseInTests(count);
 
             // Act & Assert.
             var actualResult = emptyCollection.OrderBySequence(someOrder);
@@ -66,7 +66,7 @@ namespace Acolyte.Tests.Linq.OrderBySeruence
         {
             // Arrange.
             int count = TestDataCreator.GetRandomPositiveSmallCountNumber();
-            IReadOnlyList<int> someSource = TestDataCreator.CreateRandomInt32List(count);
+            IReadOnlyList<int> someSource = PrepareCollectionToUseInTests(count);
             IEnumerable<int> emptyOrder = Enumerable.Empty<int>();
 
             // Act & Assert.
@@ -117,7 +117,7 @@ namespace Acolyte.Tests.Linq.OrderBySeruence
         {
             // Arrange.
             IReadOnlyList<int> collectionWithSomeItems =
-                TestDataCreator.CreateRandomInt32List(count);
+                PrepareCollectionToUseInTests(count);
             IReadOnlyList<int> randomOrder = collectionWithSomeItems
                 .Shuffle()
                 .ToReadOnlyList();
@@ -138,11 +138,9 @@ namespace Acolyte.Tests.Linq.OrderBySeruence
         public void OrderBySequence_ForCollectionWithRandomSize_ShouldOrderSource()
         {
             // Arrange.
-            // "Enumerable.Join" has some issues when called for large collections.
-            // See https://github.com/dotnet/runtime/issues/55219
-            int count = TestDataCreator.GetRandomSmallCountNumber();
+            int count = TestDataCreator.GetRandomCountNumber();
             IReadOnlyList<int> collectionWithSomeItems =
-                TestDataCreator.CreateRandomInt32List(count);
+                PrepareCollectionToUseInTests(count);
             IReadOnlyList<int> randomOrder = collectionWithSomeItems
                 .Shuffle()
                 .ToReadOnlyList();
@@ -183,6 +181,15 @@ namespace Acolyte.Tests.Linq.OrderBySeruence
         private static Func<T1, T2, T1> GetSourceResultSelector<T1, T2>()
         {
             return (source, order) => source;
+        }
+
+        private static IReadOnlyList<int> PrepareCollectionToUseInTests(int count)
+        {
+            // Do not use duplicated values for "Enumerable.Join" method (called in
+            // "OrderBySequence").
+            // See https://github.com/dotnet/runtime/issues/55219
+            return Enumerable.Range(0, count)
+                .ToReadOnlyList();
         }
 
         #endregion
