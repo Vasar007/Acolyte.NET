@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Acolyte.Linq;
 using Acolyte.Tests.Cases.Parameterized;
+using Acolyte.Tests.Collections;
 using Acolyte.Tests.Creators;
 using MoreLinq;
 using Xunit;
@@ -158,6 +159,23 @@ namespace Acolyte.Tests.Linq.OrderBySeruence
 
         #region Extended Logical Coverage
 
+        [Fact]
+        public void OrderBySequence_ShouldLookWholeCollectionToOrderSource()
+        {
+            // Arrange.
+            IReadOnlyList<int> collection = new[] { 1, 2, 3, 4 };
+            IReadOnlyList<int> order = new[] { 2, 1, 3, 4 };
+            IReadOnlyList<int> expectedCollection = order;
+            var explosive = ExplosiveEnumerable.CreateNotExplosive(collection);
+
+            // Act.
+            var actualCollection = explosive.OrderBySequence(order);
+
+            // Assert.
+            Assert.Equal(expectedCollection, actualCollection);
+            CustomAssert.True(explosive.VerifyOnceEnumerateWholeCollection(collection));
+        }
+
         #endregion
 
         #region Private Methods
@@ -165,11 +183,6 @@ namespace Acolyte.Tests.Linq.OrderBySeruence
         private static Func<T1, T2, T1> GetSourceResultSelector<T1, T2>()
         {
             return (source, order) => source;
-        }
-
-        private static Func<int, T, int> GetRedoubledSourceResultSelector<T>()
-        {
-            return (source, order) => source * 2;
         }
 
         #endregion

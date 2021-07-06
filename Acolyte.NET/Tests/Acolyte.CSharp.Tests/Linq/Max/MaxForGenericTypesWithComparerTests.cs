@@ -343,14 +343,14 @@ namespace Acolyte.Tests.Linq.Max
             // Arrange.
             IReadOnlyList<DummyStruct> collection = DummyStruct.DefaultList.Reverse().ToList();
             var explosive = ExplosiveEnumerable.CreateNotExplosive(collection);
-            DummyStruct expectedValue = explosive.Max();
+            DummyStruct expectedValue = collection.Max();
             var comparer = MockComparer.SetupDefaultFor(collection);
 
             // Act.
             DummyStruct actualValue = explosive.Max(comparer);
 
             // Assert.
-            CustomAssert.True(explosive.VerifyTwiceEnumerateWholeCollection(collection));
+            CustomAssert.True(explosive.VerifyOnceEnumerateWholeCollection(collection));
             Assert.Equal(expectedValue, actualValue);
             VerifyCompareCallsForMax(comparer, collection);
         }
@@ -361,14 +361,14 @@ namespace Acolyte.Tests.Linq.Max
             // Arrange.
             IReadOnlyList<DummyClass> collection = DummyClass.DefaultList.Reverse().ToList();
             var explosive = ExplosiveEnumerable.CreateNotExplosive(collection);
-            DummyClass? expectedValue = explosive.Max();
+            DummyClass? expectedValue = collection.Max();
             var comparer = MockComparer.SetupDefaultFor<DummyClass?>(collection);
 
             // Act.
             DummyClass? actualValue = explosive.Max(comparer);
 
             // Assert.
-            CustomAssert.True(explosive.VerifyTwiceEnumerateWholeCollection(collection));
+            CustomAssert.True(explosive.VerifyOnceEnumerateWholeCollection(collection));
             Assert.Equal(expectedValue, actualValue);
             VerifyCompareCallsForMax(comparer, collection);
         }

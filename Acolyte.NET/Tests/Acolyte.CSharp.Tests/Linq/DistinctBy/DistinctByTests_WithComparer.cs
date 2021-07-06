@@ -96,14 +96,14 @@ namespace Acolyte.Tests.Linq.DistinctBy
             var range = CreateRange();
             Func<int, long> keySelector = item => MapToValueInRange(item, range);
             var keyComparer = MockEqualityComparer.SetupDefaultFor(range);
-            var expectedResult = GetExpectedResult(predefinedCollection, keySelector, keyComparer);
+            var expectedResult = GetExpectedResult(predefinedCollection, keySelector);
 
             // Act.
             var actualResult = predefinedCollection.DistinctBy(keySelector, keyComparer);
 
             // Assert.
             Assert.Equal(expectedResult, actualResult);
-            keyComparer.VerifyGetHashCodeCallsTwiceForEach(predefinedCollection);
+            keyComparer.VerifyGetHashCodeCallsOnceForEach(predefinedCollection);
         }
 
         #endregion
@@ -122,16 +122,14 @@ namespace Acolyte.Tests.Linq.DistinctBy
             var range = CreateRange();
             Func<int, long> keySelector = item => MapToValueInRange(item, range);
             var keyComparer = MockEqualityComparer.SetupDefaultFor(range);
-            var expectedResult = GetExpectedResult(
-                collectionWithSomeItems, keySelector, keyComparer
-            );
+            var expectedResult = GetExpectedResult(collectionWithSomeItems, keySelector);
 
             // Act.
             var actualResult = collectionWithSomeItems.DistinctBy(keySelector, keyComparer);
 
             // Assert.
             Assert.Equal(expectedResult, actualResult);
-            keyComparer.VerifyGetHashCodeCallsTwiceForEach(collectionWithSomeItems);
+            keyComparer.VerifyGetHashCodeCallsOnceForEach(collectionWithSomeItems);
         }
 
         #endregion
@@ -150,9 +148,7 @@ namespace Acolyte.Tests.Linq.DistinctBy
             Func<int, long> keySelector = item => MapToValueInRange(item, range);
             // Use default comparer to avoid long running tests.
             var keyComparer = EqualityComparer<long>.Default;
-            var expectedResult = GetExpectedResult(
-                collectionWithRandomSize, keySelector, keyComparer
-            );
+            var expectedResult = GetExpectedResult(collectionWithRandomSize, keySelector);
 
             // Act.
             var actualResult = collectionWithRandomSize.DistinctBy(keySelector, keyComparer);
@@ -173,15 +169,15 @@ namespace Acolyte.Tests.Linq.DistinctBy
             var explosive = ExplosiveEnumerable.CreateNotExplosive(collection);
             Func<int, bool> keySelector = item => NumberParityFunction.IsEven(item);
             var keyComparer = MockEqualityComparer<bool>.Default;
-            var expectedResult = GetExpectedResult(explosive, keySelector, keyComparer).ToList();
+            var expectedResult = GetExpectedResult(collection, keySelector);
 
             // Act.
-            var actualResult = explosive.DistinctBy(keySelector, keyComparer).ToList();
+            var actualResult = explosive.DistinctBy(keySelector, keyComparer);
 
             // Assert.
-            CustomAssert.True(explosive.VerifyTwiceEnumerateWholeCollection(collection));
             Assert.Equal(expectedResult, actualResult);
-            keyComparer.VerifyGetHashCodeCallsTwiceForEach(collection);
+            CustomAssert.True(explosive.VerifyOnceEnumerateWholeCollection(collection));
+            keyComparer.VerifyGetHashCodeCallsOnceForEach(collection);
         }
 
         #endregion

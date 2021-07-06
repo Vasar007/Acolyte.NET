@@ -113,18 +113,17 @@ namespace Acolyte.Tests.Linq
         public void IsNullOrEmpty_ShouldLookOnlyAtFirstItemFromCollection()
         {
             // Arrange.
-            const int count = 2;
+            IReadOnlyList<int> collection = new[] { 1, 2, 3, 4 };
             var explosive = ExplosiveEnumerable.Create(
-                TestDataCreator.CreateRandomInt32List(count),
-                explosiveIndex: Constants.FirstIndex + 1
+                collection, explosiveIndex: Constants.FirstIndex + 1
             );
-            bool expectedResult = !explosive.Any();
+            bool expectedResult = !collection.Any();
 
             // Act.
             bool actualResult = explosive.IsNullOrEmpty();
 
             // Assert.
-            CustomAssert.True(explosive.VerifyTwice(expectedVisitedItemsNumber: 1));
+            CustomAssert.True(explosive.VerifyOnce(expectedVisitedItemsNumber: 1));
             Assert.Equal(expectedResult, actualResult);
         }
 

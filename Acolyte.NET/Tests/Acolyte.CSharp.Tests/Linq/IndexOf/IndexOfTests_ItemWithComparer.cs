@@ -189,7 +189,7 @@ namespace Acolyte.Tests.Linq.IndexOf
             var explosive = ExplosiveEnumerable.Create(
                 collection, explosiveIndex: Constants.FirstIndex + 2
             );
-            int value = explosive.Skip(1).First();
+            int value = collection.Skip(1).First();
             const int expectedIndex = 1;
             var comparer = MockEqualityComparer.SetupDefaultFor(collection);
 
@@ -197,7 +197,7 @@ namespace Acolyte.Tests.Linq.IndexOf
             int actualIndex = explosive.IndexOf(value, comparer);
 
             // Assert.
-            CustomAssert.True(explosive.VerifyTwice(expectedVisitedItemsNumber: 2));
+            CustomAssert.True(explosive.VerifyOnce(expectedVisitedItemsNumber: 2));
             Assert.Equal(expectedIndex, actualIndex);
             comparer.VerifyEqualsCalls(times: explosive.ExplosiveIndex);
             comparer.VerifyGetHashCodeNoCalls();

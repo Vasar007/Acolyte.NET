@@ -189,14 +189,14 @@ namespace Acolyte.Tests.Linq.Min
             var explosive = ExplosiveEnumerable.CreateNotExplosive(collection);
             Func<int, int> keySelector = InverseFunction.ForInt32;
             // Min with selector returns transformed value. Need to transform it back.
-            int minValue = explosive.Min(keySelector);
+            int minValue = collection.Min(keySelector);
             int expectedValue = keySelector(minValue);
 
             // Act.
             int actualValue = explosive.MinBy(keySelector);
 
             // Assert.
-            CustomAssert.True(explosive.VerifyTwiceEnumerateWholeCollection(collection));
+            CustomAssert.True(explosive.VerifyOnceEnumerateWholeCollection(collection));
             Assert.Equal(expectedValue, actualValue);
         }
 

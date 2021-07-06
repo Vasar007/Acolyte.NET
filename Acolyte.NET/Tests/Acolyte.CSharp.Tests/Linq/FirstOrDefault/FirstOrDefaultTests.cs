@@ -116,18 +116,17 @@ namespace Acolyte.Tests.Linq.FirstOrDefault
         public void FirstOrDefault_ShouldLookOnlyAtFirstItemFromCollection()
         {
             // Arrange.
-            const int count = 2;
+            IReadOnlyList<int> collection = new[] { 1, 2, 3, 4 };
             var explosive = ExplosiveEnumerable.Create(
-                TestDataCreator.CreateRandomInt32List(count),
-                explosiveIndex: Constants.FirstIndex + 1
+                collection, explosiveIndex: Constants.FirstIndex + 1
             );
-            int expectedValue = explosive.First();
+            int expectedValue = collection.First();
 
             // Act.
             int actualValue = explosive.FirstOrDefault(defaultValue: default);
 
             // Assert.
-            CustomAssert.True(explosive.VerifyTwice(expectedVisitedItemsNumber: 1));
+            CustomAssert.True(explosive.VerifyOnce(expectedVisitedItemsNumber: 1));
             Assert.Equal(expectedValue, actualValue);
         }
 

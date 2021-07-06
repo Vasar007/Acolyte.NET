@@ -230,7 +230,7 @@ namespace Acolyte.Tests.Linq
             var explosive = ExplosiveEnumerable.CreateNotExplosive(collection);
             const int startIndex = 1;
             const int count = 2;
-            IReadOnlyList<int> expectedCollection = explosive
+            IReadOnlyList<int> expectedCollection = collection
                 .Skip(startIndex)
                 .Take(count)
                 .ToList();
@@ -242,8 +242,8 @@ namespace Acolyte.Tests.Linq
             // We should take into account "Skip" and "Take" methods.
             // When "Take" method finished enumeration, we ignore the remaining items.
             int expectedVisitedItemsNumber = expectedCollection.Count + startIndex;
-            CustomAssert.True(explosive.VerifyOnce(expectedVisitedItemsNumber));
             Assert.Equal(expectedCollection, actualCollection);
+            CustomAssert.True(explosive.VerifyOnce(expectedVisitedItemsNumber));
         }
 
         #endregion

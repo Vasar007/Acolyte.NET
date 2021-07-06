@@ -54,11 +54,10 @@ namespace Acolyte.Tests.Linq
         public void ToReadOnlyCollection_ForPredefinedCollection_ShouldReturnFilledCollection()
         {
             // Arrange.
-            IReadOnlyList<int> predefinedCollection = new[] { 1, 2, 3 };
-            IReadOnlyCollection<int> expectedCollection = predefinedCollection.ToList();
+            IReadOnlyList<int> expectedCollection = new[] { 1, 2, 3 };
 
             // Act.
-            var actualCollection = predefinedCollection.ToReadOnlyCollection();
+            var actualCollection = expectedCollection.ToReadOnlyCollection();
 
             // Assert.
             Assert.NotNull(actualCollection);
@@ -76,12 +75,11 @@ namespace Acolyte.Tests.Linq
             int count)
         {
             // Arrange.
-            IReadOnlyCollection<int> collectionWithSomeItems =
+            IReadOnlyCollection<int> expectedCollection =
                 TestDataCreator.CreateRandomInt32List(count);
-            IReadOnlyCollection<int> expectedCollection = collectionWithSomeItems.ToList();
 
             // Act.
-            var actualCollection = collectionWithSomeItems.ToReadOnlyCollection();
+            var actualCollection = expectedCollection.ToReadOnlyCollection();
 
             // Assert.
             Assert.NotNull(actualCollection);
@@ -98,16 +96,15 @@ namespace Acolyte.Tests.Linq
         {
             // Arrange.
             int count = TestDataCreator.GetRandomCountNumber();
-            IReadOnlyCollection<int> collectionWithRandomSize =
+            IReadOnlyCollection<int> expectedCollection =
                 TestDataCreator.CreateRandomInt32List(count);
-            IReadOnlyCollection<int> expectedCollection = collectionWithRandomSize.ToList();
 
             // Act.
-            var actualCollection = collectionWithRandomSize.ToReadOnlyCollection();
+            var actualCollection = expectedCollection.ToReadOnlyCollection();
 
             // Assert.
             Assert.NotNull(actualCollection);
-            if (collectionWithRandomSize.Any())
+            if (expectedCollection.Any())
             {
                 Assert.NotEmpty(actualCollection);
             }
@@ -127,12 +124,11 @@ namespace Acolyte.Tests.Linq
         {
             // Arrange.
             const int count = 5;
-            IReadOnlyCollection<int> collectionWithRandomSize =
+            IReadOnlyCollection<int> expectedCollection =
                 TestDataCreator.CreateRandomInt32List(count);
-            IReadOnlyCollection<int> expectedCollection = collectionWithRandomSize.ToList();
 
             // Act.
-            var actualCollection = collectionWithRandomSize.ToReadOnlyCollection();
+            var actualCollection = expectedCollection.ToReadOnlyCollection();
 
             // Assert.
             Assert.IsAssignableFrom<ICollection<int>>(actualCollection);

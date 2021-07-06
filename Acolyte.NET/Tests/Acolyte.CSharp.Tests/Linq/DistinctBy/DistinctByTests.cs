@@ -142,13 +142,13 @@ namespace Acolyte.Tests.Linq.DistinctBy
             IReadOnlyList<int> collection = new[] { 1, 2, 3, 4, 4 };
             var explosive = ExplosiveEnumerable.CreateNotExplosive(collection);
             Func<int, bool> keySelector = item => NumberParityFunction.IsEven(item);
-            var expectedResult = GetExpectedResult(explosive, keySelector).ToList();
+            var expectedResult = GetExpectedResult(collection, keySelector).ToList();
 
             // Act.
             var actualResult = explosive.DistinctBy(keySelector).ToList();
 
             // Assert.
-            CustomAssert.True(explosive.VerifyTwiceEnumerateWholeCollection(collection));
+            CustomAssert.True(explosive.VerifyOnceEnumerateWholeCollection(collection));
             Assert.Equal(expectedResult, actualResult);
         }
 
@@ -157,10 +157,9 @@ namespace Acolyte.Tests.Linq.DistinctBy
         #region Private Methods
 
         private static IEnumerable<TSource> GetExpectedResult<TSource, TKey>(
-            IEnumerable<TSource> source, Func<TSource, TKey> keySelector,
-            IEqualityComparer<TKey>? keyComparer = null)
+            IEnumerable<TSource> source, Func<TSource, TKey> keySelector)
         {
-            var seenKeys = new HashSet<TKey>(keyComparer);
+            var seenKeys = new HashSet<TKey>();
             foreach (TSource element in source)
             {
                 if (seenKeys.Add(keySelector(element))) yield return element;

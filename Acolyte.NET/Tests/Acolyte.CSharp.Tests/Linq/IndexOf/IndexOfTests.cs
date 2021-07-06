@@ -168,14 +168,14 @@ namespace Acolyte.Tests.Linq.IndexOf
             var explosive = ExplosiveEnumerable.Create(
                 collection, explosiveIndex: Constants.FirstIndex + 2
             );
-            int expectedValue = explosive.Skip(1).First();
+            int expectedValue = collection.Skip(1).First();
             const int expectedIndex = 1;
 
             // Act.
             int actualIndex = explosive.IndexOf(i => i.Equals(expectedValue));
 
             // Assert.
-            CustomAssert.True(explosive.VerifyTwice(expectedVisitedItemsNumber: 2));
+            CustomAssert.True(explosive.VerifyOnce(expectedVisitedItemsNumber: 2));
             Assert.Equal(expectedIndex, actualIndex);
         }
 

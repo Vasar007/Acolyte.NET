@@ -4,6 +4,7 @@ using System.Linq;
 using Acolyte.Functions;
 using Acolyte.Linq;
 using Acolyte.Tests.Cases.Parameterized;
+using Acolyte.Tests.Collections;
 using Acolyte.Tests.Creators;
 using MoreLinq;
 using Xunit;
@@ -189,6 +190,27 @@ namespace Acolyte.Tests.Linq.OrderBySeruence
         #endregion
 
         #region Extended Logical Coverage
+
+        [Fact]
+        public void OrderBySequence_WithSourceKeySelector_ShouldLookWholeCollectionToOrderSource()
+        {
+            // Arrange.
+            IReadOnlyList<int> collection = new[] { 1, 2, 3, 4 };
+            Func<int, int> sourceKeySelector = MultiplyFunction.RedoubleInt32;
+            IReadOnlyList<int> sourceOrder = new[] { 2, 1, 3, 4 };
+            IReadOnlyList<int> order = sourceOrder
+                .Select(sourceKeySelector)
+                .ToReadOnlyList();
+            IReadOnlyList<int> expectedCollection = sourceOrder;
+            var explosive = ExplosiveEnumerable.CreateNotExplosive(collection);
+
+            // Act.
+            var actualCollection = explosive.OrderBySequence(order, sourceKeySelector);
+
+            // Assert.
+            Assert.Equal(expectedCollection, actualCollection);
+            CustomAssert.True(explosive.VerifyOnceEnumerateWholeCollection(collection));
+        }
 
         #endregion
     }

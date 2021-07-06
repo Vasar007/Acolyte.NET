@@ -57,13 +57,12 @@ namespace Acolyte.Tests.Linq
         public void ForEach_ForPredefinedCollection_ShouldDoActionForEachItem()
         {
             // Arrange.
-            IReadOnlyList<int> predefinedCollection = new[] { 1, 2, 3 };
-            IReadOnlyList<int> expectedCollection = predefinedCollection.ToList();
+            IReadOnlyList<int> expectedCollection = new[] { 1, 2, 3 };
             var actualCollection = new List<int>();
             Action<int> action = i => actualCollection.Add(i);
 
             // Act.
-            predefinedCollection.ForEach(action);
+            expectedCollection.ForEach(action);
 
             // Assert.
             Assert.Equal(expectedCollection, actualCollection);
@@ -99,14 +98,12 @@ namespace Acolyte.Tests.Linq
         {
             // Arrange.
             int count = TestDataCreator.GetRandomCountNumber();
-            IReadOnlyList<int> collectionWithRandomSize =
-                TestDataCreator.CreateRandomInt32List(count);
-            IReadOnlyList<int> expectedCollection = collectionWithRandomSize.ToList();
+            IReadOnlyList<int> expectedCollection = TestDataCreator.CreateRandomInt32List(count);
             var actualCollection = new List<int>();
             Action<int> action = i => actualCollection.Add(i);
 
             // Act.
-            collectionWithRandomSize.ForEach(action);
+            expectedCollection.ForEach(action);
 
             // Assert.
             Assert.Equal(expectedCollection, actualCollection);
@@ -117,14 +114,13 @@ namespace Acolyte.Tests.Linq
         {
             // Arrange.
             int count = TestDataCreator.GetRandomCountNumber();
-            IReadOnlyList<int?> collectionWithRandomSize =
+            IReadOnlyList<int?> expectedCollection =
                 TestDataCreator.CreateRandomNullableInt32List(count);
-            IReadOnlyList<int?> expectedCollection = collectionWithRandomSize.ToList();
             var actualCollection = new List<int?>();
             Action<int?> action = i => actualCollection.Add(i);
 
             // Act.
-            collectionWithRandomSize.ForEach(action);
+            expectedCollection.ForEach(action);
 
             // Assert.
             Assert.Equal(expectedCollection, actualCollection);
@@ -140,7 +136,7 @@ namespace Acolyte.Tests.Linq
             // Arrange.
             IReadOnlyList<int> collection = new[] { 1, 2, 3, 4 };
             var explosive = ExplosiveEnumerable.CreateNotExplosive(collection);
-            IReadOnlyList<int> expectedCollection = explosive.ToList();
+            IReadOnlyList<int> expectedCollection = collection.ToList();
             var actualCollection = new List<int>();
             Action<int> action = i => actualCollection.Add(i);
 
@@ -148,7 +144,7 @@ namespace Acolyte.Tests.Linq
             explosive.ForEach(action);
 
             // Assert.
-            CustomAssert.True(explosive.VerifyTwiceEnumerateWholeCollection(collection));
+            CustomAssert.True(explosive.VerifyOnceEnumerateWholeCollection(collection));
             Assert.Equal(expectedCollection, actualCollection);
         }
 

@@ -4,6 +4,7 @@ using System.Linq;
 using Acolyte.Functions;
 using Acolyte.Linq;
 using Acolyte.Tests.Cases.Parameterized;
+using Acolyte.Tests.Collections;
 using Acolyte.Tests.Creators;
 using MoreLinq;
 using Xunit;
@@ -191,15 +192,12 @@ namespace Acolyte.Tests.Linq.OrderBySeruence
             // Arrange.
             Func<int, int> sourceKeySelector = MultiplyFunction.RedoubleInt32;
             Func<int, int> orderKeySelector = MultiplyFunction.RedoubleInt32;
-            IReadOnlyList<int> predefinedCollection = new[] { 1, 2, 3 }
-                  .Select(sourceKeySelector)
-                .ToReadOnlyList();
-            IReadOnlyList<int> predefinedOrder = new[] { 2, 1, 3 }
-                .Select(orderKeySelector)
-                .ToReadOnlyList();
-            Func<int, int, int> sourceResultSelector = GetRedoubledSourceResultSelector<int>();
+            Func<int, int> resultSelector = MultiplyFunction.RedoubleInt32;
+            IReadOnlyList<int> predefinedCollection = new[] { 1, 2, 3 };
+            IReadOnlyList<int> predefinedOrder = new[] { 2, 1, 3 };
+            Func<int, int, int> sourceResultSelector = (source, order) => resultSelector(source);
             IReadOnlyList<int> expectedCollection = predefinedOrder
-                .Select(MultiplyFunction.RedoubleInt32)
+                .Select(resultSelector)
                 .ToReadOnlyList();
 
             // Act.
@@ -279,6 +277,31 @@ namespace Acolyte.Tests.Linq.OrderBySeruence
         #endregion
 
         #region Extended Logical Coverage
+
+        [Fact]
+        public void OrderBySequence_WithSourceAndOrderAndResultKeySelectors_ShouldLookWholeCollectionToOrderSource()
+        {
+            // Arrange.
+            IReadOnlyList<int> collection = new[] { 1, 2, 3, 4 };
+            Func<int, int> sourceKeySelector = MultiplyFunction.RedoubleInt32;
+            Func<int, int> orderKeySelector = MultiplyFunction.RedoubleInt32;
+            Func<int, int> resultSelector = MultiplyFunction.RedoubleInt32;
+            IReadOnlyList<int> order = new[] { 2, 1, 3, 4 };
+            Func<int, int, int> sourceResultSelector = (source, order) => resultSelector(source);
+            IReadOnlyList<int> expectedCollection = order
+                .Select(resultSelector)
+                .ToReadOnlyList();
+            var explosive = ExplosiveEnumerable.CreateNotExplosive(collection);
+
+            // Act.
+            var actualCollection = explosive.OrderBySequence(
+                 order, sourceKeySelector, orderKeySelector, sourceResultSelector
+             );
+
+            // Assert.
+            Assert.Equal(expectedCollection, actualCollection);
+            CustomAssert.True(explosive.VerifyOnceEnumerateWholeCollection(collection));
+        }
 
         #endregion
     }

@@ -256,15 +256,15 @@ namespace Acolyte.Tests.Linq
             var explosive = ExplosiveEnumerable.CreateNotExplosive(collection);
             (int minValue, int maxValue) expectedValue =
             (
-                explosive.Min(MultiplyFunction.RedoubleInt32),
-                explosive.Max(MultiplyFunction.RedoubleInt32)
+                collection.Min(MultiplyFunction.RedoubleInt32),
+                collection.Max(MultiplyFunction.RedoubleInt32)
             );
 
             // Act.
             var actualValue = explosive.MinMax(MultiplyFunction.RedoubleInt32);
 
             // Assert.
-            CustomAssert.True(explosive.VerifyThriceEnumerateWholeCollection(collection));
+            CustomAssert.True(explosive.VerifyOnceEnumerateWholeCollection(collection));
             Assert.Equal(expectedValue, actualValue);
         }
 
@@ -276,15 +276,15 @@ namespace Acolyte.Tests.Linq
             var explosive = ExplosiveEnumerable.CreateNotExplosive(collection);
             (int? minValue, int? maxValue) expectedValue =
              (
-                 explosive.Min(MultiplyFunction.RedoubleNullableInt32),
-                 explosive.Max(MultiplyFunction.RedoubleNullableInt32)
+                 collection.Min(MultiplyFunction.RedoubleNullableInt32),
+                 collection.Max(MultiplyFunction.RedoubleNullableInt32)
              );
 
             // Act.
             var actualValue = explosive.MinMax(MultiplyFunction.RedoubleNullableInt32);
 
             // Assert.
-            CustomAssert.True(explosive.VerifyThriceEnumerateWholeCollection(collection));
+            CustomAssert.True(explosive.VerifyOnceEnumerateWholeCollection(collection));
             Assert.Equal(expectedValue, actualValue);
         }
 
@@ -531,15 +531,15 @@ namespace Acolyte.Tests.Linq
             var explosive = ExplosiveEnumerable.CreateNotExplosive(collection);
             (long minValue, long maxValue) expectedValue =
             (
-                explosive.Min(MultiplyFunction.RedoubleInt64),
-                explosive.Max(MultiplyFunction.RedoubleInt64)
+                collection.Min(MultiplyFunction.RedoubleInt64),
+                collection.Max(MultiplyFunction.RedoubleInt64)
             );
 
             // Act.
             var actualValue = explosive.MinMax(MultiplyFunction.RedoubleInt64);
 
             // Assert.
-            CustomAssert.True(explosive.VerifyThriceEnumerateWholeCollection(collection));
+            CustomAssert.True(explosive.VerifyOnceEnumerateWholeCollection(collection));
             Assert.Equal(expectedValue, actualValue);
         }
 
@@ -551,15 +551,15 @@ namespace Acolyte.Tests.Linq
             var explosive = ExplosiveEnumerable.CreateNotExplosive(collection);
             (long? minValue, long? maxValue) expectedValue =
             (
-                explosive.Min(MultiplyFunction.RedoubleNullableInt64),
-                explosive.Max(MultiplyFunction.RedoubleNullableInt64)
+                collection.Min(MultiplyFunction.RedoubleNullableInt64),
+                collection.Max(MultiplyFunction.RedoubleNullableInt64)
             );
 
             // Act.
             var actualValue = explosive.MinMax(MultiplyFunction.RedoubleNullableInt64);
 
             // Assert.
-            CustomAssert.True(explosive.VerifyThriceEnumerateWholeCollection(collection));
+            CustomAssert.True(explosive.VerifyOnceEnumerateWholeCollection(collection));
             Assert.Equal(expectedValue, actualValue);
         }
 
@@ -806,15 +806,15 @@ namespace Acolyte.Tests.Linq
             var explosive = ExplosiveEnumerable.CreateNotExplosive(collection);
             (float minValue, float maxValue) expectedValue =
             (
-                explosive.Min(MultiplyFunction.RedoubleSingle),
-                explosive.Max(MultiplyFunction.RedoubleSingle)
+                collection.Min(MultiplyFunction.RedoubleSingle),
+                collection.Max(MultiplyFunction.RedoubleSingle)
             );
 
             // Act.
             var actualValue = explosive.MinMax(MultiplyFunction.RedoubleSingle);
 
             // Assert.
-            CustomAssert.True(explosive.VerifyThriceEnumerateWholeCollection(collection));
+            CustomAssert.True(explosive.VerifyOnceEnumerateWholeCollection(collection));
             Assert.Equal(expectedValue, actualValue);
         }
 
@@ -826,15 +826,15 @@ namespace Acolyte.Tests.Linq
             var explosive = ExplosiveEnumerable.CreateNotExplosive(collection);
             (float? minValue, float? maxValue) expectedValue =
             (
-                explosive.Min(MultiplyFunction.RedoubleNullableSingle),
-                explosive.Max(MultiplyFunction.RedoubleNullableSingle)
+                collection.Min(MultiplyFunction.RedoubleNullableSingle),
+                collection.Max(MultiplyFunction.RedoubleNullableSingle)
             );
 
             // Act.
             var actualValue = explosive.MinMax(MultiplyFunction.RedoubleNullableSingle);
 
             // Assert.
-            CustomAssert.True(explosive.VerifyThriceEnumerateWholeCollection(collection));
+            CustomAssert.True(explosive.VerifyOnceEnumerateWholeCollection(collection));
             Assert.Equal(expectedValue, actualValue);
         }
 
@@ -1081,15 +1081,15 @@ namespace Acolyte.Tests.Linq
             var explosive = ExplosiveEnumerable.CreateNotExplosive(collection);
             (double minValue, double maxValue) expectedValue =
             (
-                explosive.Min(MultiplyFunction.RedoubleDouble),
-                explosive.Max(MultiplyFunction.RedoubleDouble)
+                collection.Min(MultiplyFunction.RedoubleDouble),
+                collection.Max(MultiplyFunction.RedoubleDouble)
             );
 
             // Act.
             var actualValue = explosive.MinMax(MultiplyFunction.RedoubleDouble);
 
             // Assert.
-            CustomAssert.True(explosive.VerifyThriceEnumerateWholeCollection(collection));
+            CustomAssert.True(explosive.VerifyOnceEnumerateWholeCollection(collection));
             Assert.Equal(expectedValue, actualValue);
         }
 
@@ -1101,15 +1101,15 @@ namespace Acolyte.Tests.Linq
             var explosive = ExplosiveEnumerable.CreateNotExplosive(collection);
             (double? minValue, double? maxValue) expectedValue =
             (
-                explosive.Min(MultiplyFunction.RedoubleNullableDouble),
-                explosive.Max(MultiplyFunction.RedoubleNullableDouble)
+                collection.Min(MultiplyFunction.RedoubleNullableDouble),
+                collection.Max(MultiplyFunction.RedoubleNullableDouble)
             );
 
             // Act.
             var actualValue = explosive.MinMax(MultiplyFunction.RedoubleNullableDouble);
 
             // Assert.
-            CustomAssert.True(explosive.VerifyThriceEnumerateWholeCollection(collection));
+            CustomAssert.True(explosive.VerifyOnceEnumerateWholeCollection(collection));
             Assert.Equal(expectedValue, actualValue);
         }
 
@@ -1356,15 +1356,15 @@ namespace Acolyte.Tests.Linq
             var explosive = ExplosiveEnumerable.CreateNotExplosive(collection);
             (decimal minValue, decimal maxValue) expectedValue =
             (
-                explosive.Min(MultiplyFunction.RedoubleDecimal),
-                explosive.Max(MultiplyFunction.RedoubleDecimal)
+                collection.Min(MultiplyFunction.RedoubleDecimal),
+                collection.Max(MultiplyFunction.RedoubleDecimal)
             );
 
             // Act.
             var actualValue = explosive.MinMax(MultiplyFunction.RedoubleDecimal);
 
             // Assert.
-            CustomAssert.True(explosive.VerifyThriceEnumerateWholeCollection(collection));
+            CustomAssert.True(explosive.VerifyOnceEnumerateWholeCollection(collection));
             Assert.Equal(expectedValue, actualValue);
         }
 
@@ -1376,15 +1376,15 @@ namespace Acolyte.Tests.Linq
             var explosive = ExplosiveEnumerable.CreateNotExplosive(collection);
             (decimal? minValue, decimal? maxValue) expectedValue =
             (
-                explosive.Min(MultiplyFunction.RedoubleNullableDecimal),
-                explosive.Max(MultiplyFunction.RedoubleNullableDecimal)
+                collection.Min(MultiplyFunction.RedoubleNullableDecimal),
+                collection.Max(MultiplyFunction.RedoubleNullableDecimal)
             );
 
             // Act.
             var actualValue = explosive.MinMax(MultiplyFunction.RedoubleNullableDecimal);
 
             // Assert.
-            CustomAssert.True(explosive.VerifyThriceEnumerateWholeCollection(collection));
+            CustomAssert.True(explosive.VerifyOnceEnumerateWholeCollection(collection));
             Assert.Equal(expectedValue, actualValue);
         }
 
@@ -1914,14 +1914,14 @@ namespace Acolyte.Tests.Linq
             IReadOnlyList<DummyStruct> collection = DummyStruct.DefaultList;
             var explosive = ExplosiveEnumerable.CreateNotExplosive(collection);
             (DummyStruct minValue, DummyStruct maxValue) expectedValue =
-                (explosive.Min(), explosive.Max());
+                (collection.Min(), collection.Max());
             Func<DummyStruct, DummyStruct> selector = IdentityFunction<DummyStruct>.Instance;
 
             // Act.
             var actualValue = explosive.MinMax(selector);
 
             // Assert.
-            CustomAssert.True(explosive.VerifyThriceEnumerateWholeCollection(collection));
+            CustomAssert.True(explosive.VerifyOnceEnumerateWholeCollection(collection));
             Assert.Equal(expectedValue, actualValue);
         }
 
@@ -1932,14 +1932,14 @@ namespace Acolyte.Tests.Linq
             IReadOnlyList<DummyClass> collection = DummyClass.DefaultList;
             var explosive = ExplosiveEnumerable.CreateNotExplosive(collection);
             (DummyClass? minValue, DummyClass? maxValue) expectedValue =
-                (explosive.Min(), explosive.Max());
+                (collection.Min(), collection.Max());
             Func<DummyClass?, DummyClass?> selector = IdentityFunction<DummyClass?>.Instance;
 
             // Act.
             var actualValue = explosive.MinMax(selector);
 
             // Assert.
-            CustomAssert.True(explosive.VerifyThriceEnumerateWholeCollection(collection));
+            CustomAssert.True(explosive.VerifyOnceEnumerateWholeCollection(collection));
             Assert.Equal(expectedValue, actualValue);
         }
 
@@ -1949,7 +1949,8 @@ namespace Acolyte.Tests.Linq
             // Arrange.
             IReadOnlyList<DummyStruct> collection = DummyStruct.DefaultList;
             var explosive = ExplosiveEnumerable.CreateNotExplosive(collection);
-            (DummyStruct minValue, DummyStruct maxValue) expectedValue = (explosive.Min(), explosive.Max());
+            (DummyStruct minValue, DummyStruct maxValue) expectedValue =
+                (collection.Min(), collection.Max());
             Func<DummyStruct, DummyStruct> selector = IdentityFunction<DummyStruct>.Instance;
             var comparer = MockComparer<DummyStruct>.Default;
 
@@ -1957,7 +1958,7 @@ namespace Acolyte.Tests.Linq
             var actualValue = explosive.MinMax(selector, comparer);
 
             // Assert.
-            CustomAssert.True(explosive.VerifyThriceEnumerateWholeCollection(collection));
+            CustomAssert.True(explosive.VerifyOnceEnumerateWholeCollection(collection));
             Assert.Equal(expectedValue, actualValue);
             VerifyCompareCallsForMinMax(comparer, collection);
         }
@@ -1969,7 +1970,7 @@ namespace Acolyte.Tests.Linq
             IReadOnlyList<DummyClass> collection = DummyClass.DefaultList;
             var explosive = ExplosiveEnumerable.CreateNotExplosive(collection);
             (DummyClass? minValue, DummyClass? maxValue) expectedValue =
-                (explosive.Min(), explosive.Max());
+                (collection.Min(), collection.Max());
             Func<DummyClass?, DummyClass?> selector = IdentityFunction<DummyClass?>.Instance;
             var comparer = MockComparer<DummyClass?>.Default;
 
@@ -1979,7 +1980,7 @@ namespace Acolyte.Tests.Linq
             var actualValue = explosive.MinMax(selector, comparer);
 
             // Assert.
-            CustomAssert.True(explosive.VerifyThriceEnumerateWholeCollection(collection));
+            CustomAssert.True(explosive.VerifyOnceEnumerateWholeCollection(collection));
             Assert.Equal(expectedValue, actualValue);
             VerifyCompareCallsForMinMax(comparer, collection);
         }

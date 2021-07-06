@@ -376,8 +376,8 @@ namespace Acolyte.Tests.Linq.MinMax
             var explosive = ExplosiveEnumerable.CreateNotExplosive(collection);
             Func<DummyStruct, int> keySelector = item => InverseFunction.ForInt32(item.Value);
             // Min/max with selector returns transformed value. Need to transform it back.
-            int minValue = explosive.Min(keySelector);
-            int maxValue = explosive.Max(keySelector);
+            int minValue = collection.Min(keySelector);
+            int maxValue = collection.Max(keySelector);
             (DummyStruct minValue, DummyStruct maxValue) expectedValue =
                 (new DummyStruct(-minValue), new DummyStruct(-maxValue));
             var keyComparer = MockComparer<int>.Default;
@@ -386,7 +386,7 @@ namespace Acolyte.Tests.Linq.MinMax
             var actualValue = explosive.MinMaxBy(keySelector, keyComparer);
 
             // Assert.
-            CustomAssert.True(explosive.VerifyThriceEnumerateWholeCollection(collection));
+            CustomAssert.True(explosive.VerifyOnceEnumerateWholeCollection(collection));
             Assert.Equal(expectedValue, actualValue);
             VerifyCompareCallsForMinMax(keyComparer, collection);
         }
@@ -399,8 +399,8 @@ namespace Acolyte.Tests.Linq.MinMax
             var explosive = ExplosiveEnumerable.CreateNotExplosive(collection);
             Func<DummyClass?, int> keySelector = item => InverseFunction.ForInt32(item!.Value);
             // Min/max with selector returns transformed value. Need to transform it back.
-            int minValue = explosive.Min(keySelector);
-            int maxValue = explosive.Max(keySelector);
+            int minValue = collection.Min(keySelector);
+            int maxValue = collection.Max(keySelector);
             (DummyClass minValue, DummyClass maxValue) expectedValue =
                 (new DummyClass(-minValue), new DummyClass(-maxValue));
             var keyComparer = MockComparer<int>.Default;
@@ -409,7 +409,7 @@ namespace Acolyte.Tests.Linq.MinMax
             var actualValue = explosive.MinMaxBy(keySelector, keyComparer);
 
             // Assert.
-            CustomAssert.True(explosive.VerifyThriceEnumerateWholeCollection(collection));
+            CustomAssert.True(explosive.VerifyOnceEnumerateWholeCollection(collection));
             Assert.Equal(expectedValue, actualValue);
             VerifyCompareCallsForMinMax(keyComparer, collection);
         }

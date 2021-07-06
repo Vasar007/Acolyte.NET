@@ -343,14 +343,14 @@ namespace Acolyte.Tests.Linq.Min
             // Arrange.
             IReadOnlyList<DummyStruct> collection = DummyStruct.DefaultList;
             var explosive = ExplosiveEnumerable.CreateNotExplosive(collection);
-            DummyStruct expectedValue = explosive.Min();
+            DummyStruct expectedValue = collection.Min();
             var comparer = MockComparer.SetupDefaultFor(collection);
 
             // Act.
             DummyStruct actualValue = explosive.Min(comparer);
 
             // Assert.
-            CustomAssert.True(explosive.VerifyTwiceEnumerateWholeCollection(collection));
+            CustomAssert.True(explosive.VerifyOnceEnumerateWholeCollection(collection));
             Assert.Equal(expectedValue, actualValue);
             VerifyCompareCallsForMin(comparer, collection);
         }
@@ -361,14 +361,14 @@ namespace Acolyte.Tests.Linq.Min
             // Arrange.
             IReadOnlyList<DummyClass> collection = DummyClass.DefaultList;
             var explosive = ExplosiveEnumerable.CreateNotExplosive(collection);
-            DummyClass? expectedValue = explosive.Min();
+            DummyClass? expectedValue = collection.Min();
             var comparer = MockComparer.SetupDefaultFor<DummyClass?>(collection);
 
             // Act.
             DummyClass? actualValue = explosive.Min(comparer);
 
             // Assert.
-            CustomAssert.True(explosive.VerifyTwiceEnumerateWholeCollection(collection));
+            CustomAssert.True(explosive.VerifyOnceEnumerateWholeCollection(collection));
             Assert.Equal(expectedValue, actualValue);
             VerifyCompareCallsForMin(comparer, collection);
         }

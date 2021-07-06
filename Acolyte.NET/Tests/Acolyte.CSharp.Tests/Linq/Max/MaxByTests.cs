@@ -188,14 +188,14 @@ namespace Acolyte.Tests.Linq.Max
             var explosive = ExplosiveEnumerable.CreateNotExplosive(collection);
             Func<int, int> keySelector = InverseFunction.ForInt32;
             // Max with selector returns transformed value. Need to transform it back.
-            int maxValue = explosive.Max(keySelector);
+            int maxValue = collection.Max(keySelector);
             int expectedValue = keySelector(maxValue);
 
             // Act.
             int actualValue = explosive.MaxBy(keySelector);
 
             // Assert.
-            CustomAssert.True(explosive.VerifyTwiceEnumerateWholeCollection(collection));
+            CustomAssert.True(explosive.VerifyOnceEnumerateWholeCollection(collection));
             Assert.Equal(expectedValue, actualValue);
         }
 
