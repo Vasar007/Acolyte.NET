@@ -161,6 +161,31 @@ namespace Acolyte.Tests.Linq.OrderBySeruence
 
         #region Random Values
 
+        [Fact]
+        public void OrderBySequence_WithSourceKeySelector_ForCollectionWithRandomSize_ShouldOrderSource()
+        {
+            // Arrange.
+            // "Enumerable.Join" has some issues when called for large collections.
+            // See https://github.com/dotnet/runtime/issues/55219
+            int count = TestDataCreator.GetRandomSmallCountNumber();
+            // Using identity function to avoid int overflowing.
+            Func<int, int> sourceKeySelector = IdentityFunction<int>.Instance;
+            IReadOnlyList<int> collectionWithSomeItems =
+                TestDataCreator.CreateRandomInt32List(count);
+            IReadOnlyList<int> randomOrder = collectionWithSomeItems
+                .Shuffle()
+                .ToReadOnlyList();
+            IReadOnlyList<int> expectedCollection = randomOrder;
+
+            // Act.
+            var actualCollection = collectionWithSomeItems.OrderBySequence(
+               randomOrder, sourceKeySelector
+           );
+
+            // Assert.
+            Assert.Equal(expectedCollection, actualCollection);
+        }
+
         #endregion
 
         #region Extended Logical Coverage

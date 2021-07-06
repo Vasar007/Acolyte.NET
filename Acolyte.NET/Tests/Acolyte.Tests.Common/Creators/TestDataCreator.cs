@@ -93,7 +93,7 @@ namespace Acolyte.Tests.Creators
 
             var result = new List<TItem>(capacity: count);
             result.AddRange(values);
-            return result;
+            return result.AsReadOnly();
         }
 
         public static IReadOnlyList<TItem> CreateList<TItem>(int count,
