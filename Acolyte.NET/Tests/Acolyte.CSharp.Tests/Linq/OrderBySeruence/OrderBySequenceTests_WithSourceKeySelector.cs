@@ -106,6 +106,27 @@ namespace Acolyte.Tests.Linq.OrderBySeruence
 
         #region Predefined Values
 
+        [Fact]
+        public void OrderBySequence_WithSourceKeySelector_ForPredefinedCollection_ShouldOrderSource()
+        {
+            // Arrange.
+            IReadOnlyList<int> predefinedCollection = new[] { 1, 2, 3 };
+            Func<int, int> sourceKeySelector = MultiplyFunction.RedoubleInt32;
+            IReadOnlyList<int> sourceOrder = new[] { 2, 1, 3 };
+            IReadOnlyList<int> predefinedOrder = sourceOrder
+                .Select(sourceKeySelector)
+                .ToReadOnlyList();
+            IReadOnlyList<int> expectedCollection = sourceOrder;
+
+            // Act.
+            var actualCollection = predefinedCollection.OrderBySequence(
+                predefinedOrder, sourceKeySelector
+            );
+
+            // Assert.
+            Assert.Equal(expectedCollection, actualCollection);
+        }
+
         #endregion
 
         #region Some Values
