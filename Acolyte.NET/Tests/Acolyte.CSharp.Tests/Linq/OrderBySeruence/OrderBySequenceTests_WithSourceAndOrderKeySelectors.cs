@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Acolyte.Functions;
 using Acolyte.Linq;
+using Acolyte.Tests.Cases.Parameterized;
 using Acolyte.Tests.Creators;
+using MoreLinq;
 using Xunit;
 
 namespace Acolyte.Tests.Linq.OrderBySeruence
@@ -149,7 +151,7 @@ namespace Acolyte.Tests.Linq.OrderBySeruence
             Func<int, int> sourceKeySelector = MultiplyFunction.RedoubleInt32;
             Func<int, int> orderKeySelector = MultiplyFunction.RedoubleInt32;
             IReadOnlyList<int> predefinedCollection = new[] { 1, 2, 3 }
-                  .Select(sourceKeySelector)
+                .Select(sourceKeySelector)
                 .ToReadOnlyList();
             IReadOnlyList<int> predefinedOrder = new[] { 2, 1, 3 }
                 .Select(orderKeySelector)
@@ -168,6 +170,36 @@ namespace Acolyte.Tests.Linq.OrderBySeruence
         #endregion
 
         #region Some Values
+
+        [Theory]
+        [ClassData(typeof(PositiveTestCases))]
+        public void OrderBySequence_WithSourceAndOrderKeySelectors_ForCollectionWithSomeItems_ShouldOrderSource(
+            int count)
+        {
+            // Arrange.
+            // Using identity function to avoid int overflowing.
+            Func<int, int> sourceKeySelector = IdentityFunction<int>.Instance;
+            Func<int, int> orderKeySelector = IdentityFunction<int>.Instance;
+            IReadOnlyList<int> collectionWithSomeItems =
+                TestDataCreator.CreateRandomInt32List(count)
+                .Select(sourceKeySelector)
+                .ToReadOnlyList();
+            IReadOnlyList<int> sourceOrder = collectionWithSomeItems
+                .Shuffle()
+                .ToReadOnlyList();
+            IReadOnlyList<int> randomOrder = sourceOrder
+                .Select(orderKeySelector)
+                .ToReadOnlyList();
+            IReadOnlyList<int> expectedCollection = sourceOrder;
+
+            // Act.
+            var actualCollection = collectionWithSomeItems.OrderBySequence(
+               randomOrder, sourceKeySelector, orderKeySelector
+           );
+
+            // Assert.
+            Assert.Equal(expectedCollection, actualCollection);
+        }
 
         #endregion
 

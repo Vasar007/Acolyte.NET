@@ -78,14 +78,13 @@ namespace Acolyte.Tests.Linq
         public void ForEach_ForCollectionWithSomeItems_ShouldDoActionForEachItem(int count)
         {
             // Arrange.
-            IReadOnlyList<int> collectionWithSomeItems =
+            IReadOnlyList<int> expectedCollection =
                 TestDataCreator.CreateRandomInt32List(count);
-            IReadOnlyList<int> expectedCollection = collectionWithSomeItems.ToList();
             var actualCollection = new List<int>();
             Action<int> action = i => actualCollection.Add(i);
 
             // Act.
-            collectionWithSomeItems.ForEach(action);
+            expectedCollection.ForEach(action);
 
             // Assert.
             Assert.Equal(expectedCollection, actualCollection);

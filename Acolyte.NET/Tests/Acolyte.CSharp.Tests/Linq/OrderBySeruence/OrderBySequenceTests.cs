@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using Acolyte.Linq;
+using Acolyte.Tests.Cases.Parameterized;
 using Acolyte.Tests.Creators;
+using MoreLinq;
 using Xunit;
 
 namespace Acolyte.Tests.Linq.OrderBySeruence
@@ -107,6 +109,25 @@ namespace Acolyte.Tests.Linq.OrderBySeruence
         #endregion
 
         #region Some Values
+
+        [Theory]
+        [ClassData(typeof(PositiveTestCases))]
+        public void OrderBySequence_ForCollectionWithSomeItems_ShouldOrderSource(int count)
+        {
+            // Arrange.
+            IReadOnlyList<int> collectionWithSomeItems =
+                TestDataCreator.CreateRandomInt32List(count);
+            IReadOnlyList<int> randomOrder = collectionWithSomeItems
+                .Shuffle()
+                .ToReadOnlyList();
+            IReadOnlyList<int> expectedCollection = randomOrder;
+
+            // Act.
+            var actualCollection = collectionWithSomeItems.OrderBySequence(randomOrder);
+
+            // Assert.
+            Assert.Equal(expectedCollection, actualCollection);
+        }
 
         #endregion
 

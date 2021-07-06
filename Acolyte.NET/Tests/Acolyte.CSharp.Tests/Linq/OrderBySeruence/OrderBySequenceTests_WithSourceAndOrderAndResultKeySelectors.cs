@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Acolyte.Functions;
 using Acolyte.Linq;
+using Acolyte.Tests.Cases.Parameterized;
 using Acolyte.Tests.Creators;
+using MoreLinq;
 using Xunit;
 
 namespace Acolyte.Tests.Linq.OrderBySeruence
@@ -212,6 +214,34 @@ namespace Acolyte.Tests.Linq.OrderBySeruence
         #endregion
 
         #region Some Values
+
+        [Theory]
+        [ClassData(typeof(PositiveTestCases))]
+        public void OrderBySequence_WithSourceAndOrderAndResultKeySelectors_ForCollectionWithSomeItems_ShouldOrderSource(
+            int count)
+        {
+            // Arrange.
+            // Using identity function to avoid int overflowing.
+            Func<int, int> sourceKeySelector = IdentityFunction<int>.Instance;
+            Func<int, int> orderKeySelector = IdentityFunction<int>.Instance;
+            IReadOnlyList<int> collectionWithSomeItems =
+                TestDataCreator.CreateRandomInt32List(count)
+                .Select(sourceKeySelector)
+                .ToReadOnlyList();
+            IReadOnlyList<int> randomOrder = collectionWithSomeItems
+                .Shuffle()
+                .ToReadOnlyList();
+            Func<int, int, int> sourceResultSelector = GetSourceResultSelector<int, int>();
+            IReadOnlyList<int> expectedCollection = randomOrder;
+
+            // Act.
+            var actualCollection = collectionWithSomeItems.OrderBySequence(
+               randomOrder, sourceKeySelector, orderKeySelector, sourceResultSelector
+           );
+
+            // Assert.
+            Assert.Equal(expectedCollection, actualCollection);
+        }
 
         #endregion
 
