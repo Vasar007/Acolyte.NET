@@ -31,7 +31,7 @@ namespace Acolyte.Tests.Linq
 
             // Act & Assert.
             Assert.Throws<ArgumentNullException>(
-                "source", () => nullValue!.MinMax(DiscardFunction<int>.Func)
+                "source", () => nullValue!.MinMax(DiscardFunction<int>.Instance)
             );
         }
 
@@ -55,7 +55,7 @@ namespace Acolyte.Tests.Linq
 
             // Act & Assert.
             Assert.Throws<ArgumentNullException>(
-                "source", () => nullValue!.MinMax(DiscardFunction<int?>.Func)
+                "source", () => nullValue!.MinMax(DiscardFunction<int?>.Instance)
             );
         }
 
@@ -304,7 +304,7 @@ namespace Acolyte.Tests.Linq
 
             // Act & Assert.
             Assert.Throws<ArgumentNullException>(
-                "source", () => nullValue!.MinMax(DiscardFunction<long>.Func)
+                "source", () => nullValue!.MinMax(DiscardFunction<long>.Instance)
             );
         }
 
@@ -328,7 +328,7 @@ namespace Acolyte.Tests.Linq
 
             // Act & Assert.
             Assert.Throws<ArgumentNullException>(
-                "source", () => nullValue!.MinMax(DiscardFunction<long?>.Func)
+                "source", () => nullValue!.MinMax(DiscardFunction<long?>.Instance)
             );
         }
 
@@ -579,7 +579,7 @@ namespace Acolyte.Tests.Linq
 
             // Act & Assert.
             Assert.Throws<ArgumentNullException>(
-                "source", () => nullValue!.MinMax(DiscardFunction<float>.Func)
+                "source", () => nullValue!.MinMax(DiscardFunction<float>.Instance)
             );
         }
 
@@ -603,7 +603,7 @@ namespace Acolyte.Tests.Linq
 
             // Act & Assert.
             Assert.Throws<ArgumentNullException>(
-                "source", () => nullValue!.MinMax(DiscardFunction<float?>.Func)
+                "source", () => nullValue!.MinMax(DiscardFunction<float?>.Instance)
             );
         }
 
@@ -854,7 +854,7 @@ namespace Acolyte.Tests.Linq
 
             // Act & Assert.
             Assert.Throws<ArgumentNullException>(
-                "source", () => nullValue!.MinMax(DiscardFunction<double>.Func)
+                "source", () => nullValue!.MinMax(DiscardFunction<double>.Instance)
             );
         }
 
@@ -878,7 +878,7 @@ namespace Acolyte.Tests.Linq
 
             // Act & Assert.
             Assert.Throws<ArgumentNullException>(
-                "source", () => nullValue!.MinMax(DiscardFunction<double?>.Func)
+                "source", () => nullValue!.MinMax(DiscardFunction<double?>.Instance)
             );
         }
 
@@ -1129,7 +1129,7 @@ namespace Acolyte.Tests.Linq
 
             // Act & Assert.
             Assert.Throws<ArgumentNullException>(
-                "source", () => nullValue!.MinMax(DiscardFunction<decimal>.Func)
+                "source", () => nullValue!.MinMax(DiscardFunction<decimal>.Instance)
             );
         }
 
@@ -1153,7 +1153,7 @@ namespace Acolyte.Tests.Linq
 
             // Act & Assert.
             Assert.Throws<ArgumentNullException>(
-                "source", () => nullValue!.MinMax(DiscardFunction<decimal?>.Func)
+                "source", () => nullValue!.MinMax(DiscardFunction<decimal?>.Instance)
             );
         }
 
@@ -1403,7 +1403,7 @@ namespace Acolyte.Tests.Linq
         {
             // Arrange.
             const IEnumerable<DummyStruct>? nullValue = null;
-            Func<DummyStruct, DummyStruct> discardKeySelector = DiscardFunction<DummyStruct>.Func;
+            Func<DummyStruct, DummyStruct> discardKeySelector = DiscardFunction<DummyStruct>.Instance;
 
             // Act & Assert.
             Assert.Throws<ArgumentNullException>(
@@ -1416,7 +1416,7 @@ namespace Acolyte.Tests.Linq
         {
             // Arrange.
             const IEnumerable<DummyClass>? nullValue = null;
-            Func<DummyClass, DummyClass?> discardKeySelector = DiscardFunction<DummyClass>.Func;
+            Func<DummyClass, DummyClass?> discardKeySelector = DiscardFunction<DummyClass>.Instance;
 
             // Act & Assert.
             Assert.Throws<ArgumentNullException>(
@@ -1454,7 +1454,7 @@ namespace Acolyte.Tests.Linq
             // Arrange.
             const IEnumerable<DummyStruct>? nullValue = null;
             var comparer = MockComparer<DummyStruct>.Default;
-            Func<DummyStruct, DummyStruct> discardKeySelector = DiscardFunction<DummyStruct>.Func;
+            Func<DummyStruct, DummyStruct> discardKeySelector = DiscardFunction<DummyStruct>.Instance;
 
             // Act & Assert.
             Assert.Throws<ArgumentNullException>(
@@ -1469,7 +1469,7 @@ namespace Acolyte.Tests.Linq
             // Arrange.
             const IEnumerable<DummyClass>? nullValue = null;
             var comparer = MockComparer<DummyClass?>.Default;
-            Func<DummyClass, DummyClass?> discardKeySelector = DiscardFunction<DummyClass>.Func;
+            Func<DummyClass, DummyClass?> discardKeySelector = DiscardFunction<DummyClass>.Instance;
 
             // Act & Assert.
             Assert.Throws<ArgumentNullException>(

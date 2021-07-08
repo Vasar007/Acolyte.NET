@@ -21,7 +21,7 @@ namespace Acolyte.Tests.Linq.OrderBySeruence
             // Arrange.
             const IEnumerable<int>? nullValue = null;
             IEnumerable<int> emptyOrder = Enumerable.Empty<int>();
-            Func<int, int> discardSourceKeySelector = DiscardFunction<int>.Func;
+            Func<int, int> discardSourceKeySelector = DiscardFunction<int>.Instance;
 
             // Act & Assert.
             Assert.Throws<ArgumentNullException>(
@@ -34,7 +34,7 @@ namespace Acolyte.Tests.Linq.OrderBySeruence
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
-            Func<int, int> discardSourceKeySelector = DiscardFunction<int>.Func;
+            Func<int, int> discardSourceKeySelector = DiscardFunction<int>.Instance;
 
             // Act & Assert.
             Assert.Throws<ArgumentNullException>(

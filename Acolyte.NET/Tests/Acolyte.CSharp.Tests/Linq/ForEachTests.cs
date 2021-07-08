@@ -23,7 +23,7 @@ namespace Acolyte.Tests.Linq
         {
             // Arrange.
             const IEnumerable<int>? nullValue = null;
-            Action<int> discard = DiscardFunction<int>.Action;
+            Action<int> discard = DiscardAction<int>.Instance;
 
             // Act & Assert.
             Assert.Throws<ArgumentNullException>("source", () => nullValue!.ForEach(discard));

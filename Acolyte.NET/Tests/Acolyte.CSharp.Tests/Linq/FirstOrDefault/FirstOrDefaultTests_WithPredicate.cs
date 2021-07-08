@@ -20,7 +20,7 @@ namespace Acolyte.Tests.Linq.FirstOrDefault
         {
             // Arrange.
             const IEnumerable<int>? nullValue = null;
-            Func<int, bool> discard = DiscardFunction<int, bool>.Func;
+            Func<int, bool> discard = DiscardFunction<int, bool>.Instance;
 
             // Act & Assert.
             Assert.Throws<ArgumentNullException>(
@@ -50,7 +50,7 @@ namespace Acolyte.Tests.Linq.FirstOrDefault
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
-            Func<int, bool> discard = DiscardFunction<int, bool>.Func;
+            Func<int, bool> discard = DiscardFunction<int, bool>.Instance;
             int expectedValue = TestDataCreator.CreateRandomInt32();
 
             // Act.

@@ -24,7 +24,7 @@ namespace Acolyte.Tests.Linq.IndexOf
         {
             // Arrange.
             const IEnumerable<int>? nullValue = null;
-            Func<int, bool> discard = DiscardFunction<int, bool>.Func;
+            Func<int, bool> discard = DiscardFunction<int, bool>.Instance;
 
             // Act & Assert.
             Assert.Throws<ArgumentNullException>("source", () => nullValue!.IndexOf(discard));
@@ -51,7 +51,7 @@ namespace Acolyte.Tests.Linq.IndexOf
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
-            Func<int, bool> discard = DiscardFunction<int, bool>.Func;
+            Func<int, bool> discard = DiscardFunction<int, bool>.Instance;
             int expectedIndex = Constants.NotFoundIndex;
 
             // Act.

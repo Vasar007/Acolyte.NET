@@ -25,7 +25,7 @@ namespace Acolyte.Tests.Linq.Min
         {
             // Arrange.
             const IEnumerable<int>? nullValue = null;
-            Func<int, int> discardKeySelector = DiscardFunction<int>.Func;
+            Func<int, int> discardKeySelector = DiscardFunction<int>.Instance;
 
             // Act & Assert.
             Assert.Throws<ArgumentNullException>(

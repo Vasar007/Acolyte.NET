@@ -19,7 +19,7 @@ namespace Acolyte.Tests.Linq.LastOrDefault
         {
             // Arrange.
             const IEnumerable<int>? nullValue = null;
-            Func<int, bool> discard = DiscardFunction<int, bool>.Func;
+            Func<int, bool> discard = DiscardFunction<int, bool>.Instance;
 
             // Act & Assert.
             Assert.Throws<ArgumentNullException>(
@@ -50,7 +50,7 @@ namespace Acolyte.Tests.Linq.LastOrDefault
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
             int expectedValue = TestDataCreator.CreateRandomInt32();
-            Func<int, bool> discard = DiscardFunction<int, bool>.Func;
+            Func<int, bool> discard = DiscardFunction<int, bool>.Instance;
 
             // Act.
             int actualValue = emptyCollection.LastOrDefault(discard, expectedValue);
@@ -108,7 +108,7 @@ namespace Acolyte.Tests.Linq.LastOrDefault
         {
             // Arrange.
             IEnumerable<int> collectionWithSomeItems = TestDataCreator.CreateRandomInt32List(count);
-            Func<int, bool> discard = DiscardFunction<int, bool>.Func;
+            Func<int, bool> discard = DiscardFunction<int, bool>.Instance;
             int expectedValue = TestDataCreator.CreateRandomInt32();
 
             // Act.
@@ -150,7 +150,7 @@ namespace Acolyte.Tests.Linq.LastOrDefault
             int count = TestDataCreator.GetRandomCountNumber();
             IEnumerable<int> collectionWithRandomSize =
                 TestDataCreator.CreateRandomInt32List(count);
-            Func<int, bool> discard = DiscardFunction<int, bool>.Func;
+            Func<int, bool> discard = DiscardFunction<int, bool>.Instance;
             int expectedValue = TestDataCreator.CreateRandomInt32();
 
             // Act.
@@ -170,7 +170,7 @@ namespace Acolyte.Tests.Linq.LastOrDefault
             // Arrange.
             IReadOnlyList<int> collection = new[] { 1, 2, 3, 4 };
             var explosive = ExplosiveEnumerable.CreateNotExplosive(collection);
-            Func<int, bool> discard = DiscardFunction<int, bool>.Func;
+            Func<int, bool> discard = DiscardFunction<int, bool>.Instance;
             int expectedValue = collection[1];
 
             // Act.

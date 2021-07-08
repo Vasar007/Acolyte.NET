@@ -20,7 +20,7 @@ namespace Acolyte.Tests.Linq
         {
             // Arrange.
             const IEnumerable<int>? nullValue = null;
-            Func<int, Task> discard = DiscardFunction<int>.FuncAsync;
+            Func<int, Task> discard = DiscardFunction<int>.InstanceAsync;
 
             // Act & Assert.
             Assert.ThrowsAsync<ArgumentNullException>(
@@ -33,7 +33,7 @@ namespace Acolyte.Tests.Linq
         {
             // Arrange.
             const IEnumerable<int>? nullValue = null;
-            Func<int, int, Task> discard = DiscardFunction<int>.FuncWithIndexAsync;
+            Func<int, int, Task> discard = DiscardFunction<int>.InstanceWithIndexAsync;
 
             // Act & Assert.
             Assert.ThrowsAsync<ArgumentNullException>(
@@ -46,7 +46,7 @@ namespace Acolyte.Tests.Linq
         {
             // Arrange.
             const IEnumerable<int>? nullValue = null;
-            Func<int, Task<bool>> discard = DiscardFunction<int, bool>.FuncAsync;
+            Func<int, Task<bool>> discard = DiscardFunction<int, bool>.InstanceAsync;
 
             // Act & Assert.
             Assert.ThrowsAsync<ArgumentNullException>(
@@ -59,7 +59,7 @@ namespace Acolyte.Tests.Linq
         {
             // Arrange.
             const IEnumerable<int>? nullValue = null;
-            Func<int, int, Task<bool>> discard = DiscardFunction<int, bool>.FuncWithIndexAsync;
+            Func<int, int, Task<bool>> discard = DiscardFunction<int, bool>.InstanceWithIndexAsync;
 
             // Act & Assert.
             Assert.ThrowsAsync<ArgumentNullException>(

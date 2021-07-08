@@ -22,7 +22,7 @@ namespace Acolyte.Tests.Linq.MinMax
         {
             // Arrange.
             const IEnumerable<DummyStruct>? nullValue = null;
-            Func<DummyStruct, DummyStruct> discardKeySelector = DiscardFunction<DummyStruct>.Func;
+            Func<DummyStruct, DummyStruct> discardKeySelector = DiscardFunction<DummyStruct>.Instance;
             var keyComparer = MockComparer<DummyStruct>.Default;
 
             // Act & Assert.
@@ -37,7 +37,7 @@ namespace Acolyte.Tests.Linq.MinMax
         {
             // Arrange.
             const IEnumerable<DummyClass>? nullValue = null;
-            Func<DummyClass, DummyClass?> discardKeySelector = DiscardFunction<DummyClass>.Func;
+            Func<DummyClass, DummyClass?> discardKeySelector = DiscardFunction<DummyClass>.Instance;
             var keyComparer = MockComparer<DummyClass?>.Default;
 
             // Act & Assert.

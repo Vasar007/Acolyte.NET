@@ -50,7 +50,7 @@ namespace Acolyte.Tests.Linq.SingleOrDefault
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
-            Func<int, bool> discard = DiscardFunction<int, bool>.Func;
+            Func<int, bool> discard = DiscardFunction<int, bool>.Instance;
             int expectedValue = TestDataCreator.CreateRandomInt32();
 
             // Act.

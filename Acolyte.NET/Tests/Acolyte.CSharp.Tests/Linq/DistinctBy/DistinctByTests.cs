@@ -24,7 +24,7 @@ namespace Acolyte.Tests.Linq.DistinctBy
         {
             // Arrange.
             const IEnumerable<int>? nullValue = null;
-            Func<int, bool> discardKeySelector = DiscardFunction<int, bool>.Func;
+            Func<int, bool> discardKeySelector = DiscardFunction<int, bool>.Instance;
 
             // Act & Assert.
             Assert.Throws<ArgumentNullException>(

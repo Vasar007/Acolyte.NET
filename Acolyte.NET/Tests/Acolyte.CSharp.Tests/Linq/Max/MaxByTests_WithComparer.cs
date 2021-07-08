@@ -21,7 +21,7 @@ namespace Acolyte.Tests.Linq.Max
         {
             // Arrange.
             const IEnumerable<int>? nullValue = null;
-            Func<int, int> discardKeySelector = DiscardFunction<int>.Func;
+            Func<int, int> discardKeySelector = DiscardFunction<int>.Instance;
             var keyComparer = MockComparer<int>.Default;
 
             // Act & Assert.

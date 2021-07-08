@@ -18,8 +18,8 @@ namespace Acolyte.Tests.Linq.ToReadOnlyCollection
         {
             // Arrange.
             const IEnumerable<int>? nullValue = null;
-            Func<int, Guid> discardKeySelector = DiscardFunction<int, Guid>.Func;
-            Func<int, int> discardElementSelector = DiscardFunction<int, int>.Func;
+            Func<int, Guid> discardKeySelector = DiscardFunction<int, Guid>.Instance;
+            Func<int, int> discardElementSelector = DiscardFunction<int, int>.Instance;
 
             // Act & Assert.
             Assert.Throws<ArgumentNullException>(
@@ -34,7 +34,7 @@ namespace Acolyte.Tests.Linq.ToReadOnlyCollection
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
             const Func<int, Guid>? nullKeySelector = null;
-            Func<int, int> discardElementSelector = DiscardFunction<int, int>.Func;
+            Func<int, int> discardElementSelector = DiscardFunction<int, int>.Instance;
 
             // Act & Assert.
             Assert.Throws<ArgumentNullException>(
@@ -48,7 +48,7 @@ namespace Acolyte.Tests.Linq.ToReadOnlyCollection
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
-            Func<int, Guid> discardKeySelector = DiscardFunction<int, Guid>.Func;
+            Func<int, Guid> discardKeySelector = DiscardFunction<int, Guid>.Instance;
             const Func<int, int>? nullElementSelector = null;
 
             // Act & Assert.
