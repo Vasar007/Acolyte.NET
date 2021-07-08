@@ -35,7 +35,6 @@ namespace Acolyte.Tests.Linq
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
-            var expectedList = emptyCollection.ToList();
 
             // Act.
             var actualList = emptyCollection.ToReadOnlyList();
@@ -43,7 +42,6 @@ namespace Acolyte.Tests.Linq
             // Assert.
             Assert.NotNull(actualList);
             Assert.Empty(actualList);
-            Assert.Equal(expectedList, actualList);
         }
 
         #endregion

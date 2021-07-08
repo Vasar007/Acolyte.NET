@@ -37,8 +37,11 @@ namespace Acolyte.Tests.Linq
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
 
-            // Act & Assert.
-            Assert.True(emptyCollection.IsNullOrEmpty());
+            // Act.
+            bool actualResult = emptyCollection.IsNullOrEmpty();
+
+            // Assert.
+            Assert.True(actualResult);
         }
 
         #endregion
@@ -51,8 +54,11 @@ namespace Acolyte.Tests.Linq
             // Arrange.
             IReadOnlyList<int> predefinedCollection = new[] { 1, 2, 3 };
 
-            // Act & Assert.
-            Assert.False(predefinedCollection.IsNullOrEmpty());
+            // Act.
+            bool actualResult = predefinedCollection.IsNullOrEmpty();
+
+            // Assert.
+            Assert.False(actualResult);
         }
 
         #endregion
@@ -66,8 +72,11 @@ namespace Acolyte.Tests.Linq
             // Arrange.
             IEnumerable<int> collectionWithSomeItems = TestDataCreator.CreateRandomInt32List(count);
 
-            // Act & Assert.
-            Assert.False(collectionWithSomeItems.IsNullOrEmpty());
+            // Act.
+            bool actualResult = collectionWithSomeItems.IsNullOrEmpty();
+
+            // Assert.
+            Assert.False(actualResult);
         }
 
         #endregion

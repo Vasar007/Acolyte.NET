@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Acolyte.Linq;
+using Acolyte.Tests.Creators;
 using Xunit;
 
 namespace Acolyte.Tests.Linq.Zip
@@ -53,6 +54,69 @@ namespace Acolyte.Tests.Linq.Zip
         #endregion
 
         #region Empty Values
+
+        [Fact]
+        public void ZipThree_ForEmptyFirstCollection_ShouldDoNothing()
+        {
+            // Arrange.
+            int count = TestDataCreator.GetRandomPositiveSmallCountNumber();
+            IEnumerable<int> first = Enumerable.Empty<int>();
+            IReadOnlyList<int> second = TestDataCreator.CreateRandomInt32List(count);
+            IReadOnlyList<int> third = TestDataCreator.CreateRandomInt32List(count);
+
+            // Act.
+            var actualCollection = first.ZipThree(second, third);
+
+            // Assert.
+            Assert.Empty(actualCollection);
+        }
+
+        [Fact]
+        public void ZipThree_ForEmptySecondCollection_ShouldDoNothing()
+        {
+            // Arrange.
+            int count = TestDataCreator.GetRandomPositiveSmallCountNumber();
+            IReadOnlyList<int> first = TestDataCreator.CreateRandomInt32List(count);
+            IEnumerable<int> second = Enumerable.Empty<int>();
+            IReadOnlyList<int> third = TestDataCreator.CreateRandomInt32List(count);
+
+            // Act.
+            var actualCollection = first.ZipThree(second, third);
+
+            // Assert.
+            Assert.Empty(actualCollection);
+        }
+
+        [Fact]
+        public void ZipThree_ForEmptyThirdCollection_ShouldDoNothing()
+        {
+            // Arrange.
+            int count = TestDataCreator.GetRandomPositiveSmallCountNumber();
+            IReadOnlyList<int> first = TestDataCreator.CreateRandomInt32List(count);
+            IReadOnlyList<int> second = TestDataCreator.CreateRandomInt32List(count);
+            IEnumerable<int> third = Enumerable.Empty<int>();
+
+            // Act.
+            var actualCollection = first.ZipThree(second, third);
+
+            // Assert.
+            Assert.Empty(actualCollection);
+        }
+
+        [Fact]
+        public void ZipThree_ForEmptyValues_ShouldDoNothing()
+        {
+            // Arrange.
+            IEnumerable<int> first = Enumerable.Empty<int>();
+            IEnumerable<int> second = Enumerable.Empty<int>();
+            IEnumerable<int> third = Enumerable.Empty<int>();
+
+            // Act.
+            var actualCollection = first.ZipThree(second, third);
+
+            // Assert.
+            Assert.Empty(actualCollection);
+        }
 
         #endregion
 

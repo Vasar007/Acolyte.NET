@@ -38,7 +38,7 @@ namespace Acolyte.Tests.Linq
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
-            IReadOnlyList<int> expectedCollection = emptyCollection.ToList();
+            IReadOnlyList<int> expectedCollection = emptyCollection.ToReadOnlyList();
             var actualCollection = new List<int>();
             Action<int> action = i => actualCollection.Add(i);
 

@@ -69,7 +69,6 @@ namespace Acolyte.Tests.Linq.ToReadOnlyCollection
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
             Func<int, Guid> keySelector = KeyFunction<int>.Simple;
             Func<int, int> elementSelector = IdentityFunction<int>.Instance;
-            var expectedDictionary = emptyCollection.ToDictionary(keySelector, elementSelector);
 
             // Act.
             var actualDictionary = emptyCollection.ToReadOnlyDictionary(
@@ -79,7 +78,6 @@ namespace Acolyte.Tests.Linq.ToReadOnlyCollection
             // Assert.
             Assert.NotNull(actualDictionary);
             Assert.Empty(actualDictionary);
-            Assert.Equal(expectedDictionary, actualDictionary);
         }
 
         #endregion

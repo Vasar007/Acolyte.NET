@@ -107,9 +107,6 @@ namespace Acolyte.Tests.Linq.ToReadOnlyCollection
             Func<int, Guid> keySelector = KeyFunction<int>.Simple;
             Func<int, int> elementSelector = IdentityFunction<int>.Instance;
             var comparer = MockEqualityComparer<Guid>.Default;
-            var expectedDictionary = emptyCollection.ToDictionary(
-                keySelector, elementSelector, comparer
-            );
 
             // Act.
             var actualDictionary = emptyCollection.ToReadOnlyDictionary(
@@ -119,7 +116,6 @@ namespace Acolyte.Tests.Linq.ToReadOnlyCollection
             // Assert.
             Assert.NotNull(actualDictionary);
             Assert.Empty(actualDictionary);
-            Assert.Equal(expectedDictionary, actualDictionary);
             comparer.VerifyNoCalls();
         }
 

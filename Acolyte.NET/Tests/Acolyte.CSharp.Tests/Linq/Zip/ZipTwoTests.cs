@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Acolyte.Linq;
+using Acolyte.Tests.Creators;
 using Xunit;
 
 namespace Acolyte.Tests.Linq.Zip
@@ -39,6 +40,56 @@ namespace Acolyte.Tests.Linq.Zip
         #endregion
 
         #region Empty Values
+
+        [Fact]
+        public void ZipTwo_ForEmptyFirstCollection_ShouldDoNothing()
+        {
+            // Arrange.
+            int count = TestDataCreator.GetRandomPositiveSmallCountNumber();
+            IEnumerable<int> first = Enumerable.Empty<int>();
+            IReadOnlyList<int> second = TestDataCreator.CreateRandomInt32List(count);
+            IReadOnlyList<(int, int)> expectedCollection = Enumerable.Empty<(int, int)>()
+                .ToReadOnlyList();
+
+            // Act.
+            var actualCollection = first.ZipTwo(second);
+
+            // Assert.
+            Assert.Equal(expectedCollection, actualCollection);
+        }
+
+        [Fact]
+        public void ZipTwo_ForEmptySecondCollection_ShouldDoNothing()
+        {
+            // Arrange.
+            int count = TestDataCreator.GetRandomPositiveSmallCountNumber();
+            IReadOnlyList<int> first = TestDataCreator.CreateRandomInt32List(count);
+            IEnumerable<int> second = Enumerable.Empty<int>();
+            IReadOnlyList<(int, int)> expectedCollection = Enumerable.Empty<(int, int)>()
+                  .ToReadOnlyList();
+
+            // Act.
+            var actualCollection = first.ZipTwo(second);
+
+            // Assert.
+            Assert.Equal(expectedCollection, actualCollection);
+        }
+
+        [Fact]
+        public void ZipTwo_ForEmptyValues_ShouldDoNothing()
+        {
+            // Arrange.
+            IEnumerable<int> first = Enumerable.Empty<int>();
+            IEnumerable<int> second = Enumerable.Empty<int>();
+            IReadOnlyList<(int, int)> expectedCollection = Enumerable.Empty<(int, int)>()
+                  .ToReadOnlyList();
+
+            // Act.
+            var actualCollection = first.ZipTwo(second);
+
+            // Assert.
+            Assert.Equal(expectedCollection, actualCollection);
+        }
 
         #endregion
 

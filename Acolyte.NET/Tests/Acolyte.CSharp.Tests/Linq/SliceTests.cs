@@ -44,7 +44,7 @@ namespace Acolyte.Tests.Linq
             var actualCollection = emptyCollection.SliceIfRequired(startIndex, count);
 
             // Assert.
-            Assert.Equal(emptyCollection, actualCollection);
+            Assert.Empty(actualCollection);
         }
 
         #endregion
