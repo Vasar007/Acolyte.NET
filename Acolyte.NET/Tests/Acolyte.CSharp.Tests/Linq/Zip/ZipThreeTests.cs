@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Acolyte.Linq;
+using Acolyte.Tests.Cases.Parameterized;
 using Acolyte.Tests.Creators;
 using Xunit;
 
@@ -122,17 +123,87 @@ namespace Acolyte.Tests.Linq.Zip
 
         #region Predefined Values
 
+        [Fact]
+        public void ZipThree_ForPredefinedCollection_ShouldUniteToSingleCollection()
+        {
+            // Arrange.
+            IReadOnlyList<int> first = new[] { 1, 2, 3 };
+            IReadOnlyList<int> second = new[] { 1, 3, 1 };
+            IReadOnlyList<int> third = new[] { 2, 3, 1 };
+            var expectedCollection = GetExpectedCollection(first, second, third);
+
+            // Act.
+            var actualCollection = first.ZipThree(second, third);
+
+            // Assert.
+            Assert.Equal(expectedCollection, actualCollection);
+        }
+
         #endregion
 
         #region Some Values
+
+        [Theory]
+        [ClassData(typeof(PositiveTestCases))]
+        public void ZipThree_ForCollectionsWithSomeItems_ShouldUniteToSingleCollection(int count)
+        {
+            // Arrange.
+            IReadOnlyList<int> first = TestDataCreator.CreateRandomInt32List(count);
+            IReadOnlyList<int> second = TestDataCreator.CreateRandomInt32List(count);
+            IReadOnlyList<int> third = TestDataCreator.CreateRandomInt32List(count);
+            var expectedCollection = GetExpectedCollection(first, second, third);
+
+            // Act.
+            var actualCollection = first.ZipThree(second, third);
+
+            // Assert.
+            Assert.Equal(expectedCollection, actualCollection);
+        }
 
         #endregion
 
         #region Random Values
 
+        [Fact]
+        public void ZipThree_ForCollectionsWithRandomSize_ShouldUniteToSingleCollection()
+        {
+            // Arrange.
+            int countFirst = TestDataCreator.GetRandomCountNumber();
+            IReadOnlyList<int> first = TestDataCreator.CreateRandomInt32List(countFirst);
+            int countSecond = TestDataCreator.GetRandomCountNumber();
+            IReadOnlyList<int> second = TestDataCreator.CreateRandomInt32List(countSecond);
+            int countThird = TestDataCreator.GetRandomCountNumber();
+            IReadOnlyList<int> third = TestDataCreator.CreateRandomInt32List(countThird);
+            var expectedCollection = GetExpectedCollection(first, second, third);
+
+            // Act.
+            var actualCollection = first.ZipThree(second, third);
+
+            // Assert.
+            Assert.Equal(expectedCollection, actualCollection);
+        }
+
         #endregion
 
         #region Extended Logical Coverage
+
+        #endregion
+
+        #region Private Methods
+
+        private static IReadOnlyList<(int first, int second, int third)> GetExpectedCollection(
+            IReadOnlyList<int> first, IReadOnlyList<int> second, IReadOnlyList<int> third)
+        {
+            var minSize = Math.Min(first.Count, Math.Min(second.Count, third.Count));
+            var expectedCollection = new List<(int first, int second, int third)>(minSize);
+            for (int index = 0; index < minSize; ++index)
+            {
+                var item = ValueTuple.Create(first[index], second[index], third[index]);
+                expectedCollection.Add(item);
+            }
+
+            return expectedCollection;
+        }
 
         #endregion
     }
