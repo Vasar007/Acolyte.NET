@@ -122,7 +122,7 @@ namespace Acolyte.Functions
     /// </summary>
     /// <typeparam name="TElement1">The first type of the elements to discard.</typeparam>
     /// <typeparam name="TElement2">The second type of the elements to discard.</typeparam>
-    /// <typeparam name="TElement2">The third type of the elements to discard.</typeparam>
+    /// <typeparam name="TElement3">The third type of the elements to discard.</typeparam>
     /// <typeparam name="TReturn">The type to return default value of.</typeparam>
     public sealed class DiscardFunction<TElement1, TElement2, TElement3, TReturn>
     {
