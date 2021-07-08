@@ -28,11 +28,13 @@
 
   <PropertyGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
     <AssemblyTitle>Acolyte.NET Tests .NET Standard 2.0</AssemblyTitle>
+    <ReferringTargetFrameworkForProjectReferences>.NETStandard,Version=v2.0</ReferringTargetFrameworkForProjectReferences>
     <DefineConstants>$(DefineConstants);NETSTANDARD2_0</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(TargetFramework)' == 'netstandard2.1'">
     <AssemblyTitle>Acolyte.NET Tests .NET Standard 2.1</AssemblyTitle>
+    <ReferringTargetFrameworkForProjectReferences>.NETStandard,Version=v2.1</ReferringTargetFrameworkForProjectReferences>
     <DefineConstants>$(DefineConstants);NETSTANDARD2_1</DefineConstants>
   </PropertyGroup>
 

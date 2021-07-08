@@ -216,27 +216,28 @@ namespace Acolyte.Tests.Creators
             return random.Next();
         }
 
-        public static int CreateRandomNonNegativeInt32(int maxValue, Random? random = null)
+        public static int CreateRandomNonNegativeInt32(int includedMaxValue, Random? random = null)
         {
             random ??= RandomInstance;
 
             // "Random.Next" method lower bound is equal to zero.
-            return random.Next(GetUpperBound(maxValue));
+            return random.Next(GetUpperBound(includedMaxValue));
         }
 
-        public static int CreateRandomPositiveInt32(int maxValue, Random? random = null)
+        public static int CreateRandomPositiveInt32(int includedMaxValue, Random? random = null)
         {
             random ??= RandomInstance;
 
             // "Random.Next" method lower bound is equal to zero.
-            return random.Next(1, GetUpperBound(maxValue));
+            return random.Next(1, GetUpperBound(includedMaxValue));
         }
 
-        public static int CreateRandomInt32(int minValue, int maxValue, Random? random = null)
+        public static int CreateRandomInt32(int includedMinValue, int includedMaxValue,
+            Random? random = null)
         {
             random ??= RandomInstance;
 
-            return random.Next(minValue, GetUpperBound(maxValue));
+            return random.Next(includedMinValue, GetUpperBound(includedMaxValue));
         }
 
         public static int CreateRandomInt32(Random? random = null)
@@ -286,19 +287,21 @@ namespace Acolyte.Tests.Creators
             return random.NextInt64();
         }
 
-        public static long CreateRandomNonNegativeInt64(long maxValue, Random? random = null)
+        public static long CreateRandomNonNegativeInt64(long includedMaxValue,
+            Random? random = null)
         {
             random ??= RandomInstance;
 
             // "RandomExtensions.NextInt64" method lower bound is equal to zero.
-            return random.NextInt64(GetUpperBound(maxValue));
+            return random.NextInt64(GetUpperBound(includedMaxValue));
         }
 
-        public static long CreateRandomInt64(long minValue, long maxValue, Random? random = null)
+        public static long CreateRandomInt64(long includedMinValue, long includedMaxValue,
+            Random? random = null)
         {
             random ??= RandomInstance;
 
-            return random.NextInt64(minValue, GetUpperBound(maxValue));
+            return random.NextInt64(includedMinValue, GetUpperBound(includedMaxValue));
         }
 
         public static long CreateRandomInt64(Random? random = null)
@@ -320,20 +323,21 @@ namespace Acolyte.Tests.Creators
             return random.NextSingle();
         }
 
-        public static float CreateRandomNonNegativeSingle(float maxValue, Random? random = null)
-        {
-            random ??= RandomInstance;
-
-            // "RandomExtensions.NextSingle" method lower bound is equal to zero.
-            return random.NextSingle(GetUpperBound(maxValue));
-        }
-
-        public static float CreateRandomSingle(float minValue, float maxValue,
+        public static float CreateRandomNonNegativeSingle(float includedMaxValue,
             Random? random = null)
         {
             random ??= RandomInstance;
 
-            return random.NextSingle(minValue, GetUpperBound(maxValue));
+            // "RandomExtensions.NextSingle" method lower bound is equal to zero.
+            return random.NextSingle(GetUpperBound(includedMaxValue));
+        }
+
+        public static float CreateRandomSingle(float includedMinValue, float includedMaxValue,
+            Random? random = null)
+        {
+            random ??= RandomInstance;
+
+            return random.NextSingle(includedMinValue, GetUpperBound(includedMaxValue));
         }
 
         public static float CreateRandomSingle(Random? random = null)
@@ -355,20 +359,21 @@ namespace Acolyte.Tests.Creators
             return random.NextDouble();
         }
 
-        public static double CreateRandomNonNegativeDouble(double maxValue, Random? random = null)
-        {
-            random ??= RandomInstance;
-
-            // "RandomExtensions.NextDouble" method lower bound is equal to zero.
-            return random.NextDouble(GetUpperBound(maxValue));
-        }
-
-        public static double CreateRandomDouble(double minValue, double maxValue,
+        public static double CreateRandomNonNegativeDouble(double includedMaxValue,
             Random? random = null)
         {
             random ??= RandomInstance;
 
-            return random.NextDouble(minValue, GetUpperBound(maxValue));
+            // "RandomExtensions.NextDouble" method lower bound is equal to zero.
+            return random.NextDouble(GetUpperBound(includedMaxValue));
+        }
+
+        public static double CreateRandomDouble(double includedMinValue, double includedMaxValue,
+            Random? random = null)
+        {
+            random ??= RandomInstance;
+
+            return random.NextDouble(includedMinValue, GetUpperBound(includedMaxValue));
         }
 
         public static double CreateRandomDouble(Random? random = null)
@@ -390,21 +395,21 @@ namespace Acolyte.Tests.Creators
             return random.NextDecimal();
         }
 
-        public static decimal CreateRandomNonNegativeDecimal(decimal maxValue,
+        public static decimal CreateRandomNonNegativeDecimal(decimal includedMaxValue,
             Random? random = null)
         {
             random ??= RandomInstance;
 
             // "RandomExtensions.NextDecimal" method lower bound is equal to decimal.Zero.
-            return random.NextDecimal(GetUpperBound(maxValue));
+            return random.NextDecimal(GetUpperBound(includedMaxValue));
         }
 
-        public static decimal CreateRandomDecimal(decimal minValue, decimal maxValue,
-            Random? random = null)
+        public static decimal CreateRandomDecimal(decimal includedMinValue,
+            decimal includedMaxValue, Random? random = null)
         {
             random ??= RandomInstance;
 
-            return random.NextDecimal(minValue, GetUpperBound(maxValue));
+            return random.NextDecimal(includedMinValue, GetUpperBound(includedMaxValue));
         }
 
         public static decimal CreateRandomDecimal(Random? random = null)

@@ -130,6 +130,28 @@ namespace Acolyte.Tests.Linq.OrderBySeruence
             Assert.Equal(expectedCollection, actualCollection);
         }
 
+        [Theory]
+        [ClassData(typeof(PositiveTestCases))]
+        public void OrderBySequence_ForCollectionWithSomeItems_ShouldOrderSourceAndRemainItemsWhichIncludeInBothCollections(
+            int count)
+        {
+            // Arrange.
+            IReadOnlyList<int> collectionWithSomeItems =
+                PrepareCollectionToUseInTests(count);
+            int orderCount = TestDataCreator.CreateRandomNonNegativeInt32(count);
+            IReadOnlyList<int> randomOrder = collectionWithSomeItems
+                .Take(orderCount)
+                .Shuffle()
+                .ToReadOnlyList();
+            IReadOnlyList<int> expectedCollection = randomOrder;
+
+            // Act.
+            var actualCollection = collectionWithSomeItems.OrderBySequence(randomOrder);
+
+            // Assert.
+            Assert.Equal(expectedCollection, actualCollection);
+        }
+
         #endregion
 
         #region Random Values
@@ -180,10 +202,14 @@ namespace Acolyte.Tests.Linq.OrderBySeruence
         public void OrderBySequence_ShouldPreserveDuplicatesInSource()
         {
             // Arrange.
-            IReadOnlyList<int> source = new[] { 1, 1, 2, 2, 3, 3, 4, 4 };
+            const int countToRepeat = 2;
+            IReadOnlyList<int> initialSource = new[] { 1, 2, 3, 4 };
+            IReadOnlyList<int> source = initialSource
+                .SelectMany(item => Enumerable.Repeat(item, countToRepeat))
+                .ToReadOnlyList();
             IReadOnlyList<int> order = new[] { 2, 1, 3, 4 };
             IReadOnlyList<int> expectedCollection = order
-                .SelectMany(item => Enumerable.Repeat(item, 2))
+                .SelectMany(item => Enumerable.Repeat(item, countToRepeat))
                 .ToReadOnlyList();
             var explosiveSource = ExplosiveEnumerable.CreateNotExplosive(source);
             var explosiveOrder = ExplosiveEnumerable.CreateNotExplosive(order);

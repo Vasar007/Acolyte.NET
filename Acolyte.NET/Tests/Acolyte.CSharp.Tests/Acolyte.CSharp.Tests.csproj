@@ -49,6 +49,11 @@
     <ProjectReference Include="$(SolutionDir)Tests\Acolyte.Tests.Common\Acolyte.Tests.Common.csproj" />
   </ItemGroup>
 
+  <!-- Required to resolve issues with out-of-date versions of "Microsoft.Bcl.HashCode" package. -->
+  <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.1'">
+    <PackageReference Include="Microsoft.Bcl.HashCode" Version="$(MicrosoftBclHashCodePackageVersion)" />
+  </ItemGroup>
+
   <ItemGroup Condition="'$(TargetFramework)' == 'net5.0'">
     <PackageReference Include="System.Linq.Async" Version="$(SystemLinqAsyncPackageVersion)" />
   </ItemGroup>

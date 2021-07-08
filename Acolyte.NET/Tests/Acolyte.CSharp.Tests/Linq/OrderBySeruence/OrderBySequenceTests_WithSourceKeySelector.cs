@@ -158,6 +158,32 @@ namespace Acolyte.Tests.Linq.OrderBySeruence
             Assert.Equal(expectedCollection, actualCollection);
         }
 
+        [Theory]
+        [ClassData(typeof(PositiveTestCases))]
+        public void OrderBySequence_WithSourceKeySelector_ForCollectionWithSomeItems_ShouldOrderSourceAndRemainItemsWhichIncludeInBothCollections(
+            int count)
+        {
+            // Arrange.
+            // Using identity function to avoid int overflowing.
+            Func<int, int> sourceKeySelector = IdentityFunction<int>.Instance;
+            IReadOnlyList<int> collectionWithSomeItems =
+                PrepareCollectionToUseInTests(count);
+            int orderCount = TestDataCreator.CreateRandomNonNegativeInt32(count);
+            IReadOnlyList<int> randomOrder = collectionWithSomeItems
+                .Take(orderCount)
+                .Shuffle()
+                .ToReadOnlyList();
+            IReadOnlyList<int> expectedCollection = randomOrder;
+
+            // Act.
+            var actualCollection = collectionWithSomeItems.OrderBySequence(
+               randomOrder, sourceKeySelector
+           );
+
+            // Assert.
+            Assert.Equal(expectedCollection, actualCollection);
+        }
+
         #endregion
 
         #region Random Values
@@ -218,14 +244,18 @@ namespace Acolyte.Tests.Linq.OrderBySeruence
         public void OrderBySequence_WithSourceKeySelector_ShouldPreserveDuplicatesInSource()
         {
             // Arrange.
-            IReadOnlyList<int> source = new[] { 1, 1, 2, 2, 3, 3, 4, 4 };
+            const int countToRepeat = 2;
+            IReadOnlyList<int> initialSource = new[] { 1, 2, 3, 4 };
+            IReadOnlyList<int> source = initialSource
+                .SelectMany(item => Enumerable.Repeat(item, countToRepeat))
+                .ToReadOnlyList();
             Func<int, int> sourceKeySelector = MultiplyFunction.RedoubleInt32;
             IReadOnlyList<int> sourceOrder = new[] { 2, 1, 3, 4 };
             IReadOnlyList<int> order = sourceOrder
               .Select(sourceKeySelector)
               .ToReadOnlyList();
             IReadOnlyList<int> expectedCollection = sourceOrder
-                .SelectMany(item => Enumerable.Repeat(item, 2))
+                .SelectMany(item => Enumerable.Repeat(item, countToRepeat))
                 .ToReadOnlyList();
             var explosiveSource = ExplosiveEnumerable.CreateNotExplosive(source);
             var explosiveOrder = ExplosiveEnumerable.CreateNotExplosive(order);
