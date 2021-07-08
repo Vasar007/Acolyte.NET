@@ -190,24 +190,55 @@ namespace Acolyte.Tests.Linq.OrderBySeruence
         #region Extended Logical Coverage
 
         [Fact]
-        public void OrderBySequence_WithSourceKeySelector_ShouldLookWholeCollectionToOrderSource()
+        public void OrderBySequence_WithSourceKeySelector_ShouldLookWholeCollectionsToOrderSource()
         {
             // Arrange.
-            IReadOnlyList<int> collection = new[] { 1, 2, 3, 4 };
+            IReadOnlyList<int> source = new[] { 1, 2, 3, 4 };
             Func<int, int> sourceKeySelector = MultiplyFunction.RedoubleInt32;
             IReadOnlyList<int> sourceOrder = new[] { 2, 1, 3, 4 };
             IReadOnlyList<int> order = sourceOrder
                 .Select(sourceKeySelector)
                 .ToReadOnlyList();
             IReadOnlyList<int> expectedCollection = sourceOrder;
-            var explosive = ExplosiveEnumerable.CreateNotExplosive(collection);
+            var explosiveSource = ExplosiveEnumerable.CreateNotExplosive(source);
+            var explosiveOrder = ExplosiveEnumerable.CreateNotExplosive(order);
 
             // Act.
-            var actualCollection = explosive.OrderBySequence(order, sourceKeySelector);
+            var actualCollection = explosiveSource.OrderBySequence(
+                explosiveOrder, sourceKeySelector
+            );
 
             // Assert.
             Assert.Equal(expectedCollection, actualCollection);
-            CustomAssert.True(explosive.VerifyOnceEnumerateWholeCollection(collection));
+            CustomAssert.True(explosiveSource.VerifyOnceEnumerateWholeCollection(source));
+            CustomAssert.True(explosiveOrder.VerifyOnceEnumerateWholeCollection(order));
+        }
+
+        [Fact]
+        public void OrderBySequence_WithSourceKeySelector_ShouldPreserveDuplicatesInSource()
+        {
+            // Arrange.
+            IReadOnlyList<int> source = new[] { 1, 1, 2, 2, 3, 3, 4, 4 };
+            Func<int, int> sourceKeySelector = MultiplyFunction.RedoubleInt32;
+            IReadOnlyList<int> sourceOrder = new[] { 2, 1, 3, 4 };
+            IReadOnlyList<int> order = sourceOrder
+              .Select(sourceKeySelector)
+              .ToReadOnlyList();
+            IReadOnlyList<int> expectedCollection = sourceOrder
+                .SelectMany(item => Enumerable.Repeat(item, 2))
+                .ToReadOnlyList();
+            var explosiveSource = ExplosiveEnumerable.CreateNotExplosive(source);
+            var explosiveOrder = ExplosiveEnumerable.CreateNotExplosive(order);
+
+            // Act.
+            var actualCollection = explosiveSource.OrderBySequence(
+                explosiveOrder, sourceKeySelector
+            );
+
+            // Assert.
+            Assert.Equal(expectedCollection, actualCollection);
+            CustomAssert.True(explosiveSource.VerifyOnceEnumerateWholeCollection(source));
+            CustomAssert.True(explosiveOrder.VerifyOnceEnumerateWholeCollection(order));
         }
 
         #endregion
