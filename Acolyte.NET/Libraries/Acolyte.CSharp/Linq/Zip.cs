@@ -78,14 +78,7 @@ namespace Acolyte.Linq
             third.ThrowIfNull(nameof(third));
             resultSelector.ThrowIfNull(nameof(resultSelector));
 
-            using var e1 = first.GetEnumerator();
-            using var e2 = second.GetEnumerator();
-            using var e3 = third.GetEnumerator();
-
-            while (e1.MoveNext() && e2.MoveNext() && e3.MoveNext())
-            {
-                yield return resultSelector(e1.Current, e2.Current, e3.Current);
-            }
+            return ZipThreeIterator(first, second, third, resultSelector);
         }
 
         /// <summary>
@@ -124,5 +117,53 @@ namespace Acolyte.Linq
                 resultSelector: resultSelector
             );
         }
+
+        /// <summary>
+        /// Applies a specified function to the corresponding elements of three sequences,
+        /// producing a sequence of the results.
+        /// </summary>
+        /// <typeparam name="TFirst">
+        /// The type of the elements of the <paramref name="first" /> input sequence.
+        /// </typeparam>
+        /// <typeparam name="TSecond">
+        /// The type of the elements of the <paramref name="second" /> input sequence.
+        /// </typeparam>
+        /// <typeparam name="TThird">
+        /// The type of the elements of the <paramref name="third" /> input sequence.
+        /// </typeparam>
+        /// <typeparam name="TResult">The type of the elements of the result sequence.</typeparam>
+        /// <param name="first">The first sequence to merge.</param>
+        /// <param name="second">The second sequence to merge.</param>
+        /// <param name="third">The third sequence to merge.</param>
+        /// <param name="resultSelector">
+        /// A function that specifies how to merge the elements from the three sequences.
+        /// </param>
+        /// <returns>
+        /// An <see cref="IEnumerable{T}" /> that contains merged elements of three input sequences.
+        /// </returns>
+        /// <remarks>
+        /// This function is iterator. It means that all execution will be lazy. Even exception
+        /// will be caught and rethrown only when someone starts iterating.
+        /// </remarks>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="first" /> is <see langword="null" />. -or-
+        /// <paramref name="second" /> is <see langword="null" />. -or-
+        /// <paramref name="third" /> is <see langword="null" />. -or-
+        /// <paramref name="resultSelector" /> is <see langword="null" />.
+        /// </exception>
+        private static IEnumerable<TResult> ZipThreeIterator<TFirst, TSecond, TThird, TResult>(
+           IEnumerable<TFirst> first, IEnumerable<TSecond> second, IEnumerable<TThird> third,
+           Func<TFirst, TSecond, TThird, TResult> resultSelector)
+        {
+            using var e1 = first.GetEnumerator();
+            using var e2 = second.GetEnumerator();
+            using var e3 = third.GetEnumerator();
+
+            while (e1.MoveNext() && e2.MoveNext() && e3.MoveNext())
+            {
+                yield return resultSelector(e1.Current, e2.Current, e3.Current);
+            }
+        }
+
     }
 }
