@@ -4,6 +4,7 @@ using System.Linq;
 using Acolyte.Functions;
 using Acolyte.Linq;
 using Acolyte.Tests.Cases.Parameterized;
+using Acolyte.Tests.Collections;
 using Acolyte.Tests.Creators;
 using Xunit;
 
@@ -149,11 +150,11 @@ namespace Acolyte.Tests.Linq.Zip
         #region Predefined Values
 
         [Fact]
-        public void ZipThree_WithSelector_ForPredefinedCollection_ShouldUniteToSingleCollection()
+        public void ZipThree_WithSelector_ForPredefinedCollection_ShouldMergeIntoSingleCollection()
         {
             // Arrange.
             IReadOnlyList<int> first = new[] { 1, 2, 3 };
-            IReadOnlyList<int> second = new[] { 1, 3, 1 };
+            IReadOnlyList<int> second = new[] { 1, 3, 2 };
             IReadOnlyList<int> third = new[] { 2, 3, 1 };
             var selector = GetResultSelectorToFindMax();
             var expectedCollection = GetExpectedCollection(first, second, third, selector);
@@ -171,7 +172,7 @@ namespace Acolyte.Tests.Linq.Zip
 
         [Theory]
         [ClassData(typeof(PositiveTestCases))]
-        public void ZipThree_WithSelector_ForCollectionsWithSomeItems_ShouldUniteToSingleCollection(
+        public void ZipThree_WithSelector_ForCollectionsWithSomeItems_ShouldMergeIntoSingleCollection(
             int count)
         {
             // Arrange.
@@ -193,7 +194,7 @@ namespace Acolyte.Tests.Linq.Zip
         #region Random Values
 
         [Fact]
-        public void ZipThree_WithSelector_ForCollectionsWithRandomSize_ShouldUniteToSingleCollection()
+        public void ZipThree_WithSelector_ForCollectionsWithRandomSize_ShouldMergeIntoSingleCollection()
         {
             // Arrange.
             int countFirst = TestDataCreator.GetRandomCountNumber();
@@ -215,6 +216,32 @@ namespace Acolyte.Tests.Linq.Zip
         #endregion
 
         #region Extended Logical Coverage
+
+        [Fact]
+        public void ZipThree_WithSelector_ShouldLookCollectionWithSmallestSizeMergeIntoSingleCollection()
+        {
+            // Arrange.
+            IReadOnlyList<int> first = new[] { 1, 2, 3, 4 };
+            IReadOnlyList<int> second = new[] { 1, 3, 4, 2, 5 };
+            IReadOnlyList<int> third = new[] { 2, 3, 1, 5, 4, 6 };
+            var explosiveFirst = ExplosiveEnumerable.CreateNotExplosive(first);
+            var explosiveSecond = ExplosiveEnumerable.Create(second, explosiveIndex: first.Count);
+            var explosiveThird = ExplosiveEnumerable.Create(third, explosiveIndex: first.Count);
+            var selector = GetResultSelectorToFindMax();
+            var expectedCollection = GetExpectedCollection(first, second, third, selector);
+
+            // Act.
+            var actualCollection = explosiveFirst.ZipThree(
+                explosiveSecond, explosiveThird, selector
+            );
+
+            // Assert.
+            // Here we should use exactly first collection because it is the smallest one.
+            Assert.Equal(expectedCollection, actualCollection);
+            CustomAssert.True(explosiveFirst.VerifyOnceEnumerateWholeCollection(first));
+            CustomAssert.True(explosiveSecond.VerifyOnceEnumerateWholeCollection(first));
+            CustomAssert.True(explosiveThird.VerifyOnceEnumerateWholeCollection(first));
+        }
 
         #endregion
 
