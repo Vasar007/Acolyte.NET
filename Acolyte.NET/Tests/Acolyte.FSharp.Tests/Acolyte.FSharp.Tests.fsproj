@@ -46,8 +46,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="Functional\Throw\CheckIfNullValueTests.fs" />
+    <Compile Include="Functional\Throw\IfNullTests.fs" />
+    <Compile Include="Functional\Throw\IfNullValueTests.fs" />
+    <Compile Include="Functional\Throw\CheckIfNullTests.fs" />
     <Compile Include="Functional\SeqEx\SkipSafeTests.fs" />
-    <Compile Include="Functional\ThrowTests.fs" />
     <Compile Include="Functional\UtilsTests.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
