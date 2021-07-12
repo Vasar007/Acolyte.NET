@@ -2,13 +2,13 @@
 
 
 open System
-open Acolyte.Tests.Cases.Parameterized
 open Acolyte.Functional
+open Acolyte.Tests.Cases.Parameterized
+open Acolyte.Tests.Collections
+open Acolyte.Tests.Creators
 open FsUnit.Xunit
 open Swensen.Unquote
 open Xunit
-open Acolyte.Tests.Creators
-open Acolyte.Tests.Collections
 
 /// region: Null Values
 
