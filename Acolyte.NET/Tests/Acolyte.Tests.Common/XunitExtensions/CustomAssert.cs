@@ -3,7 +3,7 @@ using Xunit.Sdk;
 
 namespace Xunit
 {
-    internal static class CustomAssert
+    public static class CustomAssert
     {
         public static void Fail(string message)
         {

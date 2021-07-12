@@ -46,6 +46,7 @@
     </PackageReference>
     <PackageReference Include="Moq" Version="$(MoqPackageVersion)" />
     <PackageReference Include="morelinq" Version="$(MoreLinqPackageVersion)" />
+    <PackageReference Include="xunit" Version="$(XunitPackageVersion)" />
   </ItemGroup>
 
   <ItemGroup>
