@@ -51,7 +51,8 @@
     <Compile Include="Functional\Throw\IfNullValueTests.fs" />
     <Compile Include="Functional\Throw\CheckIfNullTests.fs" />
     <Compile Include="Functional\SeqEx\SkipSafeTests.fs" />
-    <Compile Include="Functional\UtilsTests.fs" />
+    <Compile Include="Functional\Utils\CastAsTests.fs" />
+    <Compile Include="Functional\Utils\CastAsOptionTests.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
 
