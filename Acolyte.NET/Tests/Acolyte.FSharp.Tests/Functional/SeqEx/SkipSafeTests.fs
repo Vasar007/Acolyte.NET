@@ -1,4 +1,4 @@
-module Acolyte.Functional.Tests.SeqExTests
+﻿module Acolyte.Functional.Tests.SkipSafeTests
 
 
 open System
@@ -6,8 +6,6 @@ open Swensen.Unquote
 open Xunit
 open Acolyte.Tests.Cases.Parameterized
 open Acolyte.Functional
-
-/// region: Tests for "skipSafe" method.
 
 [<Fact>]
 let ``"skipSafe" throw an exception if argument is null`` () =
@@ -86,5 +84,3 @@ let ``"skipSafe" can skip specified number of items if "count" parameter is grea
     // Assert.
     Assert.NotNull(actualSeq)
     Assert.Empty(actualSeq)
-
-/// endregion

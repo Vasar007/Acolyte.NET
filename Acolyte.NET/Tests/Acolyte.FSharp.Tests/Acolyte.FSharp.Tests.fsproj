@@ -46,9 +46,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="Functional\SeqEx\SkipSafeTests.fs" />
     <Compile Include="Functional\ThrowTests.fs" />
     <Compile Include="Functional\UtilsTests.fs" />
-    <Compile Include="Functional\SeqExTests.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
 
