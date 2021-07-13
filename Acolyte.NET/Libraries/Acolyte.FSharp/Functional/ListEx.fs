@@ -3,6 +3,8 @@
 /// </summary>
 module Acolyte.Functional.ListEx
 
+open System
+
 
 let skipSafe count (source: list<'T>) =
     Throw.checkIfNullValue source (nameof source)
@@ -11,9 +13,14 @@ let skipSafe count (source: list<'T>) =
         |> SeqEx.skipSafe count
         |> Seq.toList
 
-let appendSingle item (source: list<'T>) =
+
+let appendSingleton item (source: list<'T>) =
     Throw.checkIfNullValue source (nameof source)
 
     source
-        |> SeqEx.appendSingle item
+        |> SeqEx.appendSingleton item
         |> Seq.toList
+
+[<Obsolete("Use \Acolyte.Functional.ListEx.appendSingleton\" instead. This method will be remove in next major version.", false)>]
+let appendSingle item source =
+    appendSingleton item source

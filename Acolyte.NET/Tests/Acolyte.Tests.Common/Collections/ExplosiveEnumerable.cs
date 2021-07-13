@@ -106,6 +106,32 @@ namespace Acolyte.Tests.Collections
             return VerifyThrice(collection.Count);
         }
 
+        public Reasonable<bool> VerifyNoIterationsNoGetEnumeratorCalls()
+        {
+            return Verify(expectedVisitedItemsNumber: 0, expectedGetEnumeratorCalls: 0);
+        }
+
+        public Reasonable<bool> VerifyNoIterationsButWithGetEnumerator(
+            int expectedGetEnumeratorCalls)
+        {
+            return Verify(expectedVisitedItemsNumber: 0, expectedGetEnumeratorCalls);
+        }
+
+        public Reasonable<bool> VerifyNoIterationsButWithOnceGetEnumerator()
+        {
+            return VerifyNoIterationsButWithGetEnumerator(expectedGetEnumeratorCalls: 1);
+        }
+
+        public Reasonable<bool> VerifyNoIterationsButWithTwiceGetEnumerator()
+        {
+            return VerifyNoIterationsButWithGetEnumerator(expectedGetEnumeratorCalls: 2);
+        }
+
+        public Reasonable<bool> VerifyNoIterationsButWithThriceGetEnumerator()
+        {
+            return VerifyNoIterationsButWithGetEnumerator(expectedGetEnumeratorCalls: 3);
+        }
+
         #endregion
     }
 

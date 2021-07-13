@@ -1,22 +1,21 @@
-﻿module Acolyte.Functional.Tests.SeqEx.SkipSafeTests
+﻿module Acolyte.Functional.Tests.ArrayEx.SkipSafeTests
 
 
 open System
 open Acolyte.Functional
+open Acolyte.Functional.Tests.Helpers
 open Acolyte.Tests.Cases.Parameterized
-open Acolyte.Tests.Collections
 open Acolyte.Tests.Creators
 open FsUnit.Xunit
 open Swensen.Unquote
 open Xunit
-open Acolyte.Functional.Tests.Helpers
 
 /// region: Null Values
 
 [<Fact>]
 let ``"skipSafe" throw an exception if argument "source" is null`` () =
     // Arrange & Act & Assert.
-    raises<ArgumentNullException> <@ SeqEx.skipSafe Unchecked.defaultof<int> null @>
+    raises<ArgumentNullException> <@ ArrayEx.skipSafe Unchecked.defaultof<int> null @>
 
 /// endregion
 
@@ -25,11 +24,11 @@ let ``"skipSafe" throw an exception if argument "source" is null`` () =
 [<Fact>]
 let ``"skipSafe" does not do anything if collection is empty`` () =
     // Arrange.
-    let emptySeq = Seq.empty
+    let emptySeq = Array.empty
     let skipCount = 1
 
     // Act.
-    let actualSeq = emptySeq |> SeqEx.skipSafe skipCount
+    let actualSeq = emptySeq |> ArrayEx.skipSafe skipCount
 
     // Assert.
     actualSeq |> should be Empty
@@ -41,16 +40,12 @@ let ``"skipSafe" does not do anything if collection is empty`` () =
 [<Fact>]
 let ``"skipSafe" skips some items for prefefined collection`` () =
     // Arrange.
-    let predefinedSeq = [ 1..3 ] |> Seq.cast
+    let predefinedSeq = [| 1..3 |]
     let skipCount = 1
-    let expectedSeq = predefinedSeq
-                      |> Seq.skip skipCount
-                      |> Seq.toList
+    let expectedSeq = predefinedSeq |> Array.skip skipCount
 
     // Act.
-    let actualSeq = predefinedSeq
-                    |> SeqEx.skipSafe skipCount
-                    |> Seq.toList
+    let actualSeq = predefinedSeq |> ArrayEx.skipSafe skipCount
 
     // Assert.
     actualSeq |> should equal expectedSeq
@@ -64,13 +59,10 @@ let ``"skipSafe" skips some items for prefefined collection`` () =
 let ``"skipSafe" does not skip any items if "count" parameter is not positive``
     (skipCount: int32) =
     // Arrange.
-    let originalSeq = [ 1..3 ] |> Seq.cast
-    let expectedSeq = originalSeq |> Seq.toList
+    let expectedSeq = [| 1..3 |]
 
     // Act.
-    let actualSeq = expectedSeq
-                    |> SeqEx.skipSafe skipCount
-                    |> Seq.toList
+    let actualSeq = expectedSeq |> ArrayEx.skipSafe skipCount
 
     // Assert.
     actualSeq |> should not' Null
@@ -83,15 +75,11 @@ let ``"skipSafe" can skip specified number of items if "count" parameter is less
     (skipCount: int32) =
     // Arrange.
     let length = skipCount + 1
-    let originalSeq = [ 0..length ] |> Seq.cast
-    let expectedSeq = originalSeq
-                      |> Seq.skip skipCount
-                      |> Seq.toList
+    let originalSeq = [| 0..length |]
+    let expectedSeq = originalSeq |> Array.skip skipCount
 
     // Act.
-    let actualSeq = originalSeq
-                    |> SeqEx.skipSafe skipCount
-                    |> Seq.toList
+    let actualSeq = originalSeq |> ArrayEx.skipSafe skipCount
 
     // Assert.
     actualSeq |> should not' Null
@@ -104,12 +92,10 @@ let ``"skipSafe" can skip specified number of items if "count" parameter is equa
     (skipCount: int32) =
     // Arrange.
     let length = skipCount
-    let originalSeq = [ 1..length ] |> Seq.cast
+    let originalSeq = [| 1..length |]
 
     // Act.
-    let actualSeq = originalSeq
-                    |> SeqEx.skipSafe skipCount
-                    |> Seq.toList
+    let actualSeq = originalSeq |> ArrayEx.skipSafe skipCount
 
     // Assert.
     actualSeq |> should not' Null
@@ -121,12 +107,10 @@ let ``"skipSafe" can skip specified number of items if "count" parameter is grea
     (skipCount: int32) =
     // Arrange.
     let length = skipCount - 1
-    let originalSeq = [ 0..length ] |> Seq.cast
+    let originalSeq = [| 0..length |]
 
     // Act.
-    let actualSeq = originalSeq
-                    |> SeqEx.skipSafe skipCount
-                    |> Seq.toList
+    let actualSeq = originalSeq |> ArrayEx.skipSafe skipCount
 
     // Assert.
     actualSeq |> should not' Null
@@ -140,44 +124,23 @@ let ``"skipSafe" can skip specified number of items if "count" parameter is grea
 let ``"skipSafe" skips or does not skip items for random collection`` () =
     // Arrange.
     let count = TestDataCreator.GetRandomCountNumber()
-    let randomdSeq = FsTestDataCreator.createRandomInt32Seq count
+    let randomdSeq = FsTestDataCreator.createRandomInt32Array count
     let skipCount = TestDataCreator.CreateRandomInt32()
 
     // Act.
-    let actualSeq = randomdSeq
-                    |> SeqEx.skipSafe skipCount
-                    |> Seq.toList
+    let actualSeq = randomdSeq |> ArrayEx.skipSafe skipCount
 
     // Assert.
     if skipCount > count then
         actualSeq |> should be Empty
     else
-        let expectedSeq = randomdSeq
-                          |> Seq.skip skipCount
-                          |> Seq.toList
+        let expectedSeq = randomdSeq |> Array.skip skipCount
         actualSeq |> should equal expectedSeq
 
 /// endregion
 
 /// region: Extended Logical Coverage
 
-[<Fact>]
-let ``"skipSafe" should iterate through the whole collection but skip specified number of items from source collection`` () =
-    // Arrange.
-    let collection = [ 1..4 ]
-    let explosive = ExplosiveEnumerable.CreateNotExplosive(collection)
-    let skipCount = 2
-    let expectedSeq = collection
-                      |> Seq.skip skipCount
-                      |> Seq.toList
-
-    // Act.
-    let actualSeq = explosive
-                    |> SeqEx.skipSafe skipCount
-                    |> Seq.toList
-
-    // Assert.
-    actualSeq |> should equal expectedSeq
-    CustomAssert.True(explosive.VerifyOnceEnumerateWholeCollection(collection))
+// We cannot use explosive collection due to collection restriction for methods from ArrayEx.
 
 /// endregion

@@ -46,10 +46,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="Helpers\FsTestDataCreator.fs" />
+    <Compile Include="Functional\ArrayEx\AppendSingletonTests.fs" />
+    <Compile Include="Functional\ArrayEx\SkipSafeTests.fs" />
+    <Compile Include="Functional\ListEx\AppendSingletonTests.fs" />
+    <Compile Include="Functional\ListEx\SkipSafeTests.fs" />
     <Compile Include="Functional\Throw\CheckIfNullValueTests.fs" />
     <Compile Include="Functional\Throw\IfNullTests.fs" />
     <Compile Include="Functional\Throw\IfNullValueTests.fs" />
     <Compile Include="Functional\Throw\CheckIfNullTests.fs" />
+    <Compile Include="Functional\SeqEx\AppendSingletonTests.fs" />
     <Compile Include="Functional\SeqEx\SkipSafeTests.fs" />
     <Compile Include="Functional\Utils\CastAsTests.fs" />
     <Compile Include="Functional\Utils\CastAsOptionTests.fs" />
