@@ -1,14 +1,13 @@
 ﻿module Acolyte.Functional.Option
 
-
-let bindAsync fAsync option =
+let public bindAsync fAsync option =
     async {
         match option with
             | Some some -> return! fAsync some
             | None -> return None
     }
 
-let mapAsync fAsync option =
+let public mapAsync fAsync option =
     async {
         match option with
             | Some some ->

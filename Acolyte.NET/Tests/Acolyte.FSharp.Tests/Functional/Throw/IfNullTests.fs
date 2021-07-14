@@ -2,12 +2,13 @@
 
 
 open System
+open Acolyte.Functional
+open FsUnit.Xunit
 open Swensen.Unquote
 open Xunit
-open Acolyte.Functional
 
 [<Fact>]
-let ``"ifNull" returns the same object and throws no exception if object is not null`` () =
+let public ``"ifNull" returns the same object and throws no exception if object is not null`` () =
     // Arrange.
     let expectedObj = obj()
 
@@ -15,16 +16,16 @@ let ``"ifNull" returns the same object and throws no exception if object is not 
     let actualObj = Throw.ifNull expectedObj (nameof expectedObj)
 
     // Assert.
-    Assert.NotNull(actualObj)
-    Assert.Same(expectedObj, actualObj)
+    actualObj |> should not' Null
+    actualObj |> should sameAs expectedObj
 
 [<Fact>]
-let ``"ifNull" throws an exception when object is null`` () =
+let public ``"ifNull" throws an exception when object is null`` () =
     // Arrange & Act & Assert.
     raises<ArgumentNullException> <@ Throw.ifNull null "nullObj" @>
     
 [<Fact>]
-let ``"ifNull" throws an exception when name of object is null`` () =
+let public ``"ifNull" throws an exception when name of object is null`` () =
     // Arrange.
     let expectedObj = obj()
 
@@ -32,6 +33,6 @@ let ``"ifNull" throws an exception when name of object is null`` () =
     raises<ArgumentNullException> <@ Throw.ifNull expectedObj null @>
 
 [<Fact>]
-let ``"ifNull" performs null check name of value at first`` () =
+let public ``"ifNull" performs null check name of value at first`` () =
     // Arrange & Act & Assert.
     raises<ArgumentNullException> <@ Throw.ifNull null null @>

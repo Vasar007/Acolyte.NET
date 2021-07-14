@@ -1,49 +1,48 @@
 ﻿module Acolyte.Functional.Tests.Utils.CastAsOptionTests
 
 
-open Xunit
 open Acolyte.Functional
+open Acolyte.Functional.Collections
+open FsUnit.Xunit
+open Xunit
 
 [<Fact>]
-let ``"castAsOption" converts object to the specified type`` () =
+let public ``"castAsOption" converts object to the specified type`` () =
     // Arrange.
-    let arrayAsEnumerable = Array.empty<string> :> seq<string>
+    let arrayAsEnumerable = Array.empty<string> |> SeqEx.asSeq
 
     // Act.
     let actualObj = Utils.castAsOption<array<string>> arrayAsEnumerable
 
     // Assert.
-    Assert.NotNull(actualObj)
+    actualObj |> should not' Null
+    actualObj |> should be ofExactType<Option<array<string>>>
 
-    let expectedType = typeof<Option<array<string>>>
-    Assert.IsType(expectedType, actualObj)
-
-    Assert.True(actualObj.IsSome)
-    Assert.Same(arrayAsEnumerable, actualObj.Value)
+    actualObj.IsSome |> should be True
+    actualObj.Value |> should sameAs arrayAsEnumerable
 
 [<Fact>]
-let ``If "castAsOption" cannot convert object to the specified type, it returns the None value`` () =
+let public ``If "castAsOption" cannot convert object to the specified type, it returns the None value`` () =
     // Arrange.
-    let arrayAsEnumerable = Array.empty<string> :> seq<string>
+    let arrayAsEnumerable = Array.empty<string> |> SeqEx.asSeq
+    let expectedObj = Option<array<int32>>.None
 
     // Act.
     let actualObj = Utils.castAsOption<array<int32>> arrayAsEnumerable
 
     // Assert.
-    let expectedObj = Option<array<int32>>.None
-    Assert.Null(actualObj)
-    Assert.Same(expectedObj, actualObj)
+    actualObj |> should be Null
+    actualObj |> should sameAs expectedObj
 
 [<Fact>]
-let ``"castAsOption" can process null reference`` () =
+let public ``"castAsOption" can process null reference`` () =
     // Arrange.
     let (nullEnumerable: seq<string>) = null
+    let expectedObj = Option<array<int32>>.None
 
     // Act.
     let actualObj = Utils.castAsOption<array<int32>> nullEnumerable
 
     // Assert.
-    Assert.Null(actualObj)
-
-    let expectedObj = Option<array<int32>>.None
-    Assert.Same(expectedObj, actualObj)
+    actualObj |> should be Null
+    actualObj |> should sameAs expectedObj

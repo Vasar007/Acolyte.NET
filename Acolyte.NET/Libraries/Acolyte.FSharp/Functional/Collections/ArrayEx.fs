@@ -1,25 +1,24 @@
 ﻿/// <summary>
 /// Contains additional methods to work with <see cref="Microsoft.FSharp.Collections.Array{T}" />.
 /// </summary>
-module Acolyte.Functional.ArrayEx
-
-open System
+module Acolyte.Functional.Collections.ArrayEx
 
 
-let skipSafe count (source: 'T[]) =
+open Acolyte.Functional
+
+let public skipSafe count (source: array<'T>) =
     Throw.checkIfNull source (nameof source)
 
     source
         |> SeqEx.skipSafe count
         |> Seq.toArray
 
-let appendSingleton item (source: 'T[]) =
+let public asSeq (source: array<'T>) =
+    source :> seq<'T>
+
+let public appendSingleton item (source: array<'T>) =
     Throw.checkIfNull source (nameof source)
 
     source
         |> SeqEx.appendSingleton item
         |> Seq.toArray
-
-[<Obsolete("Use \Acolyte.Functional.ArraytEx.appendSingleton\" instead. This method will be remove in next major version.", false)>]
-let appendSingle item source =
-    appendSingleton item source

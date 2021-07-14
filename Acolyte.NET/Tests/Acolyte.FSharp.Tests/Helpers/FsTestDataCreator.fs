@@ -1,13 +1,14 @@
 ﻿module Acolyte.Functional.Tests.Helpers.FsTestDataCreator
 
 
+open Acolyte.Functional.Collections
 open Acolyte.Tests.Creators
 
-let createRandomInt32Seq (count: int32) =
-    TestDataCreator.CreateRandomInt32List(count) |> Seq.cast
+let internal createRandomInt32Seq (count: int32) =
+    TestDataCreator.CreateRandomInt32List(count) |> SeqEx.asSeq
 
-let createRandomInt32List (count: int32) =
+let internal createRandomInt32List (count: int32) =
     TestDataCreator.CreateRandomInt32List(count) |> Seq.toList
 
-let createRandomInt32Array (count: int32) =
+let internal createRandomInt32Array (count: int32) =
     TestDataCreator.CreateRandomInt32List(count) |> Seq.toArray

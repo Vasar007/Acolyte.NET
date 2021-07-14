@@ -1,14 +1,13 @@
 ﻿module Acolyte.Functional.Result
 
-
-let bindAsync fAsync result =
+let public bindAsync fAsync result =
     async {
         match result with
             | Ok ok -> return! fAsync ok
             | Error error -> return Error error
     }
 
-let mapAsync fAsync result =
+let public mapAsync fAsync result =
     async {
         match result with
             | Ok ok ->

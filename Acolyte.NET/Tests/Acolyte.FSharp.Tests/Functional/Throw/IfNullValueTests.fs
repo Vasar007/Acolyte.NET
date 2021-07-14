@@ -2,12 +2,13 @@
 
 
 open System
+open Acolyte.Functional
+open FsUnit.Xunit
 open Swensen.Unquote
 open Xunit
-open Acolyte.Functional
 
 [<Fact>]
-let ``"ifNullValue" returns the same value and throws no exception if value is not null`` () =
+let public ``"ifNullValue" returns the same value and throws no exception if value is not null`` () =
     // Arrange.
     let expectedValue = obj()
 
@@ -15,16 +16,16 @@ let ``"ifNullValue" returns the same value and throws no exception if value is n
     let actualValue = Throw.ifNullValue expectedValue (nameof expectedValue)
 
     // Assert.
-    Assert.NotNull(actualValue)
-    Assert.Same(expectedValue, actualValue)
+    actualValue |> should not' Null
+    actualValue |> should sameAs expectedValue
 
 [<Fact>]
-let ``"ifNullValue" throws an exception when value is null`` () =
+let public ``"ifNullValue" throws an exception when value is null`` () =
     // Arrange & Act & Assert.
     raises<ArgumentNullException> <@ Throw.ifNullValue null "nullValue" @>
 
 [<Fact>]
-let ``"ifNullValue" throws an exception when name of value is null`` () =
+let public ``"ifNullValue" throws an exception when name of value is null`` () =
     // Arrange.
     let expectedValue = obj()
 
@@ -32,6 +33,6 @@ let ``"ifNullValue" throws an exception when name of value is null`` () =
     raises<ArgumentNullException> <@ Throw.ifNullValue expectedValue null @>
 
 [<Fact>]
-let ``"ifNullValue" performs null check name of value at first`` () =
+let public ``"ifNullValue" performs null check name of value at first`` () =
     // Arrange & Act & Assert.
     raises<ArgumentNullException> <@ Throw.ifNullValue null null @>

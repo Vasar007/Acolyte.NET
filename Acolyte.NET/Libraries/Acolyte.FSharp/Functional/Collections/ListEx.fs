@@ -1,26 +1,24 @@
 ﻿/// <summary>
 /// Contains additional methods to work with <see cref="Microsoft.FSharp.Collections.List{T}" />.
 /// </summary>
-module Acolyte.Functional.ListEx
-
-open System
+module Acolyte.Functional.Collections.ListEx
 
 
-let skipSafe count (source: list<'T>) =
+open Acolyte.Functional
+
+let public skipSafe count (source: list<'T>) =
     Throw.checkIfNullValue source (nameof source)
 
     source
         |> SeqEx.skipSafe count
         |> Seq.toList
 
+let public asSeq (source: list<'T>) =
+    source :> seq<'T>
 
-let appendSingleton item (source: list<'T>) =
+let public appendSingleton item (source: list<'T>) =
     Throw.checkIfNullValue source (nameof source)
 
     source
         |> SeqEx.appendSingleton item
         |> Seq.toList
-
-[<Obsolete("Use \Acolyte.Functional.ListEx.appendSingleton\" instead. This method will be remove in next major version.", false)>]
-let appendSingle item source =
-    appendSingleton item source

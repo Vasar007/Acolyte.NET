@@ -64,12 +64,13 @@
   <ItemGroup>
     <Compile Include="Functional\ExitCodes.fs" />
     <Compile Include="Functional\Throw.fs" />
-    <Compile Include="Functional\Utils.fs" />
     <Compile Include="Functional\Option.fs" />
     <Compile Include="Functional\Result.fs" />
+    <Compile Include="Functional\Utils.fs" />
+    <Compile Include="Functional\Collections\SeqEx.fs" />
+    <Compile Include="Functional\Collections\ArrayEx.fs" />
+    <Compile Include="Functional\Collections\ListEx.fs" />
     <Compile Include="Functional\SeqEx.fs" />
-    <Compile Include="Functional\ArrayEx.fs" />
-    <Compile Include="Functional\ListEx.fs" />
   </ItemGroup>
 
   <ItemGroup>
