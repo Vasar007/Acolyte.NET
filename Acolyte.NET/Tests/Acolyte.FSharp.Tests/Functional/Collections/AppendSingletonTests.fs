@@ -53,7 +53,7 @@ let public ``"appendSingleton" appends item for prefefined collection``
     (parameters: TestCaseParameters<int32>) =
     // Arrange.
     let predefinedSeq = [ 1..3 ]
-                        |> SeqEx.asSeq
+                        |> seq
                         |> parameters.Conversion
     let itemToAppend = 4
     let expectedSeq = predefinedSeq

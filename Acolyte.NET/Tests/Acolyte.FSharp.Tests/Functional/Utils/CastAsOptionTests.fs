@@ -9,7 +9,7 @@ open Xunit
 [<Fact>]
 let public ``"castAsOption" converts object to the specified type`` () =
     // Arrange.
-    let arrayAsEnumerable = Array.empty<string> |> SeqEx.asSeq
+    let arrayAsEnumerable = Array.empty<string> |> seq
 
     // Act.
     let actualObj = Utils.castAsOption<array<string>> arrayAsEnumerable
@@ -24,7 +24,7 @@ let public ``"castAsOption" converts object to the specified type`` () =
 [<Fact>]
 let public ``If "castAsOption" cannot convert object to the specified type, it returns the None value`` () =
     // Arrange.
-    let arrayAsEnumerable = Array.empty<string> |> SeqEx.asSeq
+    let arrayAsEnumerable = Array.empty<string> |> seq
     let expectedObj = Option<array<int32>>.None
 
     // Act.

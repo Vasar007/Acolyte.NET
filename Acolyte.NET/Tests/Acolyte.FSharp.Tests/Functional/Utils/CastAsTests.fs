@@ -9,7 +9,7 @@ open Xunit
 [<Fact>]
 let public ``"castAs" converts non-null object to the specified type`` () =
     // Arrange.
-    let arrayAsEnumerable = Array.empty<string> |> SeqEx.asSeq
+    let arrayAsEnumerable = Array.empty<string> |> seq
 
     // Act.
     let actualObj = Utils.castAs<array<string>> arrayAsEnumerable
@@ -23,7 +23,7 @@ let public ``"castAs" converts non-null object to the specified type`` () =
 [<Fact>]
 let public ``If "castAs" cannot convert object to the specified type, it returns the null reference`` () =
     // Arrange.
-    let arrayAsEnumerable = Array.empty<string> |> SeqEx.asSeq
+    let arrayAsEnumerable = Array.empty<string> |> seq
     let (expectedObj: array<int32>) = null
 
     // Act.

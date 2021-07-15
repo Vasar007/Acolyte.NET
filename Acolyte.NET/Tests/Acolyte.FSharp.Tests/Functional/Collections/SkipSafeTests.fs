@@ -48,7 +48,7 @@ let public ``"skipSafe" skips some items for prefefined collection``
     (parameters: TestCaseParameters<int32>) =
     // Arrange.
     let predefinedSeq = [ 1..3 ]
-                        |> SeqEx.asSeq
+                        |> seq
                         |> parameters.Conversion
     let skipCount = 1
     let expectedSeq = predefinedSeq
@@ -73,7 +73,7 @@ let public ``"skipSafe" does not skip any items if "count" parameter is not posi
     (parameters: TestCaseParametersWithSkipCount<int32>) =
     // Arrange.
     let originalSeq = [ 1..3 ]
-                      |> SeqEx.asSeq
+                      |> seq
                       |> parameters.Common.Conversion
     let expectedSeq = originalSeq |> Seq.toList
 
@@ -94,7 +94,7 @@ let public ``"skipSafe" can skip specified number of items if "count" parameter 
     // Arrange.
     let length = parameters.SkipCount + 1
     let originalSeq = [ 0..length ]
-                      |> SeqEx.asSeq
+                      |> seq
                       |> parameters.Common.Conversion
     let expectedSeq = originalSeq
                       |> parameters.Common.ExpectedFactory parameters.SkipCount
@@ -117,7 +117,7 @@ let public ``"skipSafe" can skip specified number of items if "count" parameter 
     // Arrange.
     let length = parameters.SkipCount
     let originalSeq = [ 1..length ]
-                      |> SeqEx.asSeq
+                      |> seq
                       |> parameters.Common.Conversion
 
     // Act.
@@ -136,7 +136,7 @@ let public ``"skipSafe" can skip specified number of items if "count" parameter 
     // Arrange.
     let length = parameters.SkipCount - 1
     let originalSeq = [ 0..length ]
-                      |> SeqEx.asSeq
+                      |> seq
                       |> parameters.Common.Conversion
 
     // Act.
