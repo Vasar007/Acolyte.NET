@@ -1,10 +1,10 @@
 ﻿module Acolyte.Functional.Tests.Utils.CastAsOptionTests
 
-
 open Acolyte.Functional
 open Acolyte.Functional.Collections
 open FsUnit.Xunit
 open Xunit
+
 
 [<Fact>]
 let public ``"castAsOption" converts object to the specified type`` () =

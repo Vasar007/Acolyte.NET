@@ -4,8 +4,8 @@
 [<System.Obsolete("Use \Acolyte.Functional.Collections.SeqEx.skipSafe\" instead. This method will be remove in next major version.", error = false)>]
 module Acolyte.Functional.SeqEx
 
-
 open System
+
 
 [<Obsolete("Use \Acolyte.Functional.Collections.SeqEx.skipSafe\" instead. This method will be remove in next major version.", error = false)>]
 let public skipSafe count (source: seq<'T>) =

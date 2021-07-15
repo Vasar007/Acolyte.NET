@@ -1,11 +1,11 @@
 ﻿module Acolyte.Functional.Tests.Throw.CheckIfNullValueTests
 
-
 open System
 open Acolyte.Functional
 open FsUnit.Xunit
 open Swensen.Unquote
 open Xunit
+
 
 [<Fact>]
 let public ``"checkIfNullValue" returns unit and throws no exception if value is not null`` () =

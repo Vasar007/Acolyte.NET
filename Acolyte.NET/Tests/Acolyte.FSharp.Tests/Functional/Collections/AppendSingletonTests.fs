@@ -1,6 +1,5 @@
 ﻿module Acolyte.Functional.Tests.AppendSingletontonTests
 
-
 open System
 open Acolyte.Functional.Collections
 open Acolyte.Functional.Tests.Cases.AppendSingleton
@@ -10,6 +9,7 @@ open Acolyte.Tests.Creators
 open FsUnit.Xunit
 open Swensen.Unquote
 open Xunit
+
 
 /// region: Null Values
 

@@ -3,8 +3,8 @@
 /// </summary>
 module Acolyte.Functional.Collections.SeqEx
 
-
 open Acolyte.Functional
+
 
 let public skipSafe count (source: seq<'T>) =
     Throw.checkIfNull source (nameof source)
@@ -21,9 +21,6 @@ let public skipSafe count (source: seq<'T>) =
         while enumerator.MoveNext() do
             yield enumerator.Current
     }
-
-let public asSeq (source: seq<'T>) =
-    source
 
 let public appendSingleton item source =
     Throw.checkIfNull source (nameof source)

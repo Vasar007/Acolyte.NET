@@ -1,8 +1,11 @@
 ﻿module Acolyte.Functional.Tests.Cases.SkipSafe
 
-
 open Acolyte.Functional.Collections
+open Acolyte.Functional.Tests.Cases.Base
 open Acolyte.Tests.Cases.Parameterized
+
+
+/// region: Test Cases And Parameters Definitions
 
 type internal ConversionFunction<'T> = (seq<'T> -> seq<'T>)
 
@@ -26,6 +29,10 @@ type internal ISkipSafeTestCase<'T> =
     abstract member GetExpectedValue : skipCount: int32 -> initialSeq: seq<'T> -> seq<'T>
     abstract member GetActualValue : skipCount: int32 -> initialSeq: seq<'T> -> seq<'T>
 
+/// endregion
+
+/// region: Test Cases Implementations
+
 type internal SeqExSkipSafeTestCase<'T>() =
     interface ISkipSafeTestCase<'T> with
 
@@ -43,7 +50,7 @@ type internal SeqExSkipSafeTestCase<'T>() =
                 |> SeqEx.skipSafe skipCount
 
     member private _.SeqToSeqForce (seqToConvert: seq<'T>) =
-        seqToConvert |> SeqEx.asSeq
+        seqToConvert |> seq
 
 type internal ListExSkipSafeTestCase<'T>() =
     interface ISkipSafeTestCase<'T> with
@@ -51,19 +58,19 @@ type internal ListExSkipSafeTestCase<'T>() =
         override this.Convert (seqToConvert: seq<'T>) =
             seqToConvert
                 |> this.SeqToList
-                |> SeqEx.asSeq
+                |> seq
 
         override this.GetExpectedValue (skipCount: int32) (initialSeq: seq<'T>) =
             initialSeq
                 |> this.SeqToList
                 |> List.skip skipCount
-                |> SeqEx.asSeq
+                |> seq
 
         override this.GetActualValue (skipCount: int32) (initialSeq: seq<'T>) =
             initialSeq
                 |> this.SeqToList
                 |> ListEx.skipSafe skipCount
-                |> SeqEx.asSeq
+                |> seq
 
     member private _.SeqToList (seqToConvert: seq<'T>) =
         match seqToConvert with
@@ -76,24 +83,28 @@ type internal ArrayExSkipSafeTestCase<'T>() =
         member this.Convert (seqToConvert: seq<'T>) =
             seqToConvert
                 |> this.SeqToArray
-                |> SeqEx.asSeq
+                |> seq
 
         member this.GetExpectedValue (skipCount: int32) (initialSeq: seq<'T>) =
             initialSeq
                 |> this.SeqToArray
                 |> Array.skip skipCount
-                |> SeqEx.asSeq
+                |> seq
 
         member this.GetActualValue (skipCount: int32) (initialSeq: seq<'T>) =
             initialSeq
                 |> this.SeqToArray
                 |> ArrayEx.skipSafe skipCount
-                |> SeqEx.asSeq
+                |> seq
 
     member private _.SeqToArray (seqToConvert: seq<'T>) =
         match seqToConvert with
             | :? array<'T> as convertedList -> convertedList
             | _ -> seqToConvert |> Seq.toArray
+
+/// endregion
+
+/// region: Test Cases With Parameters
 
 let private activeTestCases<'T> = [
     SeqExSkipSafeTestCase<'T>() :> ISkipSafeTestCase<'T>
@@ -101,41 +112,33 @@ let private activeTestCases<'T> = [
     ArrayExSkipSafeTestCase<'T>() :> ISkipSafeTestCase<'T>
 ]
 
+let private getParametersFactory (testCase: ISkipSafeTestCase<'T>) =
+    let parameters = {
+        Conversion = testCase.Convert
+        ExpectedFactory = testCase.GetExpectedValue
+        ActualFactory = testCase.GetActualValue
+    }
+    parameters
+
+let private getParametersWithSkipCountFactory (testCase: ISkipSafeTestCase<'T>) (skipCount: int32) =
+    let parametersWithCount = {
+        Common = getParametersFactory testCase
+        SkipCount = skipCount
+    }
+    parametersWithCount
+
 type internal SkipSafeTestCases<'T>() =
-    inherit BaseParameterizedTestCase<TestCaseParameters<'T>>()
-
-    override _.GetValues() =
-        activeTestCases<'T>
-            |> Seq.map (fun testCase -> {
-                        Conversion = testCase.Convert
-                        ExpectedFactory = testCase.GetExpectedValue
-                        ActualFactory = testCase.GetActualValue })
-
-[<AbstractClass>]
-type internal BaseSkipSafeWithSomethingTestCases<'T>(withTestCases: BaseParameterizedTestCase<int32>) =
-    inherit BaseParameterizedTestCase<TestCaseParametersWithSkipCount<'T>>()
-
-    let _withTestCases = withTestCases
-
-    member private _.GetTestCasesForAllPositive (testCase: ISkipSafeTestCase<'T>) =
-        let parameters = {
-            Conversion = testCase.Convert
-            ExpectedFactory = testCase.GetExpectedValue
-            ActualFactory = testCase.GetActualValue
-        }
-        _withTestCases
-            // Class "PositiveTestCases" returns sequence of arrays with single integer.
-            |> Seq.map (fun case -> (Array.exactlyOne case) :?> int32)
-            |> Seq.map (fun case -> {
-                        Common = parameters
-                        SkipCount = case })
-
-    override this.GetValues() =
-        activeTestCases<'T>
-            |> Seq.collect (fun testCase -> this.GetTestCasesForAllPositive testCase)
+    inherit BaseTestCases<ISkipSafeTestCase<'T>, TestCaseParameters<'T>>(
+        activeTestCases<'T>, getParametersFactory
+    )
 
 type internal SkipSafeWithPositiveTestCases<'T>() =
-    inherit BaseSkipSafeWithSomethingTestCases<'T>(PositiveTestCases())
-
+    inherit BaseWithSomethingTestCases<ISkipSafeTestCase<'T>, TestCaseParametersWithSkipCount<'T>>(
+        activeTestCases<'T>, getParametersWithSkipCountFactory, PositiveTestCases()
+    )
 type internal SkipSafeWithNegativeAndZeroTestCases<'T>() =
-    inherit BaseSkipSafeWithSomethingTestCases<'T>(NegativeWithZeroTestCases())
+    inherit BaseWithSomethingTestCases<ISkipSafeTestCase<'T>, TestCaseParametersWithSkipCount<'T>>(
+        activeTestCases<'T>, getParametersWithSkipCountFactory, NegativeWithZeroTestCases()
+    )
+
+/// endregion

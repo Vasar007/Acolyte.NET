@@ -1,10 +1,10 @@
 ﻿module Acolyte.Functional.Tests.Utils.CastAsTests
 
-
 open Acolyte.Functional
 open Acolyte.Functional.Collections
 open FsUnit.Xunit
 open Xunit
+
 
 [<Fact>]
 let public ``"castAs" converts non-null object to the specified type`` () =

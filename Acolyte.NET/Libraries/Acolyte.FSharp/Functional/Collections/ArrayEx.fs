@@ -13,9 +13,6 @@ let public skipSafe count (source: array<'T>) =
         |> SeqEx.skipSafe count
         |> Seq.toArray
 
-let public asSeq (source: array<'T>) =
-    source :> seq<'T>
-
 let public appendSingleton item (source: array<'T>) =
     Throw.checkIfNull source (nameof source)
 

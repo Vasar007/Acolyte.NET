@@ -13,9 +13,6 @@ let public skipSafe count (source: list<'T>) =
         |> SeqEx.skipSafe count
         |> Seq.toList
 
-let public asSeq (source: list<'T>) =
-    source :> seq<'T>
-
 let public appendSingleton item (source: list<'T>) =
     Throw.checkIfNullValue source (nameof source)
 
