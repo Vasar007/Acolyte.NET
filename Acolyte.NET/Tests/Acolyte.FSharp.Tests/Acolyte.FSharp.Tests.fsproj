@@ -49,16 +49,14 @@
     <Compile Include="Cases\AppendSingleton.fs" />
     <Compile Include="Cases\SkipSafe.fs" />
     <Compile Include="Helpers\FsTestDataCreator.fs" />
-    <Compile Include="Functional\AppendSingletonTests.fs" />
-    <Compile Include="Functional\SkipSafeTests.fs" />
     <Compile Include="Functional\Throw\CheckIfNullValueTests.fs" />
     <Compile Include="Functional\Throw\IfNullTests.fs" />
-    <Compile Include="Functional\AppendSingletonTests.fs" />
     <Compile Include="Functional\Throw\IfNullValueTests.fs" />
-    <Compile Include="Functional\AppendSingletonTests.fs" />
     <Compile Include="Functional\Throw\CheckIfNullTests.fs" />
     <Compile Include="Functional\Utils\CastAsTests.fs" />
     <Compile Include="Functional\Utils\CastAsOptionTests.fs" />
+    <Compile Include="Functional\Collections\AppendSingletonTests.fs" />
+    <Compile Include="Functional\Collections\SkipSafeTests.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
 

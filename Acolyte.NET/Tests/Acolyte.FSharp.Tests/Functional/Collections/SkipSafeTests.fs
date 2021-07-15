@@ -16,9 +16,9 @@ open Xunit
 [<Theory>]
 [<ClassData(typeof<SkipSafeTestCases<int32>>)>]
 let public ``"skipSafe" throw an exception if argument "source" is null``
-    (conversion: ConversionFunction<int32>) (expectedFactory: ExpectedValueFactory<int32>) (actualFactory: ActualValueFactory<int32>) =
+    (parameters: TestCaseParameters<int32>) =
     // Arrange & Act & Assert.
-    raises<ArgumentNullException> <@ actualFactory Unchecked.defaultof<int> null @>
+    raises<ArgumentNullException> <@ parameters.ActualFactory Unchecked.defaultof<int> null @>
 
 /// endregion
 
@@ -27,13 +27,13 @@ let public ``"skipSafe" throw an exception if argument "source" is null``
 [<Theory>]
 [<ClassData(typeof<SkipSafeTestCases<int32>>)>]
 let public ``"skipSafe" does not do anything if collection is empty``
-    (conversion: ConversionFunction<int32>) (expectedFactory: ExpectedValueFactory<int32>) (actualFactory: ActualValueFactory<int32>) =
+    (parameters: TestCaseParameters<int32>) =
     // Arrange.
-    let emptySeq = Seq.empty |> conversion
+    let emptySeq = Seq.empty |> parameters.Conversion
     let skipCount = 1
 
     // Act.
-    let actualSeq = emptySeq |> actualFactory skipCount
+    let actualSeq = emptySeq |> parameters.ActualFactory skipCount
 
     // Assert.
     actualSeq |> should be Empty
@@ -45,17 +45,19 @@ let public ``"skipSafe" does not do anything if collection is empty``
 [<Theory>]
 [<ClassData(typeof<SkipSafeTestCases<int32>>)>]
 let public ``"skipSafe" skips some items for prefefined collection``
-    (conversion: ConversionFunction<int32>) (expectedFactory: ExpectedValueFactory<int32>) (actualFactory: ActualValueFactory<int32>) =
+    (parameters: TestCaseParameters<int32>) =
     // Arrange.
-    let predefinedSeq = [ 1..3 ] |> conversion
+    let predefinedSeq = [ 1..3 ]
+                        |> SeqEx.asSeq
+                        |> parameters.Conversion
     let skipCount = 1
     let expectedSeq = predefinedSeq
-                      |> expectedFactory skipCount
+                      |> parameters.ExpectedFactory skipCount
                       |> Seq.toList
 
     // Act.
     let actualSeq = predefinedSeq
-                    |> actualFactory skipCount
+                    |> parameters.ActualFactory skipCount
                     |> Seq.toList
 
     // Assert.
@@ -68,14 +70,16 @@ let public ``"skipSafe" skips some items for prefefined collection``
 [<Theory>]
 [<ClassData(typeof<SkipSafeWithNegativeAndZeroTestCases<int32>>)>]
 let public ``"skipSafe" does not skip any items if "count" parameter is not positive``
-    (conversion: ConversionFunction<int32>) (expectedFactory: ExpectedValueFactory<int32>) (actualFactory: ActualValueFactory<int32>) (skipCount: int32) =
+    (parameters: TestCaseParametersWithSkipCount<int32>) =
     // Arrange.
-    let originalSeq = [ 1..3 ] |> conversion
+    let originalSeq = [ 1..3 ]
+                      |> SeqEx.asSeq
+                      |> parameters.Common.Conversion
     let expectedSeq = originalSeq |> Seq.toList
 
     // Act.
-    let actualSeq = expectedSeq
-                    |> actualFactory skipCount
+    let actualSeq = originalSeq
+                    |> parameters.Common.ActualFactory parameters.SkipCount
                     |> Seq.toList
 
     // Assert.
@@ -86,17 +90,19 @@ let public ``"skipSafe" does not skip any items if "count" parameter is not posi
 [<Theory>]
 [<ClassData(typeof<SkipSafeWithPositiveTestCases<int32>>)>]
 let public ``"skipSafe" can skip specified number of items if "count" parameter is less than collection length``
-    (conversion: ConversionFunction<int32>) (expectedFactory: ExpectedValueFactory<int32>) (actualFactory: ActualValueFactory<int32>) (skipCount: int32) =
+    (parameters: TestCaseParametersWithSkipCount<int32>) =
     // Arrange.
-    let length = skipCount + 1
-    let originalSeq = [ 0..length ] |> conversion
+    let length = parameters.SkipCount + 1
+    let originalSeq = [ 0..length ]
+                      |> SeqEx.asSeq
+                      |> parameters.Common.Conversion
     let expectedSeq = originalSeq
-                      |> expectedFactory skipCount
+                      |> parameters.Common.ExpectedFactory parameters.SkipCount
                       |> Seq.toList
 
     // Act.
     let actualSeq = originalSeq
-                    |> actualFactory skipCount
+                    |> parameters.Common.ActualFactory parameters.SkipCount
                     |> Seq.toList
 
     // Assert.
@@ -107,14 +113,16 @@ let public ``"skipSafe" can skip specified number of items if "count" parameter 
 [<Theory>]
 [<ClassData(typeof<SkipSafeWithPositiveTestCases<int32>>)>]
 let public ``"skipSafe" can skip specified number of items if "count" parameter is equal to collection length``
-    (conversion: ConversionFunction<int32>) (expectedFactory: ExpectedValueFactory<int32>) (actualFactory: ActualValueFactory<int32>) (skipCount: int32) =
+    (parameters: TestCaseParametersWithSkipCount<int32>) =
     // Arrange.
-    let length = skipCount
-    let originalSeq = [ 1..length ] |> conversion
+    let length = parameters.SkipCount
+    let originalSeq = [ 1..length ]
+                      |> SeqEx.asSeq
+                      |> parameters.Common.Conversion
 
     // Act.
     let actualSeq = originalSeq
-                    |> actualFactory skipCount
+                    |> parameters.Common.ActualFactory parameters.SkipCount
                     |> Seq.toList
 
     // Assert.
@@ -124,14 +132,16 @@ let public ``"skipSafe" can skip specified number of items if "count" parameter 
 [<Theory>]
 [<ClassData(typeof<SkipSafeWithPositiveTestCases<int32>>)>]
 let public ``"skipSafe" can skip specified number of items if "count" parameter is greater than collection length``
-    (conversion: ConversionFunction<int32>) (expectedFactory: ExpectedValueFactory<int32>) (actualFactory: ActualValueFactory<int32>) (skipCount: int32) =
+    (parameters: TestCaseParametersWithSkipCount<int32>) =
     // Arrange.
-    let length = skipCount - 1
-    let originalSeq = [ 0..length ] |> conversion
+    let length = parameters.SkipCount - 1
+    let originalSeq = [ 0..length ]
+                      |> SeqEx.asSeq
+                      |> parameters.Common.Conversion
 
     // Act.
     let actualSeq = originalSeq
-                    |> actualFactory skipCount
+                    |> parameters.Common.ActualFactory parameters.SkipCount
                     |> Seq.toList
 
     // Assert.
@@ -145,15 +155,16 @@ let public ``"skipSafe" can skip specified number of items if "count" parameter 
 [<Theory>]
 [<ClassData(typeof<SkipSafeTestCases<int32>>)>]
 let public ``"skipSafe" skips or does not skip items for random collection``
-    (conversion: ConversionFunction<int32>) (expectedFactory: ExpectedValueFactory<int32>) (actualFactory: ActualValueFactory<int32>) =
+    (parameters: TestCaseParameters<int32>) =
     // Arrange.
     let count = TestDataCreator.GetRandomCountNumber()
-    let randomdSeq = FsTestDataCreator.createRandomInt32Seq count |> conversion
+    let randomdSeq = FsTestDataCreator.createRandomInt32Seq count
+                     |> parameters.Conversion
     let skipCount = TestDataCreator.CreateRandomInt32()
 
     // Act.
     let actualSeq = randomdSeq
-                    |> actualFactory skipCount
+                    |> parameters.ActualFactory skipCount
                     |> Seq.toList
 
     // Assert.
@@ -161,7 +172,7 @@ let public ``"skipSafe" skips or does not skip items for random collection``
         actualSeq |> should be Empty
     else
         let expectedSeq = randomdSeq
-                          |> expectedFactory skipCount
+                          |> parameters.ExpectedFactory skipCount
                           |> Seq.toList
         actualSeq |> should equal expectedSeq
 

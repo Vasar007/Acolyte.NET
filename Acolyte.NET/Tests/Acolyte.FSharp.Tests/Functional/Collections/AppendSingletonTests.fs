@@ -16,9 +16,9 @@ open Xunit
 [<Theory>]
 [<ClassData(typeof<AppendSingletonTestCases<int32>>)>]
 let public ``"appendSingleton" throw an exception if argument "source" is null``
-    (conversion: ConversionFunction<int32>) (expectedFactory: ExpectedValueFactory<int32>) (actualFactory: ActualValueFactory<int32>) =
+    (parameters: TestCaseParameters<int32>) =
     // Arrange & Act & Assert.
-    raises<ArgumentNullException> <@ actualFactory Unchecked.defaultof<int> null @>
+    raises<ArgumentNullException> <@ parameters.ActualFactory Unchecked.defaultof<int> null @>
 
 /// endregion
 
@@ -27,17 +27,17 @@ let public ``"appendSingleton" throw an exception if argument "source" is null``
 [<Theory>]
 [<ClassData(typeof<AppendSingletonTestCases<int32>>)>]
 let public ``"appendSingleton" appends item to the empty collection``
-    (conversion: ConversionFunction<int32>) (expectedFactory: ExpectedValueFactory<int32>) (actualFactory: ActualValueFactory<int32>) =
+    (parameters: TestCaseParameters<int32>) =
     // Arrange.
-    let emptySeq = Seq.empty |> conversion
+    let emptySeq = Seq.empty |> parameters.Conversion
     let itemToAppend = 1
     let expectedSeq = emptySeq
-                      |> expectedFactory itemToAppend
+                      |> parameters.ExpectedFactory itemToAppend
                       |> Seq.toList
 
     // Act.
     let actualSeq = emptySeq
-                    |> actualFactory itemToAppend
+                    |> parameters.ActualFactory itemToAppend
                     |> Seq.toList
 
     // Assert.
@@ -50,17 +50,19 @@ let public ``"appendSingleton" appends item to the empty collection``
 [<Theory>]
 [<ClassData(typeof<AppendSingletonTestCases<int32>>)>]
 let public ``"appendSingleton" appends item for prefefined collection``
-    (conversion: ConversionFunction<int32>) (expectedFactory: ExpectedValueFactory<int32>) (actualFactory: ActualValueFactory<int32>) =
+    (parameters: TestCaseParameters<int32>) =
     // Arrange.
-    let predefinedSeq = [ 1..3 ] |> conversion
+    let predefinedSeq = [ 1..3 ]
+                        |> SeqEx.asSeq
+                        |> parameters.Conversion
     let itemToAppend = 4
     let expectedSeq = predefinedSeq
-                      |> expectedFactory itemToAppend
+                      |> parameters.ExpectedFactory itemToAppend
                       |> Seq.toList
 
     // Act.
     let actualSeq = predefinedSeq
-                    |> actualFactory itemToAppend
+                    |> parameters.ActualFactory itemToAppend
                     |> Seq.toList
 
     // Assert.
@@ -73,17 +75,18 @@ let public ``"appendSingleton" appends item for prefefined collection``
 [<Theory>]
 [<ClassData(typeof<AppendSingletonWithPositiveTestCases<int32>>)>]
 let public ``"appendSingleton" appends item for collection with some items``
-    (conversion: ConversionFunction<int32>) (expectedFactory: ExpectedValueFactory<int32>) (actualFactory: ActualValueFactory<int32>) (count: int32) =
+    (parameters: TestCaseParametersWithCount<int32>) =
     // Arrange.
-    let seqWithSomeItems = FsTestDataCreator.createRandomInt32Seq count |> conversion
+    let seqWithSomeItems = FsTestDataCreator.createRandomInt32Seq parameters.Count
+                           |> parameters.Common.Conversion
     let itemToAppend = TestDataCreator.CreateRandomInt32()
     let expectedSeq = seqWithSomeItems
-                      |> expectedFactory itemToAppend
+                      |> parameters.Common.ExpectedFactory itemToAppend
                       |> Seq.toList
 
     // Act.
     let actualSeq = seqWithSomeItems
-                    |> actualFactory itemToAppend
+                    |> parameters.Common.ActualFactory itemToAppend
                     |> Seq.toList
 
     // Assert.
@@ -96,18 +99,19 @@ let public ``"appendSingleton" appends item for collection with some items``
 [<Theory>]
 [<ClassData(typeof<AppendSingletonTestCases<int32>>)>]
 let public ``"appendSingleton" skips or does not skip items for random collection``
-    (conversion: ConversionFunction<int32>) (expectedFactory: ExpectedValueFactory<int32>) (actualFactory: ActualValueFactory<int32>) =
+    (parameters: TestCaseParameters<int32>) =
     // Arrange.
     let count = TestDataCreator.GetRandomCountNumber()
-    let randomdSeq = FsTestDataCreator.createRandomInt32Seq count |> conversion
+    let randomdSeq = FsTestDataCreator.createRandomInt32Seq count
+                     |> parameters.Conversion
     let itemToAppend = TestDataCreator.CreateRandomInt32()
     let expectedSeq = randomdSeq
-                      |> expectedFactory itemToAppend
+                      |> parameters.ExpectedFactory itemToAppend
                       |> Seq.toList
 
     // Act.
     let actualSeq = randomdSeq
-                    |> actualFactory itemToAppend
+                    |> parameters.ActualFactory itemToAppend
                     |> Seq.toList
 
     // Assert.

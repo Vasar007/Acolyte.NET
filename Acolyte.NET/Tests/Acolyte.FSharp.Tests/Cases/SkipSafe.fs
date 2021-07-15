@@ -10,6 +10,17 @@ type internal ExpectedValueFactory<'T> = (int32 -> seq<'T> -> seq<'T>)
 
 type internal ActualValueFactory<'T> = (int32 -> seq<'T> -> seq<'T>)
 
+type public TestCaseParameters<'T> = {
+    Conversion: ConversionFunction<'T>
+    ExpectedFactory: ExpectedValueFactory<'T>
+    ActualFactory: ActualValueFactory<'T>
+}
+
+type public TestCaseParametersWithSkipCount<'T> = {
+    Common: TestCaseParameters<'T>
+    SkipCount: int32
+}
+
 type internal ISkipSafeTestCase<'T> =
     abstract member Convert : seqToConvert: seq<'T> -> seq<'T>
     abstract member GetExpectedValue : skipCount: int32 -> initialSeq: seq<'T> -> seq<'T>
@@ -91,23 +102,33 @@ let private activeTestCases<'T> = [
 ]
 
 type internal SkipSafeTestCases<'T>() =
-    inherit BaseParameterizedTestCase<struct(ConversionFunction<'T> * ExpectedValueFactory<'T> * ActualValueFactory<'T>)>(flattenValueTuple = true)
+    inherit BaseParameterizedTestCase<TestCaseParameters<'T>>()
 
     override _.GetValues() =
         activeTestCases<'T>
-            |> Seq.map (fun testCase -> struct(testCase.Convert, testCase.GetExpectedValue, testCase.GetActualValue))
+            |> Seq.map (fun testCase -> {
+                        Conversion = testCase.Convert
+                        ExpectedFactory = testCase.GetExpectedValue
+                        ActualFactory = testCase.GetActualValue })
 
 [<AbstractClass>]
 type internal BaseSkipSafeWithSomethingTestCases<'T>(withTestCases: BaseParameterizedTestCase<int32>) =
-    inherit BaseParameterizedTestCase<struct(ConversionFunction<'T> * ExpectedValueFactory<'T> * ActualValueFactory<'T> * int32)>(flattenValueTuple = true)
+    inherit BaseParameterizedTestCase<TestCaseParametersWithSkipCount<'T>>()
 
     let _withTestCases = withTestCases
 
     member private _.GetTestCasesForAllPositive (testCase: ISkipSafeTestCase<'T>) =
+        let parameters = {
+            Conversion = testCase.Convert
+            ExpectedFactory = testCase.GetExpectedValue
+            ActualFactory = testCase.GetActualValue
+        }
         _withTestCases
             // Class "PositiveTestCases" returns sequence of arrays with single integer.
             |> Seq.map (fun case -> (Array.exactlyOne case) :?> int32)
-            |> Seq.map (fun case -> struct(testCase.Convert, testCase.GetExpectedValue, testCase.GetActualValue, case))
+            |> Seq.map (fun case -> {
+                        Common = parameters
+                        SkipCount = case })
 
     override this.GetValues() =
         activeTestCases<'T>

@@ -3,7 +3,6 @@
 /// </summary>
 module Acolyte.Functional.Throw
 
-
 let private (|NotNull|_|) value = 
     if obj.ReferenceEquals(value, null) then None
     else Some()

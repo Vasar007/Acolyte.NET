@@ -1,4 +1,4 @@
-﻿module Acolyte.Functional.Option
+﻿module Acolyte.Functional.Core.Option
 
 let public bindAsync fAsync option =
     async {

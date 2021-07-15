@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Acolyte.Common;
@@ -31,11 +32,18 @@ namespace Acolyte.Tests.Cases.Parameterized
             IEnumerable<TData> values = GetValues();
 
             // Special case: unwrap ValueTuple and create object array with arguments.
-            bool shouldFlattenValueTuple =
-                _flattenValueTuple &&
-                typeof(TData).IsValueTupleType();
-            if (shouldFlattenValueTuple)
+            if (_flattenValueTuple)
             {
+                Type dataType = typeof(TData);
+                bool shouldFlattenValueTuple = dataType.IsValueTupleType();
+                if (!shouldFlattenValueTuple)
+                {
+                    string message =
+                        $"Failed to flatten values because type " +
+                        $"'{dataType.FullName}' is not value tuple.";
+                    throw new InvalidOperationException(message);
+                }
+
                 return values
                     .Select(value => value!.GetPublicInstanceFields().ToArray())
                     .GetEnumerator();

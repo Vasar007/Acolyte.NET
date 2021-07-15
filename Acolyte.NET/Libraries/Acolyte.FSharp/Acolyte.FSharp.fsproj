@@ -64,9 +64,9 @@
   <ItemGroup>
     <Compile Include="Functional\ExitCodes.fs" />
     <Compile Include="Functional\Throw.fs" />
-    <Compile Include="Functional\Option.fs" />
-    <Compile Include="Functional\Result.fs" />
     <Compile Include="Functional\Utils.fs" />
+    <Compile Include="Functional\Core\Option.fs" />
+    <Compile Include="Functional\Core\Result.fs" />
     <Compile Include="Functional\Collections\SeqEx.fs" />
     <Compile Include="Functional\Collections\ArrayEx.fs" />
     <Compile Include="Functional\Collections\ListEx.fs" />

@@ -1,4 +1,4 @@
-﻿module Acolyte.Functional.Result
+﻿module Acolyte.Functional.Core.Result
 
 let public bindAsync fAsync result =
     async {
