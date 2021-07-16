@@ -1,4 +1,4 @@
-﻿module Acolyte.Functional.Tests.Cases.AppendSingleton
+﻿module Acolyte.Functional.Tests.Cases.Collections.AppendSingleton
 
 open Acolyte.Functional.Collections
 open Acolyte.Functional.Tests.Cases.Base

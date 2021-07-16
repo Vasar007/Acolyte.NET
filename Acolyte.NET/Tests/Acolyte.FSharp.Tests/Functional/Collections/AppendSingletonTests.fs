@@ -1,8 +1,8 @@
-﻿module Acolyte.Functional.Tests.AppendSingletontonTests
+﻿module Acolyte.Functional.Tests.Collections.AppendSingletontonTests
 
 open System
 open Acolyte.Functional.Collections
-open Acolyte.Functional.Tests.Cases.AppendSingleton
+open Acolyte.Functional.Tests.Cases.Collections.AppendSingleton
 open Acolyte.Functional.Tests.Helpers
 open Acolyte.Tests.Collections
 open Acolyte.Tests.Creators

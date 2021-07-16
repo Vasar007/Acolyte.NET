@@ -1,4 +1,4 @@
-﻿module Acolyte.Functional.Tests.Cases.SkipSafe
+﻿module Acolyte.Functional.Tests.Cases.Collections.SkipSafe
 
 open Acolyte.Functional.Collections
 open Acolyte.Functional.Tests.Cases.Base

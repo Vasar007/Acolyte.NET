@@ -47,8 +47,8 @@
 
   <ItemGroup>
     <Compile Include="Cases\Base.fs" />
-    <Compile Include="Cases\AppendSingleton.fs" />
-    <Compile Include="Cases\SkipSafe.fs" />
+    <Compile Include="Cases\Collections\AppendSingleton.fs" />
+    <Compile Include="Cases\Collections\SkipSafe.fs" />
     <Compile Include="Helpers\FsTestHelper.fs" />
     <Compile Include="Helpers\FsTestDataCreator.fs" />
     <Compile Include="Functional\Throw\IfNullTests.fs" />
