@@ -50,13 +50,13 @@
     <Compile Include="Cases\Collections\AppendSingleton.fs" />
     <Compile Include="Cases\Collections\SkipSafe.fs" />
     <Compile Include="Cases\Throw\ThrowModule.fs" />
+    <Compile Include="Cases\Utils\CastAs.fs" />
     <Compile Include="Helpers\FsTestHelper.fs" />
     <Compile Include="Helpers\FsTestDataCreator.fs" />
     <Compile Include="Functional\Throw\ThrowModuleTests.fs" />
     <Compile Include="Functional\Collections\AppendSingletonTests.fs" />
     <Compile Include="Functional\Collections\SkipSafeTests.fs" />
     <Compile Include="Functional\Utils\CastAsTests.fs" />
-    <Compile Include="Functional\Utils\CastAsOptionTests.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
 
@@ -79,10 +79,6 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Cases\Utils\" />
   </ItemGroup>
 
 </Project>

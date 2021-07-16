@@ -1,5 +1,6 @@
 ﻿module Acolyte.Functional.Core.Result
 
+// TODO: write test for this method.
 let public bindAsync fAsync result =
     async {
         match result with
@@ -7,6 +8,7 @@ let public bindAsync fAsync result =
             | Error error -> return Error error
     }
 
+// TODO: write test for this method.
 let public mapAsync fAsync result =
     async {
         match result with

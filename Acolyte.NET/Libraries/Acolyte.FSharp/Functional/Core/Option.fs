@@ -1,5 +1,6 @@
 ﻿module Acolyte.Functional.Core.Option
 
+// TODO: write test for this method.
 let public bindAsync fAsync option =
     async {
         match option with
@@ -7,6 +8,7 @@ let public bindAsync fAsync option =
             | None -> return None
     }
 
+// TODO: write test for this method.
 let public mapAsync fAsync option =
     async {
         match option with

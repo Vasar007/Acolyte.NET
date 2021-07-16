@@ -32,16 +32,16 @@ let internal createRandomNullableInt32Array (count: int32) =
 
 let internal createRandomOptionInt32Seq (count: int32) =
     TestDataCreator.CreateRandomNullableInt32List count
-        |> Seq.map Utils.nullableToOption
+        |> Seq.map Utils.nullableValueToOption
 
 let internal createRandomOptionInt32List (count: int32) =
     TestDataCreator.CreateRandomNullableInt32List count
-        |> Seq.map Utils.nullableToOption
+        |> Seq.map Utils.nullableValueToOption
         |> Seq.toList
 
 let internal createRandomOptionInt32Array (count: int32) =
     TestDataCreator.CreateRandomNullableInt32List count
-        |> Seq.map Utils.nullableToOption
+        |> Seq.map Utils.nullableValueToOption
         |> Seq.toArray
 
 /// endregion
