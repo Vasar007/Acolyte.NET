@@ -182,6 +182,6 @@ let public ``"ifNullValue" should only perfron null-check value with nullable it
     // Assert.
     CustomAssert.True(explosive.VerifyNoIterationsNoGetEnumeratorCalls())
     actualResult |> should not' Null
-    actualResult |> should sameAs collection
+    actualResult |> should sameAs explosive
 
 /// endregion

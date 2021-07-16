@@ -55,7 +55,8 @@ let public ``"ifNull" performs null check name of value at first`` () =
 [<Fact>]
 let public ``"ifNull" returns unit and throws no exception if value is empty`` () =
     // Arrange.
-    let expectedResult = Array.empty
+    // Force array creation because we can get different reference after "ifNull" method call.
+    let expectedResult = Array.empty |> Seq.toArray
 
     // Act.
     let actualResult = Throw.ifNull expectedResult (nameof expectedResult)
@@ -182,6 +183,6 @@ let public ``"ifNull" should only perfron null-check value with nullable items w
     // Assert.
     CustomAssert.True(explosive.VerifyNoIterationsNoGetEnumeratorCalls())
     actualResult |> should not' Null
-    actualResult |> should sameAs collection
+    actualResult |> should sameAs explosive
 
 /// endregion
