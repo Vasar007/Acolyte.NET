@@ -17,7 +17,7 @@ open Xunit
 
 [<Theory>]
 [<ClassData(typeof<ThrowModuleTestCases< array<int32> >>)>]
-let public ``Throw.Function returns unit and throws no exception if value is not null``
+let public ``"Throw.function" returns unit and throws no exception if value is not null``
     (parameters: TestCaseParameters< array<int32> >) =
     // Arrange.
     let valueToCheck = [| 1..3 |]
@@ -31,14 +31,14 @@ let public ``Throw.Function returns unit and throws no exception if value is not
 
 [<Theory>]
 [<ClassData(typeof<ThrowModuleTestCases< array<int32> >>)>]
-let public ``Throw.Function throws an exception when value is null``
+let public ``"Throw.function" throws an exception when value is null``
     (parameters: TestCaseParameters< array<int32> >) =
     // Arrange & Act & Assert.
     raises<ArgumentNullException> <@ parameters.ActualFactory null "nullValue" @>
 
 [<Theory>]
 [<ClassData(typeof<ThrowModuleTestCases< array<int32> >>)>]
-let public ``Throw.Function throws an exception when name of value is null``
+let public ``"Throw.function" throws an exception when name of value is null``
     (parameters: TestCaseParameters< array<int32> >) =
     // Arrange.
     let valueToCheck = [| 1..3 |]
@@ -48,7 +48,7 @@ let public ``Throw.Function throws an exception when name of value is null``
 
 [<Theory>]
 [<ClassData(typeof<ThrowModuleTestCases< array<int32> >>)>]
-let public ``Throw.Function performs null check name of value at first``
+let public ``"Throw.function" performs null check name of value at first``
     (parameters: TestCaseParameters< array<int32> >) =
     // Arrange.
     let throwFunc = fun () -> (parameters.ActualFactory null null) |> ignore
@@ -64,7 +64,7 @@ let public ``Throw.Function performs null check name of value at first``
 
 [<Theory>]
 [<ClassData(typeof<ThrowModuleTestCases< array<int32> >>)>]
-let public ``Throw.Function returns unit and throws no exception if value is empty``
+let public ``"Throw.function" returns unit and throws no exception if value is empty``
     (parameters: TestCaseParameters< array<int32> >) =
     // Arrange.
     // Force array creation because "sameAs" can fail with pure "Array.empty" value
@@ -83,7 +83,7 @@ let public ``Throw.Function returns unit and throws no exception if value is emp
 
 [<Theory>]
 [<ClassData(typeof<ThrowModuleTestCases< array<int32> >>)>]
-let public ``Throw.Function returns unit and throws no exception if value has predefined items``
+let public ``"Throw.function" returns unit and throws no exception if value has predefined items``
     (parameters: TestCaseParameters< array<int32> >) =
     // Arrange.
     let valueToCheck = [| 1..3 |]
@@ -97,7 +97,7 @@ let public ``Throw.Function returns unit and throws no exception if value has pr
 
 [<Theory>]
 [<ClassData(typeof<ThrowModuleTestCases< array<option<int32>> >>)>]
-let public ``Throw.Function returns unit and throws no exception if value has predefined nullable items``
+let public ``"Throw.function" returns unit and throws no exception if value has predefined nullable items``
     (parameters: TestCaseParameters< array<option<int32>> >) =
     // Arrange.
     let valueToCheck = [| Some 1; Some 2; None; Some 3 |]
@@ -115,7 +115,7 @@ let public ``Throw.Function returns unit and throws no exception if value has pr
 
 [<Theory>]
 [<ClassData(typeof<ThrowModuleWithPositiveTestCases< array<int32> >>)>]
-let public ``Throw.Function returns unit and throws no exception if value has some items``
+let public ``"Throw.function" returns unit and throws no exception if value has some items``
     (parameters: TestCaseParametersWithCount< array<int32> >) =
     // Arrange.
     let valueToCheck = FsTestDataCreator.createRandomInt32Array parameters.Count
@@ -129,7 +129,7 @@ let public ``Throw.Function returns unit and throws no exception if value has so
 
 [<Theory>]
 [<ClassData(typeof<ThrowModuleWithPositiveTestCases< array<option<int32>> >>)>]
-let public ``Throw.Function returns unit and throws no exception if value has some nullable items``
+let public ``"Throw.function" returns unit and throws no exception if value has some nullable items``
     (parameters: TestCaseParametersWithCount< array<option<int32>> >) =
     // Arrange.
     let valueToCheck = FsTestDataCreator.createRandomOptionInt32Array parameters.Count
@@ -147,7 +147,7 @@ let public ``Throw.Function returns unit and throws no exception if value has so
 
 [<Theory>]
 [<ClassData(typeof<ThrowModuleTestCases< array<int32> >>)>]
-let public ``Throw.Function returns unit and throws no exception if value has random items``
+let public ``"Throw.function" returns unit and throws no exception if value has random items``
     (parameters: TestCaseParameters< array<int32> >) =
     // Arrange.
     let count = TestDataCreator.GetRandomCountNumber()
@@ -162,7 +162,7 @@ let public ``Throw.Function returns unit and throws no exception if value has ra
 
 [<Theory>]
 [<ClassData(typeof<ThrowModuleTestCases< array<option<int32>> >>)>]
-let public ``Throw.Function returns unit and throws no exception if value has random nullable items``
+let public ``"Throw.function" returns unit and throws no exception if value has random nullable items``
     (parameters: TestCaseParameters< array<option<int32>> >) =
     // Arrange.
     let count = TestDataCreator.GetRandomCountNumber()
@@ -181,7 +181,7 @@ let public ``Throw.Function returns unit and throws no exception if value has ra
 
 [<Theory>]
 [<ClassData(typeof<ThrowModuleTestCases< array<int32> >>)>]
-let public ``Throw.Function should only perfron null-check value without iteration``
+let public ``"Throw.function" should only perfron null-check value without iteration``
     (parameters: TestCaseParameters< array<int32> >) =
     // Arrange.
     let valueToCheck = [ 1..3 ]
@@ -195,7 +195,7 @@ let public ``Throw.Function should only perfron null-check value without iterati
 
 [<Theory>]
 [<ClassData(typeof<ThrowModuleTestCases< array<int32> >>)>]
-let public ``Throw.Function should only perfron null-check value with nullable items without iteration``
+let public ``"Throw.function" should only perfron null-check value with nullable items without iteration``
     (parameters: TestCaseParameters< array<int32> >) =
     // Arrange.
     let collection = [ Some 1; Some 2; None; Some 3 ]

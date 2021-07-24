@@ -1,4 +1,5 @@
-﻿using Acolyte.Data.Randomness;
+﻿using System;
+using Acolyte.Data.Randomness;
 
 namespace Acolyte.Functions
 {
@@ -38,9 +39,10 @@ namespace Acolyte.Functions
 
         #endregion
 
-        #region Single
+        #region Helpers
 
-        public static float? ReturnNullIfRandomInt32IsOdd(float value)
+        public static T? ReturnNullValueIfRandomInt32IsOdd<T>(T value)
+            where T : class
         {
             // Convert values to null if randomly created Int32 is odd.
             int mark = StaticRandom.Next();
@@ -49,11 +51,8 @@ namespace Acolyte.Functions
                 : null;
         }
 
-        #endregion
-
-        #region Double
-
-        public static double? ReturnNullIfRandomInt32IsOdd(double value)
+        public static T? ReturnNullableIfRandomInt32IsOdd<T>(T value)
+            where T : struct
         {
             // Convert values to null if randomly created Int32 is odd.
             int mark = StaticRandom.Next();
@@ -62,11 +61,10 @@ namespace Acolyte.Functions
                 : null;
         }
 
-        #endregion
-
-        #region Decimal
-
-        public static decimal? ReturnNullIfRandomInt32IsOdd(decimal value)
+        /// <inheritdoc cref="ReturnNullableIfRandomInt32IsOdd{T}(T)" />
+        [Obsolete("Use \"Acolyte.Functions.NumberParityFunction.ReturnNullableIfRandomInt32IsOdd\" instead. This method will be removed in next major version.", error: false)]
+        public static T? ReturnNullIfRandomInt32IsOdd<T>(T value)
+            where T : struct
         {
             // Convert values to null if randomly created Int32 is odd.
             int mark = StaticRandom.Next();

@@ -1,7 +1,6 @@
 ﻿module Acolyte.Functional.Tests.Collections.SkipSafeTests
 
 open System
-open Acolyte.Functional.Collections
 open Acolyte.Functional.Tests.Cases.Collections.SkipSafe
 open Acolyte.Functional.Tests.Helpers
 open Acolyte.Tests.Collections

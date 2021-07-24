@@ -16,14 +16,12 @@ let public castAsOption<'T> (obj: obj) =
         | :? 'T as res -> Some(res)
         | _            -> None
 
-// TODO: write test for this method.
 let public nullableValueToOption (nullable: Nullable<_>) =
     if nullable.HasValue then
         Some nullable.Value
     else
         None
 
-// TODO: write test for this method.
 let public nullableReferenceToOption nullable =
     if isNull nullable then
         None

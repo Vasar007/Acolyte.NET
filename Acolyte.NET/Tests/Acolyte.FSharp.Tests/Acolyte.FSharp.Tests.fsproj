@@ -56,6 +56,8 @@
     <Compile Include="Functional\Throw\ThrowModuleTests.fs" />
     <Compile Include="Functional\Collections\AppendSingletonTests.fs" />
     <Compile Include="Functional\Collections\SkipSafeTests.fs" />
+    <Compile Include="Functional\Utils\NullableValueToOptionTests.fs" />
+    <Compile Include="Functional\Utils\NullableReferenceToOptionTests.fs" />
     <Compile Include="Functional\Utils\CastAsTests.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>

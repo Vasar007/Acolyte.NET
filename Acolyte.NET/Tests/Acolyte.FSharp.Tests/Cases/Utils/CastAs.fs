@@ -71,4 +71,3 @@ type internal CastAsWithPositiveTestCases<'T, 'Return when 'Return : null>() =
     )
 
 /// endregion
-

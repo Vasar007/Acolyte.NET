@@ -7,6 +7,7 @@ open Acolyte.Tests.Creators
 open FsUnit.Xunit
 open Xunit
 
+
 // Note: using array in tests to allow work with null reference.
 
 /// region: Null Values
@@ -23,6 +24,7 @@ let public ``"castAs" can process null reference``
 
     // Assert.
     actualResult |> should be Null
+    actualResult.IsNone |> should be True
 
 [<Theory>]
 [<ClassData(typeof<CastAsTestCases< array<int32>, array<string> >>)>]
@@ -36,6 +38,7 @@ let public ``"castAs" can process null reference with another type``
 
     // Assert.
     actualResult |> should be Null
+    actualResult.IsNone |> should be True
 
 /// endregion
 
@@ -69,6 +72,7 @@ let public ``If "castAs" cannot convert empty object to the specified type, it r
 
     // Assert.
     actualResult |> should be Null
+    actualResult.IsNone |> should be True
 
 /// endregion
 
@@ -101,6 +105,7 @@ let public ``If "castAs" cannot convert object with predefined items to the spec
 
     // Assert.
     actualResult |> should be Null
+    actualResult.IsNone |> should be True
 
 /// endregion
 
@@ -132,6 +137,7 @@ let public ``If "castAs" cannot convert object with some items to the specified 
 
     // Assert.
     actualResult |> should be Null
+    actualResult.IsNone |> should be True
 
 /// endregion
 
@@ -166,6 +172,7 @@ let public ``If "castAs" cannot convert object with random items to the specifie
 
     // Assert.
     actualResult |> should be Null
+    actualResult.IsNone |> should be True
 
 /// endregion
 
@@ -187,5 +194,6 @@ let public ``"castAs" should only try to cast (i.g. change type) of value withou
     // Assert.
     CustomAssert.True(explosive.VerifyNoIterationsNoGetEnumeratorCalls())
     actualResult |> should be Null
+    actualResult.IsNone |> should be True
 
 /// endregion

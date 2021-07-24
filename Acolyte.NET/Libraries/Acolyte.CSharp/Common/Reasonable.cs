@@ -49,11 +49,7 @@ namespace Acolyte.Common
         /// <inheritdoc />
         public override bool Equals(object? obj)
         {
-            if (obj is null) return false;
-
-            if (obj is not Reasonable<T> other) return false;
-
-            return Equals(other);
+            return obj is Reasonable<T> other && Equals(other);
         }
 
         /// <inheritdoc />

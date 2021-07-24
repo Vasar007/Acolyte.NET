@@ -371,7 +371,7 @@ namespace Acolyte.Common
                 .And(value8);
         }
 
-#region IEquatable<BasicInfo> Implementation
+        #region IEquatable<BasicInfo> Implementation
 
         /// <inheritdoc />
         public bool Equals(HashCode other)
@@ -379,19 +379,14 @@ namespace Acolyte.Common
             return _value.Equals(other._value);
         }
 
-#endregion
+        #endregion
 
-#region Object Overridden Methods
+        #region Object Overridden Methods
 
         /// <inheritdoc />
         public override bool Equals(object? obj)
         {
-            if (obj is HashCode code)
-            {
-                return Equals(code);
-            }
-
-            return Equals(obj);
+            return obj is HashCode code && Equals(code);
         }
 
         /// <summary>
@@ -408,7 +403,7 @@ namespace Acolyte.Common
             );
         }
 
-#endregion
+        #endregion
 
         /// <summary>
         /// Combines two hash code values.
