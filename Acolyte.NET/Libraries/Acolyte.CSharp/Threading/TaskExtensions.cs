@@ -56,7 +56,7 @@ namespace Acolyte.Threading
             foreach (Result<NoneResult, Exception> result in source)
             {
                 // Filter null exceptions.
-                if (result.IsSuccess && result.Error is not null)
+                if (!result.IsSuccess && result.Error is not null)
                 {
                     exceptions.Add(result.Error);
                 }
@@ -74,7 +74,7 @@ namespace Acolyte.Threading
             var taskExceptions = new List<Exception>();
             foreach (Result<TResult, Exception> item in source)
             {
-                if (!item.IsSuccess)
+                if (item.IsSuccess)
                 {
                     // List allows to pass null values.
 #pragma warning disable CS8604 // Possible null reference argument.
