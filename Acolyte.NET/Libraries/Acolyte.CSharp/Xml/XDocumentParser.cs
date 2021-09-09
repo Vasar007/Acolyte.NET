@@ -36,7 +36,7 @@ namespace Acolyte.Xml
         /// </summary>
         /// <param name="element">Element to process.</param>
         /// <param name="attribute">Name of the attribute.</param>
-        /// <returns>string value if found attribute, otherwise empty string.</returns>
+        /// <returns>string value if found attribute; otherwise, empty string.</returns>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="element" /> is <see langword="null" />. -or-
         /// <paramref name="attribute" /> is <see langword="null" />.
@@ -60,7 +60,7 @@ namespace Acolyte.Xml
         /// <param name="element">Element to process.</param>
         /// <param name="attribute">Name of the attribute.</param>
         /// <returns>
-        /// Converted value if found attribute, otherwise exception could be thrown.
+        /// Converted value if found attribute; otherwise, exception could be thrown.
         /// </returns>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="element" /> is <see langword="null" />. -or-
@@ -80,7 +80,7 @@ namespace Acolyte.Xml
         /// Gets element value.
         /// </summary>
         /// <param name="element">Element to process.</param>
-        /// <returns>string value if element is valid, otherwise empty string.</returns>
+        /// <returns>string value if element is valid; otherwise, empty string.</returns>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="element" /> is <see langword="null" />.
         /// </exception>
@@ -98,7 +98,7 @@ namespace Acolyte.Xml
         /// <typeparam name="T">Type to convert.</typeparam>
         /// <param name="element">Element to process.</param>
         /// <returns>
-        /// Converted value if element is valid, otherwise exception could be thrown.
+        /// Converted value if element is valid; otherwise, exception could be thrown.
         /// </returns>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="element" /> is <see langword="null" />.
@@ -151,7 +151,7 @@ namespace Acolyte.Xml
         /// </summary>
         /// <param name="element">Name of the element to find.</param>
         /// <param name="attribute">Name of the attribute.</param>
-        /// <returns>string value if found attribute, otherwise empty string.</returns>
+        /// <returns>string value if found attribute; otherwise, empty string.</returns>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="element" /> is <see langword="null" />. -or-
         /// <paramref name="attribute" /> is <see langword="null" />.
@@ -175,7 +175,7 @@ namespace Acolyte.Xml
         /// <param name="element">Name of the element to find.</param>
         /// <param name="attribute">Name of the attribute.</param>
         /// <returns>
-        /// Converted value if found attribute, otherwise exception could be thrown.
+        /// Converted value if found attribute; otherwise, exception could be thrown.
         /// </returns>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="element" /> is <see langword="null" />. -or-

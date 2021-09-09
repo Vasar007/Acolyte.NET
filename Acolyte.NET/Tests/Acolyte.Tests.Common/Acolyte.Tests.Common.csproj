@@ -1,11 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Platforms>AnyCPU</Platforms>
-    <Configurations>Debug;Release</Configurations>
-    <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
+    <Platforms>$(PackagePlatforms)</Platforms>
+    <Configurations>$(PackageConfigurations)</Configurations>
+    <TargetFrameworks>$(PackageTargetFrameworks)</TargetFrameworks>
     <OutputType>Library</OutputType>
-    <LangVersion>9.0</LangVersion>
+    <LangVersion>$(CSharpLangVersion)</LangVersion>
     <Nullable>enable</Nullable>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <RootNamespace>Acolyte.Tests</RootNamespace>
@@ -28,16 +28,29 @@
 
   <PropertyGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
     <AssemblyTitle>Acolyte.NET Tests .NET Standard 2.0</AssemblyTitle>
-    <DefineConstants>NETSTANDARD2_0</DefineConstants>
+    <ReferringTargetFrameworkForProjectReferences>.NETStandard,Version=v2.0</ReferringTargetFrameworkForProjectReferences>
+    <DefineConstants>$(DefineConstants);NETSTANDARD2_0</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(TargetFramework)' == 'netstandard2.1'">
     <AssemblyTitle>Acolyte.NET Tests .NET Standard 2.1</AssemblyTitle>
-    <DefineConstants>NETSTANDARD2_1</DefineConstants>
+    <ReferringTargetFrameworkForProjectReferences>.NETStandard,Version=v2.1</ReferringTargetFrameworkForProjectReferences>
+    <DefineConstants>$(DefineConstants);NETSTANDARD2_1</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Libraries\Acolyte.CSharp\Acolyte.CSharp.csproj" />
+    <PackageReference Include="IndexRange" Version="$(IndexRangePackageVersion)" />
+    <PackageReference Include="IsExternalInit" Version="$(IsExternalInitPackageVersion)">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Moq" Version="$(MoqPackageVersion)" />
+    <PackageReference Include="morelinq" Version="$(MoreLinqPackageVersion)" />
+    <PackageReference Include="xunit" Version="$(XunitPackageVersion)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="$(SolutionDir)Libraries\Acolyte.CSharp\Acolyte.CSharp.csproj" />
   </ItemGroup>
 
 </Project>

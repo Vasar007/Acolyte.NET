@@ -1,11 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Platforms>AnyCPU</Platforms>
-    <Configurations>Debug;Release</Configurations>
-    <TargetFrameworks>netcoreapp3.1;net5.0</TargetFrameworks>
+    <Platforms>$(PackagePlatforms)</Platforms>
+    <Configurations>$(PackageConfigurations)</Configurations>
+    <TargetFrameworks>$(TestTargetFrameworks)</TargetFrameworks>
     <OutputType>Library</OutputType>
-    <LangVersion>5.0</LangVersion>
+    <LangVersion>$(FSharpLangVersion)</LangVersion>
     <Nullable>enable</Nullable>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <GenerateProgramFile>false</GenerateProgramFile>
@@ -27,43 +27,60 @@
     <Copyright>© 2020 Vasily Vasilyev (vasar007@yandex.ru)</Copyright>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(TargetFramework)'=='netcoreapp3.1'">
-    <AssemblyTitle>Acolyte.FSharp Tests .NET Standard 2.0</AssemblyTitle>
+  <PropertyGroup Condition="'$(TargetFramework)' == 'net472'">
+    <AssemblyTitle>Acolyte.FSharp Tests .NET Standard 2.0 (.NET Framework 4.7.2)</AssemblyTitle>
     <ReferringTargetFrameworkForProjectReferences>.NETStandard,Version=v2.0</ReferringTargetFrameworkForProjectReferences>
     <DefineConstants>NETSTANDARD2_0</DefineConstants>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(TargetFramework)'=='net5.0'">
-    <AssemblyTitle>Acolyte.FSharp Tests .NET Standard 2.1</AssemblyTitle>
+  <PropertyGroup Condition="'$(TargetFramework)' == 'netcoreapp3.1'">
+    <AssemblyTitle>Acolyte.FSharp Tests .NET Standard 2.0 (.NET Core 3.1)</AssemblyTitle>
+    <ReferringTargetFrameworkForProjectReferences>.NETStandard,Version=v2.0</ReferringTargetFrameworkForProjectReferences>
+    <DefineConstants>NETSTANDARD2_0</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(TargetFramework)' == 'net5.0'">
+    <AssemblyTitle>Acolyte.FSharp Tests .NET Standard 2.1 (.NET 5.0)</AssemblyTitle>
     <ReferringTargetFrameworkForProjectReferences>.NETStandard,Version=v2.1</ReferringTargetFrameworkForProjectReferences>
     <DefineConstants>NETSTANDARD2_1</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="Functional\ThrowTests.fs" />
-    <Compile Include="Functional\UtilsTests.fs" />
-    <Compile Include="Functional\SeqExTests.fs" />
+    <Compile Include="Cases\Base.fs" />
+    <Compile Include="Cases\Collections\AppendSingleton.fs" />
+    <Compile Include="Cases\Collections\SkipSafe.fs" />
+    <Compile Include="Cases\Throw\ThrowModule.fs" />
+    <Compile Include="Cases\Utils\CastAs.fs" />
+    <Compile Include="Helpers\FsTestHelper.fs" />
+    <Compile Include="Helpers\FsTestDataCreator.fs" />
+    <Compile Include="Functional\Throw\ThrowModuleTests.fs" />
+    <Compile Include="Functional\Collections\AppendSingletonTests.fs" />
+    <Compile Include="Functional\Collections\SkipSafeTests.fs" />
+    <Compile Include="Functional\Utils\NullableValueToOptionTests.fs" />
+    <Compile Include="Functional\Utils\NullableReferenceToOptionTests.fs" />
+    <Compile Include="Functional\Utils\CastAsTests.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Update="FSharp.Core" Version="5.0.2" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0" />
-    <PackageReference Include="Unquote" Version="6.1.0" />
-    <PackageReference Include="xunit" Version="2.4.1" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="coverlet.collector" Version="3.1.0">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
+    <ProjectReference Include="$(SolutionDir)Libraries\Acolyte.FSharp\Acolyte.FSharp.fsproj" />
+    <ProjectReference Include="$(SolutionDir)Tests\Acolyte.Tests.Common\Acolyte.Tests.Common.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Libraries\Acolyte.FSharp\Acolyte.FSharp.fsproj" />
-    <ProjectReference Include="..\Acolyte.Tests.Common\Acolyte.Tests.Common.csproj" />
+    <PackageReference Update="FSharp.Core" Version="$(FSharpCorePackageVersion)" />
+    <PackageReference Include="FsUnit.xUnit" Version="$(FsUnitxUnitPackageVersion)" />
+    <PackageReference Include="Unquote" Version="$(UnquotePackageVersion)" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="$(MicrosoftNETTestSdkPackageVersion)" />
+    <PackageReference Include="xunit" Version="$(XunitPackageVersion)" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="$(XunitRunnerVisualStudioPackageVersion)">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="coverlet.collector" Version="$(CoverletCollectorPackageVersion)">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 
 </Project>

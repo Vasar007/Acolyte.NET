@@ -3,12 +3,11 @@
 /// </summary>
 module Acolyte.Functional.Throw
 
-
 let private (|NotNull|_|) value = 
     if obj.ReferenceEquals(value, null) then None
     else Some()
 
-let ifNullValue value (paramName: string) =
+let public ifNullValue value (paramName: string) =
     if isNull paramName then
         nullArg (nameof paramName)
 
@@ -18,7 +17,7 @@ let ifNullValue value (paramName: string) =
 
     value
 
-let ifNull obj (paramName: string) =
+let public ifNull obj (paramName: string) =
     if isNull paramName then
         nullArg (nameof paramName)
 
@@ -27,8 +26,8 @@ let ifNull obj (paramName: string) =
 
     obj
 
-let checkIfNullValue value (paramName: string) =
+let public checkIfNullValue value (paramName: string) =
     ifNullValue value paramName |> ignore
 
-let checkIfNull obj (paramName: string) =
+let public checkIfNull obj (paramName: string) =
     ifNull obj paramName |> ignore

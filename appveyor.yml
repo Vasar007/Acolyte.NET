@@ -1,6 +1,7 @@
 environment:
   packageVersion: 2.1.0
   acolytePackageZip: 'Acolyte.NET.$(packageVersion).zip'
+  dotnetFormatVersion: 5.0.211103
 
 version: '$(packageVersion).{build}'
 image: Visual Studio 2019
@@ -17,10 +18,9 @@ dotnet_csproj:
   file_version: '$(packageVersion)'
   version: '$(packageVersion)'
 
-branches:
-  only:
-    - master
-    - develop
+# All branches are built by default.
+
+# Build platform is used from solution settings.
 
 configuration:
   - Debug
@@ -29,18 +29,22 @@ configuration:
 matrix:
   fast_finish: true
 
-before_build:
-  - cmd: cd Acolyte.NET
-  - cmd: dotnet restore
+install:
+  - ps: dotnet tool update -g dotnet-format --version $env:dotnetFormatVersion
 
+before_build:
+  - ps: dotnet restore Acolyte.NET
+
+# Build only package solution. Samples solution will not be built by CI now.
 build:
+  project: Acolyte.NET
   verbosity: minimal
 
 after_build:
   - ps: >-
       if (($env:configuration -eq "Release") -and ($env:APPVEYOR_REPO_BRANCH -eq "master"))
       {
-        dotnet pack --configuration Release --no-build "../Acolyte.NET"
+        dotnet pack --configuration Release --no-build "Acolyte.NET"
         7z a -tzip "$env:APPVEYOR_BUILD_FOLDER/$env:acolytePackageZip" "$env:APPVEYOR_BUILD_FOLDER/Acolyte.NET/Libraries/Acolyte.CSharp/bin/Release/*.nupkg" "$env:APPVEYOR_BUILD_FOLDER/Acolyte.NET/Libraries/Acolyte.FSharp/bin/Release/*.nupkg" "$env:APPVEYOR_BUILD_FOLDER/Acolyte.NET/Libraries/Acolyte.NET/bin/Release/*.nupkg"
       }
 
@@ -48,11 +52,13 @@ test:
   assemblies:
     - '**\*.Tests.dll'
 
-# F# tests does not execute at all.
 after_test:
-  - ps: dotnet test "Tests/Acolyte.FSharp.Tests/Acolyte.FSharp.Tests.fsproj" --configuration $env:configuration --no-build
+  # F# tests does not execute at all.
+  - ps: dotnet test --configuration $env:configuration --no-build "Acolyte.NET/Tests/Acolyte.FSharp.Tests/Acolyte.FSharp.Tests.fsproj"
+  # Check code style.
+  - ps: dotnet format "Acolyte.NET/Acolyte.NET.sln" --fix-whitespace --fix-style warn --check --verbosity diagnostic
 
-  # Upload all NuGet packages to release assets.
+# Upload all NuGet packages to release assets.
 artifacts:
   - path: '**\*.nupkg'
     name: AcolyteNuget

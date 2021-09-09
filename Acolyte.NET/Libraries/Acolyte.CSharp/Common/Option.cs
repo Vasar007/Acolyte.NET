@@ -86,11 +86,7 @@ namespace Acolyte.Common
         /// <inheritdoc />
         public override bool Equals(object? obj)
         {
-            if (obj is null) return false;
-
-            if (obj is not Option<T> other) return false;
-
-            return Equals(other);
+            return obj is Option<T> other && Equals(other);
         }
 
         /// <inheritdoc />
@@ -123,8 +119,8 @@ namespace Acolyte.Common
         /// <param name="left">Left hand side object to compare.</param>
         /// <param name="right">Right hand side object to compare.</param>
         /// <returns>
-        /// <see langword="true" /> if values are memberwise equals,
-        /// <see langword="false" /> otherwise.
+        /// <see langword="true" /> if values are memberwise equals; otherwise,
+        /// <see langword="false" />.
         /// </returns>
         public static bool operator ==(Option<T> left, Option<T> right)
         {
@@ -137,7 +133,7 @@ namespace Acolyte.Common
         /// <param name="left">Left hand side object to compare.</param>
         /// <param name="right">Right hand side object to compare.</param>
         /// <returns>
-        /// <see langword="true" /> if values are not memberwise equals,
+        /// <see langword="true" /> if values are not memberwise equals; otherwise,
         /// <see langword="false" /> otherwise.
         /// </returns>
         public static bool operator !=(Option<T> left, Option<T> right)

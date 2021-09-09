@@ -1,8 +1,9 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 
 namespace Acolyte.Threading
 {
-    public sealed class CounterInt64
+    public sealed class CounterInt64 : IEquatable<CounterInt64>
     {
         private long _counter;
 
@@ -17,6 +18,70 @@ namespace Acolyte.Threading
         public CounterInt64(long startValue)
         {
             _counter = startValue;
+        }
+
+        #region Object Overridden Methods
+
+        /// <inheritdoc />
+        public override string ToString()
+        {
+            return Value.ToString();
+        }
+
+        /// <inheritdoc />
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Value);
+        }
+
+        /// <inheritdoc />
+        public override bool Equals(object? obj)
+        {
+            return Equals(obj as CounterInt64);
+        }
+
+        #endregion
+
+        #region IEquatable<CounterInt64> Implementation
+
+        /// <inheritdoc />
+        public bool Equals(CounterInt64? other)
+        {
+            if (other is null) return false;
+
+            if (ReferenceEquals(this, other)) return true;
+
+            return Value.Equals(other.Value);
+        }
+
+        #endregion
+
+        /// <summary>
+        /// Determines whether two specified instances of <see cref="CounterInt64" /> are equal.
+        /// </summary>
+        /// <param name="left">Left hand side object to compare.</param>
+        /// <param name="right">Right hand side object to compare.</param>
+        /// <returns>
+        /// <see langword="true" /> if values are memberwise equals; otherwise,
+        /// <see langword="false" />.
+        /// </returns>
+        public static bool operator ==(CounterInt64? left, CounterInt64? right)
+        {
+            return Equals(left, right);
+        }
+
+        /// <summary>
+        /// Determines whether two specified instances of <see cref="CounterInt64" /> are not equal.
+        /// </summary>
+        /// <param name="left">Left hand side object to compare.</param>
+        /// <param name="right">Right hand side object to compare.</param>
+        /// <returns>
+        /// <see langword="true" /> if values are not memberwise equals; otherwise,
+        /// <see langword="false" />.
+        /// </returns>
+        public static bool operator !=(CounterInt64? left, CounterInt64? right)
+        {
+            return !(left == right);
         }
 
         public CounterInt64 Increment()
@@ -39,6 +104,18 @@ namespace Acolyte.Threading
         public long ExchangeDecrement()
         {
             return Interlocked.Exchange(ref _counter, _counter - 1L);
+        }
+
+        public CounterInt64 Add(long value)
+        {
+            Interlocked.Exchange(ref _counter, _counter + value);
+            return this;
+        }
+
+        public CounterInt64 Subtract(long value)
+        {
+            Interlocked.Exchange(ref _counter, _counter - value);
+            return this;
         }
 
         public CounterInt64 Reset()
@@ -65,6 +142,16 @@ namespace Acolyte.Threading
         public static CounterInt64 operator --(CounterInt64 counter)
         {
             return counter.Decrement();
+        }
+
+        public static CounterInt64 operator +(CounterInt64 counter, long value)
+        {
+            return counter.Add(value);
+        }
+
+        public static CounterInt64 operator -(CounterInt64 counter, long value)
+        {
+            return counter.Subtract(value);
         }
     }
 }

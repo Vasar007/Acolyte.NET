@@ -1,21 +1,16 @@
 ﻿/// <summary>
 /// Contains additional methods to work with <see cref="Microsoft.FSharp.Collections.seq{T}" />.
 /// </summary>
+[<System.Obsolete("Use \Acolyte.Functional.Collections.SeqEx.skipSafe\" instead. This method will be remove in next major version.", error = false)>]
 module Acolyte.Functional.SeqEx
 
+open System
 
-let skipSafe (count: int32) (source: seq<'a>) : seq<'a> =
-    Throw.checkIfNull source (nameof source)
 
-    seq {
-        use enumerator = source.GetEnumerator()
-        let index = ref 0
-        let loop = ref true
-        while !index < count && !loop do
-            if not(enumerator.MoveNext()) then
-                loop := false
-            index := !index + 1
+[<Obsolete("Use \Acolyte.Functional.Collections.SeqEx.skipSafe\" instead. This method will be remove in next major version.", error = false)>]
+let public skipSafe count (source: seq<'T>) =
+    Acolyte.Functional.Collections.SeqEx.skipSafe count source
 
-        while enumerator.MoveNext() do
-            yield enumerator.Current 
-    }
+[<Obsolete("Use \Acolyte.Functional.Collections.SeqEx.appendSingleton\" instead. This method will be remove in next major version.", error = false)>]
+let public appendSingle item source =
+    Acolyte.Functional.Collections.SeqEx.appendSingleton item source

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using Acolyte.Assertions;
-using Acolyte.Collections;
+using Acolyte.Linq;
 
 namespace Acolyte.Common
 {
@@ -18,7 +18,7 @@ namespace Acolyte.Common
     /// Result&lt;<typeparamref name="T" /> , <see cref="string" />&gt; without boolean flag
     /// IsSuccess. 
     /// </remarks>
-    public readonly struct Reasonable<T> : IEquatable<Reasonable<T>>
+    public readonly struct Reasonable<T> : IEquatable<Reasonable<T>>, IFormattable
     {
         /// <summary>
         /// Field that hold value.
@@ -49,11 +49,7 @@ namespace Acolyte.Common
         /// <inheritdoc />
         public override bool Equals(object? obj)
         {
-            if (obj is null) return false;
-
-            if (obj is not Reasonable<T> other) return false;
-
-            return Equals(other);
+            return obj is Reasonable<T> other && Equals(other);
         }
 
         /// <inheritdoc />
@@ -94,7 +90,10 @@ namespace Acolyte.Common
         /// </summary>
         /// <param name="left">Left hand side object to compare.</param>
         /// <param name="right">Right hand side object to compare.</param>
-        /// <returns><see langword="true" /> if values are memberwise equals, <see langword="false" /> otherwise.</returns>
+        /// <returns>
+        /// <see langword="true" /> if values are memberwise equals; otherwise,
+        /// <see langword="false" />.
+        /// </returns>
         public static bool operator ==(Reasonable<T> left, Reasonable<T> right)
         {
             return left.Equals(right);
@@ -107,13 +106,17 @@ namespace Acolyte.Common
         /// <param name="left">Left hand side object to compare.</param>
         /// <param name="right">Right hand side object to compare.</param>
         /// <returns>
-        /// <see langword="true" /> if values are not memberwise equals, <see langword="false" /> otherwise.
+        /// <see langword="true" /> if values are not memberwise equals; otherwise,
+        /// <see langword="false" />.
         /// </returns>
         public static bool operator !=(Reasonable<T> left, Reasonable<T> right)
         {
             return !(left == right);
         }
 
+        #region IFormattable Implementation
+
+        /// <inheritdoc />
         public string ToString(string? format, IFormatProvider formatProvider)
         {
             switch (format)
@@ -133,6 +136,8 @@ namespace Acolyte.Common
                 }
             }
         }
+
+        #endregion
     }
 
     public static class Reasonable
@@ -160,11 +165,37 @@ namespace Acolyte.Common
             return new Reasonable<T1>(value, reasonable.Reason);
         }
 
+        public static Reasonable<bool> And(this Reasonable<bool> self, Reasonable<bool> other)
+        {
+            return self.Value
+                ? other
+                : self;
+        }
+
+        public static Reasonable<bool> And(this Reasonable<bool> self, Func<Reasonable<bool>> other)
+        {
+            return self.Value
+                ? other()
+                : self;
+        }
+
         public static Reasonable<bool> Or(this Reasonable<bool> self, Reasonable<bool> other)
         {
             return self.Value
                 ? self
                 : other;
+        }
+
+        public static Reasonable<bool> Or(this Reasonable<bool> self, Func<Reasonable<bool>> other)
+        {
+            return self.Value
+                ? self
+                : other();
+        }
+
+        public static Reasonable<bool> Not(Reasonable<bool> reasonable)
+        {
+            return new Reasonable<bool>(!reasonable.Value, reasonable.Reason);
         }
     }
 }

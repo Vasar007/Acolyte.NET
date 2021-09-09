@@ -104,13 +104,13 @@ namespace Acolyte.Common
 
         #region Parse Defined
 
-        public static TEnum ParseDefined<TEnum>(String enumValue)
+        public static TEnum ParseDefined<TEnum>(string enumValue)
             where TEnum : struct, Enum
         {
             return ParseDefined<TEnum>(enumValue, ignoreCase: false);
         }
 
-        public static TEnum ParseDefined<TEnum>(String enumValue, bool ignoreCase)
+        public static TEnum ParseDefined<TEnum>(string enumValue, bool ignoreCase)
             where TEnum : struct, Enum
         {
             if (Enum.TryParse(enumValue, ignoreCase, out TEnum result) && result.IsDefined())
@@ -129,13 +129,13 @@ namespace Acolyte.Common
 
         #region Try Parse Defined
 
-        public static bool TryParseDefined<TEnum>(String enumValue, out TEnum result)
+        public static bool TryParseDefined<TEnum>(string enumValue, out TEnum result)
           where TEnum : struct, Enum
         {
             return TryParseDefined(enumValue, ignoreCase: false, out result);
         }
 
-        public static bool TryParseDefined<TEnum>(String enumValue, bool ignoreCase, out TEnum result)
+        public static bool TryParseDefined<TEnum>(string enumValue, bool ignoreCase, out TEnum result)
             where TEnum : struct, Enum
         {
             if (Enum.TryParse(enumValue, ignoreCase, out result) && result.IsDefined())
@@ -151,19 +151,19 @@ namespace Acolyte.Common
 
         #region Parse Defined Or Default
 
-        public static TEnum ParseDefinedOrDefault<TEnum>(String enumValue, TEnum defaultValue)
+        public static TEnum ParseDefinedOrDefault<TEnum>(string enumValue, TEnum defaultValue)
             where TEnum : struct, Enum
         {
             return ParseDefinedOrDefault(enumValue, ignoreCase: false, defaultValue);
         }
 
-        public static TEnum ParseDefinedOrDefault<TEnum>(String enumValue, bool ignoreCase)
+        public static TEnum ParseDefinedOrDefault<TEnum>(string enumValue, bool ignoreCase)
             where TEnum : struct, Enum
         {
             return ParseDefinedOrDefault(enumValue, ignoreCase, defaultValue: default(TEnum));
         }
 
-        public static TEnum ParseDefinedOrDefault<TEnum>(String enumValue, bool ignoreCase,
+        public static TEnum ParseDefinedOrDefault<TEnum>(string enumValue, bool ignoreCase,
             TEnum defaultValue)
             where TEnum : struct, Enum
         {
@@ -180,21 +180,21 @@ namespace Acolyte.Common
 
         #region Try Parse Defined Or Default
 
-        public static bool TryParseDefinedOrDefault<TEnum>(String enumValue, TEnum defaultValue,
+        public static bool TryParseDefinedOrDefault<TEnum>(string enumValue, TEnum defaultValue,
             out TEnum result)
             where TEnum : struct, Enum
         {
             return TryParseDefinedOrDefault(enumValue, ignoreCase: false, defaultValue, out result);
         }
 
-        public static bool TryParseDefinedOrDefault<TEnum>(String enumValue, bool ignoreCase,
+        public static bool TryParseDefinedOrDefault<TEnum>(string enumValue, bool ignoreCase,
            out TEnum result)
             where TEnum : struct, Enum
         {
             return TryParseDefinedOrDefault(enumValue, ignoreCase, defaultValue: default, out result);
         }
 
-        public static bool TryParseDefinedOrDefault<TEnum>(String enumValue, bool ignoreCase,
+        public static bool TryParseDefinedOrDefault<TEnum>(string enumValue, bool ignoreCase,
             TEnum defaultValue, out TEnum result)
             where TEnum : struct, Enum
         {

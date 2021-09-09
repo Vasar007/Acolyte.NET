@@ -86,7 +86,6 @@ namespace Acolyte.Assertions
                         "The passed parameter is a pure value type parameter.", paramName
                     );
                 }
-                
             }
 
             if (obj is null)
@@ -186,7 +185,7 @@ namespace Acolyte.Assertions
         /// </param>
         /// <returns>
         /// Returns <see langword="true" /> in case the enumerable is <see langword="null" /> or
-        /// empty, <see langword="false" /> otherwise.
+        /// empty; otherwise, <see langword="false" />.
         /// </returns>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="collection" /> is <see langword="null" />. -or-

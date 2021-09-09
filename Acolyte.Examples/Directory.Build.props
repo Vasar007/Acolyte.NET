@@ -1,0 +1,17 @@
+<Project>
+
+  <!-- Project properties -->
+  <PropertyGroup>
+    <ExamplePlatforms>AnyCPU</ExamplePlatforms>
+    <ExampleConfigurations>Debug;Release</ExampleConfigurations>
+    <ExampleTargetFrameworks>net5.0</ExampleTargetFrameworks>
+    <CSharpLangVersion>9.0</CSharpLangVersion>
+    <FSharpLangVersion>5.0</FSharpLangVersion>
+  </PropertyGroup>
+
+  <!-- NuGet packages -->
+  <PropertyGroup>
+    <AcolyteNETPackageVersion>2.1.0</AcolyteNETPackageVersion>
+  </PropertyGroup>
+
+</Project>

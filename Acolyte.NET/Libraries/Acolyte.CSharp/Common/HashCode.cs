@@ -1,4 +1,6 @@
-﻿#if NETSTANDARD2_0
+﻿#pragma warning disable format // dotnet format fails indentation for regions :(
+
+#if NETSTANDARD2_0
 
 using System;
 using System.Collections.Generic;
@@ -15,7 +17,7 @@ namespace Acolyte.Common
     /// <see href="https://stackoverflow.com/questions/263400/what-is-the-best-algorithm-for-an-overridden-system-object-gethashcode" />
     /// <see href="https://rehansaeed.com/gethashcode-made-easy/" />
     /// </remarks>
-    [Obsolete("Use System.HashCode from package Microsoft.Bcl.HashCode.", error: false)]
+    [Obsolete("Use \"System.HashCode\" from package \"Microsoft.Bcl.HashCode\".", error: false)]
     // TODO: replace this class with static helper for System.HashCode.
     public readonly struct HashCode : IEquatable<HashCode>
     {
@@ -384,12 +386,7 @@ namespace Acolyte.Common
         /// <inheritdoc />
         public override bool Equals(object? obj)
         {
-            if (obj is HashCode code)
-            {
-                return Equals(code);
-            }
-
-            return Equals(obj);
+            return obj is HashCode code && Equals(code);
         }
 
         /// <summary>
@@ -430,7 +427,8 @@ namespace Acolyte.Common
         /// <typeparam name="T">The type of object to get hash code from.</typeparam>
         /// <param name="item">The value to get hash code from.</param>
         /// <returns>
-        /// Returns result of item.GetHashCode method if item is not <c>null</c> or 0 otherwise.
+        /// Returns result of item.GetHashCode method if item is not <see langword="null" /> or
+        /// 0 otherwise.
         /// </returns>
         private static int GetHashCode<T>(T item)
         {
@@ -451,7 +449,7 @@ namespace Acolyte.Common
         {
             int temp = startHashCode;
 
-            IEnumerator<T> enumerator = items.GetEnumerator();
+            using IEnumerator<T> enumerator = items.GetEnumerator();
             if (enumerator.MoveNext())
             {
                 temp = CombineHashCodes(temp, GetHashCode(enumerator.Current));

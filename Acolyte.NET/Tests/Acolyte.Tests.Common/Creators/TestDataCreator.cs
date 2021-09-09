@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using Acolyte.Assertions;
-using Acolyte.Common;
 using Acolyte.Data.Randomness;
 using Acolyte.Functions;
+using Acolyte.Numeric;
+using Acolyte.Tests.Objects;
 
 namespace Acolyte.Tests.Creators
 {
@@ -92,7 +93,7 @@ namespace Acolyte.Tests.Creators
 
             var result = new List<TItem>(capacity: count);
             result.AddRange(values);
-            return result;
+            return result.AsReadOnly();
         }
 
         public static IReadOnlyList<TItem> CreateList<TItem>(int count,
@@ -198,12 +199,19 @@ namespace Acolyte.Tests.Creators
         {
             random ??= RandomInstance;
 
-            int randomCount = GetRandomSmallCountNumber(random);
-            int length = randomCount == 0
-                ? 1
-                : randomCount;
+            int length = GetRandomPositiveSmallCountNumber(random);
 
             return CreateRandomString(length, random);
+        }
+
+        public static string? CreateRandomNullableString(Random? random = null)
+        {
+            random ??= RandomInstance;
+
+            int length = GetRandomPositiveSmallCountNumber(random);
+
+            var result = CreateRandomString(length, random);
+            return NumberParityFunction.ReturnNullValueIfRandomInt32IsOdd(result);
         }
 
         #endregion
@@ -218,27 +226,28 @@ namespace Acolyte.Tests.Creators
             return random.Next();
         }
 
-        public static int CreateRandomNonNegativeInt32(int maxValue, Random? random = null)
+        public static int CreateRandomNonNegativeInt32(int includedMaxValue, Random? random = null)
         {
             random ??= RandomInstance;
 
             // "Random.Next" method lower bound is equal to zero.
-            return random.Next(GetUpperBound(maxValue));
+            return random.Next(GetUpperBound(includedMaxValue));
         }
 
-        public static int CreateRandomPositiveInt32(int maxValue, Random? random = null)
+        public static int CreateRandomPositiveInt32(int includedMaxValue, Random? random = null)
         {
             random ??= RandomInstance;
 
             // "Random.Next" method lower bound is equal to zero.
-            return random.Next(1, GetUpperBound(maxValue));
+            return random.Next(1, GetUpperBound(includedMaxValue));
         }
 
-        public static int CreateRandomInt32(int minValue, int maxValue, Random? random = null)
+        public static int CreateRandomInt32(int includedMinValue, int includedMaxValue,
+            Random? random = null)
         {
             random ??= RandomInstance;
 
-            return random.Next(minValue, GetUpperBound(maxValue));
+            return random.Next(includedMinValue, GetUpperBound(includedMaxValue));
         }
 
         public static int CreateRandomInt32(Random? random = null)
@@ -252,28 +261,44 @@ namespace Acolyte.Tests.Creators
         {
             random ??= RandomInstance;
 
-            return CreateRandomNonNegativeInt32(TestConstants.MaxCollectionSize, random);
+            return CreateRandomNonNegativeInt32(Cases.TestConstants.MaxCollectionSize, random);
         }
 
         public static int GetRandomPositiveCountNumber(Random? random = null)
         {
             random ??= RandomInstance;
 
-            return CreateRandomPositiveInt32(TestConstants.MaxCollectionSize, random);
+            return CreateRandomPositiveInt32(Cases.TestConstants.MaxCollectionSize, random);
         }
 
         public static int GetRandomSmallCountNumber(Random? random = null)
         {
             random ??= RandomInstance;
 
-            return CreateRandomNonNegativeInt32(TestConstants._100, random);
+            return CreateRandomNonNegativeInt32(Cases.TestConstants._100, random);
         }
 
         public static int GetRandomPositiveSmallCountNumber(Random? random = null)
         {
             random ??= RandomInstance;
 
-            return CreateRandomPositiveInt32(TestConstants._100, random);
+            return CreateRandomPositiveInt32(Cases.TestConstants._100, random);
+        }
+
+        public static int? CreateRandomNullableInt32(int includedMinValue, int includedMaxValue,
+            Random? random = null)
+        {
+            random ??= RandomInstance;
+
+            var result = random.Next(includedMinValue, GetUpperBound(includedMaxValue));
+            return NumberParityFunction.ReturnNullIfOdd(result);
+        }
+
+        public static int? CreateRandomNullableInt32(Random? random = null)
+        {
+            random ??= RandomInstance;
+
+            return CreateRandomNullableInt32(int.MinValue, int.MaxValue, random);
         }
 
         #endregion
@@ -288,19 +313,21 @@ namespace Acolyte.Tests.Creators
             return random.NextInt64();
         }
 
-        public static long CreateRandomNonNegativeInt64(long maxValue, Random? random = null)
+        public static long CreateRandomNonNegativeInt64(long includedMaxValue,
+            Random? random = null)
         {
             random ??= RandomInstance;
 
             // "RandomExtensions.NextInt64" method lower bound is equal to zero.
-            return random.NextInt64(GetUpperBound(maxValue));
+            return random.NextInt64(GetUpperBound(includedMaxValue));
         }
 
-        public static long CreateRandomInt64(long minValue, long maxValue, Random? random = null)
+        public static long CreateRandomInt64(long includedMinValue, long includedMaxValue,
+            Random? random = null)
         {
             random ??= RandomInstance;
 
-            return random.NextInt64(minValue, GetUpperBound(maxValue));
+            return random.NextInt64(includedMinValue, GetUpperBound(includedMaxValue));
         }
 
         public static long CreateRandomInt64(Random? random = null)
@@ -308,6 +335,22 @@ namespace Acolyte.Tests.Creators
             random ??= RandomInstance;
 
             return CreateRandomInt64(long.MinValue, long.MaxValue, random);
+        }
+
+        public static long? CreateRandomNullableInt64(long includedMinValue, long includedMaxValue,
+            Random? random = null)
+        {
+            random ??= RandomInstance;
+
+            var result = random.NextInt64(includedMinValue, GetUpperBound(includedMaxValue));
+            return NumberParityFunction.ReturnNullIfOdd(result);
+        }
+
+        public static long? CreateRandomNullableInt64(Random? random = null)
+        {
+            random ??= RandomInstance;
+
+            return CreateRandomNullableInt64(long.MinValue, long.MaxValue, random);
         }
 
         #endregion
@@ -322,20 +365,21 @@ namespace Acolyte.Tests.Creators
             return random.NextSingle();
         }
 
-        public static float CreateRandomNonNegativeSingle(float maxValue, Random? random = null)
-        {
-            random ??= RandomInstance;
-
-            // "RandomExtensions.NextSingle" method lower bound is equal to zero.
-            return random.NextSingle(GetUpperBound(maxValue));
-        }
-
-        public static float CreateRandomSingle(float minValue, float maxValue,
+        public static float CreateRandomNonNegativeSingle(float includedMaxValue,
             Random? random = null)
         {
             random ??= RandomInstance;
 
-            return random.NextSingle(minValue, GetUpperBound(maxValue));
+            // "RandomExtensions.NextSingle" method lower bound is equal to zero.
+            return random.NextSingle(GetUpperBound(includedMaxValue));
+        }
+
+        public static float CreateRandomSingle(float includedMinValue, float includedMaxValue,
+            Random? random = null)
+        {
+            random ??= RandomInstance;
+
+            return random.NextSingle(includedMinValue, GetUpperBound(includedMaxValue));
         }
 
         public static float CreateRandomSingle(Random? random = null)
@@ -343,6 +387,22 @@ namespace Acolyte.Tests.Creators
             random ??= RandomInstance;
 
             return CreateRandomSingle(float.MinValue, float.MaxValue, random);
+        }
+
+        public static float? CreateRandomNullableSingle(float includedMinValue,
+            float includedMaxValue, Random? random = null)
+        {
+            random ??= RandomInstance;
+
+            var result = random.NextSingle(includedMinValue, GetUpperBound(includedMaxValue));
+            return NumberParityFunction.ReturnNullableIfRandomInt32IsOdd(result);
+        }
+
+        public static float? CreateRandomNullableSingle(Random? random = null)
+        {
+            random ??= RandomInstance;
+
+            return CreateRandomNullableSingle(float.MinValue, float.MaxValue, random);
         }
 
         #endregion
@@ -357,20 +417,21 @@ namespace Acolyte.Tests.Creators
             return random.NextDouble();
         }
 
-        public static double CreateRandomNonNegativeDouble(double maxValue, Random? random = null)
-        {
-            random ??= RandomInstance;
-
-            // "RandomExtensions.NextDouble" method lower bound is equal to zero.
-            return random.NextDouble(GetUpperBound(maxValue));
-        }
-
-        public static double CreateRandomDouble(double minValue, double maxValue,
+        public static double CreateRandomNonNegativeDouble(double includedMaxValue,
             Random? random = null)
         {
             random ??= RandomInstance;
 
-            return random.NextDouble(minValue, GetUpperBound(maxValue));
+            // "RandomExtensions.NextDouble" method lower bound is equal to zero.
+            return random.NextDouble(GetUpperBound(includedMaxValue));
+        }
+
+        public static double CreateRandomDouble(double includedMinValue, double includedMaxValue,
+            Random? random = null)
+        {
+            random ??= RandomInstance;
+
+            return random.NextDouble(includedMinValue, GetUpperBound(includedMaxValue));
         }
 
         public static double CreateRandomDouble(Random? random = null)
@@ -378,6 +439,22 @@ namespace Acolyte.Tests.Creators
             random ??= RandomInstance;
 
             return CreateRandomDouble(double.MinValue, double.MaxValue, random);
+        }
+
+        public static double? CreateRandomNullableDouble(double includedMinValue,
+            double includedMaxValue, Random? random = null)
+        {
+            random ??= RandomInstance;
+
+            var result = random.NextDouble(includedMinValue, GetUpperBound(includedMaxValue));
+            return NumberParityFunction.ReturnNullableIfRandomInt32IsOdd(result);
+        }
+
+        public static double? CreateRandomNullableDouble(Random? random = null)
+        {
+            random ??= RandomInstance;
+
+            return CreateRandomNullableDouble(double.MinValue, double.MaxValue, random);
         }
 
         #endregion
@@ -392,21 +469,21 @@ namespace Acolyte.Tests.Creators
             return random.NextDecimal();
         }
 
-        public static decimal CreateRandomNonNegativeDecimal(decimal maxValue,
+        public static decimal CreateRandomNonNegativeDecimal(decimal includedMaxValue,
             Random? random = null)
         {
             random ??= RandomInstance;
 
             // "RandomExtensions.NextDecimal" method lower bound is equal to decimal.Zero.
-            return random.NextDecimal(GetUpperBound(maxValue));
+            return random.NextDecimal(GetUpperBound(includedMaxValue));
         }
 
-        public static decimal CreateRandomDecimal(decimal minValue, decimal maxValue,
-            Random? random = null)
+        public static decimal CreateRandomDecimal(decimal includedMinValue,
+            decimal includedMaxValue, Random? random = null)
         {
             random ??= RandomInstance;
 
-            return random.NextDecimal(minValue, GetUpperBound(maxValue));
+            return random.NextDecimal(includedMinValue, GetUpperBound(includedMaxValue));
         }
 
         public static decimal CreateRandomDecimal(Random? random = null)
@@ -414,6 +491,68 @@ namespace Acolyte.Tests.Creators
             random ??= RandomInstance;
 
             return CreateRandomDecimal(decimal.MinValue, decimal.MaxValue, random);
+        }
+
+        public static decimal? CreateRandomNullableDecimal(decimal includedMinValue,
+            decimal includedMaxValue, Random? random = null)
+        {
+            random ??= RandomInstance;
+
+            var result = random.NextDecimal(includedMinValue, GetUpperBound(includedMaxValue));
+            return NumberParityFunction.ReturnNullableIfRandomInt32IsOdd(result);
+        }
+
+        public static decimal? CreateRandomNullableDecimal(Random? random = null)
+        {
+            random ??= RandomInstance;
+
+            return CreateRandomNullableDecimal(decimal.MinValue, decimal.MaxValue, random);
+        }
+
+        #endregion
+
+        #region Create Dummy Struct
+
+        public static DummyStruct CreateRandomDummyStruct(Random? random = null)
+        {
+            random ??= RandomInstance;
+
+            int value = CreateRandomInt32(random);
+
+            return new DummyStruct(value);
+        }
+
+        public static DummyStruct? CreateRandomNullableDummyStruct(Random? random = null)
+        {
+            random ??= RandomInstance;
+
+            int value = CreateRandomInt32(random);
+
+            var result = new DummyStruct(value);
+            return NumberParityFunction.ReturnNullableIfRandomInt32IsOdd(result);
+        }
+
+        #endregion
+
+        #region Create Dummy Class
+
+        public static DummyClass CreateRandomDummyClass(Random? random = null)
+        {
+            random ??= RandomInstance;
+
+            int value = CreateRandomInt32(random);
+
+            return new DummyClass(value);
+        }
+
+        public static DummyClass? CreateRandomNullableDummyClass(Random? random = null)
+        {
+            random ??= RandomInstance;
+
+            int value = CreateRandomInt32(random);
+
+            var result = new DummyClass(value);
+            return NumberParityFunction.ReturnNullValueIfRandomInt32IsOdd(result);
         }
 
         #endregion
@@ -437,6 +576,54 @@ namespace Acolyte.Tests.Creators
             return CreateList(
                 count: count,
                 valueFactory: (i, rand) => CreateRandomString(rand),
+                random: random
+            );
+        }
+
+        public static IReadOnlyList<string?> CreateRandomNullableStringList(int count,
+            Func<string, string?>? valueTransformer, Random? random = null)
+        {
+            valueTransformer ??= i => NumberParityFunction.ReturnNullValueIfRandomInt32IsOdd(i);
+
+            return CreateList(
+                count: count,
+                valueFactory: (i, rand) => valueTransformer(CreateRandomString(rand)),
+                random: random
+            );
+        }
+
+        public static IReadOnlyList<string?> CreateRandomNullableStringList(int count,
+            Random? random = null)
+        {
+            return CreateRandomNullableStringList(
+                count: count,
+                valueTransformer: i => NumberParityFunction.ReturnNullValueIfRandomInt32IsOdd(i),
+                random: random
+            );
+        }
+
+        public static IReadOnlyList<string?> CreateRandomNullableStringList(
+            Func<string, string?>? valueTransformer, Random? random = null)
+        {
+            random ??= RandomInstance;
+            valueTransformer ??= i => NumberParityFunction.ReturnNullValueIfRandomInt32IsOdd(i);
+
+            int count = GetRandomCountNumber(random);
+            return CreateRandomNullableStringList(
+                count: count,
+                valueTransformer: valueTransformer,
+                random: random
+            );
+        }
+
+        public static IReadOnlyList<string?> CreateRandomNullableStringList(Random? random = null)
+        {
+            random ??= RandomInstance;
+
+            int count = GetRandomCountNumber(random);
+            return CreateRandomNullableStringList(
+                count: count,
+                valueTransformer: i => NumberParityFunction.ReturnNullValueIfRandomInt32IsOdd(i),
                 random: random
             );
         }
@@ -609,7 +796,7 @@ namespace Acolyte.Tests.Creators
         public static IReadOnlyList<float?> CreateRandomNullableSingleList(int count,
            Func<float, float?>? valueTransformer, Random? random = null)
         {
-            valueTransformer ??= f => NumberParityFunction.ReturnNullIfRandomInt32IsOdd(f);
+            valueTransformer ??= f => NumberParityFunction.ReturnNullableIfRandomInt32IsOdd(f);
 
             return CreateList(
                 count: count,
@@ -623,7 +810,7 @@ namespace Acolyte.Tests.Creators
         {
             return CreateRandomNullableSingleList(
                 count: count,
-                valueTransformer: f => NumberParityFunction.ReturnNullIfRandomInt32IsOdd(f),
+                valueTransformer: f => NumberParityFunction.ReturnNullableIfRandomInt32IsOdd(f),
                 random: random
             );
         }
@@ -632,7 +819,7 @@ namespace Acolyte.Tests.Creators
             Func<float, float?>? valueTransformer, Random? random = null)
         {
             random ??= RandomInstance;
-            valueTransformer ??= f => NumberParityFunction.ReturnNullIfRandomInt32IsOdd(f);
+            valueTransformer ??= f => NumberParityFunction.ReturnNullableIfRandomInt32IsOdd(f);
 
             int count = GetRandomCountNumber(random);
             return CreateRandomNullableSingleList(
@@ -649,7 +836,7 @@ namespace Acolyte.Tests.Creators
             int count = GetRandomCountNumber(random);
             return CreateRandomNullableSingleList(
                 count: count,
-                valueTransformer: f => NumberParityFunction.ReturnNullIfRandomInt32IsOdd(f),
+                valueTransformer: f => NumberParityFunction.ReturnNullableIfRandomInt32IsOdd(f),
                 random: random
             );
         }
@@ -678,7 +865,7 @@ namespace Acolyte.Tests.Creators
         public static IReadOnlyList<double?> CreateRandomNullableDoubleList(int count,
            Func<double, double?>? valueTransformer, Random? random = null)
         {
-            valueTransformer ??= d => NumberParityFunction.ReturnNullIfRandomInt32IsOdd(d);
+            valueTransformer ??= d => NumberParityFunction.ReturnNullableIfRandomInt32IsOdd(d);
 
             return CreateList(
                 count: count,
@@ -692,7 +879,7 @@ namespace Acolyte.Tests.Creators
         {
             return CreateRandomNullableDoubleList(
                 count: count,
-                valueTransformer: d => NumberParityFunction.ReturnNullIfRandomInt32IsOdd(d),
+                valueTransformer: d => NumberParityFunction.ReturnNullableIfRandomInt32IsOdd(d),
                 random: random
             );
         }
@@ -701,7 +888,7 @@ namespace Acolyte.Tests.Creators
             Func<double, double?>? valueTransformer, Random? random = null)
         {
             random ??= RandomInstance;
-            valueTransformer ??= d => NumberParityFunction.ReturnNullIfRandomInt32IsOdd(d);
+            valueTransformer ??= d => NumberParityFunction.ReturnNullableIfRandomInt32IsOdd(d);
 
             int count = GetRandomCountNumber(random);
             return CreateRandomNullableDoubleList(
@@ -718,7 +905,7 @@ namespace Acolyte.Tests.Creators
             int count = GetRandomCountNumber(random);
             return CreateRandomNullableDoubleList(
                 count: count,
-                valueTransformer: d => NumberParityFunction.ReturnNullIfRandomInt32IsOdd(d),
+                valueTransformer: d => NumberParityFunction.ReturnNullableIfRandomInt32IsOdd(d),
                 random: random
             );
         }
@@ -748,7 +935,7 @@ namespace Acolyte.Tests.Creators
         public static IReadOnlyList<decimal?> CreateRandomNullableDecimalList(int count,
            Func<decimal, decimal?>? valueTransformer, Random? random = null)
         {
-            valueTransformer ??= d => NumberParityFunction.ReturnNullIfRandomInt32IsOdd(d);
+            valueTransformer ??= d => NumberParityFunction.ReturnNullableIfRandomInt32IsOdd(d);
 
             return CreateList(
                 count: count,
@@ -762,7 +949,7 @@ namespace Acolyte.Tests.Creators
         {
             return CreateRandomNullableDecimalList(
                 count: count,
-                valueTransformer: d => NumberParityFunction.ReturnNullIfRandomInt32IsOdd(d),
+                valueTransformer: d => NumberParityFunction.ReturnNullableIfRandomInt32IsOdd(d),
                 random: random
             );
         }
@@ -771,7 +958,7 @@ namespace Acolyte.Tests.Creators
             Func<decimal, decimal?>? valueTransformer, Random? random = null)
         {
             random ??= RandomInstance;
-            valueTransformer ??= d => NumberParityFunction.ReturnNullIfRandomInt32IsOdd(d);
+            valueTransformer ??= d => NumberParityFunction.ReturnNullableIfRandomInt32IsOdd(d);
 
             int count = GetRandomCountNumber(random);
             return CreateRandomNullableDecimalList(
@@ -788,7 +975,157 @@ namespace Acolyte.Tests.Creators
             int count = GetRandomCountNumber(random);
             return CreateRandomNullableDecimalList(
                 count: count,
-                valueTransformer: d => NumberParityFunction.ReturnNullIfRandomInt32IsOdd(d),
+                valueTransformer: d => NumberParityFunction.ReturnNullableIfRandomInt32IsOdd(d),
+                random: random
+            );
+        }
+
+        #endregion
+
+        #region Create Dummy Struct List
+
+        public static IReadOnlyList<DummyStruct> CreateRandomDummyStructList(int count,
+            Random? random = null)
+        {
+            return CreateList(
+                count: count,
+                valueFactory: (i, rand) => CreateRandomDummyStruct(rand),
+                random: random
+            );
+        }
+
+        public static IReadOnlyList<DummyStruct> CreateRandomDummyStructList(Random? random = null)
+        {
+            random ??= RandomInstance;
+
+            int count = GetRandomCountNumber(random);
+            return CreateList(
+                count: count,
+                valueFactory: (i, rand) => CreateRandomDummyStruct(rand),
+                random: random
+            );
+        }
+
+        public static IReadOnlyList<DummyStruct?> CreateRandomNullableDummyStructList(int count,
+            Func<DummyStruct, DummyStruct?>? valueTransformer, Random? random = null)
+        {
+            valueTransformer ??= i => NumberParityFunction.ReturnNullableIfRandomInt32IsOdd(i);
+
+            return CreateList(
+                count: count,
+                valueFactory: (i, rand) => valueTransformer(CreateRandomDummyStruct(rand)),
+                random: random
+            );
+        }
+
+        public static IReadOnlyList<DummyStruct?> CreateRandomNullableDummyStructList(int count,
+            Random? random = null)
+        {
+            return CreateRandomNullableDummyStructList(
+                count: count,
+                valueTransformer: i => NumberParityFunction.ReturnNullableIfRandomInt32IsOdd(i),
+                random: random
+            );
+        }
+
+        public static IReadOnlyList<DummyStruct?> CreateRandomNullableDummyStructList(
+            Func<DummyStruct, DummyStruct?>? valueTransformer, Random? random = null)
+        {
+            random ??= RandomInstance;
+            valueTransformer ??= i => NumberParityFunction.ReturnNullableIfRandomInt32IsOdd(i);
+
+            int count = GetRandomCountNumber(random);
+            return CreateRandomNullableDummyStructList(
+                count: count,
+                valueTransformer: valueTransformer,
+                random: random
+            );
+        }
+
+        public static IReadOnlyList<DummyStruct?> CreateRandomNullableDummyStructList(
+            Random? random = null)
+        {
+            random ??= RandomInstance;
+
+            int count = GetRandomCountNumber(random);
+            return CreateRandomNullableDummyStructList(
+                count: count,
+                valueTransformer: i => NumberParityFunction.ReturnNullableIfRandomInt32IsOdd(i),
+                random: random
+            );
+        }
+
+        #endregion
+
+        #region Create Dummy Class List
+
+        public static IReadOnlyList<DummyClass> CreateRandomDummyClassList(int count,
+          Random? random = null)
+        {
+            return CreateList(
+                count: count,
+                valueFactory: (i, rand) => CreateRandomDummyClass(rand),
+                random: random
+            );
+        }
+
+        public static IReadOnlyList<DummyClass> CreateRandomDummyClassList(Random? random = null)
+        {
+            random ??= RandomInstance;
+
+            int count = GetRandomCountNumber(random);
+            return CreateList(
+                count: count,
+                valueFactory: (i, rand) => CreateRandomDummyClass(rand),
+                random: random
+            );
+        }
+
+        public static IReadOnlyList<DummyClass?> CreateRandomNullableDummyClassList(int count,
+            Func<DummyClass, DummyClass?>? valueTransformer, Random? random = null)
+        {
+            valueTransformer ??= i => NumberParityFunction.ReturnNullValueIfRandomInt32IsOdd(i);
+
+            return CreateList(
+                count: count,
+                valueFactory: (i, rand) => valueTransformer(CreateRandomDummyClass(rand)),
+                random: random
+            );
+        }
+
+        public static IReadOnlyList<DummyClass?> CreateRandomNullableDummyClassList(int count,
+            Random? random = null)
+        {
+            return CreateRandomNullableDummyClassList(
+                count: count,
+                valueTransformer: i => NumberParityFunction.ReturnNullValueIfRandomInt32IsOdd(i),
+                random: random
+            );
+        }
+
+        public static IReadOnlyList<DummyClass?> CreateRandomNullableDummyClassList(
+            Func<DummyClass, DummyClass?>? valueTransformer, Random? random = null)
+        {
+            random ??= RandomInstance;
+            valueTransformer ??= i => NumberParityFunction.ReturnNullValueIfRandomInt32IsOdd(i);
+
+            int count = GetRandomCountNumber(random);
+            return CreateRandomNullableDummyClassList(
+                count: count,
+                valueTransformer: valueTransformer,
+                random: random
+            );
+        }
+
+        public static IReadOnlyList<DummyClass?> CreateRandomNullableDummyClassList(
+            Random? random = null)
+        {
+            random ??= RandomInstance;
+
+            int count = GetRandomCountNumber(random);
+            return CreateRandomNullableDummyClassList(
+                count: count,
+                valueTransformer: i => NumberParityFunction.ReturnNullValueIfRandomInt32IsOdd(i),
                 random: random
             );
         }

@@ -1,4 +1,4 @@
-module Acolyte.FSharp.Tests.Program
+﻿module Acolyte.FSharp.Tests.Program
 
 [<EntryPoint>]
-let main _ = 0
+let private main _ = 0

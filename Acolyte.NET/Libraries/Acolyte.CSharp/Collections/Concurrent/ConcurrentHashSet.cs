@@ -117,7 +117,8 @@ namespace Acolyte.Collections.Concurrent
         {
             lock (_lock)
             {
-                return _set.ToReadOnlyList();
+                // TODO: simplify before 3.0 release.
+                return Linq.EnumerableExtensions.ToReadOnlyList(_set);
             }
         }
 
@@ -125,7 +126,8 @@ namespace Acolyte.Collections.Concurrent
         {
             lock (_lock)
             {
-                return _set.ToReadOnlyCollection();
+                // TODO: simplify before 3.0 release.
+                return Linq.EnumerableExtensions.ToReadOnlyCollection(_set);
             }
         }
 
@@ -196,7 +198,8 @@ namespace Acolyte.Collections.Concurrent
         {
             lock (_lock)
             {
-            }   return _set.Overlaps(other);
+                return _set.Overlaps(other);
+            }
         }
 
         public bool SetEquals(IEnumerable<T> other)

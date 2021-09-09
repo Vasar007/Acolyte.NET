@@ -46,11 +46,7 @@ namespace Acolyte.Common
         /// <inheritdoc />
         public override bool Equals(object? obj)
         {
-            if (obj is null) return false;
-
-            if (obj is not Result<TOk, TError> other) return false;
-
-            return Equals(other);
+            return obj is Result<TOk, TError> other && Equals(other);
         }
 
         /// <inheritdoc />
@@ -96,22 +92,23 @@ namespace Acolyte.Common
         /// <param name="left">Left hand side object to compare.</param>
         /// <param name="right">Right hand side object to compare.</param>
         /// <returns>
-        /// <see langword="true" /> if values are memberwise equals,
-        /// <see langword="false" /> otherwise
-        /// .</returns>
+        /// <see langword="true" /> if values are memberwise equals; otherwise,
+        /// <see langword="false" />.
+        /// </returns>
         public static bool operator ==(Result<TOk, TError> left, Result<TOk, TError> right)
         {
             return left.Equals(right);
         }
 
         /// <summary>
-        /// Determines whether two specified instances of <see cref="Option{T}" /> are not equal.
+        /// Determines whether two specified instances of <see cref="Result{TValue, TError}" /> are
+        /// not equal.
         /// </summary>
         /// <param name="left">Left hand side object to compare.</param>
         /// <param name="right">Right hand side object to compare.</param>
         /// <returns>
-        /// <see langword="true" /> if values are not memberwise equals, <see langword="false" />
-        /// otherwise.
+        /// <see langword="true" /> if values are not memberwise equals; otherwise,
+        /// <see langword="false" />.
         /// </returns>
         public static bool operator !=(Result<TOk, TError> left, Result<TOk, TError> right)
         {
@@ -222,4 +219,4 @@ namespace Acolyte.Common
             return new DelayedError<TError>(error);
         }
     }
- }
+}

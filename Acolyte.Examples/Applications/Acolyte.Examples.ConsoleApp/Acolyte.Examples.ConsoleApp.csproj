@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Platforms>$(ExamplePlatforms)</Platforms>
+    <Configurations>$(ExampleConfigurations)</Configurations>
+    <TargetFramework>$(ExampleTargetFrameworks)</TargetFramework>
+    <OutputType>Exe</OutputType>
+    <LangVersion>$(CSharpLangVersion)</LangVersion>
+    <Nullable>enable</Nullable>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <RootNamespace>Acolyte.Examples.ConsoleApp</RootNamespace>
+    <IncludeSymbols>false</IncludeSymbols>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Authors>Vasily Vasilyev</Authors>
+    <Product>Acolyte.Examples</Product>
+    <Description>Examples for Acolyte.NET library.</Description>
+    <Summary>Examples for Acolyte.NET library.</Summary>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <RepositoryUrl>https://github.com/Vasar007/Acolyte.NET.git</RepositoryUrl>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <PackageProjectUrl>https://github.com/Vasar007/Acolyte.NET</PackageProjectUrl>
+    <RepositoryType>git</RepositoryType>
+    <Copyright>© 2020 Vasily Vasilyev (vasar007@yandex.ru)</Copyright>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Acolyte.NET" Version="$(AcolyteNETPackageVersion)" />
+  </ItemGroup>
+
+</Project>

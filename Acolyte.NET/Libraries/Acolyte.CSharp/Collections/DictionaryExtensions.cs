@@ -103,7 +103,7 @@ namespace Acolyte.Collections
         #endregion
 
         #region Get Or Create
-        
+
         public static TValue GetOrCreate<TKey, TValue>(
             this IDictionary<TKey, TValue> dictionary,
             [DisallowNull] TKey key,

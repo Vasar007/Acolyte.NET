@@ -52,7 +52,7 @@ namespace Acolyte.Data.Randomness
             ulong ulongRand;
             do
             {
-               var buf = new byte[8];
+                var buf = new byte[8];
                 random.NextBytes(buf);
                 ulongRand = (ulong) BitConverter.ToInt64(buf, 0);
             }
