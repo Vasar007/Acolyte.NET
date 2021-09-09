@@ -88,7 +88,7 @@ deploy:
   # Deploy to GitHub Releases.
   - provider: GitHub
     auth_token:
-      secure: ex3ZUcCal1DZuXKOFoKSmiAF/NWXttFMYOQEETqrGvIanWZdyP1sesEoOmy3Rvw6
+      secure: SRovcwbup+wbPOXvFNL68i764XKufUP6FooF+mRrShiTDLLJZaVkO14y2J0RpSFu
     tag: 'v$(packageVersion)'
     release: 'Acolyte.NET v$(packageVersion)'
     description: 'TODO: write a description.'
