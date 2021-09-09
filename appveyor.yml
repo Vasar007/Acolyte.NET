@@ -1,5 +1,5 @@
 environment:
-  packageVersion: 2.1.0
+  packageVersion: 2.2.0
   acolytePackageZip: 'Acolyte.NET.$(packageVersion).zip'
   dotnetFormatVersion: 5.0.211103
 
