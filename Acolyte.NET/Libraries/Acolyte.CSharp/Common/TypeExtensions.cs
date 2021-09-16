@@ -32,7 +32,7 @@ namespace Acolyte.Common
             potentialDescendant.ThrowIfNull(nameof(potentialDescendant));
 
             return potentialDescendant.IsSubclassOf(potentialBase) ||
-                   potentialDescendant.Equals(potentialBase);
+                   potentialDescendant == potentialBase;
         }
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace Acolyte.Common
 
             return type.IsGenericType &&
                    typeToCompare.IsGenericType &&
-                   type.GetGenericTypeDefinition().Equals(typeToCompare.GetGenericTypeDefinition());
+                   type.GetGenericTypeDefinition() == typeToCompare.GetGenericTypeDefinition();
         }
 
         /// <summary>
