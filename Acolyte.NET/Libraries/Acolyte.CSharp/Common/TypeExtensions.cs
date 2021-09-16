@@ -74,7 +74,7 @@ namespace Acolyte.Common
         {
             type.ThrowIfNull(nameof(type));
 
-            IEnumerable<Type> tupleTypes = TypesForReflection.GetTupleGenericDefenitions();
+            IEnumerable<Type> tupleTypes = TypesForReflection.GetTupleGenericDefinitions();
 
             return IsOneOfGenericTypeDefinitions(type, tupleTypes);
         }
@@ -95,7 +95,7 @@ namespace Acolyte.Common
         {
             type.ThrowIfNull(nameof(type));
 
-            IEnumerable<Type> tupleTypes = TypesForReflection.GetValueTupleGenericDefenitions();
+            IEnumerable<Type> tupleTypes = TypesForReflection.GetValueTupleGenericDefinitions();
 
             return IsOneOfGenericTypeDefinitions(type, tupleTypes);
         }
