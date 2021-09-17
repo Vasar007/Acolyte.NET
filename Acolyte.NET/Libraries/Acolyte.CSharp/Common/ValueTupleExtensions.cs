@@ -6,8 +6,6 @@ namespace Acolyte.Common
 {
     public static class ValueTupleExtensions
     {
-        // TODO: add extension methods for value tuple of arbitrary length.
-
         public static IEnumerable<T> ToEnumerable<T>(this ValueTuple<T> tuple)
         {
             yield return tuple.Item1;

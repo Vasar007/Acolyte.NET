@@ -7,7 +7,22 @@ namespace Acolyte.Common
 {
     public static class TupleExtensions
     {
-        // TODO: add extension methods for tuple of arbitrary length.
+
+#if NETSTANDARD2_1
+
+        public static IEnumerable<object?> GetTupleValues(
+            this System.Runtime.CompilerServices.ITuple tuple)
+        {
+            tuple.ThrowIfNull(nameof(tuple));
+
+            int index = 0;
+            while (index < tuple.Length)
+            {
+                yield return tuple[index++];
+            }
+        }
+
+#endif
 
         public static IEnumerable<T> ToEnumerable<T>(this Tuple<T> tuple)
         {

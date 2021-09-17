@@ -40,7 +40,7 @@ namespace Acolyte.Tests.Cases.Parameterized
                 {
                     string message =
                         $"Failed to flatten values because type " +
-                        $"'{dataType.FullName}' is not value tuple.";
+                        $"[{dataType.FullName}] is not value tuple.";
                     throw new InvalidOperationException(message);
                 }
 
