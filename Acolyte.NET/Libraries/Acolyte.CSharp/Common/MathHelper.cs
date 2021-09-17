@@ -1,99 +1,79 @@
 ﻿using System;
-using System.Linq;
 
 namespace Acolyte.Common
 {
-    /// <summary>
-    /// Provides a set of useful mathematic methods.
-    /// </summary>
+    /// <inheritdoc cref="Numeric.MathHelper" />
+    [Obsolete("Use \"Acolyte.Numeric.MathHelper\" instead. This class will be remove in next major version.", error: false)]
     public static class MathHelper
     {
+        /// <inheritdoc cref="Numeric.MathHelper.Percent(int, int)" />
+        [Obsolete("Use \"Acolyte.Numeric.DecimalExtensions.Percent\" instead. This method will be remove in next major version.", error: false)]
         public static int Percent(int current, int total)
         {
-            return total > 0
-                ? (int) (current * 100.0 / total)
-                : 0;
+            return Numeric.MathHelper.Percent(current, total);
         }
 
+        /// <inheritdoc cref="Numeric.MathHelper.Percent(long, long)" />
+        [Obsolete("Use \"Acolyte.Numeric.DecimalExtensions.Percent\" instead. This method will be remove in next major version.", error: false)]
         public static long Percent(long current, long total)
         {
-            return total > 0
-                ? (long) (current * 100.0 / total)
-                : 0;
+            return Numeric.MathHelper.Percent(current, total);
         }
 
+        /// <inheritdoc cref="Numeric.MathHelper.Percent(float, float)" />
+        [Obsolete("Use \"Acolyte.Numeric.DecimalExtensions.Percent\" instead. This method will be remove in next major version.", error: false)]
         public static float Percent(float current, float total)
         {
-            return total > 0
-                ? (current * 100.0f / total)
-                : 0;
+            return Numeric.MathHelper.Percent(current, total);
         }
 
+        /// <inheritdoc cref="Numeric.MathHelper.Percent(double, double)" />
+        [Obsolete("Use \"Acolyte.Numeric.DecimalExtensions.Percent\" instead. This method will be remove in next major version.", error: false)]
         public static double Percent(double current, double total)
         {
-            return total > 0
-                ? (current * 100.0 / total)
-                : 0;
+            return Numeric.MathHelper.Percent(current, total);
         }
 
+        /// <inheritdoc cref="Numeric.MathHelper.Percent(decimal, decimal)" />
+        [Obsolete("Use \"Acolyte.Numeric.DecimalExtensions.Percent\" instead. This method will be remove in next major version.", error: false)]
         public static decimal Percent(decimal current, decimal total)
         {
-            return total > 0
-                ? (current * 100.0M / total)
-                : 0;
+            return Numeric.MathHelper.Percent(current, total);
         }
 
+        /// <inheritdoc cref="Numeric.MathHelper.IsNumeric" />
+        [Obsolete("Use \"Acolyte.Numeric.DecimalExtensions.IsNumeric\" instead. This method will be remove in next major version.", error: false)]
         public static bool IsNumeric(string str)
         {
-            // Null check for "str" parameter is provided by "Enumerable.All" method.
-            return str.All(ch => char.IsNumber(ch));
+            return Numeric.MathHelper.IsNumeric(str);
         }
 
+        /// <inheritdoc cref="Numeric.MathHelper.LinearInterpolation" />
+        [Obsolete("Use \"Acolyte.Numeric.DecimalExtensions.LinearInterpolation\" instead. This method will be remove in next major version.", error: false)]
         public static double LinearInterpolation(double a, double b, double t)
         {
-            return a + t * (b - a);
+            return Numeric.MathHelper.LinearInterpolation(a, b, t);
         }
 
+        /// <inheritdoc cref="Numeric.MathHelper.NumberOfDigits" />
+        [Obsolete("Use \"Acolyte.Numeric.DecimalExtensions.NumberOfDigits\" instead. This method will be remove in next major version.", error: false)]
         public static int NumberOfDigits(int value)
         {
-            // TODO: calculate number of digits for negative numbers.
-            if (value < 0)
-            {
-                throw new NotImplementedException(
-                    "Cannot calculate number of digits for negative value '{value.ToString()}'."
-                );
-            }
-
-            if (value == 0) return 0;
-
-            double logOfMax = Math.Log10(value);
-            int numberOfDigits = Convert.ToInt32(Math.Ceiling(logOfMax));
-            return numberOfDigits;
+            return Numeric.MathHelper.NumberOfDigits(value);
         }
 
+        /// <inheritdoc cref="Numeric.MathHelper.ToDecimalSafe" />
+        [Obsolete("Use \"Acolyte.Numeric.DecimalExtensions.ToDecimalSafe\" instead. This method will be remove in next major version.", error: false)]
         public static decimal ToDecimalSafe(double number)
         {
-            if (double.IsNaN(number))
-                return 0.0M;
-
-            if (number < (double) decimal.MinValue)
-                return decimal.MinValue;
-
-            if (number > (double) decimal.MaxValue)
-                return decimal.MaxValue;
-
-            return (decimal) number;
+            return Numeric.MathHelper.ToDecimalSafe(number);
         }
 
+        /// <inheritdoc cref="Numeric.MathHelper.NormalizePricing" />
+        [Obsolete("Use \"Acolyte.Numeric.DecimalExtensions.NormalizePricing\" instead. This method will be remove in next major version.", error: false)]
         public static decimal NormalizePricing(decimal price)
         {
-            if (price == 0.0m)
-                return price;
-
-            if (0.0m < price && price < 0.01m)
-                return 0.01m;
-
-            return price;
+            return Numeric.MathHelper.NormalizePricing(price);
         }
     }
 }
