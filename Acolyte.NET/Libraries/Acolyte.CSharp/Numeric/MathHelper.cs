@@ -95,5 +95,14 @@ namespace Acolyte.Numeric
 
             return price;
         }
+
+        public static bool IsPowerOf2(sbyte value) => value != 0 && ((value - 1) & value) == 0;
+        public static bool IsPowerOf2(short value) => value != 0 && ((value - 1) & value) == 0;
+        public static bool IsPowerOf2(int value) => value != 0 && ((value - 1) & value) == 0;
+        public static bool IsPowerOf2(long value) => value != 0 && ((value - 1) & value) == 0;
+        public static bool IsPowerOf2(byte value) => value != 0 && ((value - 1) & value) == 0;
+        public static bool IsPowerOf2(ushort value) => value != 0 && ((value - 1) & value) == 0;
+        public static bool IsPowerOf2(uint value) => value != 0 && ((value - 1) & value) == 0;
+        public static bool IsPowerOf2(ulong value) => value != 0 && ((value - 1) & value) == 0;
     }
 }
