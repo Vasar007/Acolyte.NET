@@ -5,45 +5,38 @@ namespace Acolyte.Reflection
 {
     public static class TypesForReflection
     {
+        private static readonly HashSet<Type> TupleGenericDefinitionsHashSet = new()
+        {
+            typeof(Tuple<>),
+            typeof(Tuple<,>),
+            typeof(Tuple<,,>),
+            typeof(Tuple<,,,>),
+            typeof(Tuple<,,,,>),
+            typeof(Tuple<,,,,,>),
+            typeof(Tuple<,,,,,,>),
+            typeof(Tuple<,,,,,,,>),
+        };
+
         public static IEnumerable<Type> GetTupleGenericDefinitions()
         {
-            return GetTupleGenericDefinitionsHashSet();
+            return TupleGenericDefinitionsHashSet;
         }
 
-        internal static HashSet<Type> GetTupleGenericDefinitionsHashSet()
+        private static readonly HashSet<Type> ValueTupleGenericDefinitionsHashSet = new()
         {
-            return new HashSet<Type>
-            {
-                typeof(Tuple<>),
-                typeof(Tuple<,>),
-                typeof(Tuple<,,>),
-                typeof(Tuple<,,,>),
-                typeof(Tuple<,,,,>),
-                typeof(Tuple<,,,,,>),
-                typeof(Tuple<,,,,,,>),
-                typeof(Tuple<,,,,,,,>),
-            };
-        }
+            typeof(ValueTuple<>),
+            typeof(ValueTuple<,>),
+            typeof(ValueTuple<,,>),
+            typeof(ValueTuple<,,,>),
+            typeof(ValueTuple<,,,,>),
+            typeof(ValueTuple<,,,,,>),
+            typeof(ValueTuple<,,,,,,>),
+            typeof(ValueTuple<,,,,,,,>),
+        };
 
         public static IEnumerable<Type> GetValueTupleGenericDefinitions()
         {
-            return GetValueTupleGenericDefinitionsHashSet();
-        }
-
-
-        internal static HashSet<Type> GetValueTupleGenericDefinitionsHashSet()
-        {
-            return new HashSet<Type>
-            {
-                typeof(ValueTuple<>),
-                typeof(ValueTuple<,>),
-                typeof(ValueTuple<,,>),
-                typeof(ValueTuple<,,,>),
-                typeof(ValueTuple<,,,,>),
-                typeof(ValueTuple<,,,,,>),
-                typeof(ValueTuple<,,,,,,>),
-                typeof(ValueTuple<,,,,,,,>),
-            };
+            return ValueTupleGenericDefinitionsHashSet;
         }
 
         #region Obsolete
@@ -56,11 +49,11 @@ namespace Acolyte.Reflection
         }
 
 
-        /// <inheritdoc cref="GetTupleGenericDefinitionsHashSet" />
-        [Obsolete("Use \"Acolyte.Reflection.TypesForReflection.GetTupleGenericDefinitionsHashSet\" instead. This method will be removed in next major version.", error: false)]
+        /// <inheritdoc cref="GetTupleGenericDefenitions" />
+        [Obsolete("Use \"Acolyte.Reflection.TypesForReflection.GetTupleGenericDefenitions\" instead. This method will be removed in next major version.", error: false)]
         internal static HashSet<Type> GetTupleGenericDefenitionsHashSet()
         {
-            return GetTupleGenericDefinitionsHashSet();
+            return new HashSet<Type>(GetTupleGenericDefenitions());
         }
 
         /// <inheritdoc cref="GetValueTupleGenericDefinitions" />
@@ -70,11 +63,11 @@ namespace Acolyte.Reflection
             return GetValueTupleGenericDefinitions();
         }
 
-        /// <inheritdoc cref="GetValueTupleGenericDefinitionsHashSet" />
+        /// <inheritdoc cref="GetValueTupleGenericDefenitions" />
         [Obsolete("Use \"Acolyte.Reflection.TypesForReflection.GetValueTupleGenericDefinitionsHashSet\" instead. This method will be removed in next major version.", error: false)]
         internal static HashSet<Type> GetValueTupleGenericDefenitionsHashSet()
         {
-            return GetValueTupleGenericDefinitionsHashSet();
+            return new HashSet<Type>(GetValueTupleGenericDefenitions());
         }
 
         #endregion
