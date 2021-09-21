@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using Acolyte.Assertions;
 using Acolyte.Reflection;
 
@@ -11,6 +12,58 @@ namespace Acolyte.Common
     /// </summary>
     public static class TypeExtensions
     {
+        /// <summary>
+        /// Searches for the specified method whose parameters match the specified argument types and modifiers, using the predefined binding constraints.
+        /// Tries to get method by name and check that it is exists.
+        /// </summary>
+        /// <param name="type">Type to extract method from.</param>
+        /// <param name="methodName">The string containing the name of the method to get.</param>
+        /// <param name="arguments">
+        /// An array of <see cref="Type" /> objects representing the number, order, and type of the parameters for the method to get.   -or-
+        /// An empty array of <see cref="Type" /> objects (as provided by the <see cref="Type.EmptyTypes" /> field) to get a method that takes no parameters.
+        /// </param>
+        /// <returns>Method metadata if it was found.</returns>
+        /// <exception cref="ArgumentException">
+        /// If method with <paramref name="methodName" /> cannot be found.
+        /// </exception>
+        public static MethodInfo RequireStaticMethod(this Type type, string methodName, params Type[] arguments)
+        {
+            const BindingFlags bindingFlags = BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic;
+            MethodInfo? method = type.GetMethod(methodName, bindingFlags, binder: null, arguments, modifiers: null);
+            if (method is null)
+            {
+                throw new ArgumentException($"Cannot find the required static method: {type.FullName}.{methodName}");
+            }
+
+            return method;
+        }
+
+        /// <summary>
+        /// Searches for the specified property whose parameters match the specified argument types and modifiers, using the predefined binding constraints.
+        /// </summary>
+        /// <param name="type">Type to extract property from.</param>
+        /// <param name="propertyName">The string containing the name of the property to get.</param>
+        /// <param name="returnType">The return type of the property.</param>
+        /// <param name="types">
+        /// An array of <see cref="Type" /> objects representing the number, order, and type of the parameters for the indexed property to get.   -or-
+        /// An empty array of <see cref="Type" /> objects (as provided by the <see cref="Type.EmptyTypes" /> field) to get a property that is not indexed.
+        /// </param>
+        /// <returns>Property metadata if it was found.</returns>
+        /// <exception cref="ArgumentException">
+        /// If property with <paramref name="propertyName" /> cannot be found.
+        /// </exception>
+        public static PropertyInfo RequireStaticProperty(this Type type, string propertyName, Type returnType, params Type[] types)
+        {
+            const BindingFlags bindingFlags = BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic;
+            PropertyInfo? property = type.GetProperty(propertyName, bindingFlags, binder: null, returnType, types, modifiers: null);
+            if (property is null)
+            {
+                throw new ArgumentException($"Cannot find the required static property: {type.FullName}.{propertyName}");
+            }
+
+            return property;
+        }
+
         /// <summary>
         /// Checks that <paramref name="potentialDescendant" /> is same type as
         /// <paramref name="potentialBase" /> or is the it's subclass.
