@@ -10,7 +10,7 @@ namespace Acolyte.Common
 
 #if NETSTANDARD2_1
 
-        public static IEnumerable<object?> GetTupleValues(
+        public static IEnumerable<object?> EnumerateTupleValues(
             this System.Runtime.CompilerServices.ITuple tuple)
         {
             tuple.ThrowIfNull(nameof(tuple));
