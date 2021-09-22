@@ -45,7 +45,7 @@ namespace Acolyte.Tests.Cases.Parameterized
                 }
 
                 return values
-                    .Select(value => value!.GetPublicInstanceFields().ToArray())
+                    .Select(value => value!.EnumeratePublicInstanceFields().ToArray())
                     .GetEnumerator();
             }
 
