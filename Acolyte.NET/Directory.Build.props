@@ -15,7 +15,7 @@
     <CoverletCollectorPackageVersion>3.1.0</CoverletCollectorPackageVersion>
     <IndexRangePackageVersion>1.0.0</IndexRangePackageVersion>
     <IsExternalInitPackageVersion>1.0.1</IsExternalInitPackageVersion>
-    <FSharpCorePackageVersion>5.0.2</FSharpCorePackageVersion>
+    <FSharpCorePackageVersion>6.0.0</FSharpCorePackageVersion>
     <FsUnitxUnitPackageVersion>4.0.6</FsUnitxUnitPackageVersion>
     <MicrosoftBclHashCodePackageVersion>1.1.1</MicrosoftBclHashCodePackageVersion>
     <MicrosoftNETTestSdkPackageVersion>16.11.0</MicrosoftNETTestSdkPackageVersion>
