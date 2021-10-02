@@ -3,10 +3,14 @@
 #if ASYNC_ENUMERABLE
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using Acolyte.Common;
 using Acolyte.Functions;
 using Acolyte.Linq;
+using Acolyte.Threading;
 using Xunit;
 
 namespace Acolyte.Tests.Linq
@@ -74,6 +78,107 @@ namespace Acolyte.Tests.Linq
         #endregion
 
         #region Empty Values
+
+        [Fact]
+        public async Task SafeParallelForEachAwaitAsync_ForEmptyCollection_ShouldDoNothing()
+        {
+            // Arrange.
+            IAsyncEnumerable<int> emptyCollection = AsyncEnumerable.Empty<int>();
+            IReadOnlyList<int> expectedCollection = await emptyCollection.ToArrayAsync();
+
+            var actual = new ConcurrentBag<int>();
+            Func<int, Task> action = item =>
+            {
+                actual.Add(item);
+                return Task.CompletedTask;
+            };
+
+            // Act.
+            Result<NoneResult, Exception>[] result =
+                await emptyCollection.SafeParallelForEachAwaitAsync(action);
+
+            IReadOnlyList<Exception> exceptions = result.UnwrapResultsOrExceptions();
+
+            // Assert.
+            Assert.Empty(exceptions);
+            Assert.Equal(expectedCollection, actual.ToArray());
+        }
+
+        [Fact]
+        public async Task SafeParallelForEachAwaitAsync_WithIndex_ForEmptyCollection_ShouldDoNothing()
+        {
+            // Arrange.
+            IAsyncEnumerable<int> emptyCollection = AsyncEnumerable.Empty<int>();
+            Func<int, int, int> select = (item, index) => item * (index + 1);
+            IReadOnlyList<int> expectedCollection = await emptyCollection
+                .Select(select)
+                .ToArrayAsync();
+
+            var actual = new ConcurrentBag<int>();
+            Func<int, int, Task> action = (item, index) =>
+            {
+                actual.Add(select(item, index));
+                return Task.CompletedTask;
+            };
+
+            // Act.
+            Result<NoneResult, Exception>[] result =
+                await emptyCollection.SafeParallelForEachAwaitAsync(action);
+
+            IReadOnlyList<Exception> exceptions = result.UnwrapResultsOrExceptions();
+
+            // Assert.
+            Assert.Empty(exceptions);
+            Assert.Equal(expectedCollection, actual.ToArray());
+        }
+
+        [Fact]
+        public async Task SafeParallelForEachAwaitAsync_WithSelector_ForEmptyCollection_ShouldDoNothing()
+        {
+            // Arrange.
+            IAsyncEnumerable<int> emptyCollection = AsyncEnumerable.Empty<int>();
+            Func<int, bool> transform = item => NumberParityFunction.IsEven(item);
+            IReadOnlyList<bool> expectedCollection = await emptyCollection
+                .Select(transform)
+                .ToListAsync();
+            Func<int, Task<bool>> action = item => Task.FromResult(transform(item));
+
+            // Act.
+            Result<bool, Exception>[] actualCollection =
+                await emptyCollection.SafeParallelForEachAwaitAsync(action);
+
+            (IReadOnlyList<bool> taskResults, IReadOnlyList<Exception> taskExceptions) =
+                actualCollection.UnwrapResultsOrExceptions();
+
+            // Assert.
+            Assert.Empty(taskExceptions);
+            Assert.Equal(expectedCollection, taskResults);
+        }
+
+        [Fact]
+        public async Task SafeParallelForEachAwaitAsync_WithSelectorAndIndex_ForEmptyCollection_ShouldDoNothing()
+        {
+            // Arrange.
+            IAsyncEnumerable<int> emptyCollection = AsyncEnumerable.Empty<int>();
+            Func<int, int, bool> transform =
+                (item, index) => NumberParityFunction.IsEven(item + index);
+            IReadOnlyList<bool> expectedCollection = await emptyCollection
+                .Select(transform)
+                .ToListAsync();
+            Func<int, int, Task<bool>> action =
+                (item, index) => Task.FromResult(transform(item, index));
+
+            // Act.
+            Result<bool, Exception>[] actualCollection =
+                await emptyCollection.SafeParallelForEachAwaitAsync(action);
+
+            (IReadOnlyList<bool> taskResults, IReadOnlyList<Exception> taskExceptions) =
+                actualCollection.UnwrapResultsOrExceptions();
+
+            // Assert.
+            Assert.Empty(taskExceptions);
+            Assert.Equal(expectedCollection, taskResults);
+        }
 
         #endregion
 
