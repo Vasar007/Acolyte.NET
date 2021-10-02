@@ -668,7 +668,7 @@ namespace Acolyte.Collections
             return Linq.EnumerableExtensions.SafeParallelForEachAwaitAsync(source, function);
         }
 
-#if NETSTANDARD2_1
+#if ASYNC_ENUMERABLE
 
         /// <inheritdoc cref="Linq.AsyncEnumerableExtensions.ParallelForEachAwaitAsync{TSource}(IAsyncEnumerable{TSource}, Func{TSource, Task}, CancellationToken)" />
         [Obsolete("Use \"Linq.EnumerableExtensions.ParallelForEachAwaitAsync\" instead. This method will be removed in next major version.", error: false)]

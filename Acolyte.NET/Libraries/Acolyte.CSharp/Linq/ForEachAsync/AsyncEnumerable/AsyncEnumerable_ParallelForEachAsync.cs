@@ -1,4 +1,4 @@
-﻿#if NETSTANDARD2_1
+﻿#if ASYNC_ENUMERABLE
 
 using System;
 using System.Collections.Generic;

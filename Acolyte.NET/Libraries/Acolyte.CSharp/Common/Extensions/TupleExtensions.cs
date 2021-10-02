@@ -8,7 +8,7 @@ namespace Acolyte.Common
     public static class TupleExtensions
     {
 
-#if NETSTANDARD2_1
+#if ITUIPLE
 
         public static IEnumerable<object?> EnumerateTupleValues(
             this System.Runtime.CompilerServices.ITuple tuple)
