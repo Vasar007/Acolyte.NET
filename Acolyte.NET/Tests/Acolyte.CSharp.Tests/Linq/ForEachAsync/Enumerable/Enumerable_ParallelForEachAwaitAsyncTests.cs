@@ -160,6 +160,89 @@ namespace Acolyte.Tests.Linq
 
         #region Predefined Values
 
+        [Fact]
+        public async Task ParallelForEachAwaitAsync_ForPredefinedCollection_ShouldDoNothing()
+        {
+            // Arrange.
+            IReadOnlyList<int> predefinedCollection = new[] { 1, 2, 3 };
+            IReadOnlyList<int> expectedCollection = predefinedCollection.ToArray();
+
+            var actual = new ConcurrentBag<int>();
+            Func<int, Task> action = item =>
+            {
+                actual.Add(item);
+                return Task.CompletedTask;
+            };
+
+            // Act.
+            await predefinedCollection.ParallelForEachAwaitAsync(action);
+
+            // Assert.
+            Assert.NotStrictEqual(expectedCollection, actual.ToArray());
+        }
+
+        [Fact]
+        public async Task ParallelForEachAwaitAsync_WithIndex_ForPredefinedCollection_ShouldDoNothing()
+        {
+            // Arrange.
+            IReadOnlyList<int> predefinedCollection = new[] { 1, 2, 3 };
+            Func<int, int, int> select = (item, index) => item + index;
+            IReadOnlyList<int> expectedCollection = predefinedCollection.ToArray();
+
+            var actual = new ConcurrentBag<int>();
+            Func<int, int, Task> action = (item, index) =>
+            {
+                actual.Add(select(item, index));
+                return Task.CompletedTask;
+            };
+
+            // Act.
+            await predefinedCollection.ParallelForEachAwaitAsync(action);
+
+            // Assert.
+            Assert.NotStrictEqual(expectedCollection, actual.ToArray());
+        }
+
+        [Fact]
+        public async Task ParallelForEachAwaitAsync_WithSelector_ForPredefinedCollection_ShouldDoNothing()
+        {
+            // Arrange.
+            IReadOnlyList<int> predefinedCollection = new[] { 1, 2, 3 };
+            Func<int, bool> transform = item => NumberParityFunction.IsEven(item);
+            IReadOnlyList<bool> expectedCollection = predefinedCollection
+                .Select(transform)
+                .ToList();
+            Func<int, Task<bool>> action = item => Task.FromResult(transform(item));
+
+            // Act.
+            IReadOnlyList<bool> actualCollection =
+                await predefinedCollection.ParallelForEachAwaitAsync(action);
+
+            // Assert.
+            Assert.NotStrictEqual(expectedCollection, actualCollection);
+        }
+
+        [Fact]
+        public async Task ParallelForEachAwaitAsync_WithSelectorAndIndex_ForPredefinedCollection_ShouldDoNothing()
+        {
+            // Arrange.
+            IReadOnlyList<int> predefinedCollection = new[] { 1, 2, 3 };
+            Func<int, int, bool> transform =
+                (item, index) => NumberParityFunction.IsEven(item + index);
+            IReadOnlyList<bool> expectedCollection = predefinedCollection
+                .Select(transform)
+                .ToList();
+            Func<int, int, Task<bool>> action =
+                (item, index) => Task.FromResult(transform(item, index));
+
+            // Act.
+            IReadOnlyList<bool> actualCollection =
+                await predefinedCollection.ParallelForEachAwaitAsync(action);
+
+            // Assert.
+            Assert.NotStrictEqual(expectedCollection, actualCollection);
+        }
+
         #endregion
 
         #region Some Values

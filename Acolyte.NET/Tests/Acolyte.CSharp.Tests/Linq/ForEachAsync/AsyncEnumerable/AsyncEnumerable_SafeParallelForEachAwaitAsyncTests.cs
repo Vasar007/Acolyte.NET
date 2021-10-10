@@ -184,6 +184,107 @@ namespace Acolyte.Tests.Linq
 
         #region Predefined Values
 
+        [Fact]
+        public async Task SafeParallelForEachAwaitAsync_ForPredefinedCollection_ShouldDoNothing()
+        {
+            // Arrange.
+            IAsyncEnumerable<int> predefinedCollection = AsyncEnumerable.Range(1, 3);
+            IReadOnlyList<int> expectedCollection = await predefinedCollection.ToArrayAsync();
+
+            var actual = new ConcurrentBag<int>();
+            Func<int, Task> action = item =>
+            {
+                actual.Add(item);
+                return Task.CompletedTask;
+            };
+
+            // Act.
+            Result<NoneResult, Exception>[] result =
+                await predefinedCollection.SafeParallelForEachAwaitAsync(action);
+
+            IReadOnlyList<Exception> exceptions = result.UnwrapResultsOrExceptions();
+
+            // Assert.
+            Assert.Empty(exceptions);
+            Assert.NotStrictEqual(expectedCollection, actual.ToArray());
+        }
+
+        [Fact]
+        public async Task SafeParallelForEachAwaitAsync_WithIndex_ForPredefinedCollection_ShouldDoNothing()
+        {
+            // Arrange.
+            IAsyncEnumerable<int> predefinedCollection = AsyncEnumerable.Range(1, 3);
+            Func<int, int, int> select = (item, index) => item * (index + 1);
+            IReadOnlyList<int> expectedCollection = await predefinedCollection
+                .Select(select)
+                .ToArrayAsync();
+
+            var actual = new ConcurrentBag<int>();
+            Func<int, int, Task> action = (item, index) =>
+            {
+                actual.Add(select(item, index));
+                return Task.CompletedTask;
+            };
+
+            // Act.
+            Result<NoneResult, Exception>[] result =
+                await predefinedCollection.SafeParallelForEachAwaitAsync(action);
+
+            IReadOnlyList<Exception> exceptions = result.UnwrapResultsOrExceptions();
+
+            // Assert.
+            Assert.Empty(exceptions);
+            Assert.NotStrictEqual(expectedCollection, actual.ToArray());
+        }
+
+        [Fact]
+        public async Task SafeParallelForEachAwaitAsync_WithSelector_ForPredefinedCollection_ShouldDoNothing()
+        {
+            // Arrange.
+            IAsyncEnumerable<int> predefinedCollection = AsyncEnumerable.Range(1, 3);
+            Func<int, bool> transform = item => NumberParityFunction.IsEven(item);
+            IReadOnlyList<bool> expectedCollection = await predefinedCollection
+                .Select(transform)
+                .ToListAsync();
+            Func<int, Task<bool>> action = item => Task.FromResult(transform(item));
+
+            // Act.
+            Result<bool, Exception>[] actualCollection =
+                await predefinedCollection.SafeParallelForEachAwaitAsync(action);
+
+            (IReadOnlyList<bool> taskResults, IReadOnlyList<Exception> taskExceptions) =
+                actualCollection.UnwrapResultsOrExceptions();
+
+            // Assert.
+            Assert.Empty(taskExceptions);
+            Assert.NotStrictEqual(expectedCollection, taskResults);
+        }
+
+        [Fact]
+        public async Task SafeParallelForEachAwaitAsync_WithSelectorAndIndex_ForPredefinedCollection_ShouldDoNothing()
+        {
+            // Arrange.
+            IAsyncEnumerable<int> predefinedCollection = AsyncEnumerable.Range(1, 3);
+            Func<int, int, bool> transform =
+                (item, index) => NumberParityFunction.IsEven(item + index);
+            IReadOnlyList<bool> expectedCollection = await predefinedCollection
+                .Select(transform)
+                .ToListAsync();
+            Func<int, int, Task<bool>> action =
+                (item, index) => Task.FromResult(transform(item, index));
+
+            // Act.
+            Result<bool, Exception>[] actualCollection =
+                await predefinedCollection.SafeParallelForEachAwaitAsync(action);
+
+            (IReadOnlyList<bool> taskResults, IReadOnlyList<Exception> taskExceptions) =
+                actualCollection.UnwrapResultsOrExceptions();
+
+            // Assert.
+            Assert.Empty(taskExceptions);
+            Assert.NotStrictEqual(expectedCollection, taskResults);
+        }
+
         #endregion
 
         #region Some Values
