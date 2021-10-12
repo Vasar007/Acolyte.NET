@@ -25,7 +25,6 @@
     <AssemblyVersion>2.2.0.0</AssemblyVersion>
     <FileVersion>2.2.0.0</FileVersion>
     <Version>2.2.0</Version>
-    <PackageVersion>2.2.0</PackageVersion>
     <PackageId>Acolyte.NET</PackageId>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageProjectUrl>https://github.com/Vasar007/Acolyte.NET</PackageProjectUrl>
