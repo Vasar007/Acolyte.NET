@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using Acolyte.Assertions;
+using Acolyte.Common;
 
 namespace Acolyte.Collections
 {
     public sealed class DisposableScope : IDisposable
     {
-        private readonly Stack<IDisposable> _disposables;
+        private readonly Stack<IDisposable?> _disposables;
 
 
         public DisposableScope()
@@ -16,19 +19,41 @@ namespace Acolyte.Collections
         public DisposableScope(
             int capacity)
         {
-            _disposables = new Stack<IDisposable>(capacity);
+            _disposables = new Stack<IDisposable?>(capacity);
         }
 
-        public T Capture<T>(T disposable)
+        [return: NotNullIfNotNull("disposable")]
+        public T? Capture<T>(T? disposable)
             where T : IDisposable
         {
             _disposables.Push(disposable);
             return disposable;
         }
 
+        public TCollection CaptureRange<TItem, TCollection>(TCollection disposableObjects)
+            where TCollection : IEnumerable<TItem?>
+            where TItem : IDisposable
+        {
+            disposableObjects.ThrowIfNullValue(nameof(disposableObjects));
+
+            foreach (TItem? disposable in disposableObjects)
+            {
+                Capture(disposable);
+            }
+
+            return disposableObjects;
+        }
+
         public void ReleaseAll()
         {
             _disposables.Clear();
+        }
+
+        [return: NotNullIfNotNull("valueToReturn")]
+        public T? ReleaseAllAndReturn<T>(T? valueToReturn)
+        {
+            ReleaseAll();
+            return valueToReturn;
         }
 
         #region IDisposable Implementation
@@ -37,21 +62,11 @@ namespace Acolyte.Collections
 
         public void Dispose()
         {
-            if (_disposed)
-            {
-                return;
-            }
+            if (_disposed) return;
 
-            foreach (IDisposable disposable in _disposables)
+            foreach (IDisposable? disposable in _disposables)
             {
-                try
-                {
-                    disposable.Dispose();
-                }
-                catch (Exception)
-                {
-                    // Ignore.
-                }
+                disposable.DisposeSafe();
             }
 
             _disposed = true;

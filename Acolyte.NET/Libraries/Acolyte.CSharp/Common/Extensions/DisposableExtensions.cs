@@ -12,10 +12,7 @@ namespace Acolyte.Common
         {
             try
             {
-                if (self is not null)
-                {
-                    self.Dispose();
-                }
+                self?.Dispose();
             }
             catch (ObjectDisposedException ex)
             {

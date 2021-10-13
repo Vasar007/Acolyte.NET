@@ -96,6 +96,29 @@ namespace Acolyte.Assertions
             return obj;
         }
 
+        /// <summary>
+        /// Provides <see langword="null" /> check for every object value.
+        /// </summary>
+        /// <typeparam name="T">Type which extension method will apply to.</typeparam>
+        /// <param name="obj">Instance to check.</param>
+        /// <param name="paramName">
+        /// Name of the parameter for error message. Use operator <see langword="nameof" /> to get
+        /// proper parameter name.
+        /// </param>
+        /// <returns>Returns passed value.</returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="obj" /> is <see langword="null" />. -or-
+        /// <paramref name="paramName" /> is <see langword="null" />.
+        /// </exception>
+        /// <remarks>
+        /// This method calls <see cref="ThrowIfNullValue{T}(T, string, bool)" /> with parameter
+        /// assertOnPureValueTypes = <see langword="false" />
+        /// </remarks>
+        public static T ThrowIfNullValue<T>(this T? obj, string paramName)
+        {
+            return obj.ThrowIfNullValue(paramName, assertOnPureValueTypes: false);
+        }
+
         #endregion
 
         #region Checks For Strings
