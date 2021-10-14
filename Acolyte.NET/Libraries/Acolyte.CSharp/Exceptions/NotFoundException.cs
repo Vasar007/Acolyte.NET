@@ -61,7 +61,7 @@ namespace Acolyte.Exceptions
         /// Creates the exception with description using provided object name.
         /// </summary>
         /// <param name="objectName">The object name failed to find.</param>
-        /// <returns>Exception with formated message.</returns>
+        /// <returns>Exception with formatted message.</returns>
         public static NotFoundException Create(string objectName)
         {
             return new NotFoundException($"Failed to find '{objectName}'.");
@@ -72,7 +72,7 @@ namespace Acolyte.Exceptions
         /// </summary>
         /// <param name="objectName">The object name failed to find.</param>
         /// <param name="innerException"></param>
-        /// <returns>Exception with formated message and inner cause.</returns>
+        /// <returns>Exception with formatted message and inner cause.</returns>
         public static NotFoundException Create(string objectName, Exception innerException)
         {
             return new NotFoundException($"Failed to find '{objectName}'.", innerException);
