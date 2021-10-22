@@ -18,13 +18,10 @@ namespace Acolyte.Collections.Comparers
             _lambdaHash = lambdaHash.ThrowIfNull(nameof(lambdaHash));
         }
 
-        public static LambdaEqualityComparer<T> Create(
+        public LambdaEqualityComparer(
             Func<T, T, bool> lambdaComparer)
+            : this(lambdaComparer, _ => 0)
         {
-            return new LambdaEqualityComparer<T>(
-                lambdaComparer: lambdaComparer,
-                lambdaHash: _ => 0
-            );
         }
 
         #region Implementation of IEqualityComparer<T>
