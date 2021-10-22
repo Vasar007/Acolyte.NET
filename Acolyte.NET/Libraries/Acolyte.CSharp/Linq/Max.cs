@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Acolyte.Collections;
+using Acolyte.Collections.Comparers;
 
 namespace Acolyte.Linq
 {
