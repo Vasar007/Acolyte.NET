@@ -16,7 +16,7 @@
     <IndexRangePackageVersion>1.0.0</IndexRangePackageVersion>
     <IsExternalInitPackageVersion>1.0.1</IsExternalInitPackageVersion>
     <FSharpCorePackageVersion>6.0.1</FSharpCorePackageVersion>
-    <FsUnitxUnitPackageVersion>4.0.7</FsUnitxUnitPackageVersion>
+    <FsUnitxUnitPackageVersion>4.1.0</FsUnitxUnitPackageVersion>
     <MicrosoftBclHashCodePackageVersion>1.1.1</MicrosoftBclHashCodePackageVersion>
     <MicrosoftNETTestSdkPackageVersion>17.0.0</MicrosoftNETTestSdkPackageVersion>
     <MoqPackageVersion>4.16.1</MoqPackageVersion>
