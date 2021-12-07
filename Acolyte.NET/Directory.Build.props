@@ -22,7 +22,7 @@
     <MoqPackageVersion>4.16.1</MoqPackageVersion>
     <MoreLinqPackageVersion>3.3.2</MoreLinqPackageVersion>
     <NullablePackageVersion>1.3.0</NullablePackageVersion>
-    <SystemLinqAsyncPackageVersion>5.0.0</SystemLinqAsyncPackageVersion>
+    <SystemLinqAsyncPackageVersion>5.1.0</SystemLinqAsyncPackageVersion>
     <UnquotePackageVersion>6.1.0</UnquotePackageVersion>
     <XunitPackageVersion>2.4.1</XunitPackageVersion>
     <XunitRunnerVisualStudioPackageVersion>2.4.3</XunitRunnerVisualStudioPackageVersion>
