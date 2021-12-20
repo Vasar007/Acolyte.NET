@@ -251,8 +251,10 @@ namespace Acolyte.Threading.Tasks
         /// Any <see cref="AggregateException" /> thrown is unwrapped to the first inner exception.
         /// </summary>
         /// <param name="task">The task to wait for.</param>
-        /// <param name="timeout">A TimeSpan that represents the number of milliseconds to wait, or
-        /// -1 milliseconds to wait indefinitely.</param>
+        /// <param name="timeout">
+        /// A TimeSpan that represents the number of milliseconds to wait, or
+        /// -1 milliseconds to wait indefinitely.
+        /// </param>
         public static bool WaitWithUnwrappedExceptions(this Task task, TimeSpan timeout)
         {
             try
@@ -270,7 +272,9 @@ namespace Acolyte.Threading.Tasks
         /// Any <see cref="AggregateException" /> thrown is unwrapped to the first inner exception.
         /// </summary>
         /// <param name="task">The task to wait for.</param>
-        /// <param name="millisecondsTimeout">The number of milliseconds to wait, or -1 to wait indefinitely.</param>
+        /// <param name="millisecondsTimeout">
+        /// The number of milliseconds to wait, or -1 to wait indefinitely.
+        /// </param>
         public static bool WaitWithUnwrappedExceptions(this Task task, int millisecondsTimeout)
         {
             try
@@ -288,10 +292,14 @@ namespace Acolyte.Threading.Tasks
         /// Any <see cref="AggregateException" /> thrown is unwrapped to the first inner exception.
         /// </summary>
         /// <param name="task">The task to wait for.</param>
-        /// <param name="millisecondsTimeout">The number of milliseconds to wait, or
-        /// -1 to wait indefinitely.</param>
-        /// <param name="cancellationToken">A cancellation token to observe while waiting for the task to complete</param>
-        public static bool WaitWithUnwrappedExceptions(this Task task, int millisecondsTimeout, CancellationToken cancellationToken)
+        /// <param name="millisecondsTimeout">
+        /// The number of milliseconds to wait, or -1 to wait indefinitely.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// A cancellation token to observe while waiting for the task to complete.
+        /// </param>
+        public static bool WaitWithUnwrappedExceptions(this Task task, int millisecondsTimeout,
+            CancellationToken cancellationToken)
         {
             try
             {
@@ -308,8 +316,11 @@ namespace Acolyte.Threading.Tasks
         /// Any <see cref="AggregateException" /> thrown is unwrapped to the first inner exception.
         /// </summary>
         /// <param name="task">The task to wait for.</param>
-        /// <param name="cancellationToken">A cancellation token to observe while waiting for the task to complete</param>
-        public static void WaitWithUnwrappedExceptions(this Task task, CancellationToken cancellationToken)
+        /// <param name="cancellationToken">
+        /// A cancellation token to observe while waiting for the task to complete.
+        /// </param>
+        public static void WaitWithUnwrappedExceptions(this Task task,
+            CancellationToken cancellationToken)
         {
             try
             {
