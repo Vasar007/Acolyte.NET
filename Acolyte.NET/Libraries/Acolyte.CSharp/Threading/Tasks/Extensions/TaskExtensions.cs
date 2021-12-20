@@ -101,13 +101,13 @@ namespace Acolyte.Threading.Tasks
             cancellationTokenSource.ThrowIfNull(nameof(cancellationTokenSource));
 
             return task.ContinueWith(
-                task =>
+                p =>
                 {
-                    switch (task.Status)
+                    switch (p.Status)
                     {
                         case TaskStatus.RanToCompletion:
                         {
-                            return task.Result;
+                            return p.Result;
                         }
 
                         case TaskStatus.Faulted:
@@ -115,7 +115,7 @@ namespace Acolyte.Threading.Tasks
                             cancellationTokenSource.Cancel();
 
                             Exception exception =
-                                ExceptionsHelper.UnwrapAggregateExceptionIfSingle(task.Exception);
+                                ExceptionsHelper.UnwrapAggregateExceptionIfSingle(p.Exception);
 
                             throw new TaskFaultedException(
                                 "Request cancellation because a task is in the faulted state.",
