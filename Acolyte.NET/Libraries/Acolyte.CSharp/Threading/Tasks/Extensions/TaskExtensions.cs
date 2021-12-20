@@ -225,6 +225,8 @@ namespace Acolyte.Threading.Tasks
         /// <returns>The result of the completed task.</returns>
         public static T ResultWithUnwrappedExceptions<T>(this Task<T> task)
         {
+            _ = task.ThrowIfNull(nameof(task));
+
             task.WaitWithUnwrappedExceptions();
             return task.Result;
         }
@@ -236,6 +238,8 @@ namespace Acolyte.Threading.Tasks
         /// <param name="task">The task to wait for.</param>
         public static void WaitWithUnwrappedExceptions(this Task task)
         {
+            _ = task.ThrowIfNull(nameof(task));
+
             try
             {
                 task.Wait();
@@ -257,6 +261,8 @@ namespace Acolyte.Threading.Tasks
         /// </param>
         public static bool WaitWithUnwrappedExceptions(this Task task, TimeSpan timeout)
         {
+            _ = task.ThrowIfNull(nameof(task));
+
             try
             {
                 return task.Wait(timeout);
@@ -277,6 +283,8 @@ namespace Acolyte.Threading.Tasks
         /// </param>
         public static bool WaitWithUnwrappedExceptions(this Task task, int millisecondsTimeout)
         {
+            _ = task.ThrowIfNull(nameof(task));
+
             try
             {
                 return task.Wait(millisecondsTimeout);
@@ -301,6 +309,8 @@ namespace Acolyte.Threading.Tasks
         public static bool WaitWithUnwrappedExceptions(this Task task, int millisecondsTimeout,
             CancellationToken cancellationToken)
         {
+            _ = task.ThrowIfNull(nameof(task));
+
             try
             {
                 return task.Wait(millisecondsTimeout, cancellationToken);
@@ -322,6 +332,8 @@ namespace Acolyte.Threading.Tasks
         public static void WaitWithUnwrappedExceptions(this Task task,
             CancellationToken cancellationToken)
         {
+            _ = task.ThrowIfNull(nameof(task));
+
             try
             {
                 task.Wait(cancellationToken);
