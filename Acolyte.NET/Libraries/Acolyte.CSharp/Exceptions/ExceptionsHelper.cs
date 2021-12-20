@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Runtime.ExceptionServices;
 using Acolyte.Assertions;
 
 namespace Acolyte.Exceptions
@@ -14,11 +15,18 @@ namespace Acolyte.Exceptions
         {
             aggregateException.ThrowIfNull(nameof(aggregateException));
 
-            Exception resultException = aggregateException.InnerExceptions.Count == 1
-                ? aggregateException.InnerExceptions.Single()
-                : aggregateException;
+            return aggregateException.InnerExceptions.FirstOrDefault() ?? aggregateException;
+        }
 
-            return resultException;
+        public static Exception UnwrapAndThrow(AggregateException aggregateException)
+        {
+            aggregateException.ThrowIfNull(nameof(aggregateException));
+
+            Exception firstException = UnwrapAggregateExceptionIfSingle(aggregateException);
+            var dispatchInfo = ExceptionDispatchInfo.Capture(firstException);
+            dispatchInfo.Throw();
+
+            return firstException;
         }
     }
 }
