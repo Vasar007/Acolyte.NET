@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Acolyte.Assertions;
 using Acolyte.Common;
 using Acolyte.Linq.Operators;
-using Acolyte.Threading;
+using Acolyte.Threading.Tasks;
 
 namespace Acolyte.Linq
 {

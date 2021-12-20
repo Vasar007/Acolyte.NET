@@ -6,7 +6,7 @@ using Acolyte.Assertions;
 using Acolyte.Common;
 using Acolyte.Exceptions;
 
-namespace Acolyte.Threading
+namespace Acolyte.Threading.Tasks
 {
     /// <summary>
     /// Contains extension methods to work with tasks.

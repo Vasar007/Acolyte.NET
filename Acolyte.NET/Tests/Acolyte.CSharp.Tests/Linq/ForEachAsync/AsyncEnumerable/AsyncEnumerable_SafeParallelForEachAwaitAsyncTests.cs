@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using Acolyte.Common;
 using Acolyte.Functions;
 using Acolyte.Linq;
-using Acolyte.Threading;
+using Acolyte.Threading.Tasks;
 using Xunit;
 
 namespace Acolyte.Tests.Linq
