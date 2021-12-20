@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Acolyte.Assertions;
 using Acolyte.Common;
 
-namespace Acolyte.Threading
+namespace Acolyte.Threading.Tasks
 {
     /// <summary>
     /// Contains common logic to work with tasks.
