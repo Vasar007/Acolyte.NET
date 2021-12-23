@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Acolyte.Assertions;
 
 namespace Acolyte.Linq
 {
@@ -17,6 +18,8 @@ namespace Acolyte.Linq
         /// </returns>
         public static IEnumerable<T> Collapse<T>(this IEnumerable<IEnumerable<T>> sequences)
         {
+            sequences.ThrowIfNull(nameof(sequences));
+
             int position = 0;
             foreach (IEnumerable<T> sequence in sequences)
             {
