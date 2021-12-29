@@ -142,27 +142,48 @@ namespace Acolyte.Common
 
     public static class Reasonable
     {
+        public const string OkReason = "Ok";
+
         public static Reasonable<T> Ok<T>(T? value)
         {
-            return Wrap(value, "Ok");
+            return Wrap(value, OkReason);
+        }
+
+        public static Reasonable<T> Wrap<T>(T? value, string reason)
+        {
+            return new Reasonable<T>(value, reason);
+        }
+
+        public static Reasonable<T> Wrap<T>(T? value, object reason)
+        {
+            return new Reasonable<T>(value, reason);
         }
 
         public static Reasonable<T> Wrap<T>(T? value, string reasonFormat, params object[] args)
         {
+            return Wrap(value, FormatReason(reasonFormat, args));
+        }
+
+        public static Reasonable<T?> WrapAsNullable<T>(T value, string reasonFormat,
+            params object[] args)
+           where T : struct
+        {
+            return Wrap<T?>(value, FormatReason(reasonFormat, args));
+        }
+
+        private static object FormatReason(string reasonFormat, params object[] args)
+        {
             if (args.IsNullOrEmpty())
             {
-                return new Reasonable<T>(value, reasonFormat);
+                return reasonFormat;
             }
-            else
-            {
-                var reason = new FormatString(reasonFormat, args);
-                return new Reasonable<T>(value, reason);
-            }
+
+            return new FormatString(reasonFormat, args);
         }
 
         public static Reasonable<T1> Wrap<T1, T2>(T1 value, Reasonable<T2> reasonable)
         {
-            return new Reasonable<T1>(value, reasonable.Reason);
+            return Wrap(value, reasonable.Reason);
         }
 
         public static Reasonable<bool> And(this Reasonable<bool> self, Reasonable<bool> other)
@@ -193,9 +214,19 @@ namespace Acolyte.Common
                 : other();
         }
 
-        public static Reasonable<bool> Not(Reasonable<bool> reasonable)
+        public static Reasonable<bool> Not(this Reasonable<bool> reasonable)
         {
-            return new Reasonable<bool>(!reasonable.Value, reasonable.Reason);
+            return Wrap(!reasonable.Value, reasonable.Reason);
+        }
+
+        public static Reasonable<T> Because<T>(this T? value, string reason)
+        {
+            return Wrap(value, reason);
+        }
+
+        public static Reasonable<T> Because<T>(this T? value, object reason)
+        {
+            return Wrap(value, reason);
         }
     }
 }
