@@ -9,17 +9,17 @@ namespace Acolyte.Tests.Cases.Parameterized
 {
     public abstract class BaseParameterizedTestCase<TData> : IEnumerable<object?[]>
     {
-        private readonly bool _flattenValueTuple;
+        public bool FlattenValueTuple { get; }
 
 
         protected BaseParameterizedTestCase(
             bool flattenValueTuple)
         {
-            _flattenValueTuple = flattenValueTuple;
+            FlattenValueTuple = flattenValueTuple;
         }
 
         protected BaseParameterizedTestCase()
-            : this(flattenValueTuple: false)
+            : this(TestConstants.DefaultFlattenValueTuple)
         {
         }
 
@@ -32,7 +32,7 @@ namespace Acolyte.Tests.Cases.Parameterized
             IEnumerable<TData> values = GetValues();
 
             // Special case: unwrap ValueTuple and create object array with arguments.
-            if (_flattenValueTuple)
+            if (FlattenValueTuple)
             {
                 Type dataType = typeof(TData);
                 bool shouldFlattenValueTuple = dataType.IsValueTupleType();
