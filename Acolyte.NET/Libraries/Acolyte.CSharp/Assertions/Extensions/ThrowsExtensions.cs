@@ -198,17 +198,17 @@ namespace Acolyte.Assertions
         #region Checks For Collections
 
         /// <summary>
-        /// Checks if enumerable is <see langword="null" /> or empty.
+        /// Checks if collection is <see langword="null" /> or empty.
         /// </summary>
-        /// <typeparam name="T">Internal type of <see cref="IEnumerable{T}" />.</typeparam>
-        /// <param name="collection">Enumerable to check.</param>
+        /// <typeparam name="T">Internal type of <paramref name="collection" />.</typeparam>
+        /// <param name="collection">Collection to check.</param>
         /// <param name="paramName">
         /// Name of the parameter for error message. Use operator <see langword="nameof" /> to get
         /// proper parameter name.
         /// </param>
         /// <returns>
-        /// Returns <see langword="true" /> in case the enumerable is <see langword="null" /> or
-        /// empty; otherwise, <see langword="false" />.
+        /// Returns <paramref name="collection" /> without any changes if collection is not
+        /// <see langword="null" /> or empty; otherwise throws exception.
         /// </returns>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="collection" /> is <see langword="null" />. -or-
@@ -217,7 +217,6 @@ namespace Acolyte.Assertions
         /// <exception cref="ArgumentException">
         /// <paramref name="collection" /> contains no elements.
         /// </exception>
-        [return: NotNull]
         public static IEnumerable<T> ThrowIfNullOrEmpty<T>(this IEnumerable<T>? collection,
             string paramName)
         {
@@ -233,6 +232,42 @@ namespace Acolyte.Assertions
             }
 
             return collection;
+        }
+
+
+        /// <inheritdoc cref="ThrowIfNullOrEmpty{T}(IEnumerable{T}?, string)" />
+        public static IReadOnlyCollection<T> ThrowIfNullOrEmpty<T>(
+            this IReadOnlyCollection<T>? collection, string paramName)
+        {
+            var cast = collection?.AsEnumerable();
+            cast.ThrowIfNull(paramName);
+
+            if (collection!.Count == 0)
+            {
+                throw new ArgumentException($"{paramName} contains no elements.", paramName);
+            }
+
+            return collection!;
+        }
+
+        /// <inheritdoc cref="ThrowIfNullOrEmpty{T}(IEnumerable{T}?, string)" />
+        public static IReadOnlyList<T> ThrowIfNullOrEmpty<T>(
+           this IReadOnlyList<T>? collection, string paramName)
+        {
+            var cast = (IReadOnlyCollection<T>?) collection;
+            cast.ThrowIfNullOrEmpty(paramName);
+
+            return collection!;
+        }
+
+        /// <inheritdoc cref="ThrowIfNullOrEmpty{T}(IEnumerable{T}?, string)" />
+        public static IReadOnlyDictionary<TKey, TValue> ThrowIfNullOrEmpty<TKey, TValue>(
+           this IReadOnlyDictionary<TKey, TValue>? collection, string paramName)
+        {
+            var cast = (IReadOnlyCollection<KeyValuePair<TKey, TValue>>?) collection;
+            cast.ThrowIfNullOrEmpty(paramName);
+
+            return collection!;
         }
 
         #endregion
