@@ -11,20 +11,17 @@ namespace Acolyte.Tests.Cases.Parameterized
 
         public ParameterizedGroupedTestCase(
             BaseParameterizedTestCase<TData> testCase1,
-            BaseParameterizedTestCase<TData> testCase2,
             params BaseParameterizedTestCase<TData>[] testCases)
             : base(
                 testCase1.ThrowIfNull(nameof(testCase1)).FlattenValueTuple &&
-                testCase2.ThrowIfNull(nameof(testCase2)).FlattenValueTuple &&
                 testCases.ThrowIfNull(nameof(testCases)).All(testCase => testCase.FlattenValueTuple)
             )
         {
-            // Need to check again second and third argument because condition
-            // above can be executed partially because of && operator.
-            testCase2.ThrowIfNull(nameof(testCase2));
+            // Need to check again because condition above
+            // can be executed partially because of && operator.
             testCases.ThrowIfNull(nameof(testCases));
 
-            _testCases = ConstructTestCases(testCase1, testCase2, testCases);
+            _testCases = ConstructTestCases(testCase1, testCases);
             ValidateTestCases(FlattenValueTuple, _testCases);
         }
 
@@ -34,9 +31,6 @@ namespace Acolyte.Tests.Cases.Parameterized
                 testCases.ThrowIfNull(nameof(testCases)).All(testCase => testCase.FlattenValueTuple)
             )
         {
-            if (testCases.Count < 2)
-                throw new ArgumentException("Too few test cases to group.", nameof(testCases));
-
             _testCases = testCases;
             ValidateTestCases(FlattenValueTuple, _testCases);
         }
@@ -48,13 +42,11 @@ namespace Acolyte.Tests.Cases.Parameterized
 
         private static IReadOnlyList<BaseParameterizedTestCase<TData>> ConstructTestCases(
             BaseParameterizedTestCase<TData> testCase1,
-            BaseParameterizedTestCase<TData> testCase2,
             IReadOnlyCollection<BaseParameterizedTestCase<TData>> testCases)
         {
-            var list = new List<BaseParameterizedTestCase<TData>>(testCases.Count + 2)
+            var list = new List<BaseParameterizedTestCase<TData>>(testCases.Count + 1)
             {
-                testCase1,
-                testCase2
+                testCase1
             };
 
             list.AddRange(testCases);
@@ -78,10 +70,9 @@ namespace Acolyte.Tests.Cases.Parameterized
     {
         public static ParameterizedGroupedTestCase<TData> Create<TData>(
             BaseParameterizedTestCase<TData> testCase1,
-            BaseParameterizedTestCase<TData> testCase2,
             params BaseParameterizedTestCase<TData>[] testCases)
         {
-            return new ParameterizedGroupedTestCase<TData>(testCase1, testCase2, testCases);
+            return new ParameterizedGroupedTestCase<TData>(testCase1, testCases);
         }
 
         public static ParameterizedGroupedTestCase<TData> Create<TData>(

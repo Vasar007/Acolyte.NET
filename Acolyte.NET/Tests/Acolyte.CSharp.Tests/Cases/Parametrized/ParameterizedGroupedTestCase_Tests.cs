@@ -29,26 +29,14 @@ namespace Acolyte.Tests.Cases.Parametrized
         }
 
         [Fact]
-        public void ParameterizedGroupedTestCase_ForNullTestCase2_ShouldFail()
-        {
-            // Arrange.
-            var testCase1 = new Parametrized_SimpleStringTestCase();
-
-            // Act & Assert.
-            Assert.Throws<ArgumentNullException>(() => _ = new ParameterizedGroupedTestCase<string>(testCase1, testCase2: null!));
-            Assert.Throws<ArgumentNullException>(() => _ = ParameterizedGroupedTestCase.Create(testCase1, testCase2: null!));
-        }
-
-        [Fact]
         public void ParameterizedGroupedTestCase_ForNullTestCases_ShouldFail()
         {
             // Arrange.
             var testCase1 = new Parametrized_SimpleStringTestCase();
-            var testCase2 = new Parametrized_ComplexStringTestCase();
 
             // Act & Assert.
-            Assert.Throws<ArgumentNullException>(() => _ = new ParameterizedGroupedTestCase<string>(testCase1, testCase2, testCases: null!));
-            Assert.Throws<ArgumentNullException>(() => _ = ParameterizedGroupedTestCase.Create(testCase1, testCase2, testCases: null!));
+            Assert.Throws<ArgumentNullException>(() => _ = new ParameterizedGroupedTestCase<string>(testCase1, testCases: null!));
+            Assert.Throws<ArgumentNullException>(() => _ = ParameterizedGroupedTestCase.Create(testCase1, testCases: null!));
             Assert.Throws<ArgumentNullException>(() => _ = new ParameterizedGroupedTestCase<string>(testCases: null!));
             Assert.Throws<ArgumentNullException>(() => _ = ParameterizedGroupedTestCase.Create<string>(testCases: null!));
         }
@@ -58,27 +46,14 @@ namespace Acolyte.Tests.Cases.Parametrized
         #region Empty Values
 
         [Fact]
-        public void ParameterizedGroupedTestCase_ForEmptyTestCases_ShouldFail()
+        public void ParameterizedGroupedTestCase_ForEmptyTestCases_ShouldBeOk()
         {
             // Arrange.
-            var testCases = Array.Empty<BaseParameterizedTestCase<string>>();
-
-            // Act & Assert.
-            Assert.Throws<ArgumentException>(() => _ = new ParameterizedGroupedTestCase<string>(testCases));
-            Assert.Throws<ArgumentException>(() => _ = ParameterizedGroupedTestCase.Create(testCases));
-        }
-
-        [Fact]
-        public void ParameterizedGroupedTestCase_ForEmptyTestCasesWithTestCase1And2_ShouldIgnoreEmptyArray()
-        {
-            // Arrange.
-            var testCase1 = new Parametrized_SimpleStringTestCase();
-            var testCase2 = new Parametrized_ComplexStringTestCase();
             var testCases = Array.Empty<BaseParameterizedTestCase<string>>();
 
             // Act.
-            var groupedTestCase1 = new ParameterizedGroupedTestCase<string>(testCase1, testCase2, testCases);
-            var groupedTestCase2 = ParameterizedGroupedTestCase.Create(testCase1, testCase2, testCases);
+            var groupedTestCase1 = new ParameterizedGroupedTestCase<string>(testCases);
+            var groupedTestCase2 = ParameterizedGroupedTestCase.Create(testCases);
 
             // Assert.
             groupedTestCase1.Should().NotBeNull();
@@ -86,15 +61,35 @@ namespace Acolyte.Tests.Cases.Parametrized
         }
 
         [Fact]
-        public void ParameterizedGroupedTestCase_ForSingleTestCaseAsCollection_ShouldFail()
+        public void ParameterizedGroupedTestCase_ForEmptyTestCasesWithTestCase1And2_ShouldBeOk()
+        {
+            // Arrange.
+            var testCase1 = new Parametrized_SimpleStringTestCase();
+            var testCases = Array.Empty<BaseParameterizedTestCase<string>>();
+
+            // Act.
+            var groupedTestCase1 = new ParameterizedGroupedTestCase<string>(testCase1, testCases);
+            var groupedTestCase2 = ParameterizedGroupedTestCase.Create(testCase1, testCases);
+
+            // Assert.
+            groupedTestCase1.Should().NotBeNull();
+            groupedTestCase2.Should().NotBeNull();
+        }
+
+        [Fact]
+        public void ParameterizedGroupedTestCase_ForSingleTestCaseAsCollection_ShouldBeOk()
         {
             // Arrange.
             var testCase1 = new Parametrized_SimpleStringTestCase();
             var testCases = new[] { testCase1 };
 
-            // Act & Assert.
-            Assert.Throws<ArgumentException>(() => _ = new ParameterizedGroupedTestCase<string>(testCases));
-            Assert.Throws<ArgumentException>(() => _ = ParameterizedGroupedTestCase.Create(testCases));
+            // Act.
+            var groupedTestCase1 = new ParameterizedGroupedTestCase<string>(testCases);
+            var groupedTestCase2 = ParameterizedGroupedTestCase.Create(testCases);
+
+            // Assert.
+            groupedTestCase1.Should().NotBeNull();
+            groupedTestCase2.Should().NotBeNull();
         }
 
         #endregion
@@ -164,34 +159,29 @@ namespace Acolyte.Tests.Cases.Parametrized
 
         private static IEnumerable<TData> GetExpectedValues<TData>(
             BaseParameterizedTestCase<TData> testCase1,
-            BaseParameterizedTestCase<TData> testCase2,
             params BaseParameterizedTestCase<TData>[] testCases)
         {
             return testCase1.GetValues()
-                .Concat(testCase2.GetValues())
                 .Concat(testCases.SelectMany(testCase => testCase.GetValues()));
         }
 
         private static IEnumerable<object?[]> GetExpectedObjects<TData>(
             BaseParameterizedTestCase<TData> testCase1,
-            BaseParameterizedTestCase<TData> testCase2,
             params BaseParameterizedTestCase<TData>[] testCases)
         {
             return testCase1.ToArray()
-                .Concat(testCase2.ToArray())
                 .Concat(testCases.SelectMany(testCase => testCase.ToArray()));
         }
 
         private static void ParameterizedGroupedTestCase_ActAndAssert<TData>(
             BaseParameterizedTestCase<TData> testCase1,
-            BaseParameterizedTestCase<TData> testCase2,
             params BaseParameterizedTestCase<TData>[] testCases)
         {
             // Arrange.
-            var groupedTestCase = ParameterizedGroupedTestCase.Create(testCase1, testCase2, testCases);
+            var groupedTestCase = ParameterizedGroupedTestCase.Create(testCase1, testCases);
 
-            var expectedValues = GetExpectedValues(testCase1, testCase2, testCases);
-            var expectedObjects = GetExpectedObjects(testCase1, testCase2, testCases);
+            var expectedValues = GetExpectedValues(testCase1, testCases);
+            var expectedObjects = GetExpectedObjects(testCase1, testCases);
 
             // Act.
             var actualValues = groupedTestCase.GetValues();
