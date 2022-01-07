@@ -15,7 +15,7 @@
     <CoverletCollectorPackageVersion>3.1.0</CoverletCollectorPackageVersion>
     <IndexRangePackageVersion>1.0.0</IndexRangePackageVersion>
     <IsExternalInitPackageVersion>1.0.2</IsExternalInitPackageVersion>
-    <FluentAssertionsPackageVersion>5.10.3</FluentAssertionsPackageVersion>
+    <FluentAssertionsPackageVersion>6.3.0</FluentAssertionsPackageVersion>
     <FSharpCorePackageVersion>6.0.1</FSharpCorePackageVersion>
     <FsUnitxUnitPackageVersion>4.1.0</FsUnitxUnitPackageVersion>
     <MicrosoftBclHashCodePackageVersion>1.1.1</MicrosoftBclHashCodePackageVersion>
