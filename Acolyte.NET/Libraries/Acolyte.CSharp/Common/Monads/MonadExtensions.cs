@@ -72,18 +72,29 @@ namespace Acolyte.Common.Monads
 
         #region ApplyIf
 
-        public static TSource ApplyIf<TSource>(this TSource source, Func<TSource, bool> condition,
-            Func<TSource, TSource> func)
+        public static TSource ApplyIf<TSource>(this TSource source, Func<TSource, bool> condition, Func<TSource, TSource> func)
         {
             return ApplyIf(source, condition, func, defaultValue: source);
         }
 
-        public static TResult ApplyIf<TSource, TResult>(this TSource source,
-            Func<TSource, bool> condition, Func<TSource, TResult> func, TResult defaultValue)
+        public static TResult ApplyIf<TSource, TResult>(this TSource source, Func<TSource, bool> condition, Func<TSource, TResult> func, TResult defaultValue)
         {
             func.ThrowIfNull(nameof(func));
 
-            return condition(source)
+            return ApplyIf(source, condition(source), func, defaultValue);
+        }
+
+        public static TResult ApplyIf<TSource, TResult>(this TSource source, bool condition, Func<TSource, TResult> func)
+            where TSource : TResult
+        {
+            return ApplyIf(source, condition, func, defaultValue: source);
+        }
+
+        public static TResult ApplyIf<TSource, TResult>(this TSource source, bool condition, Func<TSource, TResult> func, TResult defaultValue)
+        {
+            func.ThrowIfNull(nameof(func));
+
+            return condition
                 ? func(source)
                 : defaultValue;
         }
