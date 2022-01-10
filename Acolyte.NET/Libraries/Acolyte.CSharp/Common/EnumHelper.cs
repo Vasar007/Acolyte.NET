@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using Acolyte.Linq;
+using Acolyte.Numeric;
 
 namespace Acolyte.Common
 {
@@ -68,7 +71,7 @@ namespace Acolyte.Common
 
         #region To Object
 
-        public static TEnum ToObject<TEnum>(int value)
+        public static TEnum ToObject<TEnum>(object value)
             where TEnum : struct, Enum
         {
             return (TEnum) Enum.ToObject(typeof(TEnum), value);
@@ -83,7 +86,7 @@ namespace Acolyte.Common
         {
             return Enum.GetValues(typeof(TEnum))
                 .Cast<TEnum>()
-                .ToList();
+                .ToReadOnlyList();
         }
 
         public static TEnum GetMaxValue<TEnum>()
@@ -96,6 +99,84 @@ namespace Acolyte.Common
             where TEnum : struct, Enum
         {
             return GetValues<TEnum>().Min();
+        }
+
+        public static TEnum GetAllFlagValues<TEnum>()
+            where TEnum : struct, Enum
+        {
+            var uniqueFlags = GetUniqueFlagValues<TEnum>();
+            if (uniqueFlags.IsNullOrEmpty())
+                throw new InvalidOperationException($"Failed to process enum of type [{typeof(TEnum).Name}]: it is enum type without {nameof(FlagsAttribute)}.");
+
+            Type underlyingType = Enum.GetUnderlyingType(typeof(TEnum));
+            TypeCode typeCode = Type.GetTypeCode(underlyingType);
+
+            object allValue;
+            unchecked
+            {
+                allValue = typeCode switch
+                {
+                    TypeCode.SByte => uniqueFlags.Select(e => Convert.ToSByte(e)).Aggregate((seed, flag) => (sbyte) (seed | flag)),
+                    TypeCode.Int16 => uniqueFlags.Select(e => Convert.ToInt16(e)).Aggregate((seed, flag) => (short) (seed | flag)),
+                    TypeCode.Int32 => uniqueFlags.Select(e => Convert.ToInt32(e)).Aggregate((seed, flag) => seed | flag),
+                    TypeCode.Int64 => uniqueFlags.Select(e => Convert.ToInt64(e)).Aggregate((seed, flag) => seed | flag),
+
+                    TypeCode.Byte => uniqueFlags.Select(e => Convert.ToByte(e)).Aggregate((seed, flag) => (byte) (seed | flag)),
+                    TypeCode.UInt16 => uniqueFlags.Select(e => Convert.ToUInt16(e)).Aggregate((seed, flag) => (ushort) (seed | flag)),
+                    TypeCode.UInt32 => uniqueFlags.Select(e => Convert.ToUInt32(e)).Aggregate((seed, flag) => seed | flag),
+                    TypeCode.UInt64 => uniqueFlags.Select(e => Convert.ToUInt64(e)).Aggregate((seed, flag) => seed | flag),
+
+                    _ => throw new NotSupportedException($"Failed to process enum of type [{typeof(TEnum).Name}]. Backing type [{typeCode.ToString()}] is not supported.")
+                };
+            }
+
+            return ToObject<TEnum>(allValue);
+        }
+
+        private static TEnum[] GetUniqueFlagValuesFor<TEnum>(Func<TEnum, bool> filter)
+           where TEnum : struct, Enum
+        {
+            IReadOnlyList<TEnum> notUniqueValues = GetValues<TEnum>();
+
+            return notUniqueValues
+                .Where(filter)
+                .ToArray();
+        }
+
+        public static TEnum[] GetUniqueFlagValues<TEnum>()
+            where TEnum : struct, Enum
+        {
+            Type underlyingType = Enum.GetUnderlyingType(typeof(TEnum));
+            TypeCode typeCode = Type.GetTypeCode(underlyingType);
+
+            return typeCode switch
+            {
+                TypeCode.SByte => GetUniqueFlagValuesFor<TEnum>(value => MathHelper.IsPowerOf2(Convert.ToSByte(value))),
+                TypeCode.Int16 => GetUniqueFlagValuesFor<TEnum>(value => MathHelper.IsPowerOf2(Convert.ToInt16(value))),
+                TypeCode.Int32 => GetUniqueFlagValuesFor<TEnum>(value => MathHelper.IsPowerOf2(Convert.ToInt32(value))),
+                TypeCode.Int64 => GetUniqueFlagValuesFor<TEnum>(value => MathHelper.IsPowerOf2(Convert.ToInt64(value))),
+
+                TypeCode.Byte => GetUniqueFlagValuesFor<TEnum>(value => MathHelper.IsPowerOf2(Convert.ToByte(value))),
+                TypeCode.UInt16 => GetUniqueFlagValuesFor<TEnum>(value => MathHelper.IsPowerOf2(Convert.ToUInt16(value))),
+                TypeCode.UInt32 => GetUniqueFlagValuesFor<TEnum>(value => MathHelper.IsPowerOf2(Convert.ToUInt32(value))),
+                TypeCode.UInt64 => GetUniqueFlagValuesFor<TEnum>(value => MathHelper.IsPowerOf2(Convert.ToUInt64(value))),
+
+                _ => throw new NotSupportedException($"Failed to process enum of type [{typeof(TEnum).Name}]. Backing type [{typeCode.ToString()}] is not supported.")
+            };
+        }
+
+        public static IReadOnlyList<TAttribute> GetEnumValueAttributes<TAttribute>(this Enum value)
+            where TAttribute : Attribute
+        {
+            Type type = value.GetType();
+            IReadOnlyList<MemberInfo> members = type.GetMember(value.ToString());
+            MemberInfo? member = members.FirstOrDefault();
+            if (member is null)
+                throw new InvalidOperationException($"Failed to get enum attributes: no members of type [{type.Name}] found.");
+
+            return member.GetCustomAttributes(typeof(TAttribute), false)
+                .Cast<TAttribute>()
+                .ToReadOnlyList();
         }
 
         #endregion
