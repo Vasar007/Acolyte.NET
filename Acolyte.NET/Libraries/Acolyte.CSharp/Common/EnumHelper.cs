@@ -165,20 +165,6 @@ namespace Acolyte.Common
             };
         }
 
-        public static IReadOnlyList<TAttribute> GetEnumValueAttributes<TAttribute>(this Enum value)
-            where TAttribute : Attribute
-        {
-            Type type = value.GetType();
-            IReadOnlyList<MemberInfo> members = type.GetMember(value.ToString());
-            MemberInfo? member = members.FirstOrDefault();
-            if (member is null)
-                throw new InvalidOperationException($"Failed to get enum attributes: no members of type [{type.Name}] found.");
-
-            return member.GetCustomAttributes(typeof(TAttribute), false)
-                .Cast<TAttribute>()
-                .ToReadOnlyList();
-        }
-
         #endregion
 
         #region Enum Conversions

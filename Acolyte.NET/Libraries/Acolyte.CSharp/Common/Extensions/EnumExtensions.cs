@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
+using Acolyte.Linq;
 
 namespace Acolyte.Common
 {
@@ -13,7 +14,7 @@ namespace Acolyte.Common
     {
         #region Enum Attributes
 
-        public static TAttribute[] GetEnumValueAttributes<TAttribute>(this Enum enumValue)
+        public static IReadOnlyList<TAttribute> GetEnumValueAttributes<TAttribute>(this Enum enumValue)
              where TAttribute : Attribute
         {
             Type type = enumValue.GetType();
@@ -25,7 +26,7 @@ namespace Acolyte.Common
 
             return member.GetCustomAttributes(typeof(TAttribute), inherit: false)
                 .Cast<TAttribute>()
-                .ToArray();
+                .ToReadOnlyList();
         }
 
         public static string GetDescription<T>(this T enumValue)
