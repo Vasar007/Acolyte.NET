@@ -24,8 +24,11 @@ namespace Acolyte.Tests.Cases.Parametrized
             var testCase2 = new Parametrized_ComplexStringTestCase();
 
             // Act & Assert.
-            Assert.Throws<ArgumentNullException>(() => _ = new ParameterizedGroupedTestCase<string>(testCase1: null!, testCase2));
-            Assert.Throws<ArgumentNullException>(() => _ = ParameterizedGroupedTestCase.Create(testCase1: null!, testCase2));
+            Action checkMethod1 = () => _ = new ParameterizedGroupedTestCase<string>(testCase1: null!, testCase2);
+            checkMethod1.Should().Throw<ArgumentNullException>();
+
+            Action checkMethod2 = () => _ = ParameterizedGroupedTestCase.Create(testCase1: null!, testCase2);
+            checkMethod2.Should().Throw<ArgumentNullException>();
         }
 
         [Fact]
@@ -35,10 +38,17 @@ namespace Acolyte.Tests.Cases.Parametrized
             var testCase1 = new Parametrized_SimpleStringTestCase();
 
             // Act & Assert.
-            Assert.Throws<ArgumentNullException>(() => _ = new ParameterizedGroupedTestCase<string>(testCase1, testCases: null!));
-            Assert.Throws<ArgumentNullException>(() => _ = ParameterizedGroupedTestCase.Create(testCase1, testCases: null!));
-            Assert.Throws<ArgumentNullException>(() => _ = new ParameterizedGroupedTestCase<string>(testCases: null!));
-            Assert.Throws<ArgumentNullException>(() => _ = ParameterizedGroupedTestCase.Create<string>(testCases: null!));
+            Action checkMethod1 = () => _ = new ParameterizedGroupedTestCase<string>(testCase1, testCases: null!);
+            checkMethod1.Should().Throw<ArgumentNullException>();
+
+            Action checkMethod2 = () => _ = ParameterizedGroupedTestCase.Create(testCase1, testCases: null!);
+            checkMethod2.Should().Throw<ArgumentNullException>();
+
+            Action checkMethod3 = () => _ = new ParameterizedGroupedTestCase<string>(testCases: null!);
+            checkMethod3.Should().Throw<ArgumentNullException>();
+
+            Action checkMethod4 = () => _ = ParameterizedGroupedTestCase.Create<string>(testCases: null!);
+            checkMethod4.Should().Throw<ArgumentNullException>();
         }
 
         #endregion
@@ -137,8 +147,11 @@ namespace Acolyte.Tests.Cases.Parametrized
             var complexTestCase = new Parametrized_UnflattenSimpleValueTupleTestCase();
 
             // Act & Assert.
-            Assert.Throws<ArgumentException>(() => _ = new ParameterizedGroupedTestCase<(string, bool)>(simpleTestCase, complexTestCase));
-            Assert.Throws<ArgumentException>(() => _ = ParameterizedGroupedTestCase.Create(simpleTestCase, complexTestCase));
+            Action checkMethod1 = () => _ = new ParameterizedGroupedTestCase<(string, bool)>(simpleTestCase, complexTestCase);
+            checkMethod1.Should().Throw<ArgumentException>();
+
+            Action checkMethod2 = () => _ = ParameterizedGroupedTestCase.Create(simpleTestCase, complexTestCase);
+            checkMethod2.Should().Throw<ArgumentException>();
         }
 
         #endregion
