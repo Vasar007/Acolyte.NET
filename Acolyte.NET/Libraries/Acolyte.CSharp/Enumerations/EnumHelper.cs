@@ -4,7 +4,7 @@ using System.Linq;
 using Acolyte.Linq;
 using Acolyte.Numeric;
 
-namespace Acolyte.Common
+namespace Acolyte.Enumerations
 {
     /// <summary>
     /// Contains common logic to work with enumeration values.

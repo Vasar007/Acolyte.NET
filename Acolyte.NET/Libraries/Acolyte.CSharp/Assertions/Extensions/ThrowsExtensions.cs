@@ -4,6 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 using Acolyte.Common;
+using Acolyte.Enumerations;
 using Acolyte.Exceptions;
 
 namespace Acolyte.Assertions
@@ -397,12 +398,7 @@ namespace Acolyte.Assertions
         /// proper parameter name.
         /// </param>
         /// <returns>The original enumeration value.</returns>
-        /// <exception cref="ArgumentNullException">
-        /// <paramref name="paramName" /> is <see langword="null" />.
-        /// </exception>
-        /// <exception cref="ArgumentOutOfRangeException">
-        /// <paramref name="enumValue" /> is not defined for the <typeparamref name="TEnum" /> type.
-        /// </exception>
+        /// <inheritdoc cref="ThrowIfEnumValueIsUndefined{TEnum}(TEnum, string, bool)" />
         public static TEnum ThrowIfEnumValueIsUndefined<TEnum>(this TEnum enumValue,
             string paramName)
             where TEnum : struct, Enum

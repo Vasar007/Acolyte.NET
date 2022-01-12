@@ -5,7 +5,7 @@ using System.Linq;
 using System.Reflection;
 using Acolyte.Linq;
 
-namespace Acolyte.Common
+namespace Acolyte.Enumerations
 {
     /// <summary>
     /// Contains extension methods for enumeration values.
