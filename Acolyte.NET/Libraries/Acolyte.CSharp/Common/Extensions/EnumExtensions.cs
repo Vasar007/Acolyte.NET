@@ -14,7 +14,8 @@ namespace Acolyte.Common
     {
         #region Enum Attributes
 
-        public static IReadOnlyList<TAttribute> GetEnumValueAttributes<TAttribute>(this Enum enumValue)
+        public static IReadOnlyList<TAttribute> GetEnumValueAttributes<TAttribute>(
+            this Enum enumValue)
              where TAttribute : Attribute
         {
             Type type = enumValue.GetType();

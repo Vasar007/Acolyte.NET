@@ -276,5 +276,16 @@ namespace Acolyte.Common
         #endregion
 
         #endregion
+
+        #region Attributes
+
+        public static bool HasFlagsAttribute<TEnum>()
+            where TEnum : struct, Enum
+        {
+            Type enumType = typeof(TEnum);
+            return enumType.IsDefined(typeof(FlagsAttribute), inherit: false);
+        }
+
+        #endregion
     }
 }
