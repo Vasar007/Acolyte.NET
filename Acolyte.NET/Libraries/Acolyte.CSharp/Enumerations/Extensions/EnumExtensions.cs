@@ -12,6 +12,29 @@ namespace Acolyte.Enumerations
     /// </summary>
     public static class EnumExtensions
     {
+        #region Check Enum Values
+
+        public static bool IsDefined<TEnum>(this TEnum enumValue)
+            where TEnum : struct, Enum
+        {
+            return Enum.IsDefined(typeof(TEnum), enumValue);
+        }
+
+        public static bool HasOnlyOneFlag<TEnum>(this TEnum value)
+            where TEnum : struct, Enum
+        {
+            IReadOnlyList<TEnum> flagValues = EnumHelper.GetUniqueFlagValues<TEnum>();
+            return flagValues.Contains(value);
+        }
+
+        public static bool HasAnyFlag<TEnum>(this TEnum value, params TEnum[] flagsToCheck)
+            where TEnum : struct, Enum
+        {
+            return flagsToCheck.Any(flag => value.HasFlag(flag));
+        }
+
+        #endregion
+
         #region Enum Attributes
 
         public static IReadOnlyList<TAttribute> GetEnumValueAttributes<TAttribute>(
@@ -58,13 +81,7 @@ namespace Acolyte.Enumerations
         {
             string enumValueStr = enumValue.ToString();
 
-            if (Enum.TryParse(enumValueStr, ignoreCase, out TEnum result)) return result;
-
-            throw new ArgumentOutOfRangeException(
-                nameof(enumValue),
-                enumValue,
-                $"Cannot convert value '{enumValueStr}' to enum type '{typeof(TEnum).Name}'."
-            );
+            return EnumHelper.ParseDefined<TEnum>(enumValueStr, ignoreCase);
         }
 
         #endregion
@@ -82,10 +99,7 @@ namespace Acolyte.Enumerations
         {
             string enumValueStr = enumValue.ToString();
 
-            if (Enum.TryParse(enumValueStr, ignoreCase, out result)) return true;
-
-            // "result" is equal to default here (because of Enum.TryParse).
-            return false;
+            return EnumHelper.TryParseDefined(enumValueStr, ignoreCase, out result);
         }
 
         #endregion
@@ -108,9 +122,9 @@ namespace Acolyte.Enumerations
             TEnum defaultValue)
             where TEnum : struct, Enum
         {
-            if (Enum.TryParse(enumValue.ToString(), ignoreCase, out TEnum result)) return result;
+            string enumValueStr = enumValue.ToString();
 
-            return defaultValue;
+            return EnumHelper.ParseDefinedOrDefault(enumValueStr, ignoreCase, defaultValue);
         }
 
         #endregion
@@ -135,22 +149,26 @@ namespace Acolyte.Enumerations
             TEnum defaultValue, out TEnum result)
             where TEnum : struct, Enum
         {
-            if (Enum.TryParse(enumValue.ToString(), ignoreCase, out result)) return true;
+            string enumValueStr = enumValue.ToString();
 
-            result = defaultValue;
-            return false;
+            return EnumHelper.TryParseDefinedOrDefault(
+                enumValueStr, ignoreCase, defaultValue, out result
+            );
         }
 
         #endregion
 
         #endregion
 
-        #region Check Enum Values
+        #region Defined Values
 
-        public static bool IsDefined<TEnum>(this TEnum enumValue)
+        public static TEnum GetDefinedValueOrDefault<TEnum>(this TEnum enumValue, TEnum defaultValue)
             where TEnum : struct, Enum
         {
-            return Enum.IsDefined(typeof(TEnum), enumValue);
+            if (enumValue.IsDefined())
+                return enumValue;
+
+            return defaultValue;
         }
 
         #endregion
