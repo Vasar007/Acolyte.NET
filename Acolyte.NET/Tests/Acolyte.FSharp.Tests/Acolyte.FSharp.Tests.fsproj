@@ -12,6 +12,7 @@
     <RootNamespace>Acolyte.Tests</RootNamespace>
     <IncludeSymbols>false</IncludeSymbols>
     <IsPackable>false</IsPackable>
+    <Deterministic>true</Deterministic>
   </PropertyGroup>
 
   <PropertyGroup>

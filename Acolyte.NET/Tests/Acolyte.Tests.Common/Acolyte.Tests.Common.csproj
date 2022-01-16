@@ -11,6 +11,7 @@
     <RootNamespace>Acolyte.Tests</RootNamespace>
     <IncludeSymbols>false</IncludeSymbols>
     <IsPackable>false</IsPackable>
+    <Deterministic>true</Deterministic>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -40,10 +41,7 @@
 
   <ItemGroup>
     <PackageReference Include="IndexRange" Version="$(IndexRangePackageVersion)" />
-    <PackageReference Include="IsExternalInit" Version="$(IsExternalInitPackageVersion)">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
+    <PackageReference Include="IsExternalInit" Version="$(IsExternalInitPackageVersion)" PrivateAssets="all" />
     <PackageReference Include="FluentAssertions" Version="$(FluentAssertionsPackageVersion)" />
     <PackageReference Include="Moq" Version="$(MoqPackageVersion)" />
     <PackageReference Include="morelinq" Version="$(MoreLinqPackageVersion)" />

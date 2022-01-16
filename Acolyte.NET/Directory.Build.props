@@ -20,6 +20,7 @@
     <FsUnitxUnitPackageVersion>4.1.0</FsUnitxUnitPackageVersion>
     <MicrosoftBclHashCodePackageVersion>1.1.1</MicrosoftBclHashCodePackageVersion>
     <MicrosoftNETTestSdkPackageVersion>17.0.0</MicrosoftNETTestSdkPackageVersion>
+    <MinVerPackageVersion>2.5.0</MinVerPackageVersion>
     <MoqPackageVersion>4.16.1</MoqPackageVersion>
     <MoreLinqPackageVersion>3.3.2</MoreLinqPackageVersion>
     <NullablePackageVersion>1.3.0</NullablePackageVersion>
