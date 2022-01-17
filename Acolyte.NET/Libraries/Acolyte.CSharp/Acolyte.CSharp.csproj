@@ -12,6 +12,7 @@
     <IncludeSymbols>false</IncludeSymbols>
     <IsPackable>true</IsPackable>
     <Deterministic>true</Deterministic>
+    <MinVerTagPrefix>v</MinVerTagPrefix>
   </PropertyGroup>
 
   <PropertyGroup>
