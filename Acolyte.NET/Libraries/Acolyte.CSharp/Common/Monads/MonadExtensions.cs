@@ -20,22 +20,52 @@ namespace Acolyte.Common.Monads
             Func<TSource, TResult> func)
             where TSource : class?
         {
-            func.ThrowIfNull(nameof(func));
+            return With(source, func, () => default(TResult));
+        }
 
-            return source is null
-                ? default
-                : func(source);
+        public static TResult? With<TSource, TResult>(this TSource? source,
+            Func<TSource, TResult> func, TResult defaultValue)
+            where TSource : class?
+        {
+            return With(source, func, () => defaultValue);
+        }
+
+        public static TResult? With<TSource, TResult>(this TSource? source,
+         Func<TSource, TResult> func, Func<TResult> defaultValueFunc)
+            where TSource : class?
+        {
+            func.ThrowIfNull(nameof(func));
+            defaultValueFunc.ThrowIfNull(nameof(defaultValueFunc));
+
+            return source is not null
+                ? func(source)
+                : defaultValueFunc();
         }
 
         public static TResult? With<TSource, TResult>(this TSource? source,
             Func<TSource, TResult> func)
             where TSource : struct
         {
-            func.ThrowIfNull(nameof(func));
+            return With(source, func, () => default(TResult));
+        }
 
-            return !source.HasValue
-                ? default
-                : func(source.Value);
+        public static TResult? With<TSource, TResult>(this TSource? source,
+            Func<TSource, TResult> func, TResult defaultValue)
+            where TSource : struct
+        {
+            return With(source, func, () => defaultValue);
+        }
+
+        public static TResult? With<TSource, TResult>(this TSource? source,
+            Func<TSource, TResult> func, Func<TResult> defaultValueFunc)
+            where TSource : struct
+        {
+            func.ThrowIfNull(nameof(func));
+            defaultValueFunc.ThrowIfNull(nameof(defaultValueFunc));
+
+            return source.HasValue
+                ? func(source.Value)
+                : defaultValueFunc();
         }
 
         #endregion
@@ -72,31 +102,51 @@ namespace Acolyte.Common.Monads
 
         #region ApplyIf
 
-        public static TSource ApplyIf<TSource>(this TSource source, Func<TSource, bool> condition, Func<TSource, TSource> func)
-        {
-            return ApplyIf(source, condition, func, defaultValue: source);
-        }
-
-        public static TResult ApplyIf<TSource, TResult>(this TSource source, Func<TSource, bool> condition, Func<TSource, TResult> func, TResult defaultValue)
-        {
-            func.ThrowIfNull(nameof(func));
-
-            return ApplyIf(source, condition(source), func, defaultValue);
-        }
-
-        public static TResult ApplyIf<TSource, TResult>(this TSource source, bool condition, Func<TSource, TResult> func)
+        public static TResult ApplyIf<TSource, TResult>(this TSource source, bool condition,
+            Func<TSource, TResult> func)
             where TSource : TResult
         {
-            return ApplyIf(source, condition, func, defaultValue: source);
+            return ApplyIf(source, condition, func, () => source);
         }
 
-        public static TResult ApplyIf<TSource, TResult>(this TSource source, bool condition, Func<TSource, TResult> func, TResult defaultValue)
+        public static TResult ApplyIf<TSource, TResult>(this TSource source, bool condition,
+            Func<TSource, TResult> func, TResult defaultValue)
         {
             func.ThrowIfNull(nameof(func));
+
+            return ApplyIf(source, condition, func, () => defaultValue);
+        }
+
+        public static TResult ApplyIf<TSource, TResult>(this TSource source, bool condition,
+           Func<TSource, TResult> func, Func<TResult> defaultValueFunc)
+        {
+            func.ThrowIfNull(nameof(func));
+            defaultValueFunc.ThrowIfNull(nameof(defaultValueFunc));
 
             return condition
                 ? func(source)
-                : defaultValue;
+                : defaultValueFunc();
+        }
+
+        public static TSource ApplyIf<TSource>(this TSource source, Func<TSource, bool> condition,
+            Func<TSource, TSource> func)
+        {
+            return ApplyIf(source, condition, func, () => source);
+        }
+
+        public static TResult ApplyIf<TSource, TResult>(this TSource source,
+            Func<TSource, bool> condition, Func<TSource, TResult> func, TResult defaultValue)
+        {
+            return ApplyIf(source, condition, func, () => defaultValue);
+        }
+
+        public static TResult ApplyIf<TSource, TResult>(this TSource source,
+            Func<TSource, bool> condition, Func<TSource, TResult> func,
+            Func<TResult> defaultValueFunc)
+        {
+            condition.ThrowIfNull(nameof(condition));
+
+            return ApplyIf(source, condition(source), func, defaultValueFunc);
         }
 
         #endregion
