@@ -12,7 +12,7 @@
 
   <!-- NuGet packages -->
   <PropertyGroup>
-    <CoverletCollectorPackageVersion>3.1.1</CoverletCollectorPackageVersion>
+    <CoverletCollectorPackageVersion>3.1.2</CoverletCollectorPackageVersion>
     <IndexRangePackageVersion>1.0.0</IndexRangePackageVersion>
     <IsExternalInitPackageVersion>1.0.2</IsExternalInitPackageVersion>
     <FluentAssertionsPackageVersion>6.4.0</FluentAssertionsPackageVersion>
