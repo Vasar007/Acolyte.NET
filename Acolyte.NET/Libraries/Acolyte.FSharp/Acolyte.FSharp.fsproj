@@ -72,7 +72,7 @@
   <ItemGroup>
     <PackageReference Update="FSharp.Core" Version="$(FSharpCorePackageVersion)" />
     <PackageReference Include="MinVer" Version="$(MinVerPackageVersion)" PrivateAssets="all" />
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="$(MicrosoftSourceLinkGitHubPackageVersion)" PrivateAssets="All" />
   </ItemGroup>
 
 </Project>
