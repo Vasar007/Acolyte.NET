@@ -19,7 +19,7 @@
     <FSharpCorePackageVersion>6.0.3</FSharpCorePackageVersion>
     <FsUnitxUnitPackageVersion>4.2.0</FsUnitxUnitPackageVersion>
     <MicrosoftBclHashCodePackageVersion>1.1.1</MicrosoftBclHashCodePackageVersion>
-    <MicrosoftNETTestSdkPackageVersion>17.0.0</MicrosoftNETTestSdkPackageVersion>
+    <MicrosoftNETTestSdkPackageVersion>17.1.0</MicrosoftNETTestSdkPackageVersion>
     <MicrosoftSourceLinkGitHubPackageVersion>1.1.1</MicrosoftSourceLinkGitHubPackageVersion>
     <MinVerPackageVersion>2.5.0</MinVerPackageVersion>
     <MoqPackageVersion>4.16.1</MoqPackageVersion>
