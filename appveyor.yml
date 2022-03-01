@@ -78,7 +78,7 @@ deploy:
   # Deploy to NuGet repository.
   - provider: NuGet
     api_key:
-      secure: hnKm9eh2iZree0QLhfMG6dkeBzGsJ3UNZpHbddhSB99FuaZxlh8Z+FxHX3c/l3Re
+      secure: pnNm4YivoAgvvIjcWESe5vl7LLLxDOf7gKzoYgwthjCw0HR1d8H1xtMLUJOfUpkX
     skip_symbols: false
     artifact: AcolyteNuget
     on:
