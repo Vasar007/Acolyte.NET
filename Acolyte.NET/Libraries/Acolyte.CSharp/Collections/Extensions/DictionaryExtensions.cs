@@ -111,7 +111,7 @@ namespace Acolyte.Collections
             where TKey : notnull
         {
             dictionary.ThrowIfNull(nameof(dictionary));
-            key.ThrowIfNullValue(nameof(key), assertOnPureValueTypes: false);
+            key.ThrowIfNullValue(nameof(key));
             newValueGetter.ThrowIfNull(nameof(newValueGetter));
 
             if (!dictionary.TryGetValue(key, out TValue value))
