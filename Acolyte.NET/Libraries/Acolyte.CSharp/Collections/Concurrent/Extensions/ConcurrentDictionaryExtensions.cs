@@ -90,9 +90,7 @@ namespace Acolyte.Collections.Concurrent
             };
 
             // ConcurrentDictionary allows to add null values.
-#pragma warning disable CS8620 // Argument cannot be used for parameter due to differences in the nullability of reference types.
-            value = dictionary.GetOrAdd(key, valueFactory);
-#pragma warning restore CS8620 // Argument cannot be used for parameter due to differences in the nullability of reference types.
+            value = dictionary.GetOrAdd(key, valueFactory!);
 
             return ReferenceEquals(value, createdValue);
         }

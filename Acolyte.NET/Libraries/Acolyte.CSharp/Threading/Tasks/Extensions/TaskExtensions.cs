@@ -77,11 +77,9 @@ namespace Acolyte.Threading.Tasks
                 if (item.IsSuccess)
                 {
                     // List allows to pass null values.
-#pragma warning disable CS8604 // Possible null reference argument.
-                    taskResults.Add(item.Ok);
-#pragma warning restore CS8604 // Possible null reference argument.
+                    taskResults.Add(item.Ok!);
                 }
-                else if (!(item.Error is null)) // Filter null exceptions.
+                else if (item.Error is not null) // Filter null exceptions.
                 {
                     taskExceptions.Add(item.Error);
                 }
