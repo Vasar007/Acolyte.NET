@@ -9,6 +9,8 @@ using Acolyte.Exceptions;
 
 namespace Acolyte.Assertions
 {
+    // TODO: split this class on smaller pieces.
+
     /// <summary>
     /// Contains extension methods to check certain conditions.
     /// </summary>
