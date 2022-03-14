@@ -21,7 +21,7 @@
     <MicrosoftBclHashCodePackageVersion>1.1.1</MicrosoftBclHashCodePackageVersion>
     <MicrosoftNETTestSdkPackageVersion>17.1.0</MicrosoftNETTestSdkPackageVersion>
     <MicrosoftSourceLinkGitHubPackageVersion>1.1.1</MicrosoftSourceLinkGitHubPackageVersion>
-    <MinVerPackageVersion>2.5.0</MinVerPackageVersion>
+    <MinVerPackageVersion>3.0.0</MinVerPackageVersion>
     <MoqPackageVersion>4.17.2</MoqPackageVersion>
     <MoreLinqPackageVersion>3.3.2</MoreLinqPackageVersion>
     <NullablePackageVersion>1.3.0</NullablePackageVersion>
