@@ -1,9 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Acolyte.Common.Disposal;
 
 namespace Acolyte.Ranges
 {
-    public sealed class LoopedEnumerator<T> : IEnumerator<T?>, IEnumerator
+    public sealed class LoopedEnumerator<T> : Disposable, IEnumerator<T?>, IEnumerator
     {
         private readonly RangeEnumerator<T> _rangeEnumerator;
 
@@ -36,18 +37,9 @@ namespace Acolyte.Ranges
 
         #region IDisposable Implementation
 
-        /// <summary>
-        /// Boolean flag used to show that object has already been disposed.
-        /// </summary>
-        private bool _disposed;
-
-        public void Dispose()
+        protected override void DisposeInternal()
         {
-            if (_disposed) return;
-
             _rangeEnumerator.Dispose();
-
-            _disposed = true;
         }
 
         #endregion

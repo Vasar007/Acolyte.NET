@@ -1,13 +1,16 @@
 ﻿using System;
 using Acolyte.Assertions;
+using Acolyte.Common.Disposal;
 
 namespace Acolyte.IO.ConsoleTools
 {
-    public sealed class ConsoleColorScope : IDisposable
+    public sealed class ConsoleColorScope : Disposable
     {
         private readonly ConsoleColor _resetColor;
 
-        public ConsoleColorScope(ConsoleColor consoleColor, ConsoleColor resetColor = ConsoleColor.White)
+        public ConsoleColorScope(
+            ConsoleColor consoleColor,
+            ConsoleColor resetColor = ConsoleColor.White)
         {
             consoleColor.ThrowIfEnumValueIsUndefined(nameof(consoleColor));
 
@@ -15,20 +18,11 @@ namespace Acolyte.IO.ConsoleTools
             Console.ForegroundColor = consoleColor;
         }
 
-        #region IDisposable Members
+        #region IDisposable Implementation
 
-        private bool _disposed;
-
-        public void Dispose()
+        protected override void DisposeInternal()
         {
-            if (_disposed)
-            {
-                return;
-            }
-
             Console.ForegroundColor = _resetColor;
-
-            _disposed = true;
         }
 
         #endregion

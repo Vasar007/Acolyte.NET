@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Acolyte.Assertions;
 using Acolyte.Common;
+using Acolyte.Common.Disposal;
 
 namespace Acolyte.Collections
 {
-    public sealed class DisposableScope : IDisposable
+    public sealed class DisposableScope : Disposable
     {
         private readonly Stack<IDisposable?> _disposables;
 
@@ -58,18 +59,13 @@ namespace Acolyte.Collections
 
         #region IDisposable Implementation
 
-        private bool _disposed;
-
-        public void Dispose()
+        protected override void DisposeInternal()
         {
-            if (_disposed) return;
 
             foreach (IDisposable? disposable in _disposables)
             {
                 disposable.DisposeSafe();
             }
-
-            _disposed = true;
         }
 
         #endregion

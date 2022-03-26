@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using Acolyte.Assertions;
 using Acolyte.Common;
+using Acolyte.Common.Disposal;
 using Acolyte.Tests.Exceptions;
 using Acolyte.Threading;
 
 namespace Acolyte.Tests.Collections
 {
-    public sealed class ExplosiveEnumerator<T> : IEnumerator<T?>, IEnumerator
+    public sealed class ExplosiveEnumerator<T> : Disposable, IEnumerator<T?>, IEnumerator
     {
         private readonly IEnumerator<T> _originalEnumerator;
 
@@ -54,18 +55,9 @@ namespace Acolyte.Tests.Collections
 
         #region IDisposable Implementation
 
-        /// <summary>
-        /// Boolean flag used to show that object has already been disposed.
-        /// </summary>
-        private bool _disposed;
-
-        public void Dispose()
+        protected override void DisposeInternal()
         {
-            if (_disposed) return;
-
             _originalEnumerator.Dispose();
-
-            _disposed = true;
         }
 
         #endregion

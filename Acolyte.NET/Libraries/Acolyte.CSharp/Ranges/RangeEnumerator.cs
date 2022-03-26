@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Acolyte.Assertions;
+using Acolyte.Common.Disposal;
 
 namespace Acolyte.Ranges
 {
-    public sealed class RangeEnumerator<T> : IEnumerator<T?>, IEnumerator
+    public sealed class RangeEnumerator<T> : Disposable, IEnumerator<T?>, IEnumerator
     {
         // TODO: optimize this enumerator for small ranges (store all values in cache).
         // TODO: accept configuration instead of raw parameters.
@@ -58,18 +59,9 @@ namespace Acolyte.Ranges
 
         #region IDisposable Implementation
 
-        /// <summary>
-        /// Boolean flag used to show that object has already been disposed.
-        /// </summary>
-        private bool _disposed;
-
-        public void Dispose()
+        protected override void DisposeInternal()
         {
-            if (_disposed) return;
-
             _originalEnumerator.Dispose();
-
-            _disposed = true;
         }
 
         #endregion
