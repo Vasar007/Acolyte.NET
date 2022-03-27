@@ -4,7 +4,7 @@ environment:
   dotnetFormatVersion: 5.0.211103
 
 version: '$(packageVersion).{build}'
-image: Visual Studio 2019
+image: Visual Studio 2022
 
 # Do not build on tags (GitHub, Bitbucket, GitLab, Gitea).
 skip_tags: true
