@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Acolyte.Tests.Objects
 {
-    public readonly struct DummyStruct : IEquatable<DummyStruct>, IComparable<DummyStruct>
+    // Implicitly implements "IEquatable<DummyStruct>" because it is record.
+    public readonly record struct DummyStruct : IComparable<DummyStruct>
     {
         public static IReadOnlyList<DummyStruct> DefaultList { get; } = new List<DummyStruct>
         {
@@ -30,54 +30,6 @@ namespace Acolyte.Tests.Objects
             value = Value;
         }
 
-        #region Object Overridden Methods
-
-        /// <inheritdoc />
-        public override string ToString()
-        {
-            var stringBuilder = new StringBuilder();
-            stringBuilder.Append("DummyStruct");
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-
-        private bool PrintMembers(StringBuilder builder)
-        {
-            builder.Append("Value");
-            builder.Append(" = ");
-            builder.Append(Value.ToString());
-            return true;
-        }
-
-        /// <inheritdoc />
-        public override bool Equals(object? obj)
-        {
-            return obj is DummyStruct other && Equals(other);
-        }
-
-        /// <inheritdoc />
-        public override int GetHashCode()
-        {
-            return HashCode.Combine(Value);
-        }
-
-        #endregion
-
-        #region IEquatable<DummyStruct> Implementation
-
-        /// <inheritdoc />
-        public bool Equals(DummyStruct other)
-        {
-            return Value.Equals(other.Value);
-        }
-
-        #endregion
-
         #region IComparable<DummyStruct> Implementation
 
         public int CompareTo(DummyStruct other)
@@ -86,35 +38,6 @@ namespace Acolyte.Tests.Objects
         }
 
         #endregion
-
-        /// <summary>
-        /// Determines whether two specified instances of <see cref="DummyStruct" /> are
-        /// equal.
-        /// </summary>
-        /// <param name="left">Left hand side object to compare.</param>
-        /// <param name="right">Right hand side object to compare.</param>
-        /// <returns>
-        /// <see langword="true" /> if values are memberwise equals; otherwise,
-        /// <see langword="false" />.
-        /// </returns>
-        public static bool operator ==(DummyStruct left, DummyStruct right)
-        {
-            return left.Equals(right);
-        }
-
-        /// <summary>
-        /// Determines whether two specified instances of <see cref="DummyStruct" /> are not equal.
-        /// </summary>
-        /// <param name="left">Left hand side object to compare.</param>
-        /// <param name="right">Right hand side object to compare.</param>
-        /// <returns>
-        /// <see langword="true" /> if values are not memberwise equals; otherwise,
-        /// <see langword="false" />.
-        /// </returns>
-        public static bool operator !=(DummyStruct left, DummyStruct right)
-        {
-            return !(left == right);
-        }
 
         public static bool operator <(DummyStruct left, DummyStruct right)
         {
