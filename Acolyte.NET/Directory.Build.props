@@ -17,7 +17,7 @@
     <IsExternalInitPackageVersion>1.0.2</IsExternalInitPackageVersion>
     <FluentAssertionsPackageVersion>6.6.0</FluentAssertionsPackageVersion>
     <FSharpCorePackageVersion>6.0.3</FSharpCorePackageVersion>
-    <FsUnitxUnitPackageVersion>4.2.0</FsUnitxUnitPackageVersion>
+    <FsUnitxUnitPackageVersion>5.0.0</FsUnitxUnitPackageVersion>
     <MicrosoftBclHashCodePackageVersion>1.1.1</MicrosoftBclHashCodePackageVersion>
     <MicrosoftNETTestSdkPackageVersion>17.1.0</MicrosoftNETTestSdkPackageVersion>
     <MicrosoftSourceLinkGitHubPackageVersion>1.1.1</MicrosoftSourceLinkGitHubPackageVersion>
