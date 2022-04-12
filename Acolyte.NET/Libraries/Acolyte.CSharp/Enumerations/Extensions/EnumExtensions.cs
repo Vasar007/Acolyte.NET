@@ -20,6 +20,12 @@ namespace Acolyte.Enumerations
             return Enum.IsDefined(typeof(TEnum), enumValue);
         }
 
+        public static bool IsDefinedOrFlag<TEnum>(this TEnum enumValue)
+          where TEnum : struct, Enum
+        {
+            return enumValue.IsDefined() || EnumHelper.HasFlagsAttribute<TEnum>();
+        }
+
         public static bool HasOnlyOneFlag<TEnum>(this TEnum value)
             where TEnum : struct, Enum
         {
@@ -35,6 +41,19 @@ namespace Acolyte.Enumerations
 
         #endregion
 
+        #region Enum Values
+
+        public static IReadOnlyList<TEnum> FlagsToCollection<TEnum>(this TEnum value)
+          where TEnum : struct, Enum
+        {
+            IReadOnlyList<TEnum> flagValues = EnumHelper.GetUniqueFlagValues<TEnum>();
+            return flagValues
+                .Where(flagValue => value.HasFlag(flagValue))
+                .ToReadOnlyList();
+        }
+
+        #endregion
+
         #region Enum Attributes
 
         public static IReadOnlyList<TAttribute> GetEnumValueAttributes<TAttribute>(
@@ -46,20 +65,20 @@ namespace Acolyte.Enumerations
 
             if (members.Count == 0) return Array.Empty<TAttribute>();
 
-            MemberInfo member = members.First();
+            MemberInfo member = members[0];
 
             return member.GetCustomAttributes(typeof(TAttribute), inherit: false)
                 .Cast<TAttribute>()
                 .ToReadOnlyList();
         }
 
-        public static string GetDescription<T>(this T enumValue)
-            where T : struct, Enum
+        public static string GetDescription<TEnum>(this TEnum enumValue)
+            where TEnum : struct, Enum
         {
             IReadOnlyList<DescriptionAttribute> attributes =
                 enumValue.GetEnumValueAttributes<DescriptionAttribute>();
 
-            if (attributes.Count > 0) return attributes.First().Description;
+            if (attributes.Count > 0) return attributes[0].Description;
 
             return enumValue.ToString();
         }
@@ -165,7 +184,8 @@ namespace Acolyte.Enumerations
         public static TEnum GetDefinedValueOrDefault<TEnum>(this TEnum enumValue, TEnum defaultValue)
             where TEnum : struct, Enum
         {
-            if (enumValue.IsDefined())
+            // Flags are treated as valid values.
+            if (enumValue.IsDefinedOrFlag())
                 return enumValue;
 
             return defaultValue;
