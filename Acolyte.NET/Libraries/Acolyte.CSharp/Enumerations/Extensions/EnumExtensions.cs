@@ -181,7 +181,8 @@ namespace Acolyte.Enumerations
 
         #region Defined Values
 
-        public static TEnum GetDefinedValueOrDefault<TEnum>(this TEnum enumValue, TEnum defaultValue)
+        public static TEnum GetDefinedValueOrDefault<TEnum>(this TEnum enumValue,
+            TEnum defaultValue)
             where TEnum : struct, Enum
         {
             // Flags are treated as valid values.
