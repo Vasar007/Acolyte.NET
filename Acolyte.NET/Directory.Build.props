@@ -13,7 +13,7 @@
   <!-- NuGet packages -->
   <PropertyGroup>
     <CoverletCollectorPackageVersion>3.1.2</CoverletCollectorPackageVersion>
-    <IndexRangePackageVersion>1.0.1</IndexRangePackageVersion>
+    <IndexRangePackageVersion>1.0.2</IndexRangePackageVersion>
     <IsExternalInitPackageVersion>1.0.2</IsExternalInitPackageVersion>
     <FluentAssertionsPackageVersion>6.6.0</FluentAssertionsPackageVersion>
     <FSharpCorePackageVersion>6.0.3</FSharpCorePackageVersion>
