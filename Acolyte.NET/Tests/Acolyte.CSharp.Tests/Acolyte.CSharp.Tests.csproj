@@ -12,6 +12,7 @@
     <RootNamespace>Acolyte.Tests</RootNamespace>
     <IncludeSymbols>false</IncludeSymbols>
     <IsPackable>false</IsPackable>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -39,10 +40,10 @@
     <DefineConstants>$(DefineConstants);NETCORE3_1</DefineConstants>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(TargetFramework)' == 'net5.0'">
-    <AssemblyTitle>Acolyte.CSharp Tests .NET Standard 2.1 (.NET 5.0)</AssemblyTitle>
+  <PropertyGroup Condition="'$(TargetFramework)' == 'net6.0'">
+    <AssemblyTitle>Acolyte.CSharp Tests .NET Standard 2.1 (.NET 6.0)</AssemblyTitle>
     <ReferringTargetFrameworkForProjectReferences>.NETStandard,Version=v2.1</ReferringTargetFrameworkForProjectReferences>
-    <DefineConstants>$(DefineConstants);NET5;ASYNC_ENUMERABLE</DefineConstants>
+    <DefineConstants>$(DefineConstants);NET6;ASYNC_ENUMERABLE</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>
@@ -52,18 +53,18 @@
 
   <!-- Required to resolve issues with out-of-date versions of "Microsoft.Bcl.HashCode" package. -->
   <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.1'">
-    <PackageReference Include="Microsoft.Bcl.HashCode" Version="$(MicrosoftBclHashCodePackageVersion)" />
+    <PackageReference Include="Microsoft.Bcl.HashCode" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == 'net5.0'">
-    <PackageReference Include="System.Linq.Async" Version="$(SystemLinqAsyncPackageVersion)" />
+  <ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
+    <PackageReference Include="System.Linq.Async" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="$(MicrosoftNETTestSdkPackageVersion)" />
-    <PackageReference Include="xunit" Version="$(XunitPackageVersion)" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="$(XunitRunnerVisualStudioPackageVersion)" PrivateAssets="all" />
-    <PackageReference Include="coverlet.collector" Version="$(CoverletCollectorPackageVersion)" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="xunit" />
+    <PackageReference Include="xunit.runner.visualstudio" PrivateAssets="all" />
+    <PackageReference Include="coverlet.collector" PrivateAssets="all" />
   </ItemGroup>
 
 </Project>
