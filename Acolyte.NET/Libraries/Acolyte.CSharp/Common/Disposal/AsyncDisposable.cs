@@ -1,43 +1,44 @@
-﻿using System;
+﻿#pragma warning disable format // dotnet format fails indentation for regions :(
+
+#if ASYNC_DISPOSABLE
+
+using System;
+using System.Threading.Tasks;
 
 namespace Acolyte.Common.Disposal
 {
     /// <summary>
-    /// A general implementation of the disposable pattern for managed resources only.<br/>
+    /// A general implementation of the asynchronous disposable pattern for managed resources
+    /// only. This class extends <see cref="Disposable" /> class for asynchronous cases.<br/>
     /// </summary>
     /// <remarks>
-    /// A base class that implements <see cref="IDisposable" />.
-    /// By implementing <see cref="Disposable" />, you are announcing that
+    /// A base class that implements <see cref="IAsyncDisposable" />.
+    /// By implementing <see cref="AsyncDisposable" />, you are announcing that
     /// instances of this type allocate scarce resources.<br/>
     /// See <a href="https://docs.microsoft.com/en-us/dotnet/api/system.idisposable" />.
     /// </remarks>
-    public abstract class Disposable : IDisposable
+    public abstract class AsyncDisposable : Disposable, IAsyncDisposable
     {
         /// <summary>
         /// Default constructor.
         /// </summary>
-        protected Disposable()
+        protected AsyncDisposable()
         {
         }
 
         #region IDisposable Members
-
-        /// <summary>
-        /// Boolean flag used to show that object has already been disposed.
-        /// </summary>
-        protected bool Disposed { get; set; }
 
         /// <inheritdoc />
         /// <remarks>
         /// This method is not virtual.
         /// A derived class should not be able to override this method.
         /// </remarks>
-        public void Dispose()
+        public async ValueTask DisposeAsync()
         {
             // Check to see if Dispose has already been called.
             if (Disposed) return;
 
-            DisposeInternal();
+            await DisposeInternalAsync();
 
             // Note disposing has been done.
             Disposed = true;
@@ -49,11 +50,10 @@ namespace Acolyte.Common.Disposal
         /// <remarks>
         /// Release all managed resources here.
         /// </remarks>
-        protected virtual void DisposeInternal()
-        {
-            // Nothing to do.
-        }
+        protected abstract ValueTask DisposeInternalAsync();
 
         #endregion
     }
 }
+
+#endif
