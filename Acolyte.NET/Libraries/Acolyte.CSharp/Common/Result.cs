@@ -209,12 +209,12 @@ namespace Acolyte.Common
 
     public static class Result
     {
-        public static DelayedValue<TOk> Ok<TOk>(TOk ok)
+        public static DelayedValue<TOk> Ok<TOk>(TOk? ok)
         {
             return new DelayedValue<TOk>(ok);
         }
 
-        public static DelayedError<TError> Error<TError>(TError error)
+        public static DelayedError<TError> Error<TError>(TError? error)
         {
             return new DelayedError<TError>(error);
         }
