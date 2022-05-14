@@ -208,10 +208,28 @@ namespace Acolyte.Collections.Concurrent
             _dictionary.AddOrUpdate(key, value, updateAction);
         }
 
+        public TValue GetOrAdd([DisallowNull] TKey key, TValue value)
+        {
+            CleanupExpiredObjects();
+            return _dictionary.GetOrAdd(key, value);
+        }
+
+        public bool TryAdd([DisallowNull] TKey key, TValue value)
+        {
+            CleanupExpiredObjects();
+            return _dictionary.TryAdd(key, value);
+        }
+
         public bool TryRemove([DisallowNull] TKey key, out TValue value)
         {
             CleanupExpiredObjects();
             return _dictionary.TryRemove(key, out value);
+        }
+
+        public bool TryUpdate([DisallowNull] TKey key, TValue newValue, TValue comparisonValue)
+        {
+            CleanupExpiredObjects();
+            return _dictionary.TryUpdate(key, newValue, comparisonValue);
         }
 
         #endregion

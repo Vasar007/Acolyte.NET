@@ -8,6 +8,9 @@ namespace Acolyte.Collections.Concurrent
 {
     public class ConcurrentTwoWayDictionary<TKey, TValue> : TwoWayDictionary<TKey, TValue>
     {
+        private delegate void HandleKeyWithSameItemDelegate<T1, T2>(T1 newSource,
+            TwoWayDictionaryAddFlags flags, T2 value);
+
         private readonly object _lock;
 
         protected readonly IEqualityComparer<TKey> KeyComparer;
@@ -141,9 +144,6 @@ namespace Acolyte.Collections.Concurrent
                 }
             }
         }
-
-        private delegate void HandleKeyWithSameItemDelegate<T1, T2>(T1 newSource,
-            TwoWayDictionaryAddFlags flags, T2 value);
 
         private void HandleKeyWithSameValue(TKey newKey, TwoWayDictionaryAddFlags flags,
             TValue value)
