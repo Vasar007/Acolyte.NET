@@ -21,7 +21,7 @@ namespace Acolyte.Common.Disposal
             return wasDisposed;
         }
 
-        #region IAsyncDisposable Members
+        #region IDisposable Members
 
         protected override void DisposeInternal()
         {

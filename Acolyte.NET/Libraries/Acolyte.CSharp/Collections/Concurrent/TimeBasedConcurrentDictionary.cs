@@ -10,17 +10,19 @@ namespace Acolyte.Collections.Concurrent
 {
     /// <summary>
     /// Extends the standard <see cref="ConcurrentDictionary{TKey, TValue}" /> class with time-based
-    /// logic (this collection cleanup expired objects when calling any method).
+    /// logic. This collection cleanup expired objects when calling any method, i.g. expired objects
+    /// will be removed on next collection access.
     /// </summary>
     /// <typeparam name="TKey">The type of the keys in the dictionary.</typeparam>
     /// <typeparam name="TValue">The type of the values in the dictionary.</typeparam>
-    public sealed class TimeBasedConcurrentDictionary<TKey, TValue> :
+    public class TimeBasedConcurrentDictionary<TKey, TValue> :
         ICollection<KeyValuePair<TKey, TValue>>,
         IEnumerable<KeyValuePair<TKey, TValue>>,
         IEnumerable,
         IDictionary<TKey, TValue>,
         IReadOnlyCollection<KeyValuePair<TKey, TValue>>,
         IReadOnlyDictionary<TKey, TValue>,
+        IConcurrentDictionary<TKey, TValue>,
         ICollection,
         IDictionary
         where TKey : notnull
@@ -35,6 +37,15 @@ namespace Acolyte.Collections.Concurrent
         #endregion
 
         #region Public Properties
+
+        public TimeSpan LifeTime
+        {
+            get
+            {
+                CleanupExpiredObjects();
+                return _lifeTime;
+            }
+        }
 
         public TValue this[[DisallowNull] TKey key]
         {
@@ -143,13 +154,21 @@ namespace Acolyte.Collections.Concurrent
 
         #region Constructors
 
-        public TimeBasedConcurrentDictionary(TimeSpan lifeTime)
+        /// <inheritdoc cref="ConcurrentDictionary{TKey, TValue}.ConcurrentDictionary()" />
+        /// <param name="lifeTime">
+        /// The specified life time of the objects stored in dictionary.
+        /// </param>
+        public TimeBasedConcurrentDictionary(
+            TimeSpan lifeTime)
         {
             _lifeTime = lifeTime;
             _dictionary = new ConcurrentDictionary<TKey, TValue>();
         }
 
-        public TimeBasedConcurrentDictionary(TimeSpan lifeTime,
+        /// <inheritdoc cref="ConcurrentDictionary{TKey, TValue}.ConcurrentDictionary(IEnumerable{KeyValuePair{TKey, TValue}})" />
+        /// <inheritdoc cref="TimeBasedConcurrentDictionary{TKey, TValue}.TimeBasedConcurrentDictionary(TimeSpan)" select="param" />
+        public TimeBasedConcurrentDictionary(
+            TimeSpan lifeTime,
             IEnumerable<KeyValuePair<TKey, TValue>> collection)
         {
             collection.ThrowIfNull(nameof(collection));
@@ -158,7 +177,11 @@ namespace Acolyte.Collections.Concurrent
             _dictionary = new ConcurrentDictionary<TKey, TValue>(collection);
         }
 
-        public TimeBasedConcurrentDictionary(TimeSpan lifeTime, IEqualityComparer<TKey> comparer)
+        /// <inheritdoc cref="ConcurrentDictionary{TKey, TValue}.ConcurrentDictionary(IEqualityComparer{TKey})" />
+        /// <inheritdoc cref="TimeBasedConcurrentDictionary{TKey, TValue}.TimeBasedConcurrentDictionary(TimeSpan)" select="param" />
+        public TimeBasedConcurrentDictionary(
+            TimeSpan lifeTime,
+            IEqualityComparer<TKey> comparer)
         {
             comparer.ThrowIfNull(nameof(comparer));
 
@@ -166,7 +189,26 @@ namespace Acolyte.Collections.Concurrent
             _dictionary = new ConcurrentDictionary<TKey, TValue>(comparer);
         }
 
-        public TimeBasedConcurrentDictionary(TimeSpan lifeTime, int concurrencyLevel, int capacity)
+        /// <inheritdoc cref="ConcurrentDictionary{TKey, TValue}.ConcurrentDictionary(IEnumerable{KeyValuePair{TKey, TValue}}, IEqualityComparer{TKey})" />
+        /// <inheritdoc cref="TimeBasedConcurrentDictionary{TKey, TValue}.TimeBasedConcurrentDictionary(TimeSpan)" select="param" />
+        public TimeBasedConcurrentDictionary(
+            TimeSpan lifeTime,
+            IEnumerable<KeyValuePair<TKey, TValue>> collection,
+            IEqualityComparer<TKey> comparer)
+        {
+            collection.ThrowIfNull(nameof(collection));
+            comparer.ThrowIfNull(nameof(comparer));
+
+            _lifeTime = lifeTime;
+            _dictionary = new ConcurrentDictionary<TKey, TValue>(collection, comparer);
+        }
+
+        /// <inheritdoc cref="ConcurrentDictionary{TKey, TValue}.ConcurrentDictionary(int, int)" />
+        /// <inheritdoc cref="TimeBasedConcurrentDictionary{TKey, TValue}.TimeBasedConcurrentDictionary(TimeSpan)" select="param" />
+        public TimeBasedConcurrentDictionary(
+            TimeSpan lifeTime,
+            int concurrencyLevel,
+            int capacity)
         {
             concurrencyLevel.ThrowIfValueIsOutOfRange(nameof(concurrencyLevel), 1, int.MaxValue);
             capacity.ThrowIfValueIsOutOfRange(nameof(capacity), 0, int.MaxValue);
@@ -175,8 +217,13 @@ namespace Acolyte.Collections.Concurrent
             _dictionary = new ConcurrentDictionary<TKey, TValue>(concurrencyLevel, capacity);
         }
 
-        public TimeBasedConcurrentDictionary(TimeSpan lifeTime, int concurrencyLevel,
-            IEnumerable<KeyValuePair<TKey, TValue>> collection, IEqualityComparer<TKey> comparer)
+        /// <inheritdoc cref="ConcurrentDictionary{TKey, TValue}.ConcurrentDictionary(int, IEnumerable{KeyValuePair{TKey, TValue}}, IEqualityComparer{TKey})" />
+        /// <inheritdoc cref="TimeBasedConcurrentDictionary{TKey, TValue}.TimeBasedConcurrentDictionary(TimeSpan)" select="param" />
+        public TimeBasedConcurrentDictionary(
+            TimeSpan lifeTime,
+            int concurrencyLevel,
+            IEnumerable<KeyValuePair<TKey, TValue>> collection,
+            IEqualityComparer<TKey> comparer)
         {
             concurrencyLevel.ThrowIfValueIsOutOfRange(nameof(concurrencyLevel), 1, int.MaxValue);
             collection.ThrowIfNull(nameof(collection));
@@ -186,7 +233,12 @@ namespace Acolyte.Collections.Concurrent
             _dictionary = new ConcurrentDictionary<TKey, TValue>(concurrencyLevel, collection, comparer);
         }
 
-        public TimeBasedConcurrentDictionary(TimeSpan lifeTime, int concurrencyLevel, int capacity,
+        /// <inheritdoc cref="ConcurrentDictionary{TKey, TValue}.ConcurrentDictionary(int, int, IEqualityComparer{TKey})" />
+        /// <inheritdoc cref="TimeBasedConcurrentDictionary{TKey, TValue}.TimeBasedConcurrentDictionary(TimeSpan)" select="param" />
+        public TimeBasedConcurrentDictionary(
+            TimeSpan lifeTime,
+            int concurrencyLevel,
+            int capacity,
             IEqualityComparer<TKey> comparer)
         {
             concurrencyLevel.ThrowIfValueIsOutOfRange(nameof(concurrencyLevel), 1, int.MaxValue);
@@ -199,33 +251,80 @@ namespace Acolyte.Collections.Concurrent
 
         #endregion
 
-        #region Additional Methods
+        #region IConcurrentDictionary<TKey, TValue> Implementation
 
-        public void AddOrUpdate([DisallowNull] TKey key, TValue value,
-            Func<TKey, TValue, TValue> updateAction)
+        /// <inheritdoc />
+        public TValue AddOrUpdate([DisallowNull] TKey key, TValue addValue,
+            Func<TKey, TValue, TValue> updateValueFactory)
         {
             CleanupExpiredObjects();
-            _dictionary.AddOrUpdate(key, value, updateAction);
+            return _dictionary.AddOrUpdate(key, addValue, updateValueFactory);
         }
 
+        /// <inheritdoc />
+        public TValue AddOrUpdate([DisallowNull] TKey key, Func<TKey, TValue> addValueFactory,
+            Func<TKey, TValue, TValue> updateValueFactory)
+        {
+            CleanupExpiredObjects();
+            return _dictionary.AddOrUpdate(key, addValueFactory, updateValueFactory);
+        }
+
+#if NETSTANDARD2_1
+
+        /// <inheritdoc />
+        public TValue AddOrUpdate<TArg>([DisallowNull] TKey key,
+            Func<TKey, TArg, TValue> addValueFactory,
+            Func<TKey, TValue, TArg, TValue> updateValueFactory, TArg factoryArgument)
+        {
+            CleanupExpiredObjects();
+            return _dictionary.AddOrUpdate(
+                key, addValueFactory, updateValueFactory, factoryArgument
+            );
+        }
+
+#endif
+
+        /// <inheritdoc />
         public TValue GetOrAdd([DisallowNull] TKey key, TValue value)
         {
             CleanupExpiredObjects();
             return _dictionary.GetOrAdd(key, value);
         }
 
+        /// <inheritdoc />
+        public TValue GetOrAdd([DisallowNull] TKey key, Func<TKey, TValue> valueFactory)
+        {
+            CleanupExpiredObjects();
+            return _dictionary.GetOrAdd(key, valueFactory);
+        }
+
+#if NETSTANDARD2_1
+
+        /// <inheritdoc />
+        public TValue GetOrAdd<TArg>([DisallowNull] TKey key, Func<TKey, TArg, TValue> valueFactory,
+            TArg factoryArgument)
+        {
+            CleanupExpiredObjects();
+            return _dictionary.GetOrAdd(key, valueFactory, factoryArgument);
+        }
+
+#endif
+
+        /// <inheritdoc />
         public bool TryAdd([DisallowNull] TKey key, TValue value)
         {
             CleanupExpiredObjects();
             return _dictionary.TryAdd(key, value);
         }
 
-        public bool TryRemove([DisallowNull] TKey key, out TValue value)
+        /// <inheritdoc />
+        public bool TryRemove([DisallowNull] TKey key, [MaybeNullWhen(false)] out TValue value)
         {
             CleanupExpiredObjects();
             return _dictionary.TryRemove(key, out value);
         }
 
+        /// <inheritdoc />
         public bool TryUpdate([DisallowNull] TKey key, TValue newValue, TValue comparisonValue)
         {
             CleanupExpiredObjects();
@@ -272,6 +371,7 @@ namespace Acolyte.Collections.Concurrent
 
         void ICollection.CopyTo(Array array, int index)
         {
+            CleanupExpiredObjects();
             ((ICollection) _dictionary).CopyTo(array, index);
         }
 
@@ -279,27 +379,35 @@ namespace Acolyte.Collections.Concurrent
 
         #region IDictionary<TKey, TValue> Implementation
 
+        /// <inheritdoc />
         public bool ContainsKey([DisallowNull] TKey key)
         {
+            CleanupExpiredObjects();
             return _dictionary.ContainsKey(key);
         }
 
-        // Suppress warning because ConcurrentDictionary from .NET does not have
+        // Suppress warning because IDictionary from .NET does not have
         // nullable attributes.
+        /// <inheritdoc />
 #pragma warning disable CS8767 // Nullability of reference types in type of parameter doesn't match implicitly implemented member (possibly because of nullability attributes).
         public bool TryGetValue([DisallowNull] TKey key, [MaybeNullWhen(false)] out TValue value)
 #pragma warning restore CS8767 // Nullability of reference types in type of parameter doesn't match implicitly implemented member (possibly because of nullability attributes).
         {
+            CleanupExpiredObjects();
             return _dictionary.TryGetValue(key, out value);
         }
 
+        /// <inheritdoc />
         void IDictionary<TKey, TValue>.Add([DisallowNull] TKey key, TValue value)
         {
+            CleanupExpiredObjects();
             ((IDictionary<TKey, TValue>) _dictionary).Add(key, value);
         }
 
+        /// <inheritdoc />
         bool IDictionary<TKey, TValue>.Remove([DisallowNull] TKey key)
         {
+            CleanupExpiredObjects();
             return ((IDictionary<TKey, TValue>) _dictionary).Remove(key);
         }
 
@@ -307,24 +415,28 @@ namespace Acolyte.Collections.Concurrent
 
         #region IDictionary Implementation
 
+        /// <inheritdoc />
         void IDictionary.Add([DisallowNull] object key, object value)
         {
             CleanupExpiredObjects();
             ((IDictionary) _dictionary).Add(key, value);
         }
 
+        /// <inheritdoc />
         bool IDictionary.Contains([DisallowNull] object key)
         {
             CleanupExpiredObjects();
             return ((IDictionary) _dictionary).Contains(key);
         }
 
+        /// <inheritdoc />
         IDictionaryEnumerator IDictionary.GetEnumerator()
         {
             CleanupExpiredObjects();
             return ((IDictionary) _dictionary).GetEnumerator();
         }
 
+        /// <inheritdoc />
         void IDictionary.Remove([DisallowNull] object key)
         {
             CleanupExpiredObjects();
@@ -335,6 +447,7 @@ namespace Acolyte.Collections.Concurrent
 
         #region IEnumerable<KeyValuePair<TKey, TValue>> Implementation
 
+        /// <inheritdoc />
         public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator()
         {
             CleanupExpiredObjects();
@@ -345,6 +458,7 @@ namespace Acolyte.Collections.Concurrent
 
         #region IEnumerable Implementation
 
+        /// <inheritdoc />
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
@@ -352,17 +466,17 @@ namespace Acolyte.Collections.Concurrent
 
         #endregion
 
-        #region Private Implementation Details
+        #region Protected Implementation Details
 
-        private void CleanupExpiredObjects()
+        protected void CleanupExpiredObjects()
         {
             var keysToRemove = new List<TKey>();
-            foreach (var kvpCode in _dictionary)
+            foreach (var kvp in _dictionary)
             {
-                TimeSpan timeDifference = DateTime.UtcNow - kvpCode.Value.CreationTime;
+                TimeSpan timeDifference = DateTime.UtcNow - kvp.Value.CreationTimeUtc;
                 if (timeDifference > _lifeTime)
                 {
-                    keysToRemove.Add(kvpCode.Key);
+                    keysToRemove.Add(kvp.Key);
                 }
             }
 
