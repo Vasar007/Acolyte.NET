@@ -54,7 +54,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="..\..\Resources\AcolyteIcon.png" Pack="true" Visible="false" PackagePath="" />
+    <None Include="..\..\..\Media\AcolyteIcon.png" Pack="true" Visible="false" PackagePath="" />
     <None Include="..\..\..\LICENSE" Pack="true" Visible="false" PackagePath="" />
   </ItemGroup>
 
