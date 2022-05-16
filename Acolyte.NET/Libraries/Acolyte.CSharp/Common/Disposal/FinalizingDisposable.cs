@@ -85,6 +85,12 @@ namespace Acolyte.Common.Disposal
             Dispose(false);
         }
 
+        protected void EnsureNotDisposed()
+        {
+            if (Disposed)
+                throw new ObjectDisposedException(GetType().Name);
+        }
+
         #endregion
     }
 }
