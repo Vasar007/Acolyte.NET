@@ -54,6 +54,13 @@ namespace Acolyte.Common.Disposal
             // Nothing to do.
         }
 
+        /// <summary>
+        /// Checks that <see cref="Disposed" /> flag is <see langword="false" />. Otherwise, throws
+        /// exception.
+        /// </summary>
+        /// <exception cref="ObjectDisposedException">
+        /// Throw exception when <see cref="Disposed" /> flag is <see langword="true" />.
+        /// </exception>
         protected void EnsureNotDisposed()
         {
             if (Disposed)

@@ -85,6 +85,7 @@ namespace Acolyte.Common.Disposal
             Dispose(false);
         }
 
+        /// <inheritdoc cref="Disposable.EnsureNotDisposed" />
         protected void EnsureNotDisposed()
         {
             if (Disposed)
