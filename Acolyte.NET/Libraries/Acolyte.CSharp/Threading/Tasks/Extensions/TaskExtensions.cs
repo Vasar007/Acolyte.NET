@@ -346,12 +346,39 @@ namespace Acolyte.Threading.Tasks
 
         #region Timeout
 
-        public static Task<T?> AwaitWithTimeout<T>(this Task<T> task, TimeSpan timeout)
+        public static async Task AwaitWithTimeoutAsync(this Task task, TimeSpan timeout)
         {
-            return task.AwaitWithTimeoutAndFallback(timeout, () => default!)!;
+            _ = task.ThrowIfNull(nameof(task));
+
+            var completion = await Task.WhenAny(task, DelayedResultTask(timeout));
+            await completion;
         }
 
-        public static async Task<T> AwaitWithTimeoutAndFallback<T>(this Task<T> task,
+        public static async Task AwaitWithTimeoutAndExceptionAsync(this Task task, TimeSpan timeout)
+        {
+            _ = task.ThrowIfNull(nameof(task));
+
+            var completion = await Task.WhenAny(task, DelayedTimeoutExceptionTask(timeout));
+            await completion;
+        }
+
+        private static Task DelayedResultTask(TimeSpan delay)
+        {
+            return Task.Delay(delay);
+        }
+
+        private static async Task DelayedTimeoutExceptionTask(TimeSpan delay)
+        {
+            await Task.Delay(delay);
+            throw new TimeoutException();
+        }
+
+        public static Task<T?> AwaitWithTimeoutAsync<T>(this Task<T> task, TimeSpan timeout)
+        {
+            return task.AwaitWithTimeoutAndFallbackAsync(timeout, () => default!)!;
+        }
+
+        public static async Task<T> AwaitWithTimeoutAndFallbackAsync<T>(this Task<T> task,
             TimeSpan timeout, Func<T> fallbackFactory)
         {
             _ = task.ThrowIfNull(nameof(task));
@@ -361,7 +388,7 @@ namespace Acolyte.Threading.Tasks
             return await completion;
         }
 
-        public static async Task<T> AwaitWithTimeoutAndException<T>(this Task<T> task,
+        public static async Task<T> AwaitWithTimeoutAndExceptionAsync<T>(this Task<T> task,
             TimeSpan timeout)
         {
             _ = task.ThrowIfNull(nameof(task));
