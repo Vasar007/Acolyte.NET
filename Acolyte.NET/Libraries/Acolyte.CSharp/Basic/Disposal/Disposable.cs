@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Acolyte.Common.Disposal
+namespace Acolyte.Basic.Disposal
 {
     /// <summary>
     /// A general implementation of the disposable pattern for managed resources only.<br/>

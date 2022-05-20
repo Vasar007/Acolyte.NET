@@ -1,45 +1,44 @@
-﻿#pragma warning disable format // dotnet format fails indentation for regions :(
+﻿using System;
 
-#if ASYNC_DISPOSABLE
-
-using System;
-using System.Threading.Tasks;
-
-namespace Acolyte.Common.Disposal
+namespace Acolyte.Basic.Disposal
 {
     /// <summary>
     /// A general implementation of the disposable pattern for both managed and unmanaged
-    /// resources. This class extends <see cref="FinalizingDisposable" /> class for asynchronous
-    /// cases.<br/>
+    /// resources.<br/>
     /// </summary>
     /// <remarks>
     /// A base class that implements <see cref="IDisposable" />.
-    /// By implementing <see cref="FinalizingAsyncDisposable" />, you are announcing that
+    /// By implementing <see cref="FinalizingDisposable" />, you are announcing that
     /// instances of this type allocate scarce resources.<br/>
     /// See <a href="https://docs.microsoft.com/en-us/dotnet/api/system.idisposable" />.
     /// </remarks>
-    public abstract class FinalizingAsyncDisposable : FinalizingDisposable, IAsyncDisposable
+    public abstract class FinalizingDisposable : IDisposable
     {
         /// <summary>
         /// Default constructor.
         /// </summary>
-        protected FinalizingAsyncDisposable()
+        protected FinalizingDisposable()
         {
         }
 
         #region IDisposable Members
+
+        /// <summary>
+        /// Boolean flag used to show that object has already been disposed.
+        /// </summary>
+        protected bool Disposed { get; set; }
 
         /// <inheritdoc />
         /// <remarks>
         /// This method is not virtual.
         /// A derived class should not be able to override this method.
         /// </remarks>
-        public async ValueTask DisposeAsync()
+        public void Dispose()
         {
             // Check to see if Dispose has already been called.
             if (Disposed) return;
 
-            await DisposeAsync(true).ConfigureAwait(false);
+            Dispose(true);
 
             // This object will be cleaned up by the Dispose method.
             // Therefore, you should call GC.SuppressFinalize to
@@ -57,7 +56,7 @@ namespace Acolyte.Common.Disposal
         /// </summary>
         /// <remarks>
         /// Release all managed and/or unmanaged resources here.
-        /// <see cref="DisposeAsync(bool)" /> executes in two distinct scenarios.
+        /// <see cref="Dispose(bool)" /> executes in two distinct scenarios.
         /// If <paramref name="disposing" /> equals <see langword="true" />, the method has been
         /// called directly or indirectly by a user's code. Managed and unmanaged resources
         /// can be disposed.
@@ -66,7 +65,7 @@ namespace Acolyte.Common.Disposal
         /// other objects. Only unmanaged resources can be disposed.
         /// </remarks>
         /// <param name="disposing">Are we disposing? Otherwise we're finalizing.</param>
-        protected abstract ValueTask DisposeAsync(bool disposing);
+        protected abstract void Dispose(bool disposing);
 
         /// <summary>
         /// Finalizer.
@@ -78,7 +77,7 @@ namespace Acolyte.Common.Disposal
         /// It gives your base class the opportunity to finalize.
         /// Do not provide finalizer in types derived from this class.
         /// </remarks>
-        ~FinalizingAsyncDisposable()
+        ~FinalizingDisposable()
         {
             // Do not re-create Dispose clean-up code here.
             // Calling Dispose(disposing: false) is optimal in terms of
@@ -86,8 +85,13 @@ namespace Acolyte.Common.Disposal
             Dispose(false);
         }
 
+        /// <inheritdoc cref="Disposable.EnsureNotDisposed" />
+        protected void EnsureNotDisposed()
+        {
+            if (Disposed)
+                throw new ObjectDisposedException(GetType().Name);
+        }
+
         #endregion
     }
 }
-
-#endif

@@ -5,7 +5,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace Acolyte.Common.Disposal
+namespace Acolyte.Basic.Disposal
 {
     /// <summary>
     /// A general implementation of the asynchronous disposable pattern for managed resources

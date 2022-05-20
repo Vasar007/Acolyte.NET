@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Acolyte.Common.Disposal;
+using Acolyte.Basic.Disposal;
 
 namespace Acolyte.Ranges
 {

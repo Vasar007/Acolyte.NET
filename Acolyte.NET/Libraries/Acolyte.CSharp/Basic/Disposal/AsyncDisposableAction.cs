@@ -6,15 +6,15 @@ using System;
 using System.Threading.Tasks;
 using Acolyte.Assertions;
 
-namespace Acolyte.Common.Disposal
+namespace Acolyte.Basic.Disposal
 {
-    public sealed class AsyncDisposableActionValue : AsyncDisposable
+    public sealed class AsyncDisposableAction : AsyncDisposable
     {
-        private readonly Func<ValueTask> _onDisposeActionAsync;
+        private readonly Func<Task> _onDisposeActionAsync;
 
 
-        public AsyncDisposableActionValue(
-            Func<ValueTask> onDisposeActionAsync)
+        public AsyncDisposableAction(
+            Func<Task> onDisposeActionAsync)
         {
             _onDisposeActionAsync = onDisposeActionAsync.ThrowIfNull(nameof(onDisposeActionAsync));
         }
@@ -30,7 +30,7 @@ namespace Acolyte.Common.Disposal
 
         protected override async ValueTask DisposeInternalAsync()
         {
-            await _onDisposeActionAsync();
+            await _onDisposeActionAsync().ConfigureAwait(false);
         }
 
         #endregion

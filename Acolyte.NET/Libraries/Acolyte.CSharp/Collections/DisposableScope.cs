@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Acolyte.Assertions;
+using Acolyte.Basic.Disposal;
 using Acolyte.Common;
-using Acolyte.Common.Disposal;
 
 namespace Acolyte.Collections
 {

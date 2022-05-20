@@ -1,7 +1,7 @@
 ﻿using System;
 using Acolyte.Assertions;
 
-namespace Acolyte.Common.Disposal
+namespace Acolyte.Basic.Disposal
 {
     public sealed class DisposableAction : Disposable
     {

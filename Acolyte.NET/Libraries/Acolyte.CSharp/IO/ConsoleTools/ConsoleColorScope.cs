@@ -1,6 +1,6 @@
 ﻿using System;
 using Acolyte.Assertions;
-using Acolyte.Common.Disposal;
+using Acolyte.Basic.Disposal;
 
 namespace Acolyte.IO.ConsoleTools
 {

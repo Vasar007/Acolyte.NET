@@ -1,8 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Acolyte.Assertions;
+using Acolyte.Basic.Disposal;
 using Acolyte.Common;
-using Acolyte.Common.Disposal;
 using Acolyte.Tests.Exceptions;
 using Acolyte.Threading;
 
