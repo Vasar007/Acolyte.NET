@@ -7,7 +7,7 @@ namespace Acolyte.Basic.Disposal
 {
     public static class DisposableExtensions
     {
-        private const string ErrorFormat = "Failed to dispose \"{0}\"{1}Full call stack:{2}{3}";
+        private const string ErrorFormat = "Failed to dispose \"{0}\"{1}Full call stack:{1}{2}";
 
         public static void DisposeSafe(this IDisposable? self)
         {
@@ -17,17 +17,11 @@ namespace Acolyte.Basic.Disposal
             }
             catch (ObjectDisposedException ex)
             {
-                var currentStack = new StackTrace(true);
-                Trace.TraceWarning(
-                    ErrorFormat, ex, self, Environment.NewLine, currentStack
-                );
+                Trace.TraceWarning(ErrorFormat, self, System.Environment.NewLine, ex);
             }
             catch (Exception ex)
             {
-                var currentStack = new StackTrace(true);
-                Trace.TraceError(
-                    ErrorFormat, ex, self, Environment.NewLine, currentStack
-                );
+                Trace.TraceError(ErrorFormat, self, System.Environment.NewLine, ex);
             }
         }
 
