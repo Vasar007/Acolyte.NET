@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using Acolyte.Assertions;
+using Acolyte.Basic.Disposal.Extensions;
 
 namespace Acolyte.Common
 {

@@ -1,9 +1,9 @@
 ﻿using System;
 using Acolyte.Assertions;
 
-namespace Acolyte.Common.Extensions
+namespace Acolyte.Common
 {
-    public static class ConvertibleExtensionMethods
+    public static class ConvertibleExtensions
     {
         public static bool HasFlag<TConvertible>(this TConvertible value, TConvertible flag)
             where TConvertible : IConvertible

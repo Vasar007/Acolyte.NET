@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using Acolyte.Common;
 
-namespace Acolyte.Common
+namespace Acolyte.Basic.Disposal
 {
     public static class DisposableExtensions
     {
