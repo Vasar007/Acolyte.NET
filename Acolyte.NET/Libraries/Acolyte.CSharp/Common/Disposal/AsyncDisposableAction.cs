@@ -30,7 +30,7 @@ namespace Acolyte.Common.Disposal
 
         protected override async ValueTask DisposeInternalAsync()
         {
-            await _onDisposeActionAsync();
+            await _onDisposeActionAsync().ConfigureAwait(false);
         }
 
         #endregion

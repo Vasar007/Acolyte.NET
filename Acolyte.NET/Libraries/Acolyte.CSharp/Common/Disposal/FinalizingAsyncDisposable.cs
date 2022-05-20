@@ -39,7 +39,7 @@ namespace Acolyte.Common.Disposal
             // Check to see if Dispose has already been called.
             if (Disposed) return;
 
-            await DisposeAsync(true);
+            await DisposeAsync(true).ConfigureAwait(false);
 
             // This object will be cleaned up by the Dispose method.
             // Therefore, you should call GC.SuppressFinalize to

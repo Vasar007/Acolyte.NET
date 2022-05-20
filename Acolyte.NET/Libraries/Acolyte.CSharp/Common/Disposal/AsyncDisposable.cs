@@ -38,7 +38,7 @@ namespace Acolyte.Common.Disposal
             // Check to see if Dispose has already been called.
             if (Disposed) return;
 
-            await DisposeInternalAsync();
+            await DisposeInternalAsync().ConfigureAwait(false);
 
             // Note disposing has been done.
             Disposed = true;

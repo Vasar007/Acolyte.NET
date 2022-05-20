@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Acolyte.Assertions;
@@ -22,7 +23,7 @@ namespace Acolyte.Threading.Tasks
 
             try
             {
-                TResult taskResult = await task.ConfigureAwait(continueOnCapturedContext: false);
+                TResult taskResult = await task.ConfigureAwait(false);
                 return Result.Ok(taskResult);
             }
             catch (Exception ex)
@@ -38,7 +39,7 @@ namespace Acolyte.Threading.Tasks
 
             try
             {
-                await task.ConfigureAwait(continueOnCapturedContext: false);
+                await task.ConfigureAwait(false);
                 return Result.Ok(new NoneResult());
             }
             catch (Exception ex)
@@ -184,6 +185,7 @@ namespace Acolyte.Threading.Tasks
                 return continuationFunction(p);
             });
         }
+
         public static Task<TNewResult> CheckedContinueWith<TNewResult>(this Task task,
             Func<Task, Task<TNewResult>> continuationFunction)
         {
@@ -350,16 +352,20 @@ namespace Acolyte.Threading.Tasks
         {
             _ = task.ThrowIfNull(nameof(task));
 
-            var completion = await Task.WhenAny(task, DelayedResultTask(timeout));
-            await completion;
+            var completion = await Task.WhenAny(task, DelayedResultTask(timeout))
+                .ConfigureAwait(false);
+
+            await completion.ConfigureAwait(false);
         }
 
         public static async Task AwaitWithTimeoutAndExceptionAsync(this Task task, TimeSpan timeout)
         {
             _ = task.ThrowIfNull(nameof(task));
 
-            var completion = await Task.WhenAny(task, DelayedTimeoutExceptionTask(timeout));
-            await completion;
+            var completion = await Task.WhenAny(task, DelayedTimeoutExceptionTask(timeout))
+                .ConfigureAwait(false);
+
+            await completion.ConfigureAwait(false);
         }
 
         private static Task DelayedResultTask(TimeSpan delay)
@@ -369,7 +375,7 @@ namespace Acolyte.Threading.Tasks
 
         private static async Task DelayedTimeoutExceptionTask(TimeSpan delay)
         {
-            await Task.Delay(delay);
+            await Task.Delay(delay).ConfigureAwait(false);
             throw new TimeoutException();
         }
 
@@ -384,8 +390,9 @@ namespace Acolyte.Threading.Tasks
             _ = task.ThrowIfNull(nameof(task));
             fallbackFactory.ThrowIfNull(nameof(fallbackFactory));
 
-            var completion = await Task.WhenAny(task, DelayedResultTask(timeout, fallbackFactory));
-            return await completion;
+            var completion = await Task.WhenAny(task, DelayedResultTask(timeout, fallbackFactory))
+                .ConfigureAwait(false);
+            return await completion.ConfigureAwait(false);
         }
 
         public static async Task<T> AwaitWithTimeoutAndExceptionAsync<T>(this Task<T> task,
@@ -393,20 +400,60 @@ namespace Acolyte.Threading.Tasks
         {
             _ = task.ThrowIfNull(nameof(task));
 
-            var completion = await Task.WhenAny(task, DelayedTimeoutExceptionTask<T>(timeout));
-            return await completion;
+            var completion = await Task.WhenAny(task, DelayedTimeoutExceptionTask<T>(timeout))
+                .ConfigureAwait(false);
+
+            return await completion.ConfigureAwait(false);
         }
 
         private static async Task<T> DelayedResultTask<T>(TimeSpan delay, Func<T> fallbackFactory)
         {
-            await Task.Delay(delay);
+            await Task.Delay(delay).ConfigureAwait(false);
             return fallbackFactory();
         }
 
         private static async Task<T> DelayedTimeoutExceptionTask<T>(TimeSpan delay)
         {
-            await Task.Delay(delay);
+            await Task.Delay(delay).ConfigureAwait(false);
             throw new TimeoutException();
+        }
+
+        #endregion
+
+        #region Configure
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static ConfiguredTaskAwaitable WithoutCapturedContext(this Task task)
+        {
+            _ = task.ThrowIfNull(nameof(task));
+
+            return task.ConfigureAwait(false);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static ConfiguredTaskAwaitable<TResult> WithoutCapturedContext<TResult>(
+            this Task<TResult> task)
+        {
+            _ = task.ThrowIfNull(nameof(task));
+
+            return task.ConfigureAwait(false);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static ConfiguredTaskAwaitable WithCapturedContext(this Task task)
+        {
+            _ = task.ThrowIfNull(nameof(task));
+
+            return task.ConfigureAwait(true);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static ConfiguredTaskAwaitable<TResult> WithCapturedContext<TResult>(
+            this Task<TResult> task)
+        {
+            _ = task.ThrowIfNull(nameof(task));
+
+            return task.ConfigureAwait(true);
         }
 
         #endregion

@@ -50,7 +50,7 @@
 
   <PropertyGroup Condition="'$(TargetFramework)' == 'netstandard2.1'">
     <AssemblyTitle>Acolyte.CSharp .NET Standard 2.1</AssemblyTitle>
-    <DefineConstants>$(DefineConstants);NETSTANDARD2_1;ASYNC_ENUMERABLE;ASYNC_DISPOSABLE;ITUIPLE</DefineConstants>
+    <DefineConstants>$(DefineConstants);NETSTANDARD2_1;ASYNC_ENUMERABLE;ASYNC_DISPOSABLE;ITUIPLE;VALUE_TASK</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>

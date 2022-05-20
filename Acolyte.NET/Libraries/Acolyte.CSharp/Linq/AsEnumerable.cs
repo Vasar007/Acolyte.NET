@@ -43,7 +43,7 @@ namespace Acolyte.Linq
 
             var result = new List<T>();
             await foreach (T entity in source.WithCancellation(cancellationToken)
-                .ConfigureAwait(continueOnCapturedContext: false))
+                .ConfigureAwait(false))
             {
                 result.Add(entity);
             }

@@ -56,7 +56,7 @@ namespace Acolyte.Linq
 
             var results = new List<Task>();
             await foreach (TSource item in source.WithCancellation(cancellationToken)
-                .ConfigureAwait(continueOnCapturedContext: false))
+                .ConfigureAwait(false))
             {
                 var task = ForEachAsyncOperator.PerformActionWithCancellation(
                     item, action, cancellationToken
@@ -65,7 +65,7 @@ namespace Acolyte.Linq
             }
 
             return await TaskHelper.WhenAllResultsOrExceptions(results)
-                .ConfigureAwait(continueOnCapturedContext: false);
+                .ConfigureAwait(false);
         }
 
         /// <summary>
@@ -113,7 +113,7 @@ namespace Acolyte.Linq
             var results = new List<Task>();
             int index = 0;
             await foreach (TSource item in source.WithCancellation(cancellationToken)
-                .ConfigureAwait(continueOnCapturedContext: false))
+                .ConfigureAwait(false))
             {
                 var task = ForEachAsyncOperator.PerformActionWithCancellation(
                     item, index, action, cancellationToken
@@ -123,7 +123,7 @@ namespace Acolyte.Linq
             }
 
             return await TaskHelper.WhenAllResultsOrExceptions(results)
-                .ConfigureAwait(continueOnCapturedContext: false);
+                .ConfigureAwait(false);
         }
     }
 }
