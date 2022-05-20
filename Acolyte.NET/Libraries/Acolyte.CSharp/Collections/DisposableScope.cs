@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Acolyte.Assertions;
 using Acolyte.Basic.Disposal;
-using Acolyte.Basic.Disposal.Extensions;
 
 namespace Acolyte.Collections
 {

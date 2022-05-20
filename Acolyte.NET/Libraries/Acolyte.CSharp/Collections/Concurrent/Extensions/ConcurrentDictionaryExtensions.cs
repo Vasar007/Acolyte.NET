@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Acolyte.Assertions;
-using Acolyte.Basic.Disposal.Extensions;
+using Acolyte.Basic.Disposal;
 
 namespace Acolyte.Collections.Concurrent
 {
