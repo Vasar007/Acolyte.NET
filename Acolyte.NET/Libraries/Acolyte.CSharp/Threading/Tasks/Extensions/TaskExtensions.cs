@@ -113,8 +113,9 @@ namespace Acolyte.Threading.Tasks
                         {
                             cancellationTokenSource.Cancel();
 
-                            Exception exception =
-                                ExceptionsHelper.UnwrapAggregateExceptionIfSingle(p.Exception);
+                            Exception? exception = null;
+                            if (p.Exception is not null)
+                                exception = ExceptionsHelper.UnwrapAggregateExceptionIfSingle(p.Exception);
 
                             throw new TaskFaultedException(
                                 "Request cancellation because a task is in the faulted state.",

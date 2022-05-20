@@ -1,4 +1,6 @@
-﻿#if VALUE_TASK
+﻿#pragma warning disable format // dotnet format fails indentation for regions :(
+
+#if VALUE_TASK
 
 using System;
 using System.Runtime.CompilerServices;
@@ -12,7 +14,7 @@ namespace Acolyte.Threading.Tasks.Extensions
 {
     public static class ValueTaskExtensions
     {
-#region Results Or Exceptions
+        #region Results Or Exceptions
 
         public static async ValueTask<Result<TResult, Exception>> WrapResultOrExceptionAsync<TResult>(
             this ValueTask<TResult> task)
@@ -42,9 +44,9 @@ namespace Acolyte.Threading.Tasks.Extensions
             }
         }
 
-#endregion
+        #endregion
 
-#region Cancellation
+        #region Cancellation
 
         public static async ValueTask<TResult> CancelIfFaulted<TResult>(
             this ValueTask<TResult> task, CancellationTokenSource cancellationTokenSource)
@@ -66,9 +68,9 @@ namespace Acolyte.Threading.Tasks.Extensions
             }
         }
 
-#endregion
+        #endregion
 
-#region Configure
+        #region Configure
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ConfiguredValueTaskAwaitable WithoutCapturedContext(this ValueTask task)
@@ -96,7 +98,7 @@ namespace Acolyte.Threading.Tasks.Extensions
             return task.ConfigureAwait(true);
         }
 
-#endregion
+        #endregion
     }
 }
 
