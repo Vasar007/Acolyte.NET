@@ -33,7 +33,7 @@ namespace Acolyte.Exceptions
         /// </summary>
         /// <param name="message">The exception description.</param>
         /// <param name="innerException">The exception inner cause.</param>
-        public MultipleArgumentException(string message, Exception innerException)
+        public MultipleArgumentException(string message, Exception? innerException)
             : base(message, innerException)
         {
         }
@@ -73,7 +73,7 @@ namespace Acolyte.Exceptions
         /// <exception cref="ArgumentNullException">
         /// The <paramref name="paramNames" /> parameter is <see langword="null" />.
         /// </exception>
-        public MultipleArgumentException(string message, Exception innerException,
+        public MultipleArgumentException(string message, Exception? innerException,
             params string[] paramNames)
             : base(FormatMessage(message, paramNames), innerException)
         {
@@ -110,7 +110,7 @@ namespace Acolyte.Exceptions
         /// <exception cref="ArgumentNullException">
         /// The <paramref name="paramNames" /> parameter is <see langword="null" />.
         /// </exception>
-        public MultipleArgumentException(string message, Exception innerException,
+        public MultipleArgumentException(string message, Exception? innerException,
             IEnumerable<string> paramNames)
             : base(FormatMessage(message, paramNames), innerException)
         {

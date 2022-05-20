@@ -30,7 +30,7 @@ namespace Acolyte.Exceptions
         /// </summary>
         /// <param name="message">The exception description.</param>
         /// <param name="innerException">The exception inner cause.</param>
-        public TaskFaultedException(string message, Exception innerException)
+        public TaskFaultedException(string message, Exception? innerException)
             : base(message, innerException)
         {
         }
