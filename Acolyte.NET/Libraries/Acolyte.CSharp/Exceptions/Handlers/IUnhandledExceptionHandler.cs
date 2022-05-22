@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Acolyte.Exceptions
+namespace Acolyte.Exceptions.Handlers
 {
     /// <summary>
     /// Provides interface for exception handler used by
