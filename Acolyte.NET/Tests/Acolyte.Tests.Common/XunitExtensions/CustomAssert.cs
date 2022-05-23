@@ -14,14 +14,14 @@ namespace Xunit
         {
             if (value) return;
 
-            Fail(value.ReasonString);
+            Fail(value.Reason);
         }
 
         public static void False(Reasonable<bool> value)
         {
             if (!value) return;
 
-            Fail(value.ReasonString);
+            Fail(value.Reason);
         }
     }
 }

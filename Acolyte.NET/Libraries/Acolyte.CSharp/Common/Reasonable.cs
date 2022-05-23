@@ -29,16 +29,14 @@ namespace Acolyte.Common
             ? throw new InvalidOperationException($"{nameof(Value)} property was null.")
             : Value;
 
-        public object Reason { get; }
-
-        public string ReasonString => Reason.ToString();
+        public string Reason { get; }
 
         public string FormattedString => ToString();
 
 
         public Reasonable(
             T? value,
-            object reason)
+            string reason)
         {
             Value = value;
             Reason = reason.ThrowIfNull(nameof(reason));
@@ -154,11 +152,6 @@ namespace Acolyte.Common
             return new Reasonable<T>(value, reason);
         }
 
-        public static Reasonable<T> Wrap<T>(T? value, object reason)
-        {
-            return new Reasonable<T>(value, reason);
-        }
-
         public static Reasonable<T> Wrap<T>(T? value, string reasonFormat, params object[] args)
         {
             return Wrap(value, FormatReason(reasonFormat, args));
@@ -166,19 +159,20 @@ namespace Acolyte.Common
 
         public static Reasonable<T?> WrapAsNullable<T>(T value, string reasonFormat,
             params object[] args)
-           where T : struct
+            where T : struct
         {
             return Wrap<T?>(value, FormatReason(reasonFormat, args));
         }
 
-        private static object FormatReason(string reasonFormat, params object[] args)
+        private static string FormatReason(string reasonFormat, params object[] args)
         {
             if (args.IsNullOrEmpty())
             {
                 return reasonFormat;
             }
 
-            return new FormatString(reasonFormat, args);
+            var formatted = new FormatString(reasonFormat, args);
+            return formatted.ToString();
         }
 
         public static Reasonable<T1> Wrap<T1, T2>(T1 value, Reasonable<T2> reasonable)
@@ -220,11 +214,6 @@ namespace Acolyte.Common
         }
 
         public static Reasonable<T> Because<T>(this T? value, string reason)
-        {
-            return Wrap(value, reason);
-        }
-
-        public static Reasonable<T> Because<T>(this T? value, object reason)
         {
             return Wrap(value, reason);
         }
