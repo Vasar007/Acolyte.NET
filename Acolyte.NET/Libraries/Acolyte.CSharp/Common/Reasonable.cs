@@ -33,6 +33,12 @@ namespace Acolyte.Common
 
         public string FormattedString => ToString();
 
+        public bool IsNull => Value is null;
+
+        public bool HasValue => !IsNull;
+
+        public bool IsDefault => Equals(Value, default(T));
+
 
         public Reasonable(
             T? value,
@@ -69,11 +75,8 @@ namespace Acolyte.Common
         /// <inheritdoc />
         public bool Equals(Reasonable<T> other)
         {
-            if (!Reason.Equals(other.Reason)) return false;
-
-            return Value is null
-                ? other.Value is null
-                : Value.Equals(other.Value);
+            return Equals(Reason, other.Reason)
+                && Equals(Value, other.Value);
         }
 
         #endregion
@@ -216,6 +219,19 @@ namespace Acolyte.Common
         public static Reasonable<T> Because<T>(this T? value, string reason)
         {
             return Wrap(value, reason);
+        }
+
+        public static Reasonable<T> AsReasonable<T>(this T value)
+        {
+            return Ok(value);
+        }
+
+        public static Reasonable<TResult> Select<TSource, TResult>(this Reasonable<TSource> self,
+            Func<TSource?, TResult> selector)
+        {
+            selector.ThrowIfNull(nameof(selector));
+
+            return new Reasonable<TResult>(selector(self.Value), self.Reason);
         }
     }
 }
