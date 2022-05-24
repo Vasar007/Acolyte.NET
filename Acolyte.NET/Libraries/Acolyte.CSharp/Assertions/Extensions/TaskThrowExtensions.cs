@@ -8,29 +8,6 @@ namespace Acolyte.Assertions
     public static partial class ThrowsExtensions
     {
         /// <summary>
-        /// Provides <see langword="null" /> check for task reference type value.
-        /// This method does not return original object to avoid compiler warnings.
-        /// </summary>
-        /// <param name="obj">Instance to check.</param>
-        /// <param name="paramName">
-        /// Name of the parameter for error message. Use operator <see langword="nameof" /> to get
-        /// proper parameter name.
-        /// </param>
-        /// <exception cref="ArgumentNullException">
-        /// <paramref name="obj" /> is <see langword="null" />. -or-
-        /// <paramref name="paramName" /> is <see langword="null" />.
-        /// </exception>
-        public static void ThrowIfNullDiscard(this Task? obj, string paramName)
-        {
-            paramName.ThrowIfNull(nameof(paramName));
-
-            if (obj is null)
-            {
-                throw new ArgumentNullException(paramName);
-            }
-        }
-
-        /// <summary>
         /// Checks task state and throws exception if task is in the
         /// <see cref="TaskStatus.Faulted" /> state.
         /// </summary>

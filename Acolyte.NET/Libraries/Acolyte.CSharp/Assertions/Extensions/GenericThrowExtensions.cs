@@ -38,6 +38,26 @@ namespace Acolyte.Assertions
         }
 
         /// <summary>
+        /// Provides <see langword="null" /> check for every reference type value.
+        /// This method does not return original object to avoid compiler warnings.
+        /// </summary>
+        /// <typeparam name="T">Type which extension method will apply to.</typeparam>
+        /// <param name="obj">Instance to check.</param>
+        /// <param name="paramName">
+        /// Name of the parameter for error message. Use operator <see langword="nameof" /> to get
+        /// proper parameter name.
+        /// </param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="obj" /> is <see langword="null" />. -or-
+        /// <paramref name="paramName" /> is <see langword="null" />.
+        /// </exception>
+        public static void ThrowIfNullDiscard<T>(this T? obj, string paramName)
+            where T : class?
+        {
+            obj.ThrowIfNull(paramName);
+        }
+
+        /// <summary>
         /// Provides <see langword="null" /> check for every object value.
         /// </summary>
         /// <typeparam name="T">Type which extension method will apply to.</typeparam>
