@@ -19,7 +19,7 @@ namespace Acolyte.Threading.Tasks
         public static async Task<Result<TResult, Exception>> WrapResultOrExceptionAsync<TResult>(
             this Task<TResult> task)
         {
-            _ = task.ThrowIfNull(nameof(task));
+            task.ThrowIfNullDiscard(nameof(task));
 
             try
             {
@@ -35,7 +35,7 @@ namespace Acolyte.Threading.Tasks
         public static async Task<Result<NoneResult, Exception>> WrapResultOrExceptionAsync(
             this Task task)
         {
-            _ = task.ThrowIfNull(nameof(task));
+            task.ThrowIfNullDiscard(nameof(task));
 
             try
             {
@@ -96,7 +96,7 @@ namespace Acolyte.Threading.Tasks
         public static Task<TResult> CancelIfFaulted<TResult>(
             this Task<TResult> task, CancellationTokenSource cancellationTokenSource)
         {
-            _ = task.ThrowIfNull(nameof(task));
+            task.ThrowIfNullDiscard(nameof(task));
             cancellationTokenSource.ThrowIfNull(nameof(cancellationTokenSource));
 
             return task.ContinueWith(
@@ -138,7 +138,7 @@ namespace Acolyte.Threading.Tasks
 
         public static Task CheckedContinueWith(this Task task, Action<Task> continuationAction)
         {
-            _ = task.ThrowIfNull(nameof(task));
+            task.ThrowIfNullDiscard(nameof(task));
             continuationAction.ThrowIfNull(nameof(continuationAction));
 
             return task.ContinueWith(p =>
@@ -151,7 +151,7 @@ namespace Acolyte.Threading.Tasks
         public static Task CheckedContinueWith<TResult>(this Task<TResult> task,
             Action<Task<TResult>> continuationAction)
         {
-            _ = task.ThrowIfNull(nameof(task));
+            task.ThrowIfNullDiscard(nameof(task));
             continuationAction.ThrowIfNull(nameof(continuationAction));
 
             return task.ContinueWith(p =>
@@ -164,7 +164,7 @@ namespace Acolyte.Threading.Tasks
         public static Task<TNewResult> CheckedContinueWith<TResult, TNewResult>(
             this Task<TResult> task, Func<Task<TResult>, TNewResult> continuationFunction)
         {
-            _ = task.ThrowIfNull(nameof(task));
+            task.ThrowIfNullDiscard(nameof(task));
             continuationFunction.ThrowIfNull(nameof(continuationFunction));
 
             return task.ContinueWith(p =>
@@ -177,7 +177,7 @@ namespace Acolyte.Threading.Tasks
         public static Task<TResult> CheckedContinueWith<TResult>(this Task task,
             Func<Task, TResult> continuationFunction)
         {
-            _ = task.ThrowIfNull(nameof(task));
+            task.ThrowIfNullDiscard(nameof(task));
             continuationFunction.ThrowIfNull(nameof(continuationFunction));
 
             return task.ContinueWith(p =>
@@ -190,7 +190,7 @@ namespace Acolyte.Threading.Tasks
         public static Task<TNewResult> CheckedContinueWith<TNewResult>(this Task task,
             Func<Task, Task<TNewResult>> continuationFunction)
         {
-            _ = task.ThrowIfNull(nameof(task));
+            task.ThrowIfNullDiscard(nameof(task));
             continuationFunction.ThrowIfNull(nameof(continuationFunction));
 
             return task.ContinueWith(p =>
@@ -203,7 +203,7 @@ namespace Acolyte.Threading.Tasks
         public static Task<TNewResult> CheckedContinueWith<TFirst, TNewResult>(
             this Task<TFirst> task, Func<Task<TFirst>, Task<TNewResult>> continuationFunction)
         {
-            _ = task.ThrowIfNull(nameof(task));
+            task.ThrowIfNullDiscard(nameof(task));
             continuationFunction.ThrowIfNull(nameof(continuationFunction));
 
             return task.ContinueWith(p =>
@@ -226,7 +226,7 @@ namespace Acolyte.Threading.Tasks
         /// <returns>The result of the completed task.</returns>
         public static T ResultWithUnwrappedExceptions<T>(this Task<T> task)
         {
-            _ = task.ThrowIfNull(nameof(task));
+            task.ThrowIfNullDiscard(nameof(task));
 
             task.WaitWithUnwrappedExceptions();
             return task.Result;
@@ -239,7 +239,7 @@ namespace Acolyte.Threading.Tasks
         /// <param name="task">The task to wait for.</param>
         public static void WaitWithUnwrappedExceptions(this Task task)
         {
-            _ = task.ThrowIfNull(nameof(task));
+            task.ThrowIfNullDiscard(nameof(task));
 
             try
             {
@@ -262,7 +262,7 @@ namespace Acolyte.Threading.Tasks
         /// </param>
         public static bool WaitWithUnwrappedExceptions(this Task task, TimeSpan timeout)
         {
-            _ = task.ThrowIfNull(nameof(task));
+            task.ThrowIfNullDiscard(nameof(task));
 
             try
             {
@@ -284,7 +284,7 @@ namespace Acolyte.Threading.Tasks
         /// </param>
         public static bool WaitWithUnwrappedExceptions(this Task task, int millisecondsTimeout)
         {
-            _ = task.ThrowIfNull(nameof(task));
+            task.ThrowIfNullDiscard(nameof(task));
 
             try
             {
@@ -310,7 +310,7 @@ namespace Acolyte.Threading.Tasks
         public static bool WaitWithUnwrappedExceptions(this Task task, int millisecondsTimeout,
             CancellationToken cancellationToken)
         {
-            _ = task.ThrowIfNull(nameof(task));
+            task.ThrowIfNullDiscard(nameof(task));
 
             try
             {
@@ -333,7 +333,7 @@ namespace Acolyte.Threading.Tasks
         public static void WaitWithUnwrappedExceptions(this Task task,
             CancellationToken cancellationToken)
         {
-            _ = task.ThrowIfNull(nameof(task));
+            task.ThrowIfNullDiscard(nameof(task));
 
             try
             {
@@ -351,7 +351,7 @@ namespace Acolyte.Threading.Tasks
 
         public static async Task AwaitWithTimeoutAsync(this Task task, TimeSpan timeout)
         {
-            _ = task.ThrowIfNull(nameof(task));
+            task.ThrowIfNullDiscard(nameof(task));
 
             var completion = await Task.WhenAny(task, DelayedResultTask(timeout))
                 .ConfigureAwait(false);
@@ -361,7 +361,7 @@ namespace Acolyte.Threading.Tasks
 
         public static async Task AwaitWithTimeoutAndExceptionAsync(this Task task, TimeSpan timeout)
         {
-            _ = task.ThrowIfNull(nameof(task));
+            task.ThrowIfNullDiscard(nameof(task));
 
             var completion = await Task.WhenAny(task, DelayedTimeoutExceptionTask(timeout))
                 .ConfigureAwait(false);
@@ -388,7 +388,7 @@ namespace Acolyte.Threading.Tasks
         public static async Task<T> AwaitWithTimeoutAndFallbackAsync<T>(this Task<T> task,
             TimeSpan timeout, Func<T> fallbackFactory)
         {
-            _ = task.ThrowIfNull(nameof(task));
+            task.ThrowIfNullDiscard(nameof(task));
             fallbackFactory.ThrowIfNull(nameof(fallbackFactory));
 
             var completion = await Task.WhenAny(task, DelayedResultTask(timeout, fallbackFactory))
@@ -399,7 +399,7 @@ namespace Acolyte.Threading.Tasks
         public static async Task<T> AwaitWithTimeoutAndExceptionAsync<T>(this Task<T> task,
             TimeSpan timeout)
         {
-            _ = task.ThrowIfNull(nameof(task));
+            task.ThrowIfNullDiscard(nameof(task));
 
             var completion = await Task.WhenAny(task, DelayedTimeoutExceptionTask<T>(timeout))
                 .ConfigureAwait(false);
@@ -426,7 +426,7 @@ namespace Acolyte.Threading.Tasks
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ConfiguredTaskAwaitable WithoutCapturedContext(this Task task)
         {
-            _ = task.ThrowIfNull(nameof(task));
+            task.ThrowIfNullDiscard(nameof(task));
 
             return task.ConfigureAwait(false);
         }
@@ -435,7 +435,7 @@ namespace Acolyte.Threading.Tasks
         public static ConfiguredTaskAwaitable<TResult> WithoutCapturedContext<TResult>(
             this Task<TResult> task)
         {
-            _ = task.ThrowIfNull(nameof(task));
+            task.ThrowIfNullDiscard(nameof(task));
 
             return task.ConfigureAwait(false);
         }
@@ -443,7 +443,7 @@ namespace Acolyte.Threading.Tasks
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ConfiguredTaskAwaitable WithCapturedContext(this Task task)
         {
-            _ = task.ThrowIfNull(nameof(task));
+            task.ThrowIfNullDiscard(nameof(task));
 
             return task.ConfigureAwait(true);
         }
@@ -452,7 +452,7 @@ namespace Acolyte.Threading.Tasks
         public static ConfiguredTaskAwaitable<TResult> WithCapturedContext<TResult>(
             this Task<TResult> task)
         {
-            _ = task.ThrowIfNull(nameof(task));
+            task.ThrowIfNullDiscard(nameof(task));
 
             return task.ConfigureAwait(true);
         }
