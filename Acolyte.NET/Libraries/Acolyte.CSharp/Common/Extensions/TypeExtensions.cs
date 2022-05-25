@@ -209,5 +209,24 @@ namespace Acolyte.Common
 
             return type;
         }
+
+        /// <summary>
+        /// Returns original type for <paramref name="value" /> if <paramref name="value" /> is not
+        /// <see langword="null" />, otherwise <see langword="typeof" /> operator will be used to
+        /// get type from <paramref name="value" /> based on generic specification.
+        /// </summary>
+        /// <param name="value">A value to get type from.</param>
+        /// <typeparam name="TValue">Original type of the value.</typeparam>
+        /// <returns>
+        /// <paramref name="value" />.<see cref="object.GetType" /> if <paramref name="value" /> is
+        /// not <see langword="null" />, <see langword="typeof" />(<typeparamref name="TValue" />)
+        /// otherwise.
+        /// </returns>
+        public static Type GetTypeFromInstanceOrFromTypeArgument<TValue>(this TValue? value)
+        {
+            return value is null
+                ? typeof(TValue)
+                : value.GetType();
+        }
     }
 }
