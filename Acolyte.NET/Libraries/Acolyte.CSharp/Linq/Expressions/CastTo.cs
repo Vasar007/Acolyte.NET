@@ -26,7 +26,7 @@ namespace Acolyte.Linq.Expressions
             }
 
             private static Func<TSourceInternal, TTarget> ConvertInternal(
-                Func<ParameterExpression, Type, UnaryExpression> conversionBodyFactory)
+                Func<Expression, Type, UnaryExpression> conversionBodyFactory)
             {
                 var parameter = Expression.Parameter(typeof(TSourceInternal));
                 var conversionBody = conversionBodyFactory(parameter, typeof(TTarget));
