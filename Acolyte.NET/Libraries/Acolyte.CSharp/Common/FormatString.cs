@@ -1,14 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Acolyte.Assertions;
 
 namespace Acolyte.Common
 {
     public sealed class FormatString : IEquatable<FormatString>
     {
-        private readonly string _format;
-
-        private readonly object[] _args;
-
         private readonly Lazy<string> _lazyValue;
 
         public string Value => _lazyValue.Value;
@@ -16,12 +14,19 @@ namespace Acolyte.Common
 
         public FormatString(
             string format,
-            params object[] args)
+            IEnumerable<object> args)
         {
-            _format = format.ThrowIfNull(nameof(format));
-            _args = args.ThrowIfNull(nameof(args));
+            format.ThrowIfNull(nameof(format));
+            args.ThrowIfNull(nameof(args));
 
-            _lazyValue = new Lazy<string>(() => string.Format(_format, _args), isThreadSafe: false);
+            _lazyValue = new Lazy<string>(() => FormatInternal(format, args));
+        }
+
+        public FormatString(
+            string format,
+            params object[] args)
+            : this(format, args.ThrowIfNull(nameof(args)).AsEnumerable())
+        {
         }
 
         #region Object Overridden Methods
@@ -86,6 +91,11 @@ namespace Acolyte.Common
         public static bool operator !=(FormatString? left, FormatString? right)
         {
             return !(left == right);
+        }
+
+        private string FormatInternal(string format, IEnumerable<object> args)
+        {
+            return string.Format(format, args);
         }
     }
 }
