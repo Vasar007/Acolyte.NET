@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Linq.Expressions;
+using Acolyte.Assertions;
 using Acolyte.Reflection;
 
 namespace Acolyte.Linq.Expressions
@@ -14,6 +15,9 @@ namespace Acolyte.Linq.Expressions
 
         public static object Cast(Type toType, object value)
         {
+            toType.ThrowIfNull(nameof(toType));
+            value.ThrowIfNull(nameof(value));
+
             Func<object, object> convertor = GetOrAddCaster(
                 toType, value, (expression, type) => Expression.Convert(expression, type)
             );
@@ -22,6 +26,9 @@ namespace Acolyte.Linq.Expressions
 
         public static object CastChecked(Type toType, object value)
         {
+            toType.ThrowIfNull(nameof(toType));
+            value.ThrowIfNull(nameof(value));
+
             Func<object, object> convertor = GetOrAddCaster(
                 toType, value, (expression, type) => Expression.ConvertChecked(expression, type)
             );
