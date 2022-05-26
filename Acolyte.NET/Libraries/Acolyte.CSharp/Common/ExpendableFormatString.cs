@@ -12,6 +12,7 @@ namespace Acolyte.Common
 
         private string? _value;
 
+
         public ExpendableFormatString(
             string format,
             IEnumerable<object> initialArgs)
