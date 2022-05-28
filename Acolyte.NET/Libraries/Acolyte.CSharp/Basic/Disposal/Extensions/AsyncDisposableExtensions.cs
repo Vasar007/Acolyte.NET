@@ -1,19 +1,24 @@
-﻿using System;
+﻿#if ASYNC_DISPOSABLE
+
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using Acolyte.Common;
 
 namespace Acolyte.Basic.Disposal
 {
-    public static class DisposableExtensions
+    public static class AsyncDisposableExtensions
     {
         private const string ErrorFormat = "Failed to dispose: {0} \"{1}\"{2}Full call stack:{2}{3}";
 
-        public static void DisposeSafe(this IDisposable? self)
+        public static async ValueTask DisposeSafe(this IAsyncDisposable? self)
         {
             try
             {
-                self?.Dispose();
+                if (self is null) return;
+
+                await self.DisposeAsync();
             }
             catch (ObjectDisposedException ex)
             {
@@ -27,32 +32,34 @@ namespace Acolyte.Basic.Disposal
             }
         }
 
-        public static void DisposeSafe<T>(this Lazy<T?>? self)
-            where T : IDisposable
+        public static async ValueTask DisposeSafe<T>(this Lazy<T?>? self)
+            where T : IAsyncDisposable
         {
             if (self is null) return;
             if (!self.IsValueCreated) return;
 
-            self.Value.DisposeSafe();
+            await self.Value.DisposeSafe();
         }
 
-        public static void DisposeSafe<T>(this ResetableLazy<T?>? self)
-            where T : IDisposable
+        public static async ValueTask DisposeSafe<T>(this ResetableLazy<T?>? self)
+            where T : IAsyncDisposable
         {
             if (self is null) return;
             if (!self.IsValueCreated) return;
 
-            self.Value.DisposeSafe();
+            await self.Value.DisposeSafe();
         }
 
-        public static void DisposeSafe(this IEnumerable<IDisposable?>? self)
+        public static async ValueTask DisposeSafe(this IEnumerable<IAsyncDisposable?>? self)
         {
             if (self is null) return;
 
             foreach (var obj in self)
             {
-                obj.DisposeSafe();
+                await obj.DisposeSafe();
             }
         }
     }
 }
+
+#endif
