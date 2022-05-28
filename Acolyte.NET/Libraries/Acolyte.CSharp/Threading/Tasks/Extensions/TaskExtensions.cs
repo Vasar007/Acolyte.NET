@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -46,6 +47,38 @@ namespace Acolyte.Threading.Tasks
             {
                 return Result.Error(ex);
             }
+        }
+
+        public static Task<Result<TResult, Exception>[]> WhenAllResultsOrExceptions<TResult>(
+            this Task<TResult>[] tasks)
+        {
+            tasks.ThrowIfNull(nameof(tasks));
+
+            return Task.WhenAll(tasks.Select(task => task.WrapResultOrExceptionAsync()));
+        }
+
+        public static Task<Result<TResult, Exception>[]> WhenAllResultsOrExceptions<TResult>(
+            this IEnumerable<Task<TResult>> tasks)
+        {
+            tasks.ThrowIfNull(nameof(tasks));
+
+            return Task.WhenAll(tasks.Select(task => task.WrapResultOrExceptionAsync()));
+        }
+
+        public static Task<Result<NoneResult, Exception>[]> WhenAllResultsOrExceptions(
+            this Task[] tasks)
+        {
+            tasks.ThrowIfNull(nameof(tasks));
+
+            return Task.WhenAll(tasks.Select(task => task.WrapResultOrExceptionAsync()));
+        }
+
+        public static Task<Result<NoneResult, Exception>[]> WhenAllResultsOrExceptions(
+            this IEnumerable<Task> tasks)
+        {
+            tasks.ThrowIfNull(nameof(tasks));
+
+            return Task.WhenAll(tasks.Select(task => task.WrapResultOrExceptionAsync()));
         }
 
         public static IReadOnlyList<Exception> UnwrapResultsOrExceptions(
