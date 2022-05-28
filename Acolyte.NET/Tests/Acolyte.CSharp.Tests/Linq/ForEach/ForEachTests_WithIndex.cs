@@ -8,22 +8,18 @@ using Acolyte.Tests.Collections;
 using Acolyte.Tests.Creators;
 using Xunit;
 
-namespace Acolyte.Tests.Linq
+namespace Acolyte.Tests.Linq.ForEach
 {
-    public sealed class ForEachTests
+    public sealed partial class ForEachTests
     {
-        public ForEachTests()
-        {
-        }
-
         #region Null Values
 
         [Fact]
-        public void ForEach_ForNullValue_ShouldFail()
+        public void ForEach_WithIndex_ForNullValue_ShouldFail()
         {
             // Arrange.
             const IEnumerable<int>? nullValue = null;
-            Action<int> discard = DiscardAction<int>.Instance;
+            Action<int, int> discard = DiscardAction<int, int>.Instance;
 
             // Act & Assert.
             Assert.Throws<ArgumentNullException>("source", () => nullValue!.ForEach(discard));
@@ -34,13 +30,13 @@ namespace Acolyte.Tests.Linq
         #region Empty Values
 
         [Fact]
-        public void ForEach_ForEmptyCollection_ShouldDoNothing()
+        public void ForEach_WithIndex_ForEmptyCollection_ShouldDoNothing()
         {
             // Arrange.
             IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
             IReadOnlyList<int> expectedCollection = emptyCollection.ToReadOnlyList();
             var actualCollection = new List<int>();
-            Action<int> action = i => actualCollection.Add(i);
+            Action<int, int> action = (item, index) => actualCollection.Add(item);
 
             // Act.
             emptyCollection.ForEach(action);
@@ -54,12 +50,12 @@ namespace Acolyte.Tests.Linq
         #region Predefined Values
 
         [Fact]
-        public void ForEach_ForPredefinedCollection_ShouldDoActionForEachItem()
+        public void ForEach_WithIndex_ForPredefinedCollection_ShouldDoActionForEachItem()
         {
             // Arrange.
             IReadOnlyList<int> expectedCollection = new[] { 1, 2, 3 };
             var actualCollection = new List<int>();
-            Action<int> action = i => actualCollection.Add(i);
+            Action<int, int> action = (item, index) => actualCollection.Add(item);
 
             // Act.
             expectedCollection.ForEach(action);
@@ -74,13 +70,13 @@ namespace Acolyte.Tests.Linq
 
         [Theory]
         [ClassData(typeof(PositiveTestCases))]
-        public void ForEach_ForCollectionWithSomeItems_ShouldDoActionForEachItem(int count)
+        public void ForEach_WithIndex_ForCollectionWithSomeItems_ShouldDoActionForEachItem(int count)
         {
             // Arrange.
             IReadOnlyList<int> expectedCollection =
                 TestDataCreator.CreateRandomInt32List(count);
             var actualCollection = new List<int>();
-            Action<int> action = i => actualCollection.Add(i);
+            Action<int, int> action = (item, index) => actualCollection.Add(item);
 
             // Act.
             expectedCollection.ForEach(action);
@@ -94,13 +90,13 @@ namespace Acolyte.Tests.Linq
         #region Random Values
 
         [Fact]
-        public void ForEach_ForCollectionWithRandomSize_ShouldDoActionForEachItem()
+        public void ForEach_WithIndex_ForCollectionWithRandomSize_ShouldDoActionForEachItem()
         {
             // Arrange.
             int count = TestDataCreator.GetRandomCountNumber();
             IReadOnlyList<int> expectedCollection = TestDataCreator.CreateRandomInt32List(count);
             var actualCollection = new List<int>();
-            Action<int> action = i => actualCollection.Add(i);
+            Action<int, int> action = (item, index) => actualCollection.Add(item);
 
             // Act.
             expectedCollection.ForEach(action);
@@ -110,14 +106,14 @@ namespace Acolyte.Tests.Linq
         }
 
         [Fact]
-        public void ForEach_ForCollectionWithRandomNumberAndNullValues_ShouldDoActionForEachItem()
+        public void ForEach_WithIndex_ForCollectionWithRandomNumberAndNullValues_ShouldDoActionForEachItem()
         {
             // Arrange.
             int count = TestDataCreator.GetRandomCountNumber();
             IReadOnlyList<int?> expectedCollection =
                 TestDataCreator.CreateRandomNullableInt32List(count);
             var actualCollection = new List<int?>();
-            Action<int?> action = i => actualCollection.Add(i);
+            Action<int?, int> action = (item, index) => actualCollection.Add(item);
 
             // Act.
             expectedCollection.ForEach(action);
@@ -131,14 +127,32 @@ namespace Acolyte.Tests.Linq
         #region Extended Logical Coverage
 
         [Fact]
-        public void ForEach_ShouldLookWholeCollectionToDoActionForEachItem()
+        public void ForEach_WithIndex_ShouldLookWholeCollectionToDoActionForEachItem()
         {
             // Arrange.
             IReadOnlyList<int> collection = new[] { 1, 2, 3, 4 };
             var explosive = ExplosiveEnumerable.CreateNotExplosive(collection);
             IReadOnlyList<int> expectedCollection = collection.ToList();
             var actualCollection = new List<int>();
-            Action<int> action = i => actualCollection.Add(i);
+            Action<int, int> action = (item, index) => actualCollection.Add(item);
+
+            // Act.
+            explosive.ForEach(action);
+
+            // Assert.
+            CustomAssert.True(explosive.VerifyOnceEnumerateWholeCollection(collection));
+            Assert.Equal(expectedCollection, actualCollection);
+        }
+
+        [Fact]
+        public void ForEach_WithIndex_ShouldPassToPredicateValidIndices()
+        {
+            // Arrange. indexes
+            IReadOnlyList<int> collection = new[] { 1, 2, 3, 4 };
+            var explosive = ExplosiveEnumerable.CreateNotExplosive(collection);
+            IReadOnlyList<int> expectedCollection = Enumerable.Range(0, collection.Count).ToList();
+            var actualCollection = new List<int>();
+            Action<int, int> action = (item, index) => actualCollection.Add(index);
 
             // Act.
             explosive.ForEach(action);
