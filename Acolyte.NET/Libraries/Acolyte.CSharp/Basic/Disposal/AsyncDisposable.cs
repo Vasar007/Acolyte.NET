@@ -50,7 +50,11 @@ namespace Acolyte.Basic.Disposal
         /// <remarks>
         /// Release all managed resources here.
         /// </remarks>
-        protected abstract ValueTask DisposeInternalAsync();
+        protected virtual ValueTask DisposeInternalAsync()
+        {
+            // Nothing to do.
+            return new ValueTask();
+        }
 
         #endregion
     }
