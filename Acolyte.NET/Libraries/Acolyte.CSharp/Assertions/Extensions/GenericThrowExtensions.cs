@@ -1,62 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 
 namespace Acolyte.Assertions
 {
     public static partial class ThrowsExtensions
     {
-        /// <summary>
-        /// Provides <see langword="null" /> check for every reference type value.
-        /// </summary>
-        /// <typeparam name="T">Type which extension method will apply to.</typeparam>
-        /// <param name="obj">Instance to check.</param>
-        /// <param name="paramName">
-        /// Name of the parameter for error message. Use operator <see langword="nameof" /> to get
-        /// proper parameter name.
-        /// </param>
-        /// <returns>Returns passed value.</returns>
-        /// <exception cref="ArgumentNullException">
-        /// <paramref name="obj" /> is <see langword="null" />. -or-
-        /// <paramref name="paramName" /> is <see langword="null" />.
-        /// </exception>
-        [return: NotNull]
-        public static T ThrowIfNull<T>(this T? obj, string paramName)
-            where T : class?
-        {
-            if (paramName is null)
-            {
-                throw new ArgumentNullException(nameof(paramName));
-            }
-
-            if (obj is null)
-            {
-                throw new ArgumentNullException(paramName);
-            }
-
-            return obj;
-        }
-
-        /// <summary>
-        /// Provides <see langword="null" /> check for every reference type value.
-        /// This method does not return original object to avoid compiler warnings.
-        /// </summary>
-        /// <typeparam name="T">Type which extension method will apply to.</typeparam>
-        /// <param name="obj">Instance to check.</param>
-        /// <param name="paramName">
-        /// Name of the parameter for error message. Use operator <see langword="nameof" /> to get
-        /// proper parameter name.
-        /// </param>
-        /// <exception cref="ArgumentNullException">
-        /// <paramref name="obj" /> is <see langword="null" />. -or-
-        /// <paramref name="paramName" /> is <see langword="null" />.
-        /// </exception>
-        public static void ThrowIfNullDiscard<T>(this T? obj, string paramName)
-            where T : class?
-        {
-            obj.ThrowIfNull(paramName);
-        }
-
         /// <summary>
         /// Provides <see langword="null" /> check for every object value.
         /// </summary>
@@ -78,6 +28,10 @@ namespace Acolyte.Assertions
         /// <paramref name="obj" /> is <see langword="null" />. -or-
         /// <paramref name="paramName" /> is <see langword="null" />.
         /// </exception>
+        /// <exception cref="ArgumentException">
+        /// <paramref name="assertOnPureValueTypes"/> is <see langword="true" /> and
+        /// type of <paramref name="obj" /> is pure value type.
+        /// </exception>
         /// <remarks>
         /// This method does not have any generic type constraints because sometimes it can be used
         /// for nullable value types, or for generic types (including F# code, for example).
@@ -87,17 +41,12 @@ namespace Acolyte.Assertions
         public static T ThrowIfNullValue<T>(this T? obj, string paramName,
             bool assertOnPureValueTypes)
         {
-            paramName.ThrowIfNull(nameof(paramName));
-
-            if (assertOnPureValueTypes)
+            if (paramName is null)
             {
-                if (default(T) is not null)
-                {
-                    throw new ArgumentException(
-                        "The passed parameter is a pure value type parameter.", paramName
-                    );
-                }
+                throw new ArgumentNullException(nameof(paramName));
             }
+
+            AssertOnPureValueTypes<T>(paramName, assertOnPureValueTypes);
 
             if (obj is null)
             {
@@ -107,27 +56,41 @@ namespace Acolyte.Assertions
             return obj;
         }
 
-        /// <summary>
-        /// Provides <see langword="null" /> check for every object value.
-        /// </summary>
-        /// <typeparam name="T">Type which extension method will apply to.</typeparam>
-        /// <param name="obj">Instance to check.</param>
-        /// <param name="paramName">
-        /// Name of the parameter for error message. Use operator <see langword="nameof" /> to get
-        /// proper parameter name.
-        /// </param>
-        /// <returns>Returns passed value.</returns>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="obj" /> is <see langword="null" />. -or-
         /// <paramref name="paramName" /> is <see langword="null" />.
         /// </exception>
         /// <remarks>
         /// This method calls <see cref="ThrowIfNullValue{T}(T, string, bool)" /> with parameter
-        /// assertOnPureValueTypes = <see langword="false" />
+        /// assertOnPureValueTypes = <see langword="false" />.
         /// </remarks>
+        /// <inheritdoc cref="ThrowIfNullValue{T}(T, string, bool)" path="//summary|//typeparam|//param|//returns" />
+        [return: NotNull]
         public static T ThrowIfNullValue<T>(this T? obj, string paramName)
         {
             return obj.ThrowIfNullValue(paramName, assertOnPureValueTypes: false);
+        }
+
+        /// <summary>
+        /// Provides <see langword="null" /> check for every reference type value.
+        /// </summary>
+        /// <inheritdoc cref="ThrowIfNullValue{T}(T, string)" path="//*[name() != 'remarks']" />
+        [return: NotNull]
+        public static T ThrowIfNull<T>(this T? obj, string paramName)
+            where T : class?
+        {
+            return obj.ThrowIfNullValue(paramName);
+        }
+
+        /// <summary>
+        /// Provides <see langword="null" /> check for every reference type value.
+        /// This method does not return original object to avoid compiler warnings.
+        /// </summary>
+        /// <inheritdoc cref="ThrowIfNull{T}(T, string)" path="//typeparam|//param|//returns|//exception" />
+        public static void ThrowIfNullDiscard<T>(this T? obj, string paramName)
+            where T : class?
+        {
+            obj.ThrowIfNull(paramName);
         }
 
         /// <summary>
@@ -154,6 +117,10 @@ namespace Acolyte.Assertions
         /// <exception cref="ArgumentOutOfRangeException">
         /// <paramref name="value" /> is not out of the specified range
         /// [<paramref name="includedLowerBound" />, <paramref name="includedUpperBound" />].
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        /// The type <typeparamref name="T" /> does not implement the <see cref="IComparable" /> or
+        /// <see cref="IComparable{T}" /> interface.
         /// </exception>
         [return: NotNull]
         public static T ThrowIfValueIsOutOfRange<T>(
@@ -194,15 +161,6 @@ namespace Acolyte.Assertions
         /// Checks that value is not out of the specified range with default comparer of type
         /// <typeparamref name="T" />. Please, pay attention that lower and upper bound is included.
         /// </summary>
-        /// <typeparam name="T">An type of value and bounds.</typeparam>
-        /// <param name="value">An value to check.</param>
-        /// <param name="paramName">
-        /// Name of the parameter for error message. Use operator <see langword="nameof" /> to get
-        /// proper parameter name.
-        /// </param>
-        /// <param name="includedLowerBound">An included lower bound of the range.</param>
-        /// <param name="includedUpperBound">An included upper bound of the range.</param>
-        /// <returns>The original value.</returns>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="value" /> is <see langword="null" />. -or-
         /// <paramref name="paramName" /> is <see langword="null" />. -or-
@@ -217,6 +175,7 @@ namespace Acolyte.Assertions
         /// The type <typeparamref name="T" /> does not implement the <see cref="IComparable" /> or
         /// <see cref="IComparable{T}" /> interface.
         /// </exception>
+        /// <inheritdoc cref="ThrowIfValueIsOutOfRange{T}(T, string, T, T, IComparer{T})" path="//typeparam|//param|//returns" />
         [return: NotNull]
         public static T ThrowIfValueIsOutOfRange<T>(
             [DisallowNull] this T value,
@@ -231,6 +190,23 @@ namespace Acolyte.Assertions
                 includedUpperBound,
                 Comparer<T>.Default
             );
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static void AssertOnPureValueTypes<T>(string paramName, bool assertOnPureValueTypes)
+        {
+            if (assertOnPureValueTypes)
+            {
+                if (default(T) is not null)
+                {
+                    var pureValueType = typeof(T);
+                    string message =
+                        $"The passed parameter is a pure value type" +
+                        $" [{pureValueType}] parameter.";
+
+                    throw new ArgumentException(message, paramName);
+                }
+            }
         }
     }
 }

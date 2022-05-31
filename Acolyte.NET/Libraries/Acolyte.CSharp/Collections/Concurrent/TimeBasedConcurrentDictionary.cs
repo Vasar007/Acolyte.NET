@@ -166,7 +166,7 @@ namespace Acolyte.Collections.Concurrent
         }
 
         /// <inheritdoc cref="ConcurrentDictionary{TKey, TValue}.ConcurrentDictionary(IEnumerable{KeyValuePair{TKey, TValue}})" />
-        /// <inheritdoc cref="TimeBasedConcurrentDictionary{TKey, TValue}.TimeBasedConcurrentDictionary(TimeSpan)" select="param" />
+        /// <inheritdoc cref="TimeBasedConcurrentDictionary{TKey, TValue}.TimeBasedConcurrentDictionary(TimeSpan)" path="//param" />
         public TimeBasedConcurrentDictionary(
             TimeSpan lifeTime,
             IEnumerable<KeyValuePair<TKey, TValue>> collection)
@@ -178,7 +178,7 @@ namespace Acolyte.Collections.Concurrent
         }
 
         /// <inheritdoc cref="ConcurrentDictionary{TKey, TValue}.ConcurrentDictionary(IEqualityComparer{TKey})" />
-        /// <inheritdoc cref="TimeBasedConcurrentDictionary{TKey, TValue}.TimeBasedConcurrentDictionary(TimeSpan)" select="param" />
+        /// <inheritdoc cref="TimeBasedConcurrentDictionary{TKey, TValue}.TimeBasedConcurrentDictionary(TimeSpan)" path="//param" />
         public TimeBasedConcurrentDictionary(
             TimeSpan lifeTime,
             IEqualityComparer<TKey> comparer)
@@ -190,7 +190,7 @@ namespace Acolyte.Collections.Concurrent
         }
 
         /// <inheritdoc cref="ConcurrentDictionary{TKey, TValue}.ConcurrentDictionary(IEnumerable{KeyValuePair{TKey, TValue}}, IEqualityComparer{TKey})" />
-        /// <inheritdoc cref="TimeBasedConcurrentDictionary{TKey, TValue}.TimeBasedConcurrentDictionary(TimeSpan)" select="param" />
+        /// <inheritdoc cref="TimeBasedConcurrentDictionary{TKey, TValue}.TimeBasedConcurrentDictionary(TimeSpan)" path="//param" />
         public TimeBasedConcurrentDictionary(
             TimeSpan lifeTime,
             IEnumerable<KeyValuePair<TKey, TValue>> collection,
@@ -204,7 +204,7 @@ namespace Acolyte.Collections.Concurrent
         }
 
         /// <inheritdoc cref="ConcurrentDictionary{TKey, TValue}.ConcurrentDictionary(int, int)" />
-        /// <inheritdoc cref="TimeBasedConcurrentDictionary{TKey, TValue}.TimeBasedConcurrentDictionary(TimeSpan)" select="param" />
+        /// <inheritdoc cref="TimeBasedConcurrentDictionary{TKey, TValue}.TimeBasedConcurrentDictionary(TimeSpan)" path="//param" />
         public TimeBasedConcurrentDictionary(
             TimeSpan lifeTime,
             int concurrencyLevel,
@@ -218,7 +218,7 @@ namespace Acolyte.Collections.Concurrent
         }
 
         /// <inheritdoc cref="ConcurrentDictionary{TKey, TValue}.ConcurrentDictionary(int, IEnumerable{KeyValuePair{TKey, TValue}}, IEqualityComparer{TKey})" />
-        /// <inheritdoc cref="TimeBasedConcurrentDictionary{TKey, TValue}.TimeBasedConcurrentDictionary(TimeSpan)" select="param" />
+        /// <inheritdoc cref="TimeBasedConcurrentDictionary{TKey, TValue}.TimeBasedConcurrentDictionary(TimeSpan)" path="//param" />
         public TimeBasedConcurrentDictionary(
             TimeSpan lifeTime,
             int concurrencyLevel,
@@ -234,7 +234,7 @@ namespace Acolyte.Collections.Concurrent
         }
 
         /// <inheritdoc cref="ConcurrentDictionary{TKey, TValue}.ConcurrentDictionary(int, int, IEqualityComparer{TKey})" />
-        /// <inheritdoc cref="TimeBasedConcurrentDictionary{TKey, TValue}.TimeBasedConcurrentDictionary(TimeSpan)" select="param" />
+        /// <inheritdoc cref="TimeBasedConcurrentDictionary{TKey, TValue}.TimeBasedConcurrentDictionary(TimeSpan)" path="//param" />
         public TimeBasedConcurrentDictionary(
             TimeSpan lifeTime,
             int concurrencyLevel,
