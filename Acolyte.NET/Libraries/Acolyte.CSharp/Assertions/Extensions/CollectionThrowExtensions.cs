@@ -58,7 +58,7 @@ namespace Acolyte.Assertions
         public static IReadOnlyList<T> ThrowIfNullOrEmpty<T>(
            this IReadOnlyList<T>? collection, string paramName)
         {
-            var cast = (IReadOnlyCollection<T>?) collection;
+            IReadOnlyCollection<T>? cast = collection;
             cast.ThrowIfNullOrEmpty(paramName);
 
             return collection!;
@@ -68,7 +68,7 @@ namespace Acolyte.Assertions
         public static IReadOnlyDictionary<TKey, TValue> ThrowIfNullOrEmpty<TKey, TValue>(
            this IReadOnlyDictionary<TKey, TValue>? collection, string paramName)
         {
-            var cast = (IReadOnlyCollection<KeyValuePair<TKey, TValue>>?) collection;
+            IReadOnlyCollection<KeyValuePair<TKey, TValue>>? cast = collection;
             cast.ThrowIfNullOrEmpty(paramName);
 
             return collection!;
@@ -164,7 +164,7 @@ namespace Acolyte.Assertions
         public static IReadOnlyList<T> ThrowIfContainsNullValue<T>(
            this IReadOnlyList<T?>? collection, string paramName)
         {
-            var cast = (IReadOnlyCollection<T>?) collection;
+            IReadOnlyCollection<T?>? cast = collection;
             cast.ThrowIfContainsNullValue(paramName);
 
             return collection!;
@@ -205,7 +205,7 @@ namespace Acolyte.Assertions
            this IReadOnlyList<T?>? collection, string paramName)
             where T : class?
         {
-            var cast = (IReadOnlyCollection<T?>?) collection;
+            IReadOnlyCollection<T?>? cast = collection;
             cast.ThrowIfContainsNull(paramName);
 
             return collection!;
