@@ -19,7 +19,7 @@ namespace Acolyte.Common
             format.ThrowIfNull(nameof(format));
             args.ThrowIfNull(nameof(args));
 
-            _lazyValue = new Lazy<string>(() => FormatInternal(format, args));
+            _lazyValue = new Lazy<string>(() => FormatInternal(format, args), isThreadSafe: false);
         }
 
         public FormatString(
