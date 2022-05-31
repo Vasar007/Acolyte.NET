@@ -39,7 +39,6 @@ namespace Acolyte.Assertions
             return collection!;
         }
 
-
         /// <inheritdoc cref="ThrowIfNullOrEmpty{T}(IEnumerable{T}?, string)" />
         public static IReadOnlyCollection<T> ThrowIfNullOrEmpty<T>(
             this IReadOnlyCollection<T>? collection, string paramName)
