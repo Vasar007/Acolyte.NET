@@ -93,7 +93,7 @@ namespace Acolyte.Common
             return !(left == right);
         }
 
-        private string FormatInternal(string format, IEnumerable<object> args)
+        private static string FormatInternal(string format, IEnumerable<object> args)
         {
             return string.Format(format, args);
         }
