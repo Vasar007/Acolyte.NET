@@ -11,7 +11,7 @@ namespace Acolyte.Linq.Expressions
     /// </summary>
     public static class ObjectCaster
     {
-        private static readonly ConcurrentDictionary<Type, Func<object, object>> Cache = new();
+        private static readonly ConcurrentDictionary<(Type, Type), Func<object, object>> Cache = new();
 
         public static object Cast(Type toType, object value)
         {
@@ -38,16 +38,17 @@ namespace Acolyte.Linq.Expressions
         private static Func<object, object> GetOrAddCaster(Type toType, object value,
             Func<Expression, Type, UnaryExpression> conversionBodyFactory)
         {
-            // key == toType
-            return Cache.GetOrAdd(toType, key => ConvertInternal(key, value, conversionBodyFactory));
+            var typeOfValue = value.GetType();
+            var pair = (toType, typeOfValue);
+            return Cache.GetOrAdd(pair, key => ConvertInternal(key, conversionBodyFactory));
         }
 
-        private static Func<object, object> ConvertInternal(Type toType, object value,
+        private static Func<object, object> ConvertInternal((Type toType, Type typeOfValue) pair,
             Func<Expression, Type, UnaryExpression> conversionBodyFactory)
         {
             var parameter = Expression.Parameter(TypesForReflection.Object);
-            var expression = conversionBodyFactory(parameter, value.GetType());
-            expression = conversionBodyFactory(expression, toType);
+            var expression = conversionBodyFactory(parameter, pair.typeOfValue);
+            expression = conversionBodyFactory(expression, pair.toType);
             expression = conversionBodyFactory(expression, TypesForReflection.Object);
 
             return Expression
