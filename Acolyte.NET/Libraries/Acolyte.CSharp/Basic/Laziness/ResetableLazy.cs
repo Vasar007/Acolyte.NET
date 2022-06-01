@@ -19,6 +19,7 @@ namespace Acolyte.Basic.Laziness
 
         private Lazy<T> _lazy;
 
+
         public ResetableLazy(
             Func<T> valueFactory)
             : this(valueFactory, DefaultMode)
