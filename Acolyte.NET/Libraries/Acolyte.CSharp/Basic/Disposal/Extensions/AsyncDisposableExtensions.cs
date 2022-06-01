@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
-using Acolyte.Common;
+using Acolyte.Basic.Laziness;
 
 namespace Acolyte.Basic.Disposal
 {
