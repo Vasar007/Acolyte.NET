@@ -95,7 +95,7 @@ namespace Acolyte.Common
 
         private static string FormatInternal(string format, IEnumerable<object> args)
         {
-            return string.Format(format, args);
+            return string.Format(format, args.ToArray());
         }
     }
 }
