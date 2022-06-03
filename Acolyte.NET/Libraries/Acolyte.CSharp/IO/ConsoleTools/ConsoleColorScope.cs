@@ -12,9 +12,9 @@ namespace Acolyte.IO.ConsoleTools
             ConsoleColor consoleColor,
             ConsoleColor resetColor = ConsoleColor.White)
         {
-            consoleColor.ThrowIfEnumValueIsUndefined(nameof(consoleColor));
+            consoleColor.ThrowIfUndefined(nameof(consoleColor));
 
-            _resetColor = resetColor.ThrowIfEnumValueIsUndefined(nameof(resetColor));
+            _resetColor = resetColor.ThrowIfUndefined(nameof(resetColor));
             Console.ForegroundColor = consoleColor;
         }
 

@@ -25,7 +25,7 @@ namespace Acolyte.Assertions
         /// <exception cref="ArgumentOutOfRangeException">
         /// <paramref name="enumValue" /> is not defined for the <typeparamref name="TEnum" /> type.
         /// </exception>
-        public static TEnum ThrowIfEnumValueIsUndefined<TEnum>(this TEnum enumValue,
+        public static TEnum ThrowIfUndefined<TEnum>(this TEnum enumValue,
             string paramName, bool assertOnFlags)
             where TEnum : struct, Enum
         {
@@ -57,12 +57,12 @@ namespace Acolyte.Assertions
         /// proper parameter name.
         /// </param>
         /// <returns>The original enumeration value.</returns>
-        /// <inheritdoc cref="ThrowIfEnumValueIsUndefined{TEnum}(TEnum, string, bool)" />
-        public static TEnum ThrowIfEnumValueIsUndefined<TEnum>(this TEnum enumValue,
+        /// <inheritdoc cref="ThrowIfUndefined{TEnum}(TEnum, string, bool)" />
+        public static TEnum ThrowIfUndefined<TEnum>(this TEnum enumValue,
             string paramName)
             where TEnum : struct, Enum
         {
-            return enumValue.ThrowIfEnumValueIsUndefined(paramName, assertOnFlags: false);
+            return enumValue.ThrowIfUndefined(paramName, assertOnFlags: false);
         }
     }
 }

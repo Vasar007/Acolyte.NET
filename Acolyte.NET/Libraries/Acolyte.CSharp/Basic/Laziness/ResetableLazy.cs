@@ -57,7 +57,7 @@ namespace Acolyte.Basic.Laziness
             _lock = new object();
 
             _valueFactory = valueFactory.ThrowIfNull(nameof(valueChecker));
-            _mode = mode.ThrowIfEnumValueIsUndefined(nameof(mode));
+            _mode = mode.ThrowIfUndefined(nameof(mode));
             _valueChecker = valueChecker;
             _disposeAction = disposeAction.ThrowIfNull(nameof(disposeAction));
 
