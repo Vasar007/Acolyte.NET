@@ -251,21 +251,6 @@ namespace Acolyte.Threading.Tasks
         #region Wait And Unwrap
 
         /// <summary>
-        /// Synchronously waits for the given task to complete, and returns the result.
-        /// Any <see cref="AggregateException" /> thrown is unwrapped to the first inner exception.
-        /// </summary>
-        /// <typeparam name="T">The result type of the task</typeparam>
-        /// <param name="task">The task to wait for.</param>
-        /// <returns>The result of the completed task.</returns>
-        public static T ResultWithUnwrappedExceptions<T>(this Task<T> task)
-        {
-            task.ThrowIfNullDiscard(nameof(task));
-
-            task.WaitWithUnwrappedExceptions();
-            return task.Result;
-        }
-
-        /// <summary>
         /// Synchronously waits for the given task to complete.
         /// Any <see cref="AggregateException" /> thrown is unwrapped to the first inner exception.
         /// </summary>
@@ -378,77 +363,166 @@ namespace Acolyte.Threading.Tasks
             }
         }
 
+        /// <summary>
+        /// Synchronously waits for the given task to complete, and returns the result.
+        /// Any <see cref="AggregateException" /> thrown is unwrapped to the first inner exception.
+        /// </summary>
+        /// <typeparam name="T">The result type of the task</typeparam>
+        /// <param name="task">The task to wait for.</param>
+        /// <returns>The result of the completed task.</returns>
+        public static T ResultWithUnwrappedExceptions<T>(this Task<T> task)
+        {
+            task.ThrowIfNullDiscard(nameof(task));
+
+            task.WaitWithUnwrappedExceptions();
+            return task.Result;
+        }
+
+        /// <summary>
+        /// Synchronously waits for the given task to complete, and returns the result.
+        /// Any <see cref="AggregateException" /> thrown is unwrapped to the first inner exception.
+        /// </summary>
+        /// <typeparam name="T">The result type of the task</typeparam>
+        /// <param name="task">The task to wait for.</param>
+        /// <param name="timeout"><inheritdoc cref="WaitWithUnwrappedExceptions(Task, TimeSpan)" path="/param[@name='timeout']"/></param>
+        /// <returns>The result of the completed task.</returns>
+        public static T ResultWithUnwrappedExceptions<T>(this Task<T> task, TimeSpan timeout)
+        {
+            task.ThrowIfNullDiscard(nameof(task));
+
+            task.WaitWithUnwrappedExceptions(timeout);
+            return task.Result;
+        }
+
+        /// <summary>
+        /// Synchronously waits for the given task to complete, and returns the result.
+        /// Any <see cref="AggregateException" /> thrown is unwrapped to the first inner exception.
+        /// </summary>
+        /// <typeparam name="T">The result type of the task</typeparam>
+        /// <param name="task">The task to wait for.</param>
+        /// <param name="millisecondsTimeout"><inheritdoc cref="WaitWithUnwrappedExceptions(Task, int)" path="/param[@name='millisecondsTimeout']"/></param>
+        /// <returns>The result of the completed task.</returns>
+        public static T ResultWithUnwrappedExceptions<T>(this Task<T> task, int millisecondsTimeout)
+        {
+            task.ThrowIfNullDiscard(nameof(task));
+
+            task.WaitWithUnwrappedExceptions(millisecondsTimeout);
+            return task.Result;
+        }
+
+        /// <summary>
+        /// Synchronously waits for the given task to complete, and returns the result.
+        /// Any <see cref="AggregateException" /> thrown is unwrapped to the first inner exception.
+        /// </summary>
+        /// <typeparam name="T">The result type of the task</typeparam>
+        /// <param name="task">The task to wait for.</param>
+        /// <param name="millisecondsTimeout"><inheritdoc cref="WaitWithUnwrappedExceptions(Task, int, CancellationToken)" path="/param[@name='millisecondsTimeout']"/></param>
+        /// <param name="cancellationToken"><inheritdoc cref="WaitWithUnwrappedExceptions(Task, int, CancellationToken)" path="/param[@name='cancellationToken']"/></param>
+        /// <returns>The result of the completed task.</returns>
+        public static T ResultWithUnwrappedExceptions<T>(this Task<T> task, int millisecondsTimeout,
+            CancellationToken cancellationToken)
+        {
+            task.ThrowIfNullDiscard(nameof(task));
+
+            task.WaitWithUnwrappedExceptions(millisecondsTimeout, cancellationToken);
+            return task.Result;
+        }
+
+        /// <summary>
+        /// Synchronously waits for the given task to complete, and returns the result.
+        /// Any <see cref="AggregateException" /> thrown is unwrapped to the first inner exception.
+        /// </summary>
+        /// <typeparam name="T">The result type of the task</typeparam>
+        /// <param name="task">The task to wait for.</param>
+        /// <param name="cancellationToken"><inheritdoc cref="WaitWithUnwrappedExceptions(Task, CancellationToken)" path="/param[@name='cancellationToken']"/></param>
+        /// <returns>The result of the completed task.</returns>
+        public static T ResultWithUnwrappedExceptions<T>(this Task<T> task,
+            CancellationToken cancellationToken)
+        {
+            task.ThrowIfNullDiscard(nameof(task));
+
+            task.WaitWithUnwrappedExceptions(cancellationToken);
+            return task.Result;
+        }
+
         #endregion
 
         #region Timeout
 
-        public static async Task AwaitWithTimeoutAsync(this Task task, TimeSpan timeout)
+        public static async Task AwaitWithTimeoutAsync(this Task task, TimeSpan timeout,
+            CancellationToken cancellationToken = default)
         {
             task.ThrowIfNullDiscard(nameof(task));
 
-            var completion = await Task.WhenAny(task, DelayedResultTask(timeout))
+            var completion = await Task.WhenAny(task, DelayedResultTask(timeout, cancellationToken))
                 .ConfigureAwait(false);
 
             await completion.ConfigureAwait(false);
         }
 
-        public static async Task AwaitWithTimeoutAndExceptionAsync(this Task task, TimeSpan timeout)
+        public static async Task AwaitWithTimeoutAndExceptionAsync(this Task task, TimeSpan timeout,
+            CancellationToken cancellationToken = default)
         {
             task.ThrowIfNullDiscard(nameof(task));
 
-            var completion = await Task.WhenAny(task, DelayedTimeoutExceptionTask(timeout))
+            var completion = await Task.WhenAny(task, DelayedTimeoutExceptionTask(timeout, cancellationToken))
                 .ConfigureAwait(false);
 
             await completion.ConfigureAwait(false);
         }
 
-        private static Task DelayedResultTask(TimeSpan delay)
+        private static Task DelayedResultTask(TimeSpan delay, CancellationToken cancellationToken)
         {
-            return Task.Delay(delay);
+            return Task.Delay(delay, cancellationToken);
         }
 
-        private static async Task DelayedTimeoutExceptionTask(TimeSpan delay)
+        private static async Task DelayedTimeoutExceptionTask(TimeSpan delay,
+            CancellationToken cancellationToken)
         {
-            await Task.Delay(delay).ConfigureAwait(false);
+            await Task.Delay(delay, cancellationToken).ConfigureAwait(false);
             throw new TimeoutException();
         }
 
-        public static Task<T?> AwaitWithTimeoutAsync<T>(this Task<T> task, TimeSpan timeout)
+        public static Task<T?> AwaitWithTimeoutAsync<T>(this Task<T> task, TimeSpan timeout,
+            CancellationToken cancellationToken = default)
         {
-            return task.AwaitWithTimeoutAndFallbackAsync(timeout, () => default!)!;
+            return task.AwaitWithTimeoutAndFallbackAsync(timeout, () => default!, cancellationToken)!;
         }
 
         public static async Task<T> AwaitWithTimeoutAndFallbackAsync<T>(this Task<T> task,
-            TimeSpan timeout, Func<T> fallbackFactory)
+            TimeSpan timeout, Func<T> fallbackFactory, CancellationToken cancellationToken = default)
         {
             task.ThrowIfNullDiscard(nameof(task));
             fallbackFactory.ThrowIfNull(nameof(fallbackFactory));
 
-            var completion = await Task.WhenAny(task, DelayedResultTask(timeout, fallbackFactory))
+            var completion = await Task.WhenAny(task, DelayedResultTask(timeout, fallbackFactory, cancellationToken))
                 .ConfigureAwait(false);
+
             return await completion.ConfigureAwait(false);
         }
 
         public static async Task<T> AwaitWithTimeoutAndExceptionAsync<T>(this Task<T> task,
-            TimeSpan timeout)
+            TimeSpan timeout, CancellationToken cancellationToken = default)
         {
             task.ThrowIfNullDiscard(nameof(task));
 
-            var completion = await Task.WhenAny(task, DelayedTimeoutExceptionTask<T>(timeout))
+            var completion = await Task.WhenAny(task, DelayedTimeoutExceptionTask<T>(timeout, cancellationToken))
                 .ConfigureAwait(false);
 
             return await completion.ConfigureAwait(false);
         }
 
-        private static async Task<T> DelayedResultTask<T>(TimeSpan delay, Func<T> fallbackFactory)
+        private static async Task<T> DelayedResultTask<T>(TimeSpan delay, Func<T> fallbackFactory,
+            CancellationToken cancellationToken)
         {
-            await Task.Delay(delay).ConfigureAwait(false);
+            await Task.Delay(delay, cancellationToken).ConfigureAwait(false);
             return fallbackFactory();
         }
 
-        private static async Task<T> DelayedTimeoutExceptionTask<T>(TimeSpan delay)
+        private static async Task<T> DelayedTimeoutExceptionTask<T>(TimeSpan delay,
+            CancellationToken cancellationToken)
         {
-            await Task.Delay(delay).ConfigureAwait(false);
+            await Task.Delay(delay, cancellationToken).ConfigureAwait(false);
             throw new TimeoutException();
         }
 
