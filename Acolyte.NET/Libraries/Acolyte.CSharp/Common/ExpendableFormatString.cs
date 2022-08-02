@@ -44,7 +44,7 @@ namespace Acolyte.Common
 
         private string FormatInternal(IEnumerable<object> args)
         {
-            return _value = string.Format(_format, args);
+            return _value = string.Format(_format, args.ToArray());
         }
     }
 }
