@@ -10,8 +10,6 @@ namespace Acolyte.Common
 
         private readonly IEnumerable<object> _initialArgs;
 
-        private string? _value;
-
 
         public ExpendableFormatString(
             string format,
@@ -30,9 +28,6 @@ namespace Acolyte.Common
 
         public string Format(IEnumerable<object> additionalArgs)
         {
-            if (_value != null)
-                return _value;
-
             var args = _initialArgs.Concat(additionalArgs);
             return FormatInternal(args);
         }
@@ -44,7 +39,7 @@ namespace Acolyte.Common
 
         private string FormatInternal(IEnumerable<object> args)
         {
-            return _value = string.Format(_format, args.ToArray());
+            return string.Format(_format, args.ToArray());
         }
     }
 }
