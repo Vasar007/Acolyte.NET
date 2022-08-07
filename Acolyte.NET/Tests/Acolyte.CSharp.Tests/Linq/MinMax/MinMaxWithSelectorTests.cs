@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Acolyte.Common;
 using Acolyte.Functions;
 using Acolyte.Linq;
@@ -39,7 +38,7 @@ namespace Acolyte.Tests.Linq
         public void MinMax_WithSelector_Int32_ForNullSelector_ShouldFail()
         {
             // Arrange.
-            IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
+            IEnumerable<int> emptyCollection = EnumerableHelper.Empty<int>();
 
             // Act & Assert.
             Assert.Throws<ArgumentNullException>(
@@ -63,7 +62,7 @@ namespace Acolyte.Tests.Linq
         public void MinMax_WithSelector_NullableInt32_ForNullSelector_ShouldFail()
         {
             // Arrange.
-            IEnumerable<int?> emptyCollection = Enumerable.Empty<int?>();
+            IEnumerable<int?> emptyCollection = EnumerableHelper.Empty<int?>();
 
             // Act & Assert.
             Assert.Throws<ArgumentNullException>(
@@ -79,7 +78,7 @@ namespace Acolyte.Tests.Linq
         public void MinMax_WithSelector_Int32_ForEmptyCollection_ShouldFail()
         {
             // Arrange.
-            IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
+            IEnumerable<int> emptyCollection = EnumerableHelper.Empty<int>();
 
             // Act & Assert.
             Assert.Throws(
@@ -92,7 +91,7 @@ namespace Acolyte.Tests.Linq
         public void MinMax_WithSelector_NullableInt32_ForEmptyCollection_ShouldReturnNull()
         {
             // Arrange.
-            IEnumerable<int?> emptyCollection = Enumerable.Empty<int?>();
+            IEnumerable<int?> emptyCollection = EnumerableHelper.Empty<int?>();
             (int? minValue, int? maxValue) expectedValue = (null, null);
 
             // Act.
@@ -312,7 +311,7 @@ namespace Acolyte.Tests.Linq
         public void MinMax_WithSelector_Int64_ForNullSelector_ShouldFail()
         {
             // Arrange.
-            IEnumerable<long> emptyCollection = Enumerable.Empty<long>();
+            IEnumerable<long> emptyCollection = EnumerableHelper.Empty<long>();
 
             // Act & Assert.
             Assert.Throws<ArgumentNullException>(
@@ -336,7 +335,7 @@ namespace Acolyte.Tests.Linq
         public void MinMax_WithSelector_NullableInt64_ForNullSelector_ShouldFail()
         {
             // Arrange.
-            IEnumerable<long?> emptyCollection = Enumerable.Empty<long?>();
+            IEnumerable<long?> emptyCollection = EnumerableHelper.Empty<long?>();
 
             // Act & Assert.
             Assert.Throws<ArgumentNullException>(
@@ -352,7 +351,7 @@ namespace Acolyte.Tests.Linq
         public void MinMax_WithSelector_Int64_ForEmptyCollection_ShouldFail()
         {
             // Arrange.
-            IEnumerable<long> emptyCollection = Enumerable.Empty<long>();
+            IEnumerable<long> emptyCollection = EnumerableHelper.Empty<long>();
 
             // Act & Assert.
             Assert.Throws(
@@ -365,7 +364,7 @@ namespace Acolyte.Tests.Linq
         public void MinMax_WithSelector_NullableInt64_ForEmptyCollection_ShouldReturnNull()
         {
             // Arrange.
-            IEnumerable<long?> emptyCollection = Enumerable.Empty<long?>();
+            IEnumerable<long?> emptyCollection = EnumerableHelper.Empty<long?>();
             (long? minValue, long? maxValue) expectedValue = (null, null);
 
             // Act.
@@ -587,7 +586,7 @@ namespace Acolyte.Tests.Linq
         public void MinMax_WithSelector_Single_ForNullSelector_ShouldFail()
         {
             // Arrange.
-            IEnumerable<float> emptyCollection = Enumerable.Empty<float>();
+            IEnumerable<float> emptyCollection = EnumerableHelper.Empty<float>();
 
             // Act & Assert.
             Assert.Throws<ArgumentNullException>(
@@ -611,7 +610,7 @@ namespace Acolyte.Tests.Linq
         public void MinMax_WithSelector_NullableSingle_ForNullSelector_ShouldFail()
         {
             // Arrange.
-            IEnumerable<float?> emptyCollection = Enumerable.Empty<float?>();
+            IEnumerable<float?> emptyCollection = EnumerableHelper.Empty<float?>();
 
             // Act & Assert.
             Assert.Throws<ArgumentNullException>(
@@ -627,7 +626,7 @@ namespace Acolyte.Tests.Linq
         public void MinMax_WithSelector_Single_ForEmptyCollection_ShouldFail()
         {
             // Arrange.
-            IEnumerable<float> emptyCollection = Enumerable.Empty<float>();
+            IEnumerable<float> emptyCollection = EnumerableHelper.Empty<float>();
 
             // Act & Assert.
             Assert.Throws(
@@ -640,7 +639,7 @@ namespace Acolyte.Tests.Linq
         public void MinMax_WithSelector_NullableSingle_ForEmptyCollection_ShouldReturnNull()
         {
             // Arrange.
-            IEnumerable<float?> emptyCollection = Enumerable.Empty<float?>();
+            IEnumerable<float?> emptyCollection = EnumerableHelper.Empty<float?>();
             (float? minValue, float? maxValue) expectedValue = (null, null);
 
             // Act.
@@ -862,7 +861,7 @@ namespace Acolyte.Tests.Linq
         public void MinMax_WithSelector_Double_ForNullSelector_ShouldFail()
         {
             // Arrange.
-            IEnumerable<double> emptyCollection = Enumerable.Empty<double>();
+            IEnumerable<double> emptyCollection = EnumerableHelper.Empty<double>();
 
             // Act & Assert.
             Assert.Throws<ArgumentNullException>(
@@ -886,7 +885,7 @@ namespace Acolyte.Tests.Linq
         public void MinMax_WithSelector_NullableDouble_ForNullSelector_ShouldFail()
         {
             // Arrange.
-            IEnumerable<double?> emptyCollection = Enumerable.Empty<double?>();
+            IEnumerable<double?> emptyCollection = EnumerableHelper.Empty<double?>();
 
             // Act & Assert.
             Assert.Throws<ArgumentNullException>(
@@ -902,7 +901,7 @@ namespace Acolyte.Tests.Linq
         public void MinMax_WithSelector_Double_ForEmptyCollection_ShouldFail()
         {
             // Arrange.
-            IEnumerable<double> emptyCollection = Enumerable.Empty<double>();
+            IEnumerable<double> emptyCollection = EnumerableHelper.Empty<double>();
 
             // Act & Assert.
             Assert.Throws(
@@ -915,7 +914,7 @@ namespace Acolyte.Tests.Linq
         public void MinMax_WithSelector_NullableDouble_ForEmptyCollection_ShouldReturnNull()
         {
             // Arrange.
-            IEnumerable<double?> emptyCollection = Enumerable.Empty<double?>();
+            IEnumerable<double?> emptyCollection = EnumerableHelper.Empty<double?>();
             (double? minValue, double? maxValue) expectedValue = (null, null);
 
             // Act.
@@ -1137,7 +1136,7 @@ namespace Acolyte.Tests.Linq
         public void MinMax_WithSelector_Decimal_ForNullSelector_ShouldFail()
         {
             // Arrange.
-            IEnumerable<decimal> emptyCollection = Enumerable.Empty<decimal>();
+            IEnumerable<decimal> emptyCollection = EnumerableHelper.Empty<decimal>();
 
             // Act & Assert.
             Assert.Throws<ArgumentNullException>(
@@ -1161,7 +1160,7 @@ namespace Acolyte.Tests.Linq
         public void MinMax_WithSelector_NullableDecimal_ForNullSelector_ShouldFail()
         {
             // Arrange.
-            IEnumerable<decimal?> emptyCollection = Enumerable.Empty<decimal?>();
+            IEnumerable<decimal?> emptyCollection = EnumerableHelper.Empty<decimal?>();
 
             // Act & Assert.
             Assert.Throws<ArgumentNullException>(
@@ -1177,7 +1176,7 @@ namespace Acolyte.Tests.Linq
         public void MinMax_WithSelector_Decimal_ForEmptyCollection_ShouldFail()
         {
             // Arrange.
-            IEnumerable<decimal> emptyCollection = Enumerable.Empty<decimal>();
+            IEnumerable<decimal> emptyCollection = EnumerableHelper.Empty<decimal>();
 
             // Act & Assert.
             Assert.Throws(
@@ -1190,7 +1189,7 @@ namespace Acolyte.Tests.Linq
         public void MinMax_WithSelector_NullableDecimal_ForEmptyCollection_ShouldReturnNull()
         {
             // Arrange.
-            IEnumerable<decimal?> emptyCollection = Enumerable.Empty<decimal?>();
+            IEnumerable<decimal?> emptyCollection = EnumerableHelper.Empty<decimal?>();
             (decimal? minValue, decimal? maxValue) expectedValue = (null, null);
 
             // Act.
@@ -1428,7 +1427,7 @@ namespace Acolyte.Tests.Linq
         public void MinMax_WithSelector_GenericTypes_ForNullSelector_ShouldFailForValueTypes()
         {
             // Arrange.
-            IEnumerable<DummyStruct> emptyCollection = Enumerable.Empty<DummyStruct>();
+            IEnumerable<DummyStruct> emptyCollection = EnumerableHelper.Empty<DummyStruct>();
 
             // Act & Assert.
             Assert.Throws<ArgumentNullException>(
@@ -1440,7 +1439,7 @@ namespace Acolyte.Tests.Linq
         public void MinMax_WithSelector_GenericTypes_ForNullSelector_ShouldFailForReferenceTypes()
         {
             // Arrange.
-            IEnumerable<DummyClass> emptyCollection = Enumerable.Empty<DummyClass>();
+            IEnumerable<DummyClass> emptyCollection = EnumerableHelper.Empty<DummyClass>();
 
             // Act & Assert.
             Assert.Throws<ArgumentNullException>(
@@ -1482,7 +1481,7 @@ namespace Acolyte.Tests.Linq
         public void MinMax_WithSelector_GenericTypes_WithComparer_ForNullSelector_ShouldFailForValueTypes()
         {
             // Arrange.
-            IEnumerable<DummyStruct> emptyCollection = Enumerable.Empty<DummyStruct>();
+            IEnumerable<DummyStruct> emptyCollection = EnumerableHelper.Empty<DummyStruct>();
             var comparer = MockComparer<DummyStruct>.Default;
 
             // Act & Assert.
@@ -1496,7 +1495,7 @@ namespace Acolyte.Tests.Linq
         public void MinMax_WithSelector_GenericTypes_WithComparer_ForNullSelector_ShouldFailForReferenceTypes()
         {
             // Arrange.
-            IEnumerable<DummyClass> emptyCollection = Enumerable.Empty<DummyClass>();
+            IEnumerable<DummyClass> emptyCollection = EnumerableHelper.Empty<DummyClass>();
             var comparer = MockComparer<DummyClass>.Default;
 
             // Act & Assert.
@@ -1550,7 +1549,7 @@ namespace Acolyte.Tests.Linq
         public void MinMax_WithSelector_GenericTypes_ForEmptyCollection_ShouldFailForValueTypes()
         {
             // Arrange.
-            IEnumerable<DummyStruct> emptyCollection = Enumerable.Empty<DummyStruct>();
+            IEnumerable<DummyStruct> emptyCollection = EnumerableHelper.Empty<DummyStruct>();
             Func<DummyStruct, DummyStruct> selector = IdentityFunction<DummyStruct>.Instance;
 
             // Act & Assert.
@@ -1561,7 +1560,7 @@ namespace Acolyte.Tests.Linq
         public void MinMax_WithSelector_GenericTypes_ForEmptyCollection_ShouldReturnNullForNullableValueTypes()
         {
             // Arrange.
-            IEnumerable<DummyStruct?> emptyCollection = Enumerable.Empty<DummyStruct?>();
+            IEnumerable<DummyStruct?> emptyCollection = EnumerableHelper.Empty<DummyStruct?>();
             (DummyStruct? minValue, DummyStruct? maxValue) expectedValue = (null, null);
             Func<DummyStruct?, DummyStruct?> selector = IdentityFunction<DummyStruct?>.Instance;
 
@@ -1576,7 +1575,7 @@ namespace Acolyte.Tests.Linq
         public void MinMax_WithSelector_GenericTypes_ForEmptyCollection_ShouldReturnNullForReferenceTypes()
         {
             // Arrange.
-            IEnumerable<DummyClass> emptyCollection = Enumerable.Empty<DummyClass>();
+            IEnumerable<DummyClass> emptyCollection = EnumerableHelper.Empty<DummyClass>();
             (DummyClass? minValue, DummyClass? maxValue) expectedValue = (null, null);
             Func<DummyClass, DummyClass> selector = IdentityFunction<DummyClass>.Instance;
 
@@ -1591,7 +1590,7 @@ namespace Acolyte.Tests.Linq
         public void MinMax_WithSelector_GenericTypes_WithComparer_ForEmptyCollection_ShouldFailForValueTypes()
         {
             // Arrange.
-            IEnumerable<DummyStruct> emptyCollection = Enumerable.Empty<DummyStruct>();
+            IEnumerable<DummyStruct> emptyCollection = EnumerableHelper.Empty<DummyStruct>();
             Func<DummyStruct, DummyStruct> selector = IdentityFunction<DummyStruct>.Instance;
             var comparer = MockComparer<DummyStruct>.Default;
 
@@ -1606,7 +1605,7 @@ namespace Acolyte.Tests.Linq
         public void MinMax_WithSelector_GenericTypes_WithComparer_ForEmptyCollection_ShouldReturnNullForNullableValueTypes()
         {
             // Arrange.
-            IEnumerable<DummyStruct?> emptyCollection = Enumerable.Empty<DummyStruct?>();
+            IEnumerable<DummyStruct?> emptyCollection = EnumerableHelper.Empty<DummyStruct?>();
             (DummyStruct? minValue, DummyStruct? maxValue) expectedValue = (null, null);
             Func<DummyStruct?, DummyStruct?> selector = IdentityFunction<DummyStruct?>.Instance;
             var comparer = MockComparer<DummyStruct?>.Default;
@@ -1623,7 +1622,7 @@ namespace Acolyte.Tests.Linq
         public void MinMax_WithSelector_GenericTypes_WithComparer_ForEmptyCollection_ShouldReturnNullForReferenceTypes()
         {
             // Arrange.
-            IEnumerable<DummyClass> emptyCollection = Enumerable.Empty<DummyClass>();
+            IEnumerable<DummyClass> emptyCollection = EnumerableHelper.Empty<DummyClass>();
             (DummyClass? minValue, DummyClass? maxValue) expectedValue = (null, null);
             Func<DummyClass, DummyClass> selector = IdentityFunction<DummyClass>.Instance;
             var comparer = MockComparer<DummyClass>.Default;

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Acolyte.Functions;
 using Acolyte.Linq;
 using Acolyte.Tests.Cases.Parameterized;
@@ -25,7 +24,7 @@ namespace Acolyte.Tests.Linq.DistinctBy
 
             // Act & Assert.
             Assert.Throws<ArgumentNullException>(
-                "source", () => nullValue!.DistinctBy(discardKeySelector, keyComparer).ToList()
+                "source", () => nullValue!.DistinctBy(discardKeySelector, keyComparer).ToReadOnlyList()
             );
             keyComparer.VerifyNoCalls();
         }
@@ -34,13 +33,13 @@ namespace Acolyte.Tests.Linq.DistinctBy
         public void DistinctBy_WithComparer_ForNullKeySelector_ShouldFail()
         {
             // Arrange.
-            IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
+            IEnumerable<int> emptyCollection = EnumerableHelper.Empty<int>();
             const Func<int, bool>? keySelector = null;
             var keyComparer = MockEqualityComparer<bool>.Default;
 
             // Act & Assert.
             Assert.Throws<ArgumentNullException>(
-                "keySelector", () => emptyCollection.DistinctBy(keySelector!, keyComparer).ToList()
+                "keySelector", () => emptyCollection.DistinctBy(keySelector!, keyComparer).ToReadOnlyList()
             );
             keyComparer.VerifyNoCalls();
         }
@@ -71,7 +70,7 @@ namespace Acolyte.Tests.Linq.DistinctBy
         public void DistinctBy_WithComparer_ForEmptyCollection_ShouldDoNothing()
         {
             // Arrange.
-            IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
+            IEnumerable<int> emptyCollection = EnumerableHelper.Empty<int>();
             Func<int, bool> keySelector = item => NumberParityFunction.IsEven(item);
             var keyComparer = MockEqualityComparer<bool>.Default;
 

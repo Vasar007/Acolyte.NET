@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Acolyte.Common;
 using Acolyte.Functions;
 using Acolyte.Linq;
@@ -37,7 +36,7 @@ namespace Acolyte.Tests.Linq.Max
         public void MaxBy_ForNullSelector_ShouldFail()
         {
             // Arrange.
-            IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
+            IEnumerable<int> emptyCollection = EnumerableHelper.Empty<int>();
             const Func<int, int>? keySelector = null;
 
             // Act & Assert.
@@ -54,7 +53,7 @@ namespace Acolyte.Tests.Linq.Max
         public void MaxBy_ForEmptyCollection_ShouldFailForValueTypes()
         {
             // Arrange.
-            IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
+            IEnumerable<int> emptyCollection = EnumerableHelper.Empty<int>();
             Func<int, int> keySelector = IdentityFunction<int>.Instance;
 
             // Act & Assert.
@@ -65,7 +64,7 @@ namespace Acolyte.Tests.Linq.Max
         public void MaxBy_ForEmptyCollection_ShouldReturnNullForNullableValueTypes()
         {
             // Arrange.
-            IEnumerable<int?> emptyCollection = Enumerable.Empty<int?>();
+            IEnumerable<int?> emptyCollection = EnumerableHelper.Empty<int?>();
             int? expectedValue = null;
             Func<int?, int?> keySelector = IdentityFunction<int?>.Instance;
 
@@ -80,7 +79,7 @@ namespace Acolyte.Tests.Linq.Max
         public void MaxBy_ForEmptyCollection_ShouldReturnNullForReferenceTypes()
         {
             // Arrange.
-            IEnumerable<string> emptyCollection = Enumerable.Empty<string>();
+            IEnumerable<string> emptyCollection = EnumerableHelper.Empty<string>();
             const string? expectedValue = null;
             Func<string, string> keySelector = IdentityFunction<string>.Instance;
 
@@ -140,9 +139,9 @@ namespace Acolyte.Tests.Linq.Max
         public void MaxBy_ForCollectionWithTheSameItems_ShouldReturnThatItem(int count)
         {
             // Arrange.
-            IReadOnlyList<int> collectionWithTheSameItems = Enumerable
+            IReadOnlyList<int> collectionWithTheSameItems = EnumerableHelper
                 .Repeat(count, count)
-                .ToList();
+                .ToReadOnlyList();
             int expectedValue = count;
             Func<int, int> keySelector = InverseFunction.ForInt32;
 

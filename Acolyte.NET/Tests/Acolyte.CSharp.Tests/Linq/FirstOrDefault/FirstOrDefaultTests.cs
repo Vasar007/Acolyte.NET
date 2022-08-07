@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Acolyte.Common;
 using Acolyte.Linq;
 using Acolyte.Tests.Cases.Parameterized;
@@ -38,7 +37,7 @@ namespace Acolyte.Tests.Linq.FirstOrDefault
         public void FirstOrDefault_ForEmptyCollection_ShouldReturnDefaultItem()
         {
             // Arrange.
-            IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
+            IEnumerable<int> emptyCollection = EnumerableHelper.Empty<int>();
             int expectedValue = TestDataCreator.CreateRandomInt32();
 
             // Act.
@@ -75,8 +74,8 @@ namespace Acolyte.Tests.Linq.FirstOrDefault
         public void FirstOrDefault_ForCollectionWithSomeItems_ShouldReturnFirstItem(int count)
         {
             // Arrange.
-            IEnumerable<int> collectionWithSomeItems = TestDataCreator.CreateRandomInt32List(count);
-            int expectedValue = collectionWithSomeItems.First();
+            var collectionWithSomeItems = TestDataCreator.CreateRandomInt32List(count);
+            int expectedValue = collectionWithSomeItems[0];
 
             // Act.
             int actualValue = collectionWithSomeItems.FirstOrDefault(defaultValue: default);
@@ -94,11 +93,10 @@ namespace Acolyte.Tests.Linq.FirstOrDefault
         {
             // Arrange.
             int count = TestDataCreator.GetRandomCountNumber();
-            IEnumerable<int> collectionWithRandomSize =
-                TestDataCreator.CreateRandomInt32List(count);
+            var collectionWithRandomSize = TestDataCreator.CreateRandomInt32List(count);
             int defaultResult = TestDataCreator.CreateRandomInt32();
-            int expectedValue = collectionWithRandomSize.Any()
-                ? collectionWithRandomSize.First()
+            int expectedValue = collectionWithRandomSize.Count > 0
+                ? collectionWithRandomSize[0]
                 : defaultResult;
 
             // Act.
@@ -120,7 +118,7 @@ namespace Acolyte.Tests.Linq.FirstOrDefault
             var explosive = ExplosiveEnumerable.Create(
                 collection, explosiveIndex: Constants.FirstIndex + 1
             );
-            int expectedValue = collection.First();
+            int expectedValue = collection[0];
 
             // Act.
             int actualValue = explosive.FirstOrDefault(defaultValue: default);

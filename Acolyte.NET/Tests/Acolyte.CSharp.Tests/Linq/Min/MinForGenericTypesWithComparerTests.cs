@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Acolyte.Common;
 using Acolyte.Linq;
 using Acolyte.Tests.Cases.Parameterized;
@@ -86,7 +85,7 @@ namespace Acolyte.Tests.Linq.Min
         public void Min_WithComparer_ForEmptyCollection_ShouldFailForValueTypes()
         {
             // Arrange.
-            IEnumerable<DummyStruct> emptyCollection = Enumerable.Empty<DummyStruct>();
+            IEnumerable<DummyStruct> emptyCollection = EnumerableHelper.Empty<DummyStruct>();
             var comparer = MockComparer<DummyStruct>.Default;
 
             // Act & Assert.
@@ -98,7 +97,7 @@ namespace Acolyte.Tests.Linq.Min
         public void Min_WithComparer_ForEmptyCollection_ShouldReturnNullForNullableValueTypes()
         {
             // Arrange.
-            IEnumerable<DummyStruct?> emptyCollection = Enumerable.Empty<DummyStruct?>();
+            IEnumerable<DummyStruct?> emptyCollection = EnumerableHelper.Empty<DummyStruct?>();
             DummyStruct? expectedValue = null;
             var comparer = MockComparer<DummyStruct?>.Default;
 
@@ -114,7 +113,7 @@ namespace Acolyte.Tests.Linq.Min
         public void Min_WithComparer_ForEmptyCollection_ShouldReturnNullForReferenceTypes()
         {
             // Arrange.
-            IEnumerable<DummyClass> emptyCollection = Enumerable.Empty<DummyClass>();
+            IEnumerable<DummyClass> emptyCollection = EnumerableHelper.Empty<DummyClass>();
             const DummyClass? expectedValue = null;
             var comparer = MockComparer<DummyClass>.Default;
 
@@ -251,9 +250,9 @@ namespace Acolyte.Tests.Linq.Min
         {
             // Arrange.
             var expectedValue = DummyStruct.Item;
-            IReadOnlyList<DummyStruct> collectionWithTheSameItems = Enumerable
+            IReadOnlyList<DummyStruct> collectionWithTheSameItems = EnumerableHelper
                 .Repeat(expectedValue, count)
-                .ToList();
+                .ToReadOnlyList();
             var comparer = MockComparer.SetupDefaultFor(collectionWithTheSameItems);
 
             // Act.
@@ -271,9 +270,9 @@ namespace Acolyte.Tests.Linq.Min
         {
             // Arrange.
             var expectedValue = DummyClass.Item;
-            IReadOnlyList<DummyClass> collectionWithTheSameItems = Enumerable
+            IReadOnlyList<DummyClass> collectionWithTheSameItems = EnumerableHelper
                 .Repeat(expectedValue, count)
-                .ToList();
+                .ToReadOnlyList();
             var comparer = MockComparer.SetupDefaultFor(collectionWithTheSameItems);
 
             // Act.

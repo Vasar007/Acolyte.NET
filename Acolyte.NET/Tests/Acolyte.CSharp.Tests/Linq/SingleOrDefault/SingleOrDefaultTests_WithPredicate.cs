@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Acolyte.Common;
 using Acolyte.Functions;
 using Acolyte.Linq;
@@ -32,7 +31,7 @@ namespace Acolyte.Tests.Linq.SingleOrDefault
         public void SingleOrDefault_WithPredicate_ForNullPredicate_ShouldFail()
         {
             // Arrange.
-            IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
+            IEnumerable<int> emptyCollection = EnumerableHelper.Empty<int>();
 
             // Act & Assert.
             Assert.Throws<ArgumentNullException>(
@@ -49,7 +48,7 @@ namespace Acolyte.Tests.Linq.SingleOrDefault
         public void SingleOrDefault_WithPredicate_ForEmptyCollection_ShouldReturnDefaultItem()
         {
             // Arrange.
-            IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
+            IEnumerable<int> emptyCollection = EnumerableHelper.Empty<int>();
             Func<int, bool> discard = DiscardFunction<int, bool>.Instance;
             int expectedValue = TestDataCreator.CreateRandomInt32();
 
@@ -68,9 +67,8 @@ namespace Acolyte.Tests.Linq.SingleOrDefault
         public void SingleOrDefault_WithPredicate_ForCollectionWithSingleItem_ShouldReturnFirstItem()
         {
             // Arrange.
-            IEnumerable<int> collectionWithSingleItem =
-                TestDataCreator.CreateRandomInt32List(TestConstants._1);
-            int expectedValue = collectionWithSingleItem.Single();
+            var collectionWithSingleItem = TestDataCreator.CreateRandomInt32List(TestConstants._1);
+            int expectedValue = collectionWithSingleItem[0];
 
             // Act.
             int actualValue = collectionWithSingleItem.SingleOrDefault(
@@ -167,7 +165,7 @@ namespace Acolyte.Tests.Linq.SingleOrDefault
             Func<int, bool> predicate = i => NumberParityFunction.IsEven(i);
 
             // Act & Assert.
-            int foundValuesCount = collectionWithRandomSize.Count(predicate);
+            int foundValuesCount = System.Linq.Enumerable.Count(collectionWithRandomSize, predicate);
             if (foundValuesCount > 1)
             {
                 Assert.Throws(
@@ -181,7 +179,7 @@ namespace Acolyte.Tests.Linq.SingleOrDefault
 
                 // Collection cannot be empty if we found one value.
                 int expectedValue = foundValuesCount == 1
-                    ? collectionWithRandomSize.Single(predicate)
+                    ? System.Linq.Enumerable.Single(collectionWithRandomSize, predicate)
                     : defaultResult;
 
                 Assert.Equal(expectedValue, actualValue);

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Acolyte.Common;
 using Acolyte.Functions;
 using Acolyte.Linq;
@@ -51,7 +50,7 @@ namespace Acolyte.Tests.Linq.MinMax
         public void MinMaxBy_WithComparer_ForNullSelector_ShouldFailForValueTypes()
         {
             // Arrange.
-            IEnumerable<DummyStruct> emptyCollection = Enumerable.Empty<DummyStruct>();
+            IEnumerable<DummyStruct> emptyCollection = EnumerableHelper.Empty<DummyStruct>();
             var keyComparer = MockComparer<DummyStruct>.Default;
 
             // Act & Assert.
@@ -66,7 +65,7 @@ namespace Acolyte.Tests.Linq.MinMax
         public void MinMaxBy_WithComparer_ForNullSelector_ShouldFailForReferenceTypes()
         {
             // Arrange.
-            IEnumerable<DummyClass> emptyCollection = Enumerable.Empty<DummyClass>();
+            IEnumerable<DummyClass> emptyCollection = EnumerableHelper.Empty<DummyClass>();
             var keyComparer = MockComparer<DummyClass>.Default;
 
             // Act & Assert.
@@ -121,7 +120,7 @@ namespace Acolyte.Tests.Linq.MinMax
         public void MinMaxBy_WithComparer_ForEmptyCollection_ShouldFailForValueTypes()
         {
             // Arrange.
-            IEnumerable<DummyStruct> emptyCollection = Enumerable.Empty<DummyStruct>();
+            IEnumerable<DummyStruct> emptyCollection = EnumerableHelper.Empty<DummyStruct>();
             Func<DummyStruct, DummyStruct> keySelector = IdentityFunction<DummyStruct>.Instance;
             var keyComparer = MockComparer<DummyStruct>.Default;
 
@@ -136,7 +135,7 @@ namespace Acolyte.Tests.Linq.MinMax
         public void MinMaxBy_WithComparer_ForEmptyCollection_ShouldReturnNullForNullableValueTypes()
         {
             // Arrange.
-            IEnumerable<DummyStruct?> emptyCollection = Enumerable.Empty<DummyStruct?>();
+            IEnumerable<DummyStruct?> emptyCollection = EnumerableHelper.Empty<DummyStruct?>();
             (DummyStruct? minValue, DummyStruct? maxValue) expectedValue = (null, null);
             Func<DummyStruct?, DummyStruct?> keySelector = IdentityFunction<DummyStruct?>.Instance;
             var keyComparer = MockComparer<DummyStruct?>.Default;
@@ -153,7 +152,7 @@ namespace Acolyte.Tests.Linq.MinMax
         public void MinMaxBy_WithComparer_ForEmptyCollection_ShouldReturnNullForReferenceTypes()
         {
             // Arrange.
-            IEnumerable<DummyClass> emptyCollection = Enumerable.Empty<DummyClass>();
+            IEnumerable<DummyClass> emptyCollection = EnumerableHelper.Empty<DummyClass>();
             (DummyClass? minValue, DummyClass? maxValue) expectedValue = (null, null);
             Func<DummyClass, DummyClass> keySelector = IdentityFunction<DummyClass>.Instance;
             var keyComparer = MockComparer<DummyClass>.Default;
@@ -278,9 +277,9 @@ namespace Acolyte.Tests.Linq.MinMax
             int count)
         {
             // Arrange.
-            IReadOnlyList<int> collectionWithTheSameItems = Enumerable
+            IReadOnlyList<int> collectionWithTheSameItems = EnumerableHelper
                 .Repeat(count, count)
-                .ToList();
+                .ToReadOnlyList();
             (int minValue, int maxValue) expectedValue = (count, count);
             Func<int, int> keySelector = InverseFunction.ForInt32;
             var keyComparer = MockComparer<int>.Default;
@@ -299,9 +298,9 @@ namespace Acolyte.Tests.Linq.MinMax
             int count)
         {
             // Arrange.
-            IReadOnlyList<int> collectionWithTheSameItems = Enumerable
+            IReadOnlyList<int> collectionWithTheSameItems = EnumerableHelper
                 .Repeat(count, count)
-                .ToList();
+                .ToReadOnlyList();
             (int minValue, int maxValue) expectedValue = (count, count);
             Func<int, int> keySelector = InverseFunction.ForInt32;
             var keyComparer = MockComparer<int>.Default;

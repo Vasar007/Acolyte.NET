@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Acolyte.Common;
 using Acolyte.Functions;
 using Acolyte.Linq;
@@ -32,7 +31,7 @@ namespace Acolyte.Tests.Linq.FirstOrDefault
         public void FirstOrDefault_WithPredicate_ForNullPredicate_ShouldFail()
         {
             // Arrange.
-            IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
+            IEnumerable<int> emptyCollection = EnumerableHelper.Empty<int>();
 
             // Act & Assert.
             Assert.Throws<ArgumentNullException>(
@@ -49,7 +48,7 @@ namespace Acolyte.Tests.Linq.FirstOrDefault
         public void FirstOrDefault_WithPredicate_ForEmptyCollection_ShouldReturnDefaultItem()
         {
             // Arrange.
-            IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
+            IEnumerable<int> emptyCollection = EnumerableHelper.Empty<int>();
             Func<int, bool> discard = DiscardFunction<int, bool>.Instance;
             int expectedValue = TestDataCreator.CreateRandomInt32();
 
@@ -90,8 +89,8 @@ namespace Acolyte.Tests.Linq.FirstOrDefault
             int count)
         {
             // Arrange.
-            IEnumerable<int> collectionWithSomeItems = TestDataCreator.CreateRandomInt32List(count);
-            int expectedValue = collectionWithSomeItems.First();
+            var collectionWithSomeItems = TestDataCreator.CreateRandomInt32List(count);
+            int expectedValue = collectionWithSomeItems[0];
 
             // Act.
             int actualValue = collectionWithSomeItems.FirstOrDefault(
@@ -127,12 +126,11 @@ namespace Acolyte.Tests.Linq.FirstOrDefault
         {
             // Arrange.
             int count = TestDataCreator.GetRandomCountNumber();
-            IEnumerable<int> collectionWithRandomSize =
-                TestDataCreator.CreateRandomInt32List(count);
+            var collectionWithRandomSize = TestDataCreator.CreateRandomInt32List(count);
             int defaultResult = TestDataCreator.CreateRandomInt32();
             Func<int, bool> predicate = i => NumberParityFunction.IsEven(i);
-            int expectedValue = collectionWithRandomSize.Any()
-                ? collectionWithRandomSize.First(predicate)
+            int expectedValue = collectionWithRandomSize.Count > 0
+                ? System.Linq.Enumerable.First(collectionWithRandomSize, predicate)
                 : defaultResult;
 
             // Act.

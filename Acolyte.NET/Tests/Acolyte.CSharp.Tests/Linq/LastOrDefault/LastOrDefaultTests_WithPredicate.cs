@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Acolyte.Functions;
 using Acolyte.Linq;
 using Acolyte.Tests.Cases.Parameterized;
@@ -31,7 +30,7 @@ namespace Acolyte.Tests.Linq.LastOrDefault
         public void LastOrDefault_WithPredicate_ForNullPredicate_ShouldFail()
         {
             // Arrange.
-            IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
+            IEnumerable<int> emptyCollection = EnumerableHelper.Empty<int>();
 
             // Act & Assert.
             Assert.Throws<ArgumentNullException>(
@@ -48,7 +47,7 @@ namespace Acolyte.Tests.Linq.LastOrDefault
         public void LastOrDefault_WithPredicate_ForEmptyCollection_ShouldReturnDefaultItem()
         {
             // Arrange.
-            IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
+            IEnumerable<int> emptyCollection = EnumerableHelper.Empty<int>();
             int expectedValue = TestDataCreator.CreateRandomInt32();
             Func<int, bool> discard = DiscardFunction<int, bool>.Instance;
 
@@ -89,8 +88,8 @@ namespace Acolyte.Tests.Linq.LastOrDefault
             int count)
         {
             // Arrange.
-            IEnumerable<int> collectionWithSomeItems = TestDataCreator.CreateRandomInt32List(count);
-            int expectedValue = collectionWithSomeItems.Last();
+            var collectionWithSomeItems = TestDataCreator.CreateRandomInt32List(count);
+            int expectedValue = collectionWithSomeItems[collectionWithSomeItems.Count - 1];
 
             // Act.
             int actualValue = collectionWithSomeItems.LastOrDefault(
@@ -107,7 +106,7 @@ namespace Acolyte.Tests.Linq.LastOrDefault
             int count)
         {
             // Arrange.
-            IEnumerable<int> collectionWithSomeItems = TestDataCreator.CreateRandomInt32List(count);
+            var collectionWithSomeItems = TestDataCreator.CreateRandomInt32List(count);
             Func<int, bool> discard = DiscardFunction<int, bool>.Instance;
             int expectedValue = TestDataCreator.CreateRandomInt32();
 
@@ -127,8 +126,7 @@ namespace Acolyte.Tests.Linq.LastOrDefault
         {
             // Arrange.
             int count = TestDataCreator.GetRandomCountNumber();
-            IEnumerable<int> collectionWithRandomSize =
-                TestDataCreator.CreateRandomInt32List(count);
+            var collectionWithRandomSize = TestDataCreator.CreateRandomInt32List(count);
             int defaultResult = TestDataCreator.CreateRandomInt32();
             Func<int, bool> predicate = i => NumberParityFunction.IsEven(i);
 
@@ -136,8 +134,8 @@ namespace Acolyte.Tests.Linq.LastOrDefault
             int actualValue = collectionWithRandomSize.LastOrDefault(predicate, defaultResult);
 
             // Assert.
-            int expectedValue = collectionWithRandomSize.Any()
-                ? collectionWithRandomSize.Last(predicate)
+            int expectedValue = collectionWithRandomSize.Count > 0
+                ? System.Linq.Enumerable.Last(collectionWithRandomSize, predicate)
                 : defaultResult;
 
             Assert.Equal(expectedValue, actualValue);
@@ -148,8 +146,7 @@ namespace Acolyte.Tests.Linq.LastOrDefault
         {
             // Arrange.
             int count = TestDataCreator.GetRandomCountNumber();
-            IEnumerable<int> collectionWithRandomSize =
-                TestDataCreator.CreateRandomInt32List(count);
+            var collectionWithRandomSize = TestDataCreator.CreateRandomInt32List(count);
             Func<int, bool> discard = DiscardFunction<int, bool>.Instance;
             int expectedValue = TestDataCreator.CreateRandomInt32();
 

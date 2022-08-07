@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Acolyte.Common;
 using Acolyte.Functions;
 using Acolyte.Linq;
@@ -35,7 +34,7 @@ namespace Acolyte.Tests.Linq.Max
         public void MaxBy_WithComparer_ForNullSelector_ShouldFail()
         {
             // Arrange.
-            IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
+            IEnumerable<int> emptyCollection = EnumerableHelper.Empty<int>();
             var keyComparer = MockComparer<int>.Default;
 
             // Act & Assert.
@@ -50,8 +49,7 @@ namespace Acolyte.Tests.Linq.Max
         {
             // Arrange.
             int count = TestDataCreator.GetRandomPositiveSmallCountNumber();
-            IReadOnlyList<int> collectionWithRandomSize =
-                TestDataCreator.CreateRandomInt32List(count);
+            var collectionWithRandomSize = TestDataCreator.CreateRandomInt32List(count);
             int expectedValue = collectionWithRandomSize.Max();
             Func<int, int> keySelector = IdentityFunction<int>.Instance;
 
@@ -70,7 +68,7 @@ namespace Acolyte.Tests.Linq.Max
         public void MaxBy_WithComparer_ForEmptyCollection_ShouldFailForValueTypes()
         {
             // Arrange.
-            IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
+            var emptyCollection = EnumerableHelper.Empty<int>();
             Func<int, int> keySelector = IdentityFunction<int>.Instance;
             var keyComparer = MockComparer<int>.Default;
 
@@ -85,7 +83,7 @@ namespace Acolyte.Tests.Linq.Max
         public void MaxBy_WithComparer_ForEmptyCollection_ShouldReturnNullForNullableValueTypes()
         {
             // Arrange.
-            IEnumerable<int?> emptyCollection = Enumerable.Empty<int?>();
+            IEnumerable<int?> emptyCollection = EnumerableHelper.Empty<int?>();
             int? expectedValue = null;
             Func<int?, int?> keySelector = IdentityFunction<int?>.Instance;
             var keyComparer = MockComparer<int?>.Default;
@@ -102,7 +100,7 @@ namespace Acolyte.Tests.Linq.Max
         public void MaxBy_WithComparer_ForEmptyCollection_ShouldReturnNullForReferenceTypes()
         {
             // Arrange.
-            IEnumerable<string> emptyCollection = Enumerable.Empty<string>();
+            IEnumerable<string> emptyCollection = EnumerableHelper.Empty<string>();
             const string? expectedValue = null;
             Func<string, string> keySelector = IdentityFunction<string>.Instance;
             var keyComparer = MockComparer<string>.Default;
@@ -147,8 +145,7 @@ namespace Acolyte.Tests.Linq.Max
         public void MaxBy_WithComparer_ForCollectionWithSomeItems_ShouldReturnProperMax(int count)
         {
             // Arrange.
-            IReadOnlyList<int> collectionWithSomeItems =
-                TestDataCreator.CreateRandomInt32List(count);
+            var collectionWithSomeItems = TestDataCreator.CreateRandomInt32List(count);
             Func<int, int> keySelector = InverseFunction.ForInt32;
             // Max with selector returns transformed value. Need to transform it back.
             int maxValue = collectionWithSomeItems.Max(keySelector);
@@ -168,9 +165,9 @@ namespace Acolyte.Tests.Linq.Max
         public void MaxBy_WithComparer_ForCollectionWithTheSameItems_ShouldReturnThatItem(int count)
         {
             // Arrange.
-            IReadOnlyList<int> collectionWithTheSameItems = Enumerable
+            IReadOnlyList<int> collectionWithTheSameItems = EnumerableHelper
                 .Repeat(count, count)
-                .ToList();
+                .ToReadOnlyList();
             int expectedValue = count;
             Func<int, int> keySelector = InverseFunction.ForInt32;
             var keyComparer = MockComparer<int>.Default;
@@ -192,8 +189,7 @@ namespace Acolyte.Tests.Linq.Max
         {
             // Arrange.
             int count = TestDataCreator.GetRandomPositiveCountNumber();
-            IReadOnlyList<int> collectionWithRandomSize =
-                TestDataCreator.CreateRandomInt32List(count);
+            var collectionWithRandomSize = TestDataCreator.CreateRandomInt32List(count);
             Func<int, int> keySelector = InverseFunction.ForInt32;
             // Max with selector returns transformed value. Need to transform it back.
             int maxValue = collectionWithRandomSize.Max(keySelector);

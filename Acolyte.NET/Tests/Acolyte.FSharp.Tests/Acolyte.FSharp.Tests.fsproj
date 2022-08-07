@@ -69,7 +69,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="FSharp.Core" />
     <PackageReference Include="FsUnit.xUnit" />
     <PackageReference Include="Unquote" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />

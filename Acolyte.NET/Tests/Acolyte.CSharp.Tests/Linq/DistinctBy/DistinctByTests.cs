@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Acolyte.Functions;
 using Acolyte.Linq;
 using Acolyte.Ranges;
@@ -28,7 +27,7 @@ namespace Acolyte.Tests.Linq.DistinctBy
 
             // Act & Assert.
             Assert.Throws<ArgumentNullException>(
-                "source", () => nullValue!.DistinctBy(discardKeySelector).ToList()
+                "source", () => nullValue!.DistinctBy(discardKeySelector)
             );
         }
 
@@ -36,12 +35,12 @@ namespace Acolyte.Tests.Linq.DistinctBy
         public void DistinctBy_ForNullKeySelector_ShouldFail()
         {
             // Arrange.
-            IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
+            IEnumerable<int> emptyCollection = EnumerableHelper.Empty<int>();
             const Func<int, bool>? keySelector = null;
 
             // Act & Assert.
             Assert.Throws<ArgumentNullException>(
-                "keySelector", () => emptyCollection.DistinctBy(keySelector!).ToList()
+                "keySelector", () => emptyCollection.DistinctBy(keySelector!)
             );
         }
 
@@ -53,7 +52,7 @@ namespace Acolyte.Tests.Linq.DistinctBy
         public void DistinctBy_ForEmptyCollection_ShouldDoNothing()
         {
             // Arrange.
-            IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
+            IEnumerable<int> emptyCollection = EnumerableHelper.Empty<int>();
             Func<int, bool> keySelector = item => NumberParityFunction.IsEven(item);
 
             // Act.
@@ -142,10 +141,10 @@ namespace Acolyte.Tests.Linq.DistinctBy
             IReadOnlyList<int> collection = new[] { 1, 2, 3, 4, 4 };
             var explosive = ExplosiveEnumerable.CreateNotExplosive(collection);
             Func<int, bool> keySelector = item => NumberParityFunction.IsEven(item);
-            var expectedResult = GetExpectedResult(collection, keySelector).ToList();
+            var expectedResult = GetExpectedResult(collection, keySelector).ToReadOnlyList();
 
             // Act.
-            var actualResult = explosive.DistinctBy(keySelector).ToList();
+            var actualResult = explosive.DistinctBy(keySelector).ToReadOnlyList();
 
             // Assert.
             CustomAssert.True(explosive.VerifyOnceEnumerateWholeCollection(collection));
@@ -170,7 +169,7 @@ namespace Acolyte.Tests.Linq.DistinctBy
         {
             const int rangeCount = 50;
             IEnumerable<long> range = RangeFactory.StartsWith(1L, rangeCount);
-            return range.ToList();
+            return range.ToReadOnlyList();
         }
 
         private static long MapToValueInRange(int sourceItem, IReadOnlyList<long> range)

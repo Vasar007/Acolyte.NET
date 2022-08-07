@@ -145,9 +145,8 @@ namespace Acolyte.Tests.Linq.OrderBySeruence
         {
             // Arrange.
             int count = TestDataCreator.GetRandomPositiveSmallCountNumber();
-            IReadOnlyList<int> collectionWithRandomSize =
-                PrepareCollectionToUseInTests(count);
-            IReadOnlyList<int> reverseOrder = collectionWithRandomSize.Reverse().ToReadOnlyList();
+            IReadOnlyList<int> collectionWithRandomSize = PrepareCollectionToUseInTests(count);
+            IReadOnlyList<int> reverseOrder = Enumerable.Reverse(collectionWithRandomSize).ToReadOnlyList();
             Func<int, int> sourceKeySelector = IdentityFunction<int>.Instance;
             Func<int, int> orderKeySelector = IdentityFunction<int>.Instance;
             Func<int, int, int> sourceResultSelector = GetSourceResultSelector<int, int>();

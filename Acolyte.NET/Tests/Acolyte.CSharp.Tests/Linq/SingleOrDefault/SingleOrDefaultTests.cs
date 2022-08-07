@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Acolyte.Common;
 using Acolyte.Linq;
 using Acolyte.Tests.Cases;
@@ -39,7 +38,7 @@ namespace Acolyte.Tests.Linq.SingleOrDefault
         public void SingleOrDefault_ForEmptyCollection_ShouldReturnDefaultItem()
         {
             // Arrange.
-            IEnumerable<int> emptyCollection = Enumerable.Empty<int>();
+            IEnumerable<int> emptyCollection = EnumerableHelper.Empty<int>();
             int expectedValue = TestDataCreator.CreateRandomInt32();
 
             // Act.
@@ -57,9 +56,8 @@ namespace Acolyte.Tests.Linq.SingleOrDefault
         public void SingleOrDefault_ForCollectionWithSingleItem_ShouldReturnFirstItem()
         {
             // Arrange.
-            IEnumerable<int> collectionWithSingleItem =
-                TestDataCreator.CreateRandomInt32List(TestConstants._1);
-            int expectedValue = collectionWithSingleItem.Single();
+            var collectionWithSingleItem = TestDataCreator.CreateRandomInt32List(TestConstants._1);
+            int expectedValue = collectionWithSingleItem[0];
 
             // Act.
             int actualValue = collectionWithSingleItem.SingleOrDefault(defaultValue: default);
@@ -112,8 +110,7 @@ namespace Acolyte.Tests.Linq.SingleOrDefault
         {
             // Arrange.
             int count = TestDataCreator.GetRandomCountNumber();
-            IReadOnlyList<int> collectionWithRandomSize =
-                TestDataCreator.CreateRandomInt32List(count);
+            var collectionWithRandomSize = TestDataCreator.CreateRandomInt32List(count);
             int defaultResult = TestDataCreator.CreateRandomInt32();
 
             // Act & Assert.
@@ -128,8 +125,8 @@ namespace Acolyte.Tests.Linq.SingleOrDefault
             {
                 int actualValue = collectionWithRandomSize.SingleOrDefault(defaultResult);
 
-                int expectedValue = collectionWithRandomSize.Any()
-                     ? collectionWithRandomSize.Single()
+                int expectedValue = collectionWithRandomSize.Count > 0
+                     ? collectionWithRandomSize[0]
                      : defaultResult;
 
                 Assert.Equal(expectedValue, actualValue);
