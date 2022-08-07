@@ -19,7 +19,9 @@ dotnet_csproj:
 
 # All branches are built by default.
 
-# Build platform is used from solution settings.
+# Build platform, i.e. x86, x64, Any CPU. This setting is optional.
+platform:
+  - Any CPU
 
 configuration:
   - Debug

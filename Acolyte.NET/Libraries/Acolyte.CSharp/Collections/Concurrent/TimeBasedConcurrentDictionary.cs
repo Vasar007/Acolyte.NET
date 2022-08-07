@@ -1,4 +1,6 @@
-﻿using System;
+﻿#pragma warning disable format // dotnet format fails indentation for regions :(
+
+using System;
 using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
