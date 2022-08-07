@@ -1,7 +1,6 @@
 environment:
   packageVersion: 2.2.0
   acolytePackageZip: 'Acolyte.NET.$(packageVersion).zip'
-  dotnetFormatVersion: 5.1.225507
 
 version: '$(packageVersion).{build}'
 image: Visual Studio 2022
@@ -29,9 +28,6 @@ configuration:
 matrix:
   fast_finish: true
 
-install:
-  - ps: dotnet tool update -g dotnet-format --version $env:dotnetFormatVersion
-
 before_build:
   - ps: dotnet restore Acolyte.NET
 
@@ -56,7 +52,7 @@ after_test:
   # F# tests does not execute at all.
   - ps: dotnet test --configuration $env:configuration --no-build "Acolyte.NET/Tests/Acolyte.FSharp.Tests/Acolyte.FSharp.Tests.fsproj"
   # Check code style.
-  #- ps: dotnet-format "Acolyte.NET/Acolyte.NET.sln" --fix-whitespace --fix-style warn --check --verbosity diagnostic
+  - ps: dotnet format Acolyte.NET --severity warn --verbosity diagnostic --verify-no-changes
 
 # Upload all NuGet packages to release assets.
 artifacts:
