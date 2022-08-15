@@ -2,7 +2,7 @@
 
   <ItemGroup>
     <PackageReference Update="coverlet.collector" Version="3.1.2" />
-    <PackageReference Update="FsUnit.xUnit" Version="5.0.1" />
+    <PackageReference Update="FsUnit.xUnit" Version="5.0.2" />
     <PackageReference Update="FluentAssertions" Version="6.7.0" />
     <PackageReference Update="IndexRange" Version="1.0.2" />
     <PackageReference Update="IsExternalInit" Version="1.0.3" />
