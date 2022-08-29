@@ -1,5 +1,5 @@
 ﻿using System;
-using Acolyte.Data.Randomness;
+using Acolyte.Basic.Randomness;
 
 namespace Acolyte.Functions
 {

@@ -1,7 +1,7 @@
 ﻿using System;
 using Acolyte.Assertions;
 
-namespace Acolyte.Data.Randomness
+namespace Acolyte.Basic.Randomness
 {
     /// <summary>
     /// Extensions method for <see cref="Random" /> class.

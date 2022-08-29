@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Acolyte.Assertions;
-using Acolyte.Data.Randomness;
+using Acolyte.Basic.Randomness;
 using Acolyte.Functions;
 using Acolyte.Numeric;
 using Acolyte.Tests.Objects;
