@@ -17,21 +17,21 @@ namespace Acolyte.Common.Monads
         #region With
 
         public static TResult? With<TSource, TResult>(this TSource? source,
-            Func<TSource, TResult> func)
+            Func<TSource, TResult?> func)
             where TSource : class?
         {
-            return With(source, func, () => default(TResult));
+            return With(source, func, () => default);
         }
 
         public static TResult? With<TSource, TResult>(this TSource? source,
-            Func<TSource, TResult> func, TResult defaultValue)
+            Func<TSource, TResult?> func, TResult? defaultValue)
             where TSource : class?
         {
             return With(source, func, () => defaultValue);
         }
 
         public static TResult? With<TSource, TResult>(this TSource? source,
-         Func<TSource, TResult> func, Func<TResult> defaultValueFunc)
+         Func<TSource, TResult?> func, Func<TResult?> defaultValueFunc)
             where TSource : class?
         {
             func.ThrowIfNull(nameof(func));
@@ -43,21 +43,21 @@ namespace Acolyte.Common.Monads
         }
 
         public static TResult? With<TSource, TResult>(this TSource? source,
-            Func<TSource, TResult> func)
+            Func<TSource, TResult?> func)
             where TSource : struct
         {
-            return With(source, func, () => default(TResult));
+            return With(source, func, () => default);
         }
 
         public static TResult? With<TSource, TResult>(this TSource? source,
-            Func<TSource, TResult> func, TResult defaultValue)
+            Func<TSource, TResult?> func, TResult? defaultValue)
             where TSource : struct
         {
             return With(source, func, () => defaultValue);
         }
 
         public static TResult? With<TSource, TResult>(this TSource? source,
-            Func<TSource, TResult> func, Func<TResult> defaultValueFunc)
+            Func<TSource, TResult?> func, Func<TResult?> defaultValueFunc)
             where TSource : struct
         {
             func.ThrowIfNull(nameof(func));
@@ -152,6 +152,13 @@ namespace Acolyte.Common.Monads
         #endregion
 
         #region To
+
+        public static TResult To<TSource, TResult>(this TSource source, Func<TSource, TResult> func)
+        {
+            func.ThrowIfNull(nameof(func));
+
+            return func(source);
+        }
 
         public static TResult? To<TResult>(this object? value)
         {
