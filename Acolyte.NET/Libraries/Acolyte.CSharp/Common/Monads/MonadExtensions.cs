@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using Acolyte.Assertions;
 
 namespace Acolyte.Common.Monads
@@ -72,6 +73,7 @@ namespace Acolyte.Common.Monads
 
         #region Do
 
+        [return: NotNullIfNotNull("source")]
         public static TSource? Do<TSource>(this TSource? source, Action<TSource> action)
             where TSource : class?
         {
@@ -85,6 +87,7 @@ namespace Acolyte.Common.Monads
             return source;
         }
 
+        [return: NotNullIfNotNull("source")]
         public static TSource? Do<TSource>(this TSource? source, Action<TSource> action)
             where TSource : struct
         {
