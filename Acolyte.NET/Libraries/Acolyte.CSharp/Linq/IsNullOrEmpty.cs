@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace Acolyte.Linq
@@ -16,7 +17,8 @@ namespace Acolyte.Linq
         /// Returns <see langword="true" /> in case the enumerable is <see langword="null" /> or
         /// empty; otherwise, <see langword="false" />.
         /// </returns>
-        public static bool IsNullOrEmpty<TSource>(this IEnumerable<TSource>? source)
+        public static bool IsNullOrEmpty<TSource>(
+            [NotNullWhen(false)] this IEnumerable<TSource>? source)
         {
             return source is null || !source.Any();
         }
