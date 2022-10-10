@@ -6,9 +6,6 @@
     <TargetFrameworks>$(PackageTargetFrameworks)</TargetFrameworks>
     <OutputType>Library</OutputType>
     <LangVersion>$(CSharpLangVersion)</LangVersion>
-    <Nullable>enable</Nullable>
-    <Deterministic>true</Deterministic>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <RootNamespace>Acolyte.Tests</RootNamespace>
     <IncludeSymbols>false</IncludeSymbols>
     <IsPackable>false</IsPackable>

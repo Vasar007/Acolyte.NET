@@ -6,9 +6,6 @@
     <TargetFrameworks>$(TestTargetFrameworks)</TargetFrameworks>
     <OutputType>Library</OutputType>
     <LangVersion>$(FSharpLangVersion)</LangVersion>
-    <Nullable>enable</Nullable>
-    <Deterministic>true</Deterministic>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <GenerateProgramFile>false</GenerateProgramFile>
     <RootNamespace>Acolyte.Tests</RootNamespace>
     <IncludeSymbols>false</IncludeSymbols>

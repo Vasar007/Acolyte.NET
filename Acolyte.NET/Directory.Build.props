@@ -8,6 +8,9 @@
     <TestTargetFrameworks>net472;netcoreapp3.1;net6.0</TestTargetFrameworks>
     <CSharpLangVersion>10.0</CSharpLangVersion>
     <FSharpLangVersion>5.0</FSharpLangVersion>
+    <Nullable>enable</Nullable>
+    <Deterministic>true</Deterministic>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
 
 </Project>
