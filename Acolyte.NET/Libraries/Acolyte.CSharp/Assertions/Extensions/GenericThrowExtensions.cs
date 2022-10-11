@@ -165,7 +165,7 @@ namespace Acolyte.Assertions
         /// <paramref name="value" /> is <see langword="null" />. -or-
         /// <paramref name="paramName" /> is <see langword="null" />. -or-
         /// <paramref name="includedLowerBound" /> is <see langword="null" />. -or-
-        /// <paramref name="includedUpperBound" /> is <see langword="null" />..
+        /// <paramref name="includedUpperBound" /> is <see langword="null" />.
         /// </exception>
         /// <exception cref="ArgumentOutOfRangeException">
         /// <paramref name="value" /> is out of the specified range
