@@ -36,11 +36,9 @@ namespace Acolyte.Basic.Disposal
         {
             // Check to see if Dispose has already been called.
             if (Disposed) return;
+            Disposed = true;
 
             DisposeInternal();
-
-            // Note disposing has been done.
-            Disposed = true;
         }
 
         /// <summary>
