@@ -1,7 +1,7 @@
 <Project>
 
   <ItemGroup>
-    <PackageReference Update="coverlet.collector" Version="3.2.0" />
+    <PackageReference Update="coverlet.collector" Version="6.0.0" />
     <PackageReference Update="FsUnit.xUnit" Version="5.3.0" />
     <PackageReference Update="FluentAssertions" Version="6.11.0" />
     <PackageReference Update="IndexRange" Version="1.0.2" />
