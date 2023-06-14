@@ -46,10 +46,9 @@ namespace Acolyte.Assertions
         public static IReadOnlyCollection<T> ThrowIfNullOrEmpty<T>(
             [NotNull] this IReadOnlyCollection<T>? collection, string paramName)
         {
-            var cast = collection?.AsEnumerable();
-            cast.ThrowIfNull(paramName);
+            (collection?.AsEnumerable()).ThrowIfNull(paramName);
 
-            if (collection!.Count == 0)
+            if (collection.Count == 0)
             {
                 throw new ArgumentException($"{paramName} contains no elements.", paramName);
             }
