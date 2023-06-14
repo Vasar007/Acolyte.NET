@@ -23,7 +23,7 @@ namespace Acolyte.Assertions
         /// <paramref name="str" /> presents empty string.
         /// </exception>
         [return: NotNull]
-        public static string ThrowIfNullOrEmpty(this string? str, string paramName)
+        public static string ThrowIfNullOrEmpty([NotNull] this string? str, string paramName)
         {
             paramName.ThrowIfNull(nameof(paramName));
 
@@ -56,7 +56,7 @@ namespace Acolyte.Assertions
         /// <paramref name="str" /> presents empty string or contains only whitespaces.
         /// </exception>
         [return: NotNull]
-        public static string ThrowIfNullOrWhiteSpace(this string? str, string paramName)
+        public static string ThrowIfNullOrWhiteSpace([NotNull] this string? str, string paramName)
         {
             paramName.ThrowIfNull(nameof(paramName));
 

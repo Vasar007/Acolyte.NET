@@ -38,7 +38,7 @@ namespace Acolyte.Assertions
         /// In such cases, this restriction removes opportunity to use <see langword="null" /> check.
         /// </remarks>
         [return: NotNull]
-        public static T ThrowIfNullValue<T>(this T? obj, string paramName,
+        public static T ThrowIfNullValue<T>([NotNull] this T? obj, string paramName,
             bool assertOnPureValueTypes)
         {
             if (paramName is null)
@@ -66,7 +66,7 @@ namespace Acolyte.Assertions
         /// </remarks>
         /// <inheritdoc cref="ThrowIfNullValue{T}(T, string, bool)" path="//summary|//typeparam|//param|//returns" />
         [return: NotNull]
-        public static T ThrowIfNullValue<T>(this T? obj, string paramName)
+        public static T ThrowIfNullValue<T>([NotNull] this T? obj, string paramName)
         {
             return obj.ThrowIfNullValue(paramName, assertOnPureValueTypes: false);
         }
@@ -76,7 +76,7 @@ namespace Acolyte.Assertions
         /// </summary>
         /// <inheritdoc cref="ThrowIfNullValue{T}(T, string)" path="//*[name() != 'remarks']" />
         [return: NotNull]
-        public static T ThrowIfNull<T>(this T? obj, string paramName)
+        public static T ThrowIfNull<T>([NotNull] this T? obj, string paramName)
             where T : class?
         {
             return obj.ThrowIfNullValue(paramName);
@@ -87,7 +87,7 @@ namespace Acolyte.Assertions
         /// This method does not return original object to avoid compiler warnings.
         /// </summary>
         /// <inheritdoc cref="ThrowIfNull{T}(T, string)" path="//typeparam|//param|//returns|//exception" />
-        public static void ThrowIfNullDiscard<T>(this T? obj, string paramName)
+        public static void ThrowIfNullDiscard<T>([NotNull] this T? obj, string paramName)
             where T : class?
         {
             obj.ThrowIfNull(paramName);
@@ -124,7 +124,7 @@ namespace Acolyte.Assertions
         /// </exception>
         [return: NotNull]
         public static T ThrowIfValueIsOutOfRange<T>(
-            [DisallowNull] this T value,
+            [NotNull] this T value,
             [DisallowNull] string paramName,
             [DisallowNull] T includedLowerBound,
             [DisallowNull] T includedUpperBound,
@@ -178,7 +178,7 @@ namespace Acolyte.Assertions
         /// <inheritdoc cref="ThrowIfValueIsOutOfRange{T}(T, string, T, T, IComparer{T})" path="//typeparam|//param|//returns" />
         [return: NotNull]
         public static T ThrowIfValueIsOutOfRange<T>(
-            [DisallowNull] this T value,
+            [NotNull] this T value,
             [DisallowNull] string paramName,
             [DisallowNull] T includedLowerBound,
             [DisallowNull] T includedUpperBound)

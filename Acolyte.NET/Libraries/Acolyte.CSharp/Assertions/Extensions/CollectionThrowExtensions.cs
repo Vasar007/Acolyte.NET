@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace Acolyte.Assertions
@@ -26,8 +27,9 @@ namespace Acolyte.Assertions
         /// <exception cref="ArgumentException">
         /// <paramref name="collection" /> contains no elements.
         /// </exception>
-        public static IEnumerable<T> ThrowIfNullOrEmpty<T>(this IEnumerable<T>? collection,
-            string paramName)
+        [return: NotNull]
+        public static IEnumerable<T> ThrowIfNullOrEmpty<T>(
+            [NotNull] this IEnumerable<T>? collection, string paramName)
         {
             collection.ThrowIfNull(paramName);
 
@@ -36,12 +38,13 @@ namespace Acolyte.Assertions
                 throw new ArgumentException($"{paramName} contains no elements.", paramName);
             }
 
-            return collection!;
+            return collection;
         }
 
         /// <inheritdoc cref="ThrowIfNullOrEmpty{T}(IEnumerable{T}?, string)" />
+        [return: NotNull]
         public static IReadOnlyCollection<T> ThrowIfNullOrEmpty<T>(
-            this IReadOnlyCollection<T>? collection, string paramName)
+            [NotNull] this IReadOnlyCollection<T>? collection, string paramName)
         {
             var cast = collection?.AsEnumerable();
             cast.ThrowIfNull(paramName);
@@ -55,23 +58,23 @@ namespace Acolyte.Assertions
         }
 
         /// <inheritdoc cref="ThrowIfNullOrEmpty{T}(IEnumerable{T}?, string)" />
+        [return: NotNull]
         public static IReadOnlyList<T> ThrowIfNullOrEmpty<T>(
-           this IReadOnlyList<T>? collection, string paramName)
+           [NotNull] this IReadOnlyList<T>? collection, string paramName)
         {
-            IReadOnlyCollection<T>? cast = collection;
-            cast.ThrowIfNullOrEmpty(paramName);
+            ((IReadOnlyCollection<T>?) collection).ThrowIfNullOrEmpty(paramName);
 
-            return collection!;
+            return collection;
         }
 
         /// <inheritdoc cref="ThrowIfNullOrEmpty{T}(IEnumerable{T}?, string)" />
+        [return: NotNull]
         public static IReadOnlyDictionary<TKey, TValue> ThrowIfNullOrEmpty<TKey, TValue>(
-           this IReadOnlyDictionary<TKey, TValue>? collection, string paramName)
+           [NotNull] this IReadOnlyDictionary<TKey, TValue>? collection, string paramName)
         {
-            IReadOnlyCollection<KeyValuePair<TKey, TValue>>? cast = collection;
-            cast.ThrowIfNullOrEmpty(paramName);
+            ((IReadOnlyCollection<KeyValuePair<TKey, TValue>>?) collection).ThrowIfNullOrEmpty(paramName);
 
-            return collection!;
+            return collection;
         }
 
         /// <summary>
@@ -104,8 +107,9 @@ namespace Acolyte.Assertions
         /// type of <paramref name="collection" /> item's type is pure value type.
         /// </exception>
         /// <inheritdoc cref="ThrowIfNullValue{T}(T, string, bool)" path="//remarks" />
-        public static IEnumerable<T> ThrowIfContainsNullValue<T>(this IEnumerable<T?>? collection,
-            string paramName, bool assertOnPureValueTypes)
+        [return: NotNull]
+        public static IEnumerable<T> ThrowIfContainsNullValue<T>(
+            [NotNull] this IEnumerable<T?>? collection, string paramName, bool assertOnPureValueTypes)
         {
             paramName.ThrowIfNull(nameof(paramName));
             collection.ThrowIfNull(paramName);
@@ -144,35 +148,36 @@ namespace Acolyte.Assertions
         /// with parameter assertOnPureValueTypes = <see langword="false" />.
         /// </remarks>
         /// <inheritdoc cref="ThrowIfContainsNullValue{T}(IEnumerable{T}, string, bool)" path="//summary|//typeparam|//param|//returns" />
-        public static IEnumerable<T> ThrowIfContainsNullValue<T>(this IEnumerable<T?>? collection,
-            string paramName)
+        [return: NotNull]
+        public static IEnumerable<T> ThrowIfContainsNullValue<T>(
+            [NotNull] this IEnumerable<T?>? collection, string paramName)
         {
             return collection.ThrowIfContainsNullValue(paramName, assertOnPureValueTypes: false);
         }
 
         /// <inheritdoc cref="ThrowIfContainsNullValue{T}(IEnumerable{T}?, string)" />
+        [return: NotNull]
         public static IReadOnlyCollection<T> ThrowIfContainsNullValue<T>(
-            this IReadOnlyCollection<T?>? collection, string paramName)
+            [NotNull] this IReadOnlyCollection<T?>? collection, string paramName)
         {
-            var cast = collection?.AsEnumerable();
-            cast.ThrowIfContainsNullValue(paramName);
+            (collection?.AsEnumerable()).ThrowIfContainsNullValue(paramName);
 
             return collection!;
         }
 
         /// <inheritdoc cref="ThrowIfContainsNullValue{T}(IEnumerable{T}?, string)" />
         public static IReadOnlyList<T> ThrowIfContainsNullValue<T>(
-           this IReadOnlyList<T?>? collection, string paramName)
+           [NotNull] this IReadOnlyList<T?>? collection, string paramName)
         {
-            IReadOnlyCollection<T?>? cast = collection;
-            cast.ThrowIfContainsNullValue(paramName);
+            ((IReadOnlyCollection<T?>?) collection).ThrowIfContainsNullValue(paramName);
 
             return collection!;
         }
 
         /// <inheritdoc cref="ThrowIfContainsNullValue{T}(IEnumerable{T}?, string)" />
+        [return: NotNull]
         public static IReadOnlyDictionary<TKey, TValue> ThrowIfContainsNullValue<TKey, TValue>(
-           this IReadOnlyDictionary<TKey, TValue?>? collection, string paramName)
+            [NotNull] this IReadOnlyDictionary<TKey, TValue?>? collection, string paramName)
             where TKey : notnull
         {
             var values = collection.ThrowIfNull(nameof(collection)).Values;
@@ -182,38 +187,40 @@ namespace Acolyte.Assertions
         }
 
         /// <inheritdoc cref="ThrowIfContainsNullValue{T}(IEnumerable{T}?, string)" path="//*[name() != 'remarks']" />
-        public static IEnumerable<T> ThrowIfContainsNull<T>(this IEnumerable<T?>? collection,
-            string paramName)
+        [return: NotNull]
+        public static IEnumerable<T> ThrowIfContainsNull<T>(
+            [NotNull] this IEnumerable<T?>? collection, string paramName)
             where T : class?
         {
             return collection.ThrowIfContainsNullValue(paramName);
         }
 
         /// <inheritdoc cref="ThrowIfContainsNull{T}(IEnumerable{T}?, string)" />
+        [return: NotNull]
         public static IReadOnlyCollection<T> ThrowIfContainsNull<T>(
-            this IReadOnlyCollection<T?>? collection, string paramName)
+            [NotNull] this IReadOnlyCollection<T?>? collection, string paramName)
             where T : class?
         {
-            var cast = collection?.AsEnumerable();
-            cast.ThrowIfContainsNullValue(paramName);
+            (collection?.AsEnumerable()).ThrowIfContainsNullValue(paramName);
 
             return collection!;
         }
 
         /// <inheritdoc cref="ThrowIfContainsNull{T}(IEnumerable{T}?, string)" />
+        [return: NotNull]
         public static IReadOnlyList<T> ThrowIfContainsNull<T>(
-           this IReadOnlyList<T?>? collection, string paramName)
+            [NotNull] this IReadOnlyList<T?>? collection, string paramName)
             where T : class?
         {
-            IReadOnlyCollection<T?>? cast = collection;
-            cast.ThrowIfContainsNull(paramName);
+            ((IReadOnlyCollection<T?>?) collection).ThrowIfContainsNull(paramName);
 
             return collection!;
         }
 
         /// <inheritdoc cref="ThrowIfContainsNullValue{T}(IEnumerable{T}?, string)" />
+        [return: NotNull]
         public static IReadOnlyDictionary<TKey, TValue> ThrowIfContainsNull<TKey, TValue>(
-           this IReadOnlyDictionary<TKey, TValue?>? collection, string paramName)
+            [NotNull] this IReadOnlyDictionary<TKey, TValue?>? collection, string paramName)
             where TKey : notnull
             where TValue : class?
         {

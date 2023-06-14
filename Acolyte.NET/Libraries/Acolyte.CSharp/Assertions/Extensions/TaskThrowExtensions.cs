@@ -26,7 +26,7 @@ namespace Acolyte.Assertions
         /// <see cref="TaskStatus.Faulted" /> state).
         /// </exception>
         [return: NotNull]
-        public static Task ThrowIfFaulted(this Task task)
+        public static Task ThrowIfFaulted([NotNull] this Task task)
         {
             task.ThrowIfNullDiscard(nameof(task));
 
