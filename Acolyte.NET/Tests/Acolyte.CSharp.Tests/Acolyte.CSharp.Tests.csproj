@@ -30,12 +30,6 @@
     <DefineConstants>$(DefineConstants);NETFRAMEWORK4_7_2</DefineConstants>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(TargetFramework)' == 'netcoreapp3.1'">
-    <AssemblyTitle>Acolyte.CSharp Tests .NET Standard 2.0 (.NET Core 3.1)</AssemblyTitle>
-    <ReferringTargetFrameworkForProjectReferences>.NETStandard,Version=v2.0</ReferringTargetFrameworkForProjectReferences>
-    <DefineConstants>$(DefineConstants);NETCORE3_1</DefineConstants>
-  </PropertyGroup>
-
   <PropertyGroup Condition="'$(TargetFramework)' == 'net6.0'">
     <AssemblyTitle>Acolyte.CSharp Tests .NET Standard 2.1 (.NET 6.0)</AssemblyTitle>
     <ReferringTargetFrameworkForProjectReferences>.NETStandard,Version=v2.1</ReferringTargetFrameworkForProjectReferences>
@@ -45,11 +39,6 @@
   <ItemGroup>
     <ProjectReference Include="$(SolutionDir)Libraries\Acolyte.CSharp\Acolyte.CSharp.csproj" />
     <ProjectReference Include="$(SolutionDir)Tests\Acolyte.Tests.Common\Acolyte.Tests.Common.csproj" />
-  </ItemGroup>
-
-  <!-- Required to resolve issues with out-of-date versions of "Microsoft.Bcl.HashCode" package. -->
-  <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.1'">
-    <PackageReference Include="Microsoft.Bcl.HashCode" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
