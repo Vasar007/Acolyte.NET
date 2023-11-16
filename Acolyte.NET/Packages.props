@@ -7,7 +7,7 @@
     <PackageReference Update="IndexRange" Version="1.0.3" />
     <PackageReference Update="IsExternalInit" Version="1.0.3" />
     <PackageReference Update="Microsoft.Bcl.HashCode" Version="1.1.1" />
-    <PackageReference Update="Microsoft.SourceLink.GitHub" Version="1.1.1" />
+    <PackageReference Update="Microsoft.SourceLink.GitHub" Version="8.0.0" />
     <PackageReference Update="Microsoft.NET.Test.Sdk" Version="17.8.0" />
     <PackageReference Update="MinVer" Version="4.3.0" />
     <PackageReference Update="Moq" Version="4.20.69" />
