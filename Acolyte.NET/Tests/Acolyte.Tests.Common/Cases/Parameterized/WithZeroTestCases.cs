@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Acolyte.Assertions;
-using MoreLinq;
 
 namespace Acolyte.Tests.Cases.Parameterized
 {
@@ -20,7 +20,7 @@ namespace Acolyte.Tests.Cases.Parameterized
         public override IEnumerable<int> GetValues()
         {
             return _originalTestCases
-                 .GetValues()
+                .GetValues()
                 .Prepend(TestConstants._0);
         }
 
