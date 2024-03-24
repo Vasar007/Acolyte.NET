@@ -54,5 +54,25 @@ namespace Acolyte.Basic.Disposal
                 obj.DisposeSafe();
             }
         }
+
+#if ASYNC_DISPOSABLE
+
+        public static async System.Threading.Tasks.Task DisposeSyncOrAsync<TDisposable>(
+            this TDisposable? self, bool isAsync)
+            where TDisposable : IDisposable, IAsyncDisposable
+        {
+            if (self is null)
+                return;
+
+            if (isAsync)
+            {
+                await self.DisposeAsync();
+            }
+            else
+            {
+                self.Dispose();
+            }
+        }
+#endif
     }
 }
