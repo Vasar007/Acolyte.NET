@@ -3,7 +3,7 @@
   <ItemGroup>
     <PackageVersion Include="coverlet.collector" Version="6.0.2" />
     <PackageVersion Include="FluentAssertions" Version="7.0.0" />
-    <PackageVersion Include="FsUnit.xUnit" Version="6.0.1" />
+    <PackageVersion Include="FsUnit.xUnit" Version="7.0.0" />
     <PackageVersion Include="IndexRange" Version="1.0.3" />
     <PackageVersion Include="IsExternalInit" Version="1.0.3" />
     <PackageVersion Include="Microsoft.Bcl.HashCode" Version="6.0.0" />
