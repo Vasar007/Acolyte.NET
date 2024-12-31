@@ -30,10 +30,10 @@
     <DefineConstants>$(DefineConstants);NETFRAMEWORK4_7_2</DefineConstants>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(TargetFramework)' == 'net6.0'">
-    <AssemblyTitle>Acolyte.CSharp Tests .NET Standard 2.1 (.NET 6.0)</AssemblyTitle>
+  <PropertyGroup Condition="'$(TargetFramework)' == 'net8.0'">
+    <AssemblyTitle>Acolyte.CSharp Tests .NET Standard 2.1 (.NET 8.0)</AssemblyTitle>
     <ReferringTargetFrameworkForProjectReferences>.NETStandard,Version=v2.1</ReferringTargetFrameworkForProjectReferences>
-    <DefineConstants>$(DefineConstants);NET6;ASYNC_ENUMERABLE</DefineConstants>
+    <DefineConstants>$(DefineConstants);NET8;ASYNC_ENUMERABLE</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>
@@ -41,15 +41,15 @@
     <ProjectReference Include="$(SolutionDir)Tests\Acolyte.Tests.Common\Acolyte.Tests.Common.csproj" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
+  <ItemGroup Condition="'$(TargetFramework)' == 'net8.0'">
     <PackageReference Include="System.Linq.Async" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="coverlet.collector" PrivateAssets="all" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="xunit" />
     <PackageReference Include="xunit.runner.visualstudio" PrivateAssets="all" />
-    <PackageReference Include="coverlet.collector" PrivateAssets="all" />
   </ItemGroup>
 
 </Project>
