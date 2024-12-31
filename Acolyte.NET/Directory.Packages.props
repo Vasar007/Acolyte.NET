@@ -4,7 +4,7 @@
     <PackageVersion Include="coverlet.collector" Version="6.0.3" />
     <PackageVersion Include="FluentAssertions" Version="7.0.0" />
     <PackageVersion Include="FSharp.Core" Version="9.0.100" />
-    <PackageVersion Include="FsUnit.xUnit" Version="7.0.1" />
+    <PackageVersion Include="FsUnit.xUnit" Version="6.0.1" /> <!-- DO NOT UPDATE TO 7.0.0 or 7.0.1 because it is not working with .NET 8.0 -->
     <PackageVersion Include="IndexRange" Version="1.0.3" />
     <PackageVersion Include="IsExternalInit" Version="1.0.3" />
     <PackageVersion Include="Microsoft.Bcl.HashCode" Version="6.0.0" />
