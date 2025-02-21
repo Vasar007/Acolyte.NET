@@ -2,7 +2,7 @@
 
   <ItemGroup>
     <PackageVersion Include="coverlet.collector" Version="6.0.4" />
-    <PackageVersion Include="FluentAssertions" Version="[7.1.0]" /> <!-- DO NOT UPDATE TO 8.0.0+ because it has a new license. -->
+    <PackageVersion Include="FluentAssertions" Version="[8.1.0]" /> <!-- DO NOT UPDATE TO 8.0.0+ because it has a new license. -->
     <PackageVersion Include="FSharp.Core" Version="9.0.101" />
     <PackageVersion Include="FsUnit.xUnit" Version="[6.0.1]" /> <!-- DO NOT UPDATE TO 7.0.0 or 7.0.1+ because it is not working with .NET 8.0 -->
     <PackageVersion Include="IndexRange" Version="1.0.3" />
